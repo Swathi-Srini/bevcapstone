@@ -1,0 +1,22 @@
+# Local Python environments and interpreter artifacts
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Generated drive outputs and diagnostics
+manual_drive_output/
+manual_debug/
+logs/
+saved_images/
+my_saved_images/
+visualization_output/
+
+# Local model weights are downloaded by Ultralytics when needed
+*.pt
+
+# Local editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
