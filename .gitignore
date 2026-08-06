@@ -14,9 +14,27 @@ visualization_output/
 
 # Local model weights are downloaded by Ultralytics when needed
 *.pt
+*.pth
+*.onnx
+
+# Generated research artifacts: demonstrations, checkpoints, and recordings
+*.npz
+*.mp4
+*.avi
+*.mov
+**/runs/
+**/wandb/
+**/tensorboard/
+
+# Local configuration and secrets
+.env
+.env.*
 
 # Local editor and operating-system files
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
+
+checkpoints/*.pth
+data/train/*.npz
