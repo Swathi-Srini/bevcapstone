@@ -13,7 +13,7 @@ bevcapstone/
 |  `- Recordings/            # Local baseline rollout evidence (ignored by Git)
 |- YOLO+weather module/      # Standalone MetaDrive camera + YOLO prototype
 |- venv/                     # Local Python environment (ignored by Git)
-|- requirements.txt
+|- requirements.txt          # Shared Python dependencies, including MetaDrive 0.4.3
 `- .gitignore
 ```
 
@@ -44,29 +44,16 @@ The target camera concept uses five physical streams: a front-left/front-right s
 
 ## Environments and dependencies
 
-Python 3.11 is recommended. The modules currently have incompatible MetaDrive declarations:
+Python 3.11 is recommended. The repository now has one shared root dependency file, pinned to `metadrive-simulator==0.4.3`. Use one root-level environment for both the preserved baseline and the YOLO/weather prototype.
 
-- `baseline/bc_metadrive/requirements.txt` requests the latest GitHub MetaDrive source.
-- `YOLO+weather module/requirements.txt` pins `metadrive-simulator==0.4.3`.
-
-Do not blindly install both requirement files into one environment. Until a final version is pinned, use separate environments when independently reproducing the modules.
-
-### Baseline environment
+### Shared environment
 
 ```powershell
-py -3.11 -m venv .venv-baseline
-.\.venv-baseline\Scripts\Activate.ps1
+cd <repository-root>
+py -3.11 -m venv venv
+.\venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
-python -m pip install -r .\baseline\bc_metadrive\requirements.txt
-```
-
-### YOLO/weather environment
-
-```powershell
-py -3.11 -m venv .venv-yolo
-.\.venv-yolo\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r '.\YOLO+weather module\requirements.txt'
+python -m pip install -r .\requirements.txt
 ```
 
 If activation is blocked, run this once per PowerShell session:
