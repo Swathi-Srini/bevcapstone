@@ -353,7 +353,7 @@ def main() -> int:
                     distance_m += float(np.linalg.norm(position - previous_position))
                 previous_position = position
 
-            annotated = annotate_image(frame, traffic_detections)
+            annotated = annotate_image(weather_frame, traffic_detections)
             speed = float(info.get("velocity", 0.0)) if isinstance(info, dict) else 0.0
             status = [
                 f"Control actions: {control_actions}",
