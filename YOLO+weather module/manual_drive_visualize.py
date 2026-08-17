@@ -47,6 +47,7 @@ def _nms_boxes(detections: List[Dict[str, Any]], iou_threshold: float = 0.45) ->
 
 from weather.weather_utils import apply_weather, prepare_image
 from yolo.yolo_utils import TRAFFIC_CLASS_NAMES, ensure_yolo_model, run_yolo, annotate_image
+from yolo_depth_realtime_logger import RealtimeYOLODepthLogger
 
 try:
     import keyboard
@@ -221,6 +222,14 @@ def main() -> int:
     reward = 0.0
     rows: List[Dict[str, Any]] = []
     state = extract_state_from_obs(obs)
+    
+    # Initialize YOLO + Depth logger
+    depth_logger = RealtimeYOLODepthLogger(
+        model_path=str(args.yolo_weights or args.yolo_model),
+        conf_threshold=args.confidence_threshold,
+        output_dir=str(args.output_dir / 'depth_logs')
+    )
+    print("\n✓ YOLO + Depth logger initialized")
 
     try:
         while not done and (args.max_steps == 0 or simulation_steps < args.max_steps):
@@ -248,6 +257,9 @@ def main() -> int:
             # shows exactly the weather condition selected by the user.
             detections = run_yolo(yolo_model, clean_frame)
             frame = apply_weather(clean_frame, args.weather, args.level)
+            
+            # Log depths for all detections
+            depth_detections = depth_logger.process_frame(clean_frame, simulation_steps)
 
             if args.debug_detections and (simulation_steps % 10 == 0):
                 try:
@@ -395,6 +407,7 @@ def main() -> int:
     finally:
         env.close()
         cv2.destroyAllWindows()
+        depth_logger.close()  # Save depth logs
 
     if rows:
         save_results(args.output_dir / "manual_drive_detections.csv", rows)
