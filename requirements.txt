@@ -1,0 +1,16 @@
+metadrive-simulator==0.4.3
+
+torch
+torchvision
+stable-baselines3
+gymnasium
+
+opencv-python
+ultralytics
+
+numpy
+matplotlib
+pandas
+tqdm
+
+keyboard
