@@ -58,3 +58,7 @@ jobs:
         shell: pwsh
         working-directory: YOLO+weather module
         run: python .\stereo_depth\test_module.py
+
+      - name: Run YOLO-weather unit and non-GUI integration tests
+        shell: pwsh
+        run: python -m unittest discover -s ".\YOLO+weather module\tests" -v

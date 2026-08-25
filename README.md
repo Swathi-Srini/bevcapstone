@@ -136,6 +136,14 @@ Push-Location '.\YOLO+weather module'
 Pop-Location
 ```
 
+### YOLO-weather unit and integration tests
+
+The non-GUI suite checks camera calibration, SGBM configuration and depth conversion, stereo uncertainty, four-camera coordinate projection, weather augmentation, YOLO class/confidence filtering, visualization helpers, and the saved-image weather benchmark with a mocked model. It does not start MetaDrive or require `yolov8n.pt`.
+
+```powershell
+.\venv\Scripts\python.exe -m unittest discover -s ".\YOLO+weather module\tests" -v
+```
+
 The first run downloads the official `yolov8n.pt` weights when network access is available; alternatively, provide a local weight file with `--yolo-model <path>`. Use `--device cpu` unless a compatible CUDA setup is verified.
 
 ### Saved-image weather benchmark
