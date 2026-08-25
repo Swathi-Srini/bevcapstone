@@ -42,6 +42,7 @@ data/train/*.npz
 # Generated camera frames and runtime outputs
 camera/captured_frames_stereo/
 integrated_output/
+weather_benchmark_output/
 
 # Log files
 *.log

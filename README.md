@@ -31,7 +31,7 @@ MetaDrive cameras + ego/route state
   -> MetaDrive environment, reward, and next observation
 ```
 
-The target camera concept uses five physical streams: a front-left/front-right stereo pair plus left, right, and rear cameras. Multi-camera capture, stereo depth, BEV construction, the scalar-state extractor, CNN/MLP policy, and PPO training are **not implemented yet**.
+The camera prototype uses five physical streams: a front-left/front-right stereo pair plus left, right, and rear cameras. The multi-camera capture utility and the front StereoSGBM depth prototype are implemented. BEV construction, the scalar-state extractor, CNN/MLP policy, and PPO training are **not implemented yet**.
 
 ### Rules for future implementations
 
@@ -39,7 +39,7 @@ The target camera concept uses five physical streams: a front-left/front-right s
 - Do not feed exact simulator NPC positions/sizes to the learned policy. They are debugging/evaluation ground truth only.
 - Route/lane geometry and ego localisation are allowed structured inputs.
 - `free` and `unknown` must be distinct BEV states; visibility-aware BEV needs an explicit unknown/knownness representation.
-- The YOLO/weather module currently detects on clean RGB and adds fog/rain only for display. It does not yet demonstrate weather-degraded perception.
+- The YOLO/weather runner defaults to display-only fog/rain so that synthetic, unmatched weather streaks do not corrupt stereo correspondence. Use `--perception-weather` to run YOLO and StereoSGBM on the weathered frames and explicitly test weather-degraded perception.
 - On Windows CPU laptops, favour headless/small-camera debugging. MetaDrive onscreen rendering can exhaust shared graphics memory.
 
 ## Environments and dependencies
@@ -54,6 +54,12 @@ py -3.11 -m venv venv
 .\venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 python -m pip install -r .\requirements.txt
+```
+
+On Windows CPU machines, install the official CPU PyTorch wheels after the shared requirements. This prevents GPU/DLL loading issues on machines without a compatible CUDA setup:
+
+```powershell
+python -m pip install --upgrade --force-reinstall torch torchvision --index-url https://download.pytorch.org/whl/cpu
 ```
 
 If activation is blocked, run this once per PowerShell session:
@@ -103,23 +109,42 @@ python evaluate_bc.py
 
 ## Run YOLO + weather independently
 
-Run from inside the module directory so the local `yolo` and `weather` packages resolve.
+Run from the repository root. The script resolves its local `yolo` and `weather` packages itself.
 
 ```powershell
-cd '.\YOLO+weather module'
-python .\manual_drive_visualize.py --device cpu --weather none
+.\venv\Scripts\python.exe ".\YOLO+weather module\manual_drive_stereo_yolo_weather.py" --device cpu --weather none
 ```
 
 Controls: `W/A/S/D` drive; `Q` quits.
 
 ```powershell
-python .\manual_drive_visualize.py --device cpu --weather fog --level 0.5
-python .\manual_drive_visualize.py --device cpu --weather rain --level 0.7
-python .\manual_drive_visualize.py --device cpu --weather all --level 0.5
-python .\manual_drive_visualize.py --device cpu --weather none --max-steps 100
+# Display weather while retaining clean stereo correspondence (default).
+.\venv\Scripts\python.exe ".\YOLO+weather module\manual_drive_stereo_yolo_weather.py" --device cpu --weather rain --level 0.5 --traffic-density 0.5
+
+# Weather-degraded perception experiment: YOLO and StereoSGBM receive weathered frames.
+.\venv\Scripts\python.exe ".\YOLO+weather module\manual_drive_stereo_yolo_weather.py" --device cpu --weather fog --level 0.5 --perception-weather
+
+# Finite automated smoke run; output is written to integrated_output\detection_log.csv.
+.\venv\Scripts\python.exe ".\YOLO+weather module\manual_drive_stereo_yolo_weather.py" --device cpu --weather none --max-steps 100
 ```
 
-The first run may download `yolov8n.pt`. Use `--device cpu` unless a compatible CUDA setup is verified.
+Verify the reusable stereo module before a handoff:
+
+```powershell
+Push-Location '.\YOLO+weather module'
+..\venv\Scripts\python.exe .\stereo_depth\test_module.py
+Pop-Location
+```
+
+The first run downloads the official `yolov8n.pt` weights when network access is available; alternatively, provide a local weight file with `--yolo-model <path>`. Use `--device cpu` unless a compatible CUDA setup is verified.
+
+### Saved-image weather benchmark
+
+This benchmark runs the same YOLO model on a clean image and a synthetic fog/rain version, then writes both annotated images and `summary.csv` for a direct detection-count/confidence comparison:
+
+```powershell
+.\venv\Scripts\python.exe ".\YOLO+weather module\benchmark_weather_perception.py" --image .\path\to\image.png --weather fog --level 0.5 --device cpu
+```
 
 ## Experiment contracts
 

@@ -1,164 +1,49 @@
-# Real-Time YOLO + Depth Logging Setup
+# Integrated YOLO + Weather + StereoSGBM Logging
 
-## 🎯 What You Now Have
+Use `manual_drive_stereo_yolo_weather.py` for the supported live integration. Older `manual_drive_with_depth.py` and bounding-box-based logger scripts are retained as historical prototypes; they do not provide the calibrated front stereo pipeline.
 
-**Two ways to log depths while manually driving:**
+## Run
 
-### Option 1: Minimal Manual Drive (Recommended)
-```bash
-cd "e:\Capstone\Minimal_Grid_env\YOLO+weather module"
-python manual_drive_with_depth.py
+From the repository root:
+
+```powershell
+.\venv\Scripts\python.exe ".\YOLO+weather module\manual_drive_stereo_yolo_weather.py" --device cpu --weather rain --level 0.5 --traffic-density 0.5
 ```
 
-**What it does:**
-- Opens MetaDrive environment
-- You manually drive with keyboard (W/A/S/D)
-- **Every YOLO detection is logged to terminal in real-time with depth estimate**
-- Shows frame in window
-- Logs total detections when you quit
+Controls are `W/A/S/D`; press `Q` to quit. The terminal prints a clean table per simulation step and writes `integrated_output\detection_log.csv`.
 
-**Output format (terminal):**
-```
-Step     Class        Conf     Bbox                 Depth (m)   
-----------------------------------------------------------------------
-0        car          0.850    (100,150,250,300)    5.25
-1        truck        0.720    (80,140,240,320)     6.50
-2        bus          0.680    (120,160,300,400)    4.75
-```
+## Camera and depth contract
 
----
+- Five physical RGB camera streams: front-left/front-right stereo pair, left, right, rear.
+- YOLO runs on four logical views: front-left (front), left, right, and rear. The front-right stream is the StereoSGBM partner, not a duplicate front detector.
+- Front depth uses OpenCV StereoSGBM with `numDisparities=192`, `blockSize=5`, `P1=600`, `P2=2400`, `uniquenessRatio=10`, and SGBM 3-way mode.
+- The calibrated depth equation is `Z = fB / d_px = 500 / d_px`, with `f = 1000 px` and `B = 0.5 m`.
+- The logged uncertainty is `sigma_Z = Z^2 / 2500` for the specified 0.2-pixel disparity error.
 
-### Option 2: Batch Processing (For Testing)
-```bash
-cd "e:\Capstone\Minimal_Grid_env\YOLO+weather module"
-python yolo_depth_logger.py
+## Weather experiments
+
+Weather is shown in the visualization by default, while YOLO and StereoSGBM use clean paired frames. This avoids false disparity caused by independently generated rain streaks.
+
+To deliberately measure weather-related perception degradation, use:
+
+```powershell
+.\venv\Scripts\python.exe ".\YOLO+weather module\manual_drive_stereo_yolo_weather.py" --device cpu --weather fog --level 0.5 --perception-weather
 ```
 
-**What it does:**
-- Processes all 500 frames you already captured
-- Saves to CSV: `manual_drive_output/yolo_depth_log.csv`
-- Prints summary statistics
-- (Already tested - generates 161 detections)
+The CSV records whether each row used `clean` or `weathered` perception in the `perception_source` column.
 
----
+For a repeatable saved-image comparison, run `benchmark_weather_perception.py` from the repository root. It saves clean/weathered annotated images and a detection-count/confidence summary CSV:
 
-## 🔧 Integration with Your Manual Drive Script
-
-If you want to add depth logging to your existing `manual_drive_visualize.py`:
-
-```python
-# At top of file
-from realtime_depth_logger import RealTimeDepthLogger
-
-# In main() before the loop
-depth_logger = RealTimeDepthLogger(
-    model_path='yolov8n.pt',
-    conf_threshold=0.3
-)
-
-# Inside the step loop (after getting frame)
-detections = depth_logger.process_frame(frame, simulation_steps)
+```powershell
+.\venv\Scripts\python.exe ".\YOLO+weather module\benchmark_weather_perception.py" --image .\path\to\image.png --weather rain --level 0.5 --device cpu
 ```
 
----
+## Verify before handoff
 
-## 📊 Depth Estimation Formula
-
-From your **Technical Spec Section 3**:
-
-$$Z = \frac{f \cdot B}{d_{px}} = \frac{500}{d_{px}}$$
-
-Where:
-- **Z** = depth in meters
-- **f** = focal length = 1000 px
-- **B** = stereo baseline = 0.5 m
-- **d_px** = estimated disparity (pixels)
-
-**Disparity estimation from bbox:**
-- Large bbox (>30% width) → d_px=100 → Z ≈ 5m (very close)
-- Medium bbox (>15% width) → d_px=50 → Z ≈ 10m
-- Small bbox (>8% width) → d_px=30 → Z ≈ 17m
-- Tiny bbox (<4% width) → d_px=10 → Z ≈ 50m (very far)
-
----
-
-## ⌨️ Keyboard Controls
-
-| Key | Action |
-|-----|--------|
-| **W** | Throttle forward (0.5) |
-| **S** | Throttle backward (-0.3) |
-| **A** | Steer left (-0.5) |
-| **D** | Steer right (+0.5) |
-| **Q** | Quit and save |
-
----
-
-## 📁 Output Files
-
-### From `manual_drive_with_depth.py`:
-- Real-time terminal logging (no file saved by default)
-- Press Q to quit
-
-### From `yolo_depth_logger.py`:
-- `manual_drive_output/yolo_depth_log.csv` - CSV with all detections
-- Terminal summary statistics
-
----
-
-## 🔍 Visualize Results
-
-```bash
-# View depth statistics and charts
-python visualize_depth_log.py
-
-# View CSV data
-python -c "import pandas as pd; df=pd.read_csv('../../manual_drive_output/yolo_depth_log.csv'); print(df.head(20))"
+```powershell
+Push-Location '.\YOLO+weather module'
+..\venv\Scripts\python.exe .\stereo_depth\test_module.py
+Pop-Location
 ```
 
----
-
-## 🚨 Troubleshooting
-
-### MetaDrive won't install
-**Issue:** Long path error on Windows
-**Solution:** Enable long paths or use batch processing instead
-
-### YOLO takes too long
-**Solution:** Use smaller model `yolov8n.pt` (nano) - already used
-
-### Depths seem wrong
-**Solution:** This is monocular estimation - depth depends heavily on object size in frame. Actual stereo (if available) would be more accurate.
-
----
-
-## 📈 Expected Output
-
-**Real-time logging example:**
-```
-Step     Class        Conf     Bbox                 Depth (m)   
-----------------------------------------------------------------------
-143      truck        0.35     (100,150,350,400)    10.50
-143      bus          0.47     (400,100,500,300)    8.33
-144      car          0.62     (200,200,300,350)    12.50
-145      person       0.35     (150,250,200,350)    25.00
-```
-
-**Summary (after quit):**
-```
-✓ Manual drive complete
-✓ Total steps: 146
-✓ Total detections logged: 8
-```
-
----
-
-## 🎉 You're Ready!
-
-Run manual drive with real-time depth logging:
-```bash
-python manual_drive_with_depth.py
-```
-
-Detections will appear in terminal as you drive! 🚗
-
+Expected result: `7/7 tests passed`.
