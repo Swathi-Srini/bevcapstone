@@ -1,5 +1,9 @@
 # BEV Autonomous Driving Research Project
 
+> **Maintained project source of truth.** Update this file whenever the
+> architecture, implemented status, research claim, or project milestone
+> changes. Module READMEs explain only how to use their own code.
+
 This repository contains a MetaDrive-based autonomous-driving research project. The target system is a vision-derived Bird's-Eye View (BEV) controller trained with behavioural cloning (BC) and later fine-tuned with PPO.
 
 **The final simulator is MetaDrive, not CARLA.** Earlier CARLA work is retained as exploratory/design context; it is not the implementation target.
@@ -10,12 +14,23 @@ This repository contains a MetaDrive-based autonomous-driving research project. 
 bevcapstone/
 |- baseline/
 |  |- bc_metadrive/          # Preserved 259-D vector-observation BC baseline
-|  `- Recordings/            # Local baseline rollout evidence (ignored by Git)
-|- YOLO+weather module/      # Standalone MetaDrive camera + YOLO prototype
+|- camera/                   # Five-camera MetaDrive capture + front SGM depth
+|- YOLO+weather module/      # Live YOLO, synthetic-weather and depth prototype
 |- venv/                     # Local Python environment (ignored by Git)
 |- requirements.txt          # Shared Python dependencies, including MetaDrive 0.4.3
 `- .gitignore
 ```
+
+## Documentation policy
+
+There is one project-level document: this root README. It owns the architecture,
+research scope, system status, and experiment plan. Each executable module has
+one local README containing its commands, inputs, outputs, and limitations:
+
+- baseline/bc_metadrive/README.md — preserved vector BC baseline;
+- camera/README.md — five-camera capture and depth export;
+- YOLO+weather module/README.md — live perception demonstrator;
+- YOLO+weather module/stereo_depth/README.md — reusable stereo utilities.
 
 Do not overwrite `baseline/bc_metadrive/` during BEV development. It is the comparison experiment. Future BEV code should live separately, for example in a top-level `bev_policy/` folder.
 
@@ -31,7 +46,11 @@ MetaDrive cameras + ego/route state
   -> MetaDrive environment, reward, and next observation
 ```
 
-The camera prototype uses five physical streams: a front-left/front-right stereo pair plus left, right, and rear cameras. The multi-camera capture utility and the front StereoSGBM depth prototype are implemented. BEV construction, the scalar-state extractor, CNN/MLP policy, and PPO training are **not implemented yet**.
+The target camera rig uses five physical streams: a front-left/front-right
+stereo pair plus left, right, and rear cameras. The rig, frame capture,
+front StereoSGBM depth, and a live YOLO/depth visualisation are implemented as
+separate prototypes. The integrated BEV builder, scalar-state extractor,
+CNN/MLP policy, BC training on those inputs, and PPO are **not implemented**.
 
 ### Rules for future implementations
 
@@ -39,7 +58,9 @@ The camera prototype uses five physical streams: a front-left/front-right stereo
 - Do not feed exact simulator NPC positions/sizes to the learned policy. They are debugging/evaluation ground truth only.
 - Route/lane geometry and ego localisation are allowed structured inputs.
 - `free` and `unknown` must be distinct BEV states; visibility-aware BEV needs an explicit unknown/knownness representation.
-- The YOLO/weather runner defaults to display-only fog/rain so that synthetic, unmatched weather streaks do not corrupt stereo correspondence. Use `--perception-weather` to run YOLO and StereoSGBM on the weathered frames and explicitly test weather-degraded perception.
+- The YOLO/weather runner uses clean RGB by default. Its
+  `--perception-weather` mode applies synthetic image corruption to YOLO and
+  stereo, but this is not physical weather simulation.
 - On Windows CPU laptops, favour headless/small-camera debugging. MetaDrive onscreen rendering can exhaust shared graphics memory.
 
 ## Environments and dependencies
@@ -115,7 +136,9 @@ Run from the repository root. The script resolves its local `yolo` and `weather`
 .\venv\Scripts\python.exe ".\YOLO+weather module\manual_drive_stereo_yolo_weather.py" --device cpu --weather none
 ```
 
-Controls: `W/A/S/D` drive; `Q` quits.
+This is the current live perception demonstrator: it uses the physical
+front-left/front-right pair for StereoSGBM depth and YOLO on the front, left,
+right and rear logical views. Controls: `W/A/S/D` drive; `Q` quits.
 
 ```powershell
 # Display weather while retaining clean stereo correspondence (default).
@@ -145,6 +168,28 @@ This benchmark runs the same YOLO model on a clean image and a synthetic fog/rai
 ```powershell
 .\venv\Scripts\python.exe ".\YOLO+weather module\benchmark_weather_perception.py" --image .\path\to\image.png --weather fog --level 0.5 --device cpu
 ```
+
+Weather is display-only unless `--perception-weather` is specified. Even with
+that flag it is synthetic image corruption, not physical weather simulation.
+The first run may download `yolov8n.pt`. Use `--device cpu` unless a compatible CUDA setup is verified.
+
+## Current implementation status
+
+Implemented code is limited to a preserved vector BC baseline and independent
+sensor/perception prototypes. The repository does not yet contain an
+end-to-end perception-to-BEV-to-policy training run or research results.
+Run the module tests before relying on a component, and treat the Python source
+plus this README as authoritative over older design notes.
+
+| Layer | Status | Evidence / limitation |
+|---|---|---|
+| Preserved vector BC baseline | Present | Separate 259-D MLP experiment; not the target BEV controller. |
+| Five-camera sensor rig | Present | Captures front-left/right, left, right, rear, and front SGM-depth files. |
+| YOLO + stereo live demo | Present | YOLO can detect live objects; every front detection must still obtain valid SGM depth before it can support BEV. |
+| 64×64 final BEV | Missing | Stereo module has a standalone occupancy utility, but no live route/lane/unknown-space BEV contract. |
+| 6-D scalar state | Missing | No common extractor or action-aligned dataset. |
+| CNN + MLP BC policy | Missing | No BEV policy, dataset, or closed-loop evaluation. |
+| PPO and energy/control-effort study | Missing | Must follow a validated nominal BEV controller. |
 
 ## Experiment contracts
 

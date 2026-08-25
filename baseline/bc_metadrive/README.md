@@ -118,7 +118,9 @@ This script reads all demonstrations under `data/train/` and writes the trained 
 python evaluate_bc.py
 ```
 
-This loads `checkpoints/bc_policy.pth` and runs the policy in MetaDrive.
+This currently loads the preserved comparison checkpoint
+`checkpoints/bc_policy_50eps.pth` and runs it in MetaDrive. It does not
+automatically evaluate the checkpoint just produced by `train_bc.py`.
 
 ### 5. Run the sanity tests
 
@@ -146,6 +148,8 @@ python test_action_timing.py
 
 ## Notes
 
-- The training and evaluation scripts expect the checkpoint at `checkpoints/bc_policy.pth`.
-- The repository currently includes `checkpoints/bc_policy_50eps.pth`; if you want to use it directly, either copy or rename it to `bc_policy.pth`, or update the checkpoint path in the scripts.
+- `train_bc.py` writes `checkpoints/bc_policy.pth`.
+- `evaluate_bc.py` is deliberately pinned to the preserved
+  `checkpoints/bc_policy_50eps.pth` comparison checkpoint. Change its
+  source only when you deliberately want to evaluate a newly trained baseline.
 - `collect_demos.py` and `evaluate_bc.py` use the same MetaDrive environment settings so the policy is trained and tested on matching observations.
