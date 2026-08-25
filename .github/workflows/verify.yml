@@ -31,12 +31,14 @@ jobs:
         shell: pwsh
         run: |
           $markers = git grep -n -E '^(<<<<<<< .+|>>>>>>> .+|=======$)' -- '*.py' '*.md'
-          if ($LASTEXITCODE -eq 0) {
+          $grepExitCode = $LASTEXITCODE
+          if ($grepExitCode -eq 0) {
             Write-Error "Git merge-conflict markers found:`n$markers"
             exit 1
           }
-          if ($LASTEXITCODE -ne 1) { exit $LASTEXITCODE }
+          if ($grepExitCode -ne 1) { exit $grepExitCode }
           Write-Host 'No merge-conflict markers found.'
+          exit 0
 
       - name: Compile all tracked Python source
         shell: pwsh
