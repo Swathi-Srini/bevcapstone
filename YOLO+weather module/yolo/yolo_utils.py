@@ -12,12 +12,12 @@ import cv2
 import numpy as np
 
 TRAFFIC_CLASS_NAMES = {
+    # Technical specification Sec. 4: COCO IDs 0, 2, 3, 5, 7 only.
+    "person",
     "car",
-    "truck",
-    "bus",
     "motorcycle",
-    "bicycle",
-    "traffic light",
+    "bus",
+    "truck",
 }
 
 COCO_INSTANCE_CATEGORY_NAMES = [

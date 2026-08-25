@@ -38,10 +38,10 @@ def test_imports():
             PhysicalSizeEstimator,
             MonocularDepth
         )
-        print("✓ All imports successful")
+        print("[PASS] All imports successful")
         return True
     except ImportError as e:
-        print(f"✗ Import failed: {e}")
+        print(f"[FAIL] Import failed: {e}")
         return False
 
 
@@ -66,14 +66,14 @@ def test_camera_params():
         precision_30m = camera.get_depth_precision(30)
         assert 0.3 < precision_30m < 0.4, "Depth precision out of range"
         
-        print(f"✓ Focal length: {camera.FOCAL_LENGTH} px")
-        print(f"✓ Stereo baseline: {camera.STEREO_BASELINE} m")
-        print(f"✓ Resolution: {camera.IMAGE_WIDTH}×{camera.IMAGE_HEIGHT} px")
-        print(f"✓ Depth precision @ 30m: ±{precision_30m:.3f} m")
+        print(f"[PASS] Focal length: {camera.FOCAL_LENGTH} px")
+        print(f"[PASS] Stereo baseline: {camera.STEREO_BASELINE} m")
+        print(f"[PASS] Resolution: {camera.IMAGE_WIDTH}x{camera.IMAGE_HEIGHT} px")
+        print(f"[PASS] Depth precision @ 30m: +/-{precision_30m:.3f} m")
         
         return True
     except Exception as e:
-        print(f"✗ Camera parameters test failed: {e}")
+        print(f"[FAIL] Camera parameters test failed: {e}")
         return False
 
 
@@ -91,32 +91,34 @@ def test_coordinate_transforms():
         
         # Test pixel to camera 3D
         u, v = 600, 450  # Center of image
-        depth = 20.0
+        # The configured BEV forward extent is 17.5 m, so keep the test
+        # point inside the declared 64x64 grid rather than testing clipping.
+        depth = 15.0
         X_cam, Y_cam, Z_cam = transform.pixel_to_camera_3d(u, v, depth)
         
         assert Z_cam == depth, "Depth not preserved in pixel_to_camera_3d"
         assert abs(X_cam) < 0.1, "X should be near zero (center of image)"
         assert abs(Y_cam) < 0.1, "Y should be near zero (center of image)"
         
-        print(f"✓ Pixel (600, 450) @ 20m → Camera 3D: ({X_cam:.3f}, {Y_cam:.3f}, {Z_cam:.3f})")
+        print(f"[PASS] Pixel (600, 450) @ 15m -> Camera 3D: ({X_cam:.3f}, {Y_cam:.3f}, {Z_cam:.3f})")
         
         # Test camera to ego frame
-        X_ego, Z_ego = transform.camera_to_ego_frame(X_cam, Z_cam, yaw_deg=0)
+        X_ego, Z_ego = transform.camera_to_ego_frame(X_cam, Z_cam, camera_yaw_deg=0)
         assert abs(X_ego - X_cam) < 0.01, "Camera to ego transform failed"
         assert abs(Z_ego - Z_cam) < 0.01, "Camera to ego transform failed"
         
-        print(f"✓ Camera to ego frame (yaw=0°): ({X_ego:.3f}, {Z_ego:.3f})")
+        print(f"[PASS] Camera to ego frame (yaw=0 deg): ({X_ego:.3f}, {Z_ego:.3f})")
         
         # Test ego to BEV grid
         col, row = transform.ego_to_bev_grid(X_ego, Z_ego)
         assert 0 <= col <= 64, "BEV column out of range"
         assert 0 <= row <= 64, "BEV row out of range"
         
-        print(f"✓ Ego to BEV grid: (col={col:.1f}, row={row:.1f})")
+        print(f"[PASS] Ego to BEV grid: (col={col:.1f}, row={row:.1f})")
         
         return True
     except Exception as e:
-        print(f"✗ Coordinate transform test failed: {e}")
+        print(f"[FAIL] Coordinate transform test failed: {e}")
         import traceback
         traceback.print_exc()
         return False
@@ -140,17 +142,17 @@ def test_disparity_conversion():
         expected_depth = 500.0 / disparity_px  # f*B / d = 1000*0.5 / 25
         assert abs(depth - expected_depth) < 0.01, "Disparity-depth conversion failed"
         
-        print(f"✓ Disparity {disparity_px}px → Depth {depth:.2f}m")
+        print(f"[PASS] Disparity {disparity_px}px -> Depth {depth:.2f}m")
         
         # Test depth to disparity
         disparity_back = converter.depth_to_disparity(depth)
         assert abs(disparity_back - disparity_px) < 0.1, "Round-trip conversion failed"
         
-        print(f"✓ Depth {depth:.2f}m → Disparity {disparity_back:.1f}px")
+        print(f"[PASS] Depth {depth:.2f}m -> Disparity {disparity_back:.1f}px")
         
         return True
     except Exception as e:
-        print(f"✗ Disparity conversion test failed: {e}")
+        print(f"[FAIL] Disparity conversion test failed: {e}")
         return False
 
 
@@ -166,20 +168,20 @@ def test_stereo_matcher_initialization():
         camera = CameraParameters()
         matcher = StereoMatcher(camera)
         
-        print(f"✓ Stereo matcher created")
+        print("[PASS] Stereo matcher created")
         print(f"  - Algorithm: Semi-Global Matching (SGM)")
         print(f"  - Disparities: {camera.NUM_DISPARITIES}")
-        print(f"  - Block size: {camera.BLOCK_SIZE}×{camera.BLOCK_SIZE}")
+        print(f"  - Block size: {camera.BLOCK_SIZE}x{camera.BLOCK_SIZE}")
         
         # Check WLS filter status
         if matcher.use_wls_filter:
-            print(f"  - WLS Filter: Enabled ✓")
+            print("  - WLS Filter: Enabled")
         else:
             print(f"  - WLS Filter: Disabled (opencv-contrib-python not installed)")
         
         return True
     except Exception as e:
-        print(f"✗ Stereo matcher test failed: {e}")
+        print(f"[FAIL] Stereo matcher test failed: {e}")
         import traceback
         traceback.print_exc()
         return False
@@ -197,9 +199,9 @@ def test_depth_processor():
         
         processor = DepthProcessor()
         
-        print(f"✓ Depth processor initialized")
-        print(f"  - BEV grid size: {processor.bev_grid_size}×{processor.bev_grid_size}")
-        print(f"  - Lateral range: ±{processor.coordinate_transform.bev_lateral_range}m")
+        print("[PASS] Depth processor initialized")
+        print(f"  - BEV grid size: {processor.bev_grid_size}x{processor.bev_grid_size}")
+        print(f"  - Lateral range: +/-{processor.coordinate_transform.bev_lateral_range}m")
         print(f"  - Forward range: +{processor.coordinate_transform.bev_forward_range}m")
         print(f"  - Rear range: -{processor.coordinate_transform.bev_rear_range}m")
         print(f"  - Metres per pixel: {processor.coordinate_transform.metres_per_pixel:.4f}")
@@ -224,14 +226,14 @@ def test_depth_processor():
         assert 'bev_position' in enhanced, "Missing bev_position"
         assert 'physical_size' in enhanced, "Missing physical_size"
         
-        print(f"✓ YOLO detection processing works")
+        print("[PASS] YOLO detection processing works")
         print(f"  - Ego position: {enhanced['ego_position']}")
         print(f"  - BEV position: {enhanced['bev_position']}")
         print(f"  - Physical size: {enhanced['physical_size']}")
         
         return True
     except Exception as e:
-        print(f"✗ Depth processor test failed: {e}")
+        print(f"[FAIL] Depth processor test failed: {e}")
         import traceback
         traceback.print_exc()
         return False
@@ -282,7 +284,7 @@ def test_bev_grid():
         occupied = (bev_grid > 0.5).sum()
         free = (bev_grid < 0.1).sum()
         
-        print(f"✓ BEV grid constructed: {bev_grid.shape}")
+        print(f"[PASS] BEV grid constructed: {bev_grid.shape}")
         print(f"  - Occupied pixels: {occupied}")
         print(f"  - Free pixels: {free}")
         print(f"  - Total pixels: {bev_grid.size}")
@@ -290,7 +292,7 @@ def test_bev_grid():
         
         return True
     except Exception as e:
-        print(f"✗ BEV grid test failed: {e}")
+        print(f"[FAIL] BEV grid test failed: {e}")
         import traceback
         traceback.print_exc()
         return False
@@ -298,11 +300,9 @@ def test_bev_grid():
 
 def run_all_tests():
     """Run all verification tests."""
-    print("\n" + "█"*70)
-    print("█" + " "*68 + "█")
-    print("█" + "  STEREO DEPTH MODULE - VERIFICATION TEST SUITE".center(68) + "█")
-    print("█" + " "*68 + "█")
-    print("█"*70)
+    print("\n" + "=" * 70)
+    print("STEREO DEPTH MODULE - VERIFICATION TEST SUITE")
+    print("=" * 70)
     
     tests = [
         ("Imports", test_imports),
@@ -320,7 +320,7 @@ def run_all_tests():
             result = test_func()
             results.append((test_name, result))
         except Exception as e:
-            print(f"✗ {test_name} crashed: {e}")
+            print(f"[FAIL] {test_name} crashed: {e}")
             results.append((test_name, False))
     
     # Print summary
@@ -332,17 +332,17 @@ def run_all_tests():
     total = len(results)
     
     for test_name, result in results:
-        status = "✓ PASS" if result else "✗ FAIL"
+        status = "PASS" if result else "FAIL"
         print(f"{status:8} - {test_name}")
     
     print("-"*70)
     print(f"Result: {passed}/{total} tests passed")
     
     if passed == total:
-        print("\n🎉 ALL TESTS PASSED! Module is ready to use.")
+        print("\nALL TESTS PASSED! Module is ready to use.")
         return True
     else:
-        print(f"\n⚠️  {total - passed} test(s) failed. Check output above.")
+        print(f"\nWARNING: {total - passed} test(s) failed. Check output above.")
         return False
 
 

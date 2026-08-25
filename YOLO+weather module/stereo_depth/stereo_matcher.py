@@ -81,11 +81,11 @@ class StereoMatcher:
                 self.wls_filter.setLambda(80000)
                 self.wls_filter.setSigmaColor(1.5)
                 self.use_wls_filter = True
-                print("✓ WLS filter enabled (opencv-contrib-python available)")
+                print("[INFO] WLS filter enabled (opencv-contrib-python available)")
             else:
-                print("⚠ WLS filter disabled (opencv-contrib-python not available)")
+                print("[INFO] WLS filter disabled (opencv-contrib-python not available)")
         except Exception as e:
-            print(f"⚠ WLS filter unavailable: {e}")
+            print(f"[INFO] WLS filter unavailable: {e}")
             print("  To enable: pip install opencv-contrib-python")
     
     def compute_disparity(

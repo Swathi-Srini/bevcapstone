@@ -116,6 +116,11 @@ def depth_label(detection: dict, depth: np.ndarray) -> str:
     return "--" if value is None else f"{value:.1f}m"
 
 
+def stereo_depth_uncertainty(depth_m: float | None) -> float | None:
+    """Spec Eq. (3)-(4): sigma_Z=Z^2*sigma_d/(f*B)=Z^2/2500."""
+    return None if depth_m is None else (depth_m ** 2) * 0.2 / (FOCAL_LENGTH_PX * STEREO_BASELINE_M)
+
+
 def ego_position_from_camera(camera: str, u: float, forward_m: float) -> tuple[float, float]:
     """Convert a camera pixel/depth to ego coordinates: x=right, y=forward."""
     position, hpr = CAMERA_RIGS[camera]
@@ -244,13 +249,15 @@ def main() -> int:
                 for det in camera_detections:
                     depth_method, depth_m, ego_x_m, ego_forward_m = estimate_detection_position(camera, det, depth)
                     depth_text = f"{depth_m:.1f}" if depth_m is not None else "--"
+                    uncertainty_m = stereo_depth_uncertainty(depth_m) if depth_method == "stereo_sgm" else None
+                    uncertainty_text = f"{uncertainty_m:.2f}" if uncertainty_m is not None else "n/a"
                     x_text = f"{ego_x_m:+.1f}" if ego_x_m is not None else "--"
                     forward_text = f"{ego_forward_m:+.1f}" if ego_forward_m is not None else "--"
-                    terminal_rows.append((camera, det["label"], float(det["confidence"]), depth_method, depth_text, x_text, forward_text))
+                    terminal_rows.append((camera, det["label"], float(det["confidence"]), depth_method, depth_text, uncertainty_text, x_text, forward_text))
                     log_rows.append({
                         "timestamp_unix": f"{time.time():.3f}", "step": step, "camera": camera,
                         "object": det["label"], "confidence": f"{float(det['confidence']):.4f}",
-                        "depth_method": depth_method, "depth_m": depth_text,
+                        "depth_method": depth_method, "depth_m": depth_text, "stereo_sigma_z_m": uncertainty_text,
                         "ego_x_right_m": x_text, "ego_forward_m": forward_text,
                         "xmin": f"{det['xmin']:.1f}", "ymin": f"{det['ymin']:.1f}",
                         "xmax": f"{det['xmax']:.1f}", "ymax": f"{det['ymax']:.1f}",
@@ -259,10 +266,10 @@ def main() -> int:
                     })
             if terminal_rows:
                 print(f"\nSTEP {step}  WEATHER={args.weather}({args.level:.2f})  PERCEPTION={'weathered' if args.perception_weather else 'clean'}")
-                print(f"{'CAMERA':<20} {'OBJECT':<9} {'CONF':>6} {'DEPTH METHOD':<24} {'DEPTH':>7} {'X RIGHT':>8} {'FORWARD':>8}")
-                print("-" * 96)
-                for camera, obj, confidence, method, depth_value, x_value, forward_value in terminal_rows:
-                    print(f"{camera:<20} {obj:<9} {confidence:>6.2f} {method:<24} {depth_value:>6}m {x_value:>7}m {forward_value:>7}m")
+                print(f"{'CAMERA':<20} {'OBJECT':<9} {'CONF':>6} {'DEPTH METHOD':<24} {'DEPTH':>7} {'SIGMA Z':>8} {'X RIGHT':>8} {'FORWARD':>8}")
+                print("-" * 106)
+                for camera, obj, confidence, method, depth_value, sigma_value, x_value, forward_value in terminal_rows:
+                    print(f"{camera:<20} {obj:<9} {confidence:>6.2f} {method:<24} {depth_value:>6}m {sigma_value:>7}m {x_value:>7}m {forward_value:>7}m")
             elif step % 30 == 0:
                 print(f"[step {step}] no YOLO traffic detections", flush=True)
             step += 1
