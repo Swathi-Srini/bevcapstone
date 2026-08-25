@@ -4,16 +4,17 @@
 
 ## 1. Setup
 
-```bash
-pip install metadrive-simulator opencv-python numpy
-```
+Use the repository's Python 3.11 environment and root dependency file:
 
-No admin rights, no virtualenv needed — MetaDrive's `manual_control=True` reads keys through its own native render window.
+```powershell
+py -3.11 -m venv venv
+.\venv\Scripts\python.exe -m pip install -r .\requirements.txt
+```
 
 ## 2. Run it
 
-```bash
-python metadrive_stereo_capture.py
+```powershell
+.\venv\Scripts\python.exe .\camera\multi_camera_drive.py
 ```
 
 - Drive with **Arrow Keys or WASD** in the MetaDrive window.
@@ -48,9 +49,7 @@ Frame numbers line up across all folders — `frame_00010` is the same simulatio
 
 Stereo depth uses `numDisparities=192, blockSize=5, P1=600, P2=2400, disp12MaxDiff=1, uniquenessRatio=10, mode=SGBM_3WAY` — copied verbatim from Table 5, and `Z = (f × B) / disparity` with `f=1000px, B=0.5m` from Sec 3.1–3.2.
 
-**Resolution note:** capturing at 640×480 instead of the doc's 1200×900 for FPS while driving live. If you change `CAM_W`, you may need to recompute `FOCAL_LENGTH_PX` for accurate metric depth (it currently assumes the doc's 1200px-width, 60° FOV setup).
-
-**Unverified:** MetaDrive's `RGBCamera` doesn't have an obvious FOV-override in its basic constructor. If your actual FOV differs from 60°, depth values will be off by a scale factor — sanity-check by driving toward something of known size.
+The capture script uses the specified 1200×900 resolution and explicitly sets the sensor FOV to 60°. As with any metric stereo pipeline, validate the final depth scale against an object at a known distance before reporting an accuracy result.
 
 ## 4. How the rest of the team uses this
 
