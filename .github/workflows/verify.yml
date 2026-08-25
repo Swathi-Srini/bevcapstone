@@ -1,0 +1,60 @@
+name: Verify repository
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    name: Python 3.11 verification
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          python -m pip install --upgrade --force-reinstall torch torchvision --index-url https://download.pytorch.org/whl/cpu
+          python -m pip check
+
+      - name: Reject Git merge-conflict markers
+        shell: pwsh
+        run: |
+          $markers = git grep -n -E '^(<<<<<<< .+|>>>>>>> .+|=======$)' -- '*.py' '*.md'
+          $grepExitCode = $LASTEXITCODE
+          if ($grepExitCode -eq 0) {
+            Write-Error "Git merge-conflict markers found:`n$markers"
+            exit 1
+          }
+          if ($grepExitCode -ne 1) { exit $grepExitCode }
+          Write-Host 'No merge-conflict markers found.'
+          exit 0
+
+      - name: Compile all tracked Python source
+        shell: pwsh
+        run: |
+          $pythonFiles = git ls-files -- '*.py'
+          python -m py_compile $pythonFiles
+
+      - name: Verify runtime imports and CLI entry points
+        shell: pwsh
+        run: |
+          python -c "import torch, torchvision, ultralytics; from metadrive import MetaDriveEnv; print('Runtime imports OK')"
+          python '.\YOLO+weather module\manual_drive_stereo_yolo_weather.py' --help
+          python '.\YOLO+weather module\benchmark_weather_perception.py' --help
+          python '.\camera\multi_camera_drive.py' --help
+
+      - name: Run stereo module verification suite
+        shell: pwsh
+        working-directory: YOLO+weather module
+        run: python .\stereo_depth\test_module.py
