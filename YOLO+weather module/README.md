@@ -27,7 +27,9 @@ To apply synthetic image corruption to both display and perception:
 python .\manual_drive_stereo_yolo_weather.py --device cpu --weather fog --level 0.5 --perception-weather
 ```
 
-Without `--perception-weather`, weather affects only the display. Neither
+Without `--perception-weather`, weather affects only the display. When the
+flag is enabled, the front-left and front-right frames receive the same
+synthetic weather realization so SGBM retains stereo correspondence. Neither
 mode is a physical fog/rain or sensor-noise simulation.
 
 ## Scope and limitations
