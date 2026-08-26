@@ -18,8 +18,8 @@ StateObservation(
 The scalar order is:
 
 ```text
-[speed_mps, acceleration_mps2, steering, heading_error_rad,
- lane_offset_m, route_completion]
+[speed_mps, route_progress, lateral_deviation_m, heading_error_rad,
+ curvature_ahead_rad_per_m, distance_to_goal_m]
 ```
 
 The BEV grid encoding is:

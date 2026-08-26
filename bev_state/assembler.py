@@ -12,7 +12,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
-import cv2
 import numpy as np
 
 
@@ -56,6 +55,7 @@ class BEVStateConfig:
     forward_range_m: float = 17.5
     rear_range_m: float = 2.5
     camera_range_m: float = 30.0
+    curvature_lookahead_m: float = 10.0
     ego_width_m: float = 1.9
     ego_length_m: float = 4.6
     values: BEVValues = BEVValues()
@@ -98,8 +98,8 @@ class BEVStateAssembler:
     """Build the final BEV grid and 6-D ego state.
 
     Scalar state order:
-        [speed_mps, acceleration_mps2, steering, heading_error_rad,
-         lane_offset_m, route_completion]
+        [speed_mps, route_progress, lateral_deviation_m, heading_error_rad,
+         curvature_ahead_rad_per_m, distance_to_goal_m]
     """
 
     CLASS_FOOTPRINTS_M = {
@@ -305,13 +305,13 @@ class BEVStateAssembler:
 
         info = info or {}
         speed_mps = self._speed_mps(env, info)
-        acceleration = self._scalar_from_info(info, "acceleration", default=0.0)
-        steering = self._scalar_from_info(info, "steering", default=self._agent_scalar(env, "steering", 0.0))
-        route_completion = float(np.clip(self._scalar_from_info(info, "route_completion", default=0.0), 0.0, 1.0))
+        route_progress = self._route_progress(env, info)
+        lateral_deviation = self._lane_offset(env)
         heading_error = self._heading_error(env)
-        lane_offset = self._lane_offset(env)
+        curvature_ahead = self._curvature_ahead(env)
+        distance_to_goal = self._distance_to_goal(env, info)
         return np.asarray(
-            [speed_mps, acceleration, steering, heading_error, lane_offset, route_completion],
+            [speed_mps, route_progress, lateral_deviation, heading_error, curvature_ahead, distance_to_goal],
             dtype=np.float32,
         )
 
@@ -340,6 +340,13 @@ class BEVStateAssembler:
         except Exception:
             return 0.0
 
+    def _route_progress(self, env: Any | None, info: Mapping[str, Any]) -> float:
+        value = info.get("route_completion", None)
+        if value is None:
+            navigation = getattr(getattr(env, "agent", None), "navigation", None)
+            value = getattr(navigation, "route_completion", 0.0)
+        return float(np.clip(self._as_scalar(value, default=0.0), 0.0, 1.0))
+
     def _lane_offset(self, env: Any | None) -> float:
         agent = getattr(env, "agent", None)
         lane = getattr(agent, "lane", None)
@@ -351,13 +358,63 @@ class BEVStateAssembler:
         except Exception:
             return 0.0
 
+    def _curvature_ahead(self, env: Any | None) -> float:
+        agent = getattr(env, "agent", None)
+        lane = getattr(agent, "lane", None)
+        if agent is None or lane is None:
+            return 0.0
+        try:
+            longitudinal, _ = lane.local_coordinates(agent.position)
+            lookahead = self.config.curvature_lookahead_m
+            lane_length = float(getattr(lane, "length", longitudinal + lookahead))
+            s0 = float(np.clip(longitudinal, 0.0, lane_length))
+            s1 = float(np.clip(longitudinal + lookahead, 0.0, lane_length))
+            if s1 <= s0:
+                return 0.0
+            heading_now = float(lane.heading_theta_at(s0))
+            heading_next = float(lane.heading_theta_at(s1))
+            return self._angle_diff(heading_next, heading_now) / (s1 - s0)
+        except Exception:
+            return 0.0
+
+    def _distance_to_goal(self, env: Any | None, info: Mapping[str, Any]) -> float:
+        for key in ("distance_to_goal", "distance_to_dest", "distance_to_destination"):
+            if key in info:
+                return max(0.0, self._as_scalar(info[key], default=0.0))
+
+        agent = getattr(env, "agent", None)
+        navigation = getattr(agent, "navigation", None)
+        position = getattr(agent, "position", None)
+        if agent is None or position is None:
+            return 0.0
+
+        final_lane = getattr(navigation, "final_lane", None)
+        if final_lane is not None:
+            try:
+                goal = final_lane.position(final_lane.length, 0.0)
+                return float(np.linalg.norm(np.asarray(goal, dtype=np.float32) - np.asarray(position, dtype=np.float32)))
+            except Exception:
+                pass
+
+        if navigation is not None and hasattr(navigation, "get_checkpoints"):
+            try:
+                _, next_checkpoint = navigation.get_checkpoints()
+                return float(np.linalg.norm(np.asarray(next_checkpoint, dtype=np.float32) - np.asarray(position, dtype=np.float32)))
+            except Exception:
+                pass
+
+        return 0.0
+
     @staticmethod
     def _angle_diff(a: float, b: float) -> float:
         return (a - b + math.pi) % (2.0 * math.pi) - math.pi
 
     @staticmethod
     def _scalar_from_info(info: Mapping[str, Any], key: str, default: float = 0.0) -> float:
-        value = info.get(key, default)
+        return BEVStateAssembler._as_scalar(info.get(key, default), default)
+
+    @staticmethod
+    def _as_scalar(value: Any, default: float = 0.0) -> float:
         arr = np.asarray(value, dtype=np.float32)
         if arr.size == 0:
             return default
