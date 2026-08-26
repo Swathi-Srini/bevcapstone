@@ -75,6 +75,30 @@ def frame_from_sensor(env, name: str) -> np.ndarray:
     return cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
 
 
+def mount_camera_rig(env) -> None:
+    """Mount every physical stream and enforce the calibrated 60-degree lens FOV."""
+    for name, (position, hpr) in CAMERA_RIGS.items():
+        sensor = env.engine.get_sensor(name)
+        sensor.track(env.agent.origin, position, hpr)
+        sensor.get_lens().setFov(CAM_FOV)
+
+
+def apply_synchronized_stereo_weather(
+    left_bgr: np.ndarray, right_bgr: np.ndarray, weather: str, level: float
+) -> tuple[np.ndarray, np.ndarray]:
+    """Apply identical random weather to the rectified stereo pair.
+
+    The two frames must receive the same synthetic rain/fog realization. Applying
+    independent random streaks/noise makes artificial features that do not
+    correspond between cameras and corrupts SGBM disparity.
+    """
+    random_state = np.random.get_state()
+    weathered_left = apply_weather(left_bgr, weather, level)
+    np.random.set_state(random_state)
+    weathered_right = apply_weather(right_bgr, weather, level)
+    return weathered_left, weathered_right
+
+
 def front_stereo_depth(left_bgr: np.ndarray, right_bgr: np.ndarray, matcher: cv2.StereoSGBM) -> np.ndarray:
     """Z = f * B / d_px, with f=1000 px and B=0.5 m."""
     # The cameras are mounted parallel with identical intrinsics, so their
@@ -210,8 +234,7 @@ def main() -> int:
         "sensors": {name: (RGBCamera, CAM_W, CAM_H) for name in CAMERA_RIGS},
     })
     env.reset()
-    for name, (position, hpr) in CAMERA_RIGS.items():
-        env.engine.get_sensor(name).track(env.agent.origin, position, hpr)
+    mount_camera_rig(env)
 
     matcher = build_stereo_matcher()
     window = "Four-camera YOLO + Weather + Front Stereo Depth (WASD, Q quit)"
@@ -232,6 +255,9 @@ def main() -> int:
             _, _, terminated, truncated, _ = env.step(action)
             frames: Dict[str, np.ndarray] = {name: frame_from_sensor(env, name) for name in CAMERA_RIGS}
             weathered = {name: apply_weather(frame, args.weather, args.level) for name, frame in frames.items()}
+            weathered["front_left_camera"], weathered["front_right_camera"] = apply_synchronized_stereo_weather(
+                frames["front_left_camera"], frames["front_right_camera"], args.weather, args.level
+            )
             perception = weathered if args.perception_weather else frames
             depth = front_stereo_depth(perception["front_left_camera"], perception["front_right_camera"], matcher)
             detections = {name: (run_yolo(model, perception[name]) if name in YOLO_CAMERAS else [])
@@ -275,8 +301,7 @@ def main() -> int:
             step += 1
             if terminated or truncated:
                 env.reset()
-                for name, (position, hpr) in CAMERA_RIGS.items():
-                    env.engine.get_sensor(name).track(env.agent.origin, position, hpr)
+                mount_camera_rig(env)
     finally:
         env.close()
         cv2.destroyAllWindows()

@@ -44,6 +44,26 @@ class FakeStereoMatcher:
         return np.full(left.shape, int(self.disparity_px * 16), dtype=np.int16)
 
 
+class FakeLens:
+    def __init__(self):
+        self.fov = None
+
+    def setFov(self, value):
+        self.fov = value
+
+
+class FakeSensor:
+    def __init__(self):
+        self.lens = FakeLens()
+        self.track_args = None
+
+    def track(self, *args):
+        self.track_args = args
+
+    def get_lens(self):
+        return self.lens
+
+
 class FakeTensor:
     def __init__(self, value):
         self.value = np.asarray(value)
@@ -70,6 +90,17 @@ class TestCameraAndStereoUnit(unittest.TestCase):
         self.assertEqual(drive.CAMERA_RIGS["front_left_camera"][0], (-0.25, 2.0, 1.4))
         self.assertEqual(drive.CAMERA_RIGS["front_right_camera"][0], (0.25, 2.0, 1.4))
 
+    def test_camera_mount_enforces_calibrated_fov_for_every_stream(self):
+        sensors = {name: FakeSensor() for name in drive.CAMERA_RIGS}
+        environment = SimpleNamespace(
+            engine=SimpleNamespace(get_sensor=lambda name: sensors[name]),
+            agent=SimpleNamespace(origin=object()),
+        )
+        drive.mount_camera_rig(environment)
+        for name, sensor in sensors.items():
+            self.assertEqual(sensor.lens.fov, 60)
+            self.assertEqual(sensor.track_args[1:], drive.CAMERA_RIGS[name])
+
     def test_sgbm_configuration_matches_specification(self):
         matcher = drive.build_stereo_matcher()
         self.assertEqual(matcher.getMinDisparity(), 0)
@@ -86,6 +117,22 @@ class TestCameraAndStereoUnit(unittest.TestCase):
         self.assertTrue(np.allclose(depth, 20.0))  # 1000 * 0.5 / 25
         self.assertTrue(np.all(drive.front_stereo_depth(image, image, FakeStereoMatcher(1000.0)) == 0.0))
         self.assertTrue(np.all(drive.front_stereo_depth(image, image, FakeStereoMatcher(5.0)) == 0.0))
+
+    def test_real_sgbm_recovers_known_synthetic_disparity(self):
+        """Exercise OpenCV SGBM itself, not only the depth-conversion wrapper."""
+        random = np.random.default_rng(7)
+        left = random.integers(0, 256, (180, 400), dtype=np.uint8)
+        right = np.zeros_like(left)
+        right[:, :-25] = left[:, 25:]  # A known 25-pixel disparity -> 20 m.
+        depth = drive.front_stereo_depth(
+            cv2.cvtColor(left, cv2.COLOR_GRAY2BGR),
+            cv2.cvtColor(right, cv2.COLOR_GRAY2BGR),
+            drive.build_stereo_matcher(),
+        )
+        valid = depth[30:-30, 220:-30]
+        valid = valid[valid > 0]
+        self.assertGreater(valid.size, 1000)
+        self.assertAlmostEqual(float(np.median(valid)), 20.0, delta=1.0)
 
     def test_object_depth_uses_robust_inner_median_and_error_formula(self):
         depth = np.full((100, 100), 20.0, dtype=np.float32)
@@ -140,6 +187,17 @@ class TestWeatherAndYoloUnit(unittest.TestCase):
         rain = apply_weather(self.image, "rain", 0.5)
         self.assertFalse(np.array_equal(fog, self.image))
         self.assertFalse(np.array_equal(rain, self.image))
+
+    def test_stereo_pair_receives_synchronized_weather(self):
+        left = np.full((80, 120, 3), 100, dtype=np.uint8)
+        right = np.full((80, 120, 3), 150, dtype=np.uint8)
+        np.random.seed(123)
+        weathered_left, weathered_right = drive.apply_synchronized_stereo_weather(left, right, "rain", 0.5)
+        # With the same base image, synchronized weather must be pixel-identical.
+        np.random.seed(123)
+        same_left, same_right = drive.apply_synchronized_stereo_weather(left, left, "rain", 0.5)
+        self.assertTrue(np.array_equal(same_left, same_right))
+        self.assertEqual(weathered_left.shape, weathered_right.shape)
 
     def test_prepare_image_normalizes_supported_sensor_formats(self):
         rgba_float = np.ones((4, 5, 4), dtype=np.float32)
