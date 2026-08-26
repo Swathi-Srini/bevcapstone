@@ -21,8 +21,11 @@ from yolo.yolo_utils import ensure_yolo_model, run_yolo
 
 
 # Technical specification: 1200x900, horizontal FOV 60 deg, B=0.5m.
+# The document writes f≈1000 px; the exact pinhole value for 1200 px at 60°
+# is used here so that depth scale matches the FOV configured in MetaDrive.
 CAM_W, CAM_H, CAM_FOV = 1200, 900, 60
-FOCAL_LENGTH_PX = 1000.0
+NOMINAL_FOCAL_LENGTH_PX = 1000.0
+FOCAL_LENGTH_PX = (CAM_W / 2.0) / math.tan(math.radians(CAM_FOV / 2.0))
 STEREO_BASELINE_M = 0.5
 CAMERA_RIGS = {
     "front_left_camera": ((-0.25, 2.0, 1.4), (0, -5, 0)),
@@ -100,7 +103,7 @@ def apply_synchronized_stereo_weather(
 
 
 def front_stereo_depth(left_bgr: np.ndarray, right_bgr: np.ndarray, matcher: cv2.StereoSGBM) -> np.ndarray:
-    """Z = f * B / d_px, with f=1000 px and B=0.5 m."""
+    """Z = f * B / d_px, with calibrated f and B=0.5 m."""
     # The cameras are mounted parallel with identical intrinsics, so their
     # simulator images are already rectified. Do not inject random weather
     # separately into the pair before matching: unmatched rain streaks produce
@@ -241,7 +244,7 @@ def main() -> int:
     cv2.namedWindow(window, cv2.WINDOW_NORMAL)
     cv2.resizeWindow(window, 1200, 600)
     print("Controls in this visualization window: W/S throttle, A/D steer, Q quit.")
-    print("Front-left + front-right -> StereoSGBM -> Z=1000*0.5/disparity. YOLO runs on four logical views: front, left, right, rear.")
+    print(f"Front-left + front-right -> StereoSGBM -> Z={FOCAL_LENGTH_PX:.2f}*0.5/disparity. YOLO runs on four logical views: front, left, right, rear.")
     print("Weather is display-only by default; use --perception-weather to intentionally test weather-degraded YOLO/stereo.")
     step = 0
     log_rows: List[dict] = []

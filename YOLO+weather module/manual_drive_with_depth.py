@@ -1,8 +1,9 @@
 """
-MetaDrive Manual Drive with Real-Time YOLO + Depth Logging
+LEGACY MetaDrive manual-drive monocular bounding-box-depth demo.
 
-Simple manual drive script that logs YOLO detections with depth estimates to terminal.
-Uses keyboard controls: W/A/S/D for driving, Q to quit
+This script predates the active front StereoSGBM integration. It estimates
+range from YOLO box dimensions and must not be used to represent stereo depth.
+Use ``manual_drive_stereo_yolo_weather.py`` for the active workflow.
 """
 
 import cv2

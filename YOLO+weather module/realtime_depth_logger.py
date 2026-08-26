@@ -1,7 +1,9 @@
 """
-Real-Time YOLO + Depth Logger for MetaDrive Manual Driving
-Logs every detection with depth estimation directly to terminal
-Based on Technical Spec Section 3: Stereo Depth Estimation
+LEGACY monocular bounding-box-depth logger.
+
+It is retained only for backwards-compatible demonstrations. The active
+stereo pipeline is ``manual_drive_stereo_yolo_weather.py`` and uses SGBM
+disparity, not box dimensions, for front depth.
 """
 
 import cv2

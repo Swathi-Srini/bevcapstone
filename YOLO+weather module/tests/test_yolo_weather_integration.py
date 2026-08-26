@@ -31,6 +31,7 @@ def load_module(name: str, filename: str):
 
 drive = load_module("manual_drive_stereo_yolo_weather_test", "manual_drive_stereo_yolo_weather.py")
 benchmark = load_module("benchmark_weather_perception_test", "benchmark_weather_perception.py")
+ground_truth = load_module("ground_truth_stereo_benchmark_test", "ground_truth_stereo_benchmark.py")
 
 from weather.weather_utils import apply_weather, prepare_image
 from yolo.yolo_utils import TRAFFIC_CLASS_NAMES, detections_from_results
@@ -81,7 +82,8 @@ class FakeTensor:
 class TestCameraAndStereoUnit(unittest.TestCase):
     def test_camera_rig_matches_calibration_contract(self):
         self.assertEqual((drive.CAM_W, drive.CAM_H, drive.CAM_FOV), (1200, 900, 60))
-        self.assertEqual(drive.FOCAL_LENGTH_PX, 1000.0)
+        self.assertAlmostEqual(drive.FOCAL_LENGTH_PX, 1039.2304845, places=5)
+        self.assertEqual(drive.NOMINAL_FOCAL_LENGTH_PX, 1000.0)
         self.assertEqual(drive.STEREO_BASELINE_M, 0.5)
         self.assertEqual(set(drive.CAMERA_RIGS), {
             "front_left_camera", "front_right_camera", "left_camera", "right_camera", "rear_camera",
@@ -114,7 +116,7 @@ class TestCameraAndStereoUnit(unittest.TestCase):
     def test_disparity_to_depth_formula_and_range_filtering(self):
         image = np.zeros((20, 30, 3), dtype=np.uint8)
         depth = drive.front_stereo_depth(image, image, FakeStereoMatcher(25.0))
-        self.assertTrue(np.allclose(depth, 20.0))  # 1000 * 0.5 / 25
+        self.assertTrue(np.allclose(depth, drive.FOCAL_LENGTH_PX * 0.5 / 25.0))
         self.assertTrue(np.all(drive.front_stereo_depth(image, image, FakeStereoMatcher(1000.0)) == 0.0))
         self.assertTrue(np.all(drive.front_stereo_depth(image, image, FakeStereoMatcher(5.0)) == 0.0))
 
@@ -132,15 +134,15 @@ class TestCameraAndStereoUnit(unittest.TestCase):
         valid = depth[30:-30, 220:-30]
         valid = valid[valid > 0]
         self.assertGreater(valid.size, 1000)
-        self.assertAlmostEqual(float(np.median(valid)), 20.0, delta=1.0)
+        self.assertAlmostEqual(float(np.median(valid)), drive.FOCAL_LENGTH_PX * 0.5 / 25.0, delta=1.0)
 
     def test_object_depth_uses_robust_inner_median_and_error_formula(self):
         depth = np.full((100, 100), 20.0, dtype=np.float32)
         depth[20:80, 20:80] = 10.0
         detection = {"xmin": 10, "ymin": 10, "xmax": 90, "ymax": 90}
         self.assertAlmostEqual(drive.object_stereo_depth(detection, depth), 10.0)
-        self.assertAlmostEqual(drive.stereo_depth_uncertainty(20.0), 0.16)
-        self.assertAlmostEqual(drive.stereo_depth_uncertainty(30.0), 0.36)
+        self.assertAlmostEqual(drive.stereo_depth_uncertainty(20.0), 20.0 ** 2 * 0.2 / (drive.FOCAL_LENGTH_PX * 0.5))
+        self.assertAlmostEqual(drive.stereo_depth_uncertainty(30.0), 30.0 ** 2 * 0.2 / (drive.FOCAL_LENGTH_PX * 0.5))
 
     def test_camera_to_ego_projection_for_all_directions(self):
         self.assertEqual(drive.ego_position_from_camera("front_left_camera", 600, 10), (-0.25, 12.0))
@@ -167,6 +169,14 @@ class TestCameraAndStereoUnit(unittest.TestCase):
         self.assertGreater(z, 1.0)
         self.assertGreater(x, 0.0)
         self.assertIsNotNone(forward)
+
+    def test_ground_truth_benchmark_excludes_occluded_targets(self):
+        vehicle = SimpleNamespace(WIDTH=2.0, HEIGHT=1.6)
+        target = {"vehicle": vehicle, "forward_m": 20.0, "u": 600.0, "v": 400.0}
+        nearer = {"vehicle": vehicle, "forward_m": 10.0, "u": 600.0, "v": 400.0}
+        visible = {"vehicle": vehicle, "forward_m": 10.0, "u": 100.0, "v": 100.0}
+        self.assertTrue(ground_truth.is_occluded_by_nearer_vehicle(target, [target, nearer], drive.FOCAL_LENGTH_PX))
+        self.assertFalse(ground_truth.is_occluded_by_nearer_vehicle(target, [target, visible], drive.FOCAL_LENGTH_PX))
 
 
 class TestWeatherAndYoloUnit(unittest.TestCase):
