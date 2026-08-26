@@ -7,11 +7,16 @@ from bev_state import BEVStateAssembler, BEVStateConfig
 
 
 class FakeLane:
+    length = 50.0
+
     def local_coordinates(self, position):
         return 10.0, 0.75
 
     def heading_theta_at(self, longitudinal):
-        return 0.10
+        return 0.10 + 0.01 * longitudinal
+
+    def position(self, longitudinal, lateral):
+        return np.array([longitudinal, lateral], dtype=np.float32)
 
 
 class TestBEVStateAssembler(unittest.TestCase):
@@ -30,7 +35,7 @@ class TestBEVStateAssembler(unittest.TestCase):
                     }
                 ]
             },
-            info={"velocity": np.array([3.0, 4.0]), "acceleration": 0.2, "steering": -0.1, "route_completion": 0.4},
+            info={"velocity": np.array([3.0, 4.0]), "route_completion": 0.4, "distance_to_goal": 42.0},
         )
 
         self.assertEqual(obs.bev_grid.shape, (64, 64))
@@ -38,6 +43,8 @@ class TestBEVStateAssembler(unittest.TestCase):
         self.assertEqual(obs.scalar_state.shape, (6,))
         self.assertEqual(obs.scalar_state.dtype, np.float32)
         self.assertAlmostEqual(float(obs.scalar_state[0]), 5.0)
+        self.assertAlmostEqual(float(obs.scalar_state[1]), 0.4)
+        self.assertAlmostEqual(float(obs.scalar_state[5]), 42.0)
         self.assertEqual(len(obs.objects), 1)
         self.assertTrue(np.any(obs.bev_grid == assembler.config.values.occupied))
         self.assertTrue(np.any(obs.bev_grid == assembler.config.values.unknown))
@@ -62,14 +69,17 @@ class TestBEVStateAssembler(unittest.TestCase):
                 position=(0.0, 0.0),
                 heading_theta=0.25,
                 speed=7.0,
+                navigation=SimpleNamespace(final_lane=FakeLane(), route_completion=0.25),
             )
         )
-        state = assembler.extract_scalar_state(env, {"route_completion": 0.25})
+        state = assembler.extract_scalar_state(env, {})
         self.assertEqual(state.shape, (6,))
         self.assertAlmostEqual(float(state[0]), 7.0)
-        self.assertAlmostEqual(float(state[3]), 0.15, places=5)
-        self.assertAlmostEqual(float(state[4]), 0.75)
-        self.assertAlmostEqual(float(state[5]), 0.25)
+        self.assertAlmostEqual(float(state[1]), 0.25)
+        self.assertAlmostEqual(float(state[2]), 0.75)
+        self.assertAlmostEqual(float(state[3]), 0.05, places=5)
+        self.assertAlmostEqual(float(state[4]), 0.01, places=5)
+        self.assertAlmostEqual(float(state[5]), 50.0)
 
     def test_out_of_range_object_is_ignored(self):
         assembler = BEVStateAssembler(BEVStateConfig(camera_range_m=30.0))
