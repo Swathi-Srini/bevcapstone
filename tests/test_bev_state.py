@@ -61,6 +61,13 @@ class TestBEVStateAssembler(unittest.TestCase):
         occupied = int(np.sum(grid == assembler.config.values.occupied))
         self.assertGreaterEqual(occupied, 40)
 
+    def test_ego_footprint_uses_nearest_physical_cell_dimensions(self):
+        assembler = BEVStateAssembler()
+        grid = assembler.build_bev_grid([])
+        ego_cells = int(np.sum(grid == assembler.config.values.ego))
+        # 1.9m / .3125m = 6.08 -> 6 cells; 4.6m / .3125m = 14.72 -> 15 cells.
+        self.assertEqual(ego_cells, 6 * 15)
+
     def test_ego_state_uses_lane_when_available(self):
         assembler = BEVStateAssembler()
         env = SimpleNamespace(

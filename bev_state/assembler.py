@@ -290,15 +290,20 @@ class BEVStateAssembler:
         if center is None:
             return
 
-        half_width_cells = max(1, int(math.ceil(width_m / cfg.metres_per_cell / 2.0)))
-        half_length_cells = max(1, int(math.ceil(length_m / cfg.metres_per_cell / 2.0)))
+        # Rasterise the physical footprint itself, not both rounded-up halves.
+        # The previous half-cell rounding expanded a 1.9m x 4.6m ego vehicle
+        # to roughly 2.8m x 5.3m at 0.3125m/cell.  Nearest whole-cell counts
+        # give a 6 x 15 cell footprint (1.875m x 4.688m), which is the closest
+        # faithful representation available on this grid.
+        width_cells = max(1, int(round(width_m / cfg.metres_per_cell)))
+        length_cells = max(1, int(round(length_m / cfg.metres_per_cell)))
         center_row, center_col = center
 
-        row_min = max(0, center_row - half_length_cells)
-        row_max = min(cfg.grid_size - 1, center_row + half_length_cells)
-        col_min = max(0, center_col - half_width_cells)
-        col_max = min(cfg.grid_size - 1, center_col + half_width_cells)
-        grid[row_min:row_max + 1, col_min:col_max + 1] = value
+        row_min = max(0, center_row - length_cells // 2)
+        col_min = max(0, center_col - width_cells // 2)
+        row_max = min(cfg.grid_size, row_min + length_cells)
+        col_max = min(cfg.grid_size, col_min + width_cells)
+        grid[row_min:row_max, col_min:col_max] = value
 
     def extract_scalar_state(self, env: Any | None, info: Mapping[str, Any] | None = None) -> np.ndarray:
         """Extract the 6-D ego state expected by the BEV policy."""

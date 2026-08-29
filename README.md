@@ -16,6 +16,8 @@ bevcapstone/
 |  |- bc_metadrive/          # Preserved 259-D vector-observation BC baseline
 |- camera/                   # Five-camera MetaDrive capture + front SGM depth
 |- YOLO+weather module/      # Live YOLO, synthetic-weather and depth prototype
+|- bev_state/                # 64x64 BEV + six-dimensional state assembly
+|- bev_policy/               # Clear-condition CNN+MLP BC milestone
 |- venv/                     # Local Python environment (ignored by Git)
 |- requirements.txt          # Shared Python dependencies, including MetaDrive 0.4.3
 `- .gitignore
@@ -31,6 +33,8 @@ one local README containing its commands, inputs, outputs, and limitations:
 - camera/README.md — five-camera capture and depth export;
 - YOLO+weather module/README.md — live perception demonstrator;
 - YOLO+weather module/stereo_depth/README.md — reusable stereo utilities.
+- bev_state/README.md — BEV/state contract and live validation visualiser;
+- bev_policy/README.md — BEV behavioural-cloning commands and limitations.
 
 Do not overwrite `baseline/bc_metadrive/` during BEV development. It is the comparison experiment. Future BEV code should live separately, for example in a top-level `bev_policy/` folder.
 
@@ -194,9 +198,9 @@ plus this README as authoritative over older design notes.
 | Preserved vector BC baseline | Present | Separate 259-D MLP experiment; not the target BEV controller. |
 | Five-camera sensor rig | Present | Captures front-left/right, left, right, rear, and front SGM-depth files. |
 | YOLO + stereo live demo | Present | YOLO can detect live objects; every front detection must still obtain valid SGM depth before it can support BEV. |
-| 64×64 final BEV | Missing | Stereo module has a standalone occupancy utility, but no live route/lane/unknown-space BEV contract. |
-| 6-D scalar state | Missing | No common extractor or action-aligned dataset. |
-| CNN + MLP BC policy | Missing | No BEV policy, dataset, or closed-loop evaluation. |
+| 64×64 BEV/state | Partial | Live perception-to-BEV visual validation exists; route/lane/boundary overlays remain unimplemented. |
+| 6-D scalar state | Present | `[speed, progress, lateral deviation, heading error, curvature ahead, distance to goal]`. |
+| CNN + MLP BC policy | Initial implementation | `bev_policy/` collects IDM-labelled clear data, trains BC, and evaluates closed loop; no trained result is checked in. |
 | PPO and energy/control-effort study | Missing | Must follow a validated nominal BEV controller. |
 
 ## Experiment contracts
