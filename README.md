@@ -4,7 +4,7 @@
 > architecture, implemented status, research claim, or project milestone
 > changes. Module READMEs explain only how to use their own code.
 
-This repository contains a MetaDrive-based autonomous-driving research project. The target system is a vision-derived Bird's-Eye View (BEV) controller trained with behavioural cloning (BC) and later fine-tuned with PPO.
+This repository contains a MetaDrive-based autonomous-driving research project. The current milestone is a vision-derived Bird's-Eye View (BEV) controller trained with behavioural cloning (BC) in clear, no-traffic scenarios. PPO fine-tuning, energy-aware control, traffic, and visibility-aware adaptation are planned follow-on work.
 
 **The final simulator is MetaDrive, not CARLA.** Earlier CARLA work is retained as exploratory/design context; it is not the implementation target.
 
@@ -52,9 +52,7 @@ MetaDrive cameras + ego/route state
 
 The target camera rig uses five physical streams: a front-left/front-right
 stereo pair plus left, right, and rear cameras. The rig, frame capture,
-front StereoSGBM depth, and a live YOLO/depth visualisation are implemented as
-separate prototypes. The integrated BEV builder, scalar-state extractor,
-CNN/MLP policy, BC training on those inputs, and PPO are **not implemented**.
+front StereoSGBM depth, and a live YOLO/depth visualisation are implemented as separate prototypes. The integrated BEV builder, scalar-state extractor, CNN/MLP policy, clear-condition BC collection/training, and closed-loop evaluation are implemented. Route/lane/boundary overlays, PPO, energy-aware control, traffic training, and validated visibility-aware adaptation are not implemented.
 
 ### Rules for future implementations
 
@@ -187,21 +185,18 @@ The first run may download `yolov8n.pt`. Use `--device cpu` unless a compatible 
 
 ## Current implementation status
 
-Implemented code is limited to a preserved vector BC baseline and independent
-sensor/perception prototypes. The repository does not yet contain an
-end-to-end perception-to-BEV-to-policy training run or research results.
-Run the module tests before relying on a component, and treat the Python source
-plus this README as authoritative over older design notes.
+The repository now contains an end-to-end clear-condition BEV behavioural-cloning milestone: IDM-labelled MetaDrive demonstrations can be collected, used to train the CNN+MLP policy, and evaluated in closed loop. Local datasets, checkpoints, videos, and reports are deliberately Git-ignored, so their presence on one machine is not a reproducible or versioned research result. Run the module tests and repeat the documented experiments before relying on a component or reporting a performance claim. Treat the Python source plus this README as authoritative over older design notes.
 
 | Layer | Status | Evidence / limitation |
 |---|---|---|
 | Preserved vector BC baseline | Present | Separate 259-D MLP experiment; not the target BEV controller. |
 | Five-camera sensor rig | Present | Captures front-left/right, left, right, rear, and front SGM-depth files. |
 | YOLO + stereo live demo | Present | YOLO can detect live objects; every front detection must still obtain valid SGM depth before it can support BEV. |
-| 64×64 BEV/state | Partial | Live perception-to-BEV visual validation exists; route/lane/boundary overlays remain unimplemented. |
+| 64×64 BEV/state | Partial | Assembles a 64×64 visible/free/unknown/occupied/ego grid plus the 6-D scalar state; detected objects use estimated physical footprints. Route/lane/boundary overlays remain unimplemented. |
 | 6-D scalar state | Present | `[speed, progress, lateral deviation, heading error, curvature ahead, distance to goal]`. |
-| CNN + MLP BC policy | Initial implementation | `bev_policy/` collects IDM-labelled clear data, trains BC, and evaluates closed loop; no trained result is checked in. |
-| PPO and energy/control-effort study | Missing | Must follow a validated nominal BEV controller. |
+| CNN + MLP BC policy | Implemented milestone | `bev_policy/` collects IDM-labelled clear, no-traffic data, trains the policy, and evaluates it in closed loop. Local clear-data, checkpoint, video, and paired synthetic-weather report artifacts may exist, but are ignored by Git and are not a published result. |
+| Weather robustness evaluation | Preliminary tooling | The evaluator can apply paired synthetic image corruption to perception frames. It does not change vehicle dynamics or road friction, and is not evidence of physical fog/rain robustness or adaptive driving. |
+| PPO and energy/control-effort study | Missing | PPO, an energy model/reward term, and a validated control-effort/jerk study have not been implemented. |
 
 ## Experiment contracts
 
@@ -210,17 +205,17 @@ plus this README as authoritative over older design notes.
 | Preserved baseline | 259-D MetaDrive vector | MLP | `[steering, throttle/brake]` |
 | Proposed BEV policy | 64 x 64 BEV + 6-D scalar state | CNN + MLP fusion | `[steering, throttle/brake]` |
 
-Proposed curriculum:
+Development curriculum and status:
 
 ```text
-BEV behavioural cloning
-  -> PPO without traffic
-  -> energy-aware reward
-  -> controlled reduced visibility
-  -> traffic and scenario randomisation
+BEV behavioural cloning in clear, no-traffic MetaDrive scenarios (implemented)
+  -> PPO without traffic (not implemented)
+  -> energy-aware reward (not implemented)
+  -> controlled reduced visibility (preliminary synthetic-image tooling only)
+  -> traffic and scenario randomisation (not implemented)
 ```
 
-Evaluate using matched MetaDrive scenarios: success, collision count, progress, energy per metre, speed, lane deviation, heading error, and jerk. Do not directly compare CARLA and MetaDrive metrics.
+The current closed-loop evaluator reports success, collision and off-road rates, mean speed, mean absolute steering, and a longitudinal-control-change proxy. Energy per metre, physical jerk, lane deviation, heading error, traffic robustness, and visibility-adaptive behaviour remain planned evaluation measures. Use matched MetaDrive scenarios and do not directly compare CARLA and MetaDrive metrics.
 
 ## Generated artifacts and Git
 
