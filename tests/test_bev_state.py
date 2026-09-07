@@ -3,7 +3,7 @@ from types import SimpleNamespace
 
 import numpy as np
 
-from bev_state import BEVStateAssembler, BEVStateConfig
+from bev_state import BEVStateAssembler, BEVStateConfig, ObjectFootprint
 
 
 class FakeLane:
@@ -94,5 +94,25 @@ class TestBEVStateAssembler(unittest.TestCase):
         self.assertIsNone(outside)
 
 
+
+    def test_default_visibility_matches_unmasked_grid(self):
+        assembler = BEVStateAssembler()
+        objects = [ObjectFootprint("car", 0.0, 8.0, 1.9, 4.6)]
+        np.testing.assert_array_equal(assembler.build_bev_grid(objects), assembler.build_bev_grid(objects, visibility_range_m=None))
+
+    def test_cells_beyond_visibility_horizon_are_unknown(self):
+        assembler = BEVStateAssembler()
+        grid = assembler.build_bev_grid([], visibility_range_m=10.0)
+        y_values = np.linspace(assembler.config.forward_range_m, -assembler.config.rear_range_m, assembler.config.grid_size)
+        self.assertTrue(np.all(grid[y_values > 10.0] == assembler.config.values.unknown))
+        self.assertTrue(np.any(grid[y_values <= 10.0] == assembler.config.values.free))
+
+    def test_out_of_range_footprint_is_not_painted(self):
+        assembler = BEVStateAssembler()
+        far_object = ObjectFootprint("car", 0.0, 12.0, 1.9, 4.6)
+        masked = assembler.build_bev_grid([far_object], visibility_range_m=10.0)
+        unmasked = assembler.build_bev_grid([far_object])
+        self.assertFalse(np.any(masked == assembler.config.values.occupied))
+        self.assertTrue(np.any(unmasked == assembler.config.values.occupied))
 if __name__ == "__main__":
     unittest.main()

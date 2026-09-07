@@ -88,3 +88,7 @@ python -m bev_state.live_visualize --auto-drive --spawn-target-distance 12 --max
 It spawns one stationary vehicle 12m ahead in the ego lane. This is only for
 validating YOLO/stereo-to-BEV projection; it must never be used as a training
 input or reported as an autonomous-driving experiment.
+
+## Controlled-visibility intervention
+
+`--visibility-range-m` is an opt-in, privileged controlled-visibility intervention. It makes BEV cells forward of the supplied ego-frame distance unknown (`-1.0`) and omits detected-object footprints whose centres are beyond that horizon. It is **not camera-inferred physical fog range**; omitting it preserves the original BEV.

@@ -4,7 +4,7 @@
 > architecture, implemented status, research claim, or project milestone
 > changes. Module READMEs explain only how to use their own code.
 
-This repository contains a MetaDrive-based autonomous-driving research project. The current milestone is a vision-derived Bird's-Eye View (BEV) controller trained with behavioural cloning (BC) in clear, no-traffic scenarios. PPO fine-tuning, energy-aware control, traffic, and visibility-aware adaptation are planned follow-on work.
+This repository contains a MetaDrive-based autonomous-driving research project. The current milestone is a vision-derived Bird's-Eye View (BEV) controller trained with behavioural cloning (BC), including a reproducible sparse-traffic baseline. PPO fine-tuning, energy-aware control, and validated visibility-aware adaptation are planned follow-on work.
 
 **The final simulator is MetaDrive, not CARLA.** Earlier CARLA work is retained as exploratory/design context; it is not the implementation target.
 
@@ -194,7 +194,7 @@ The repository now contains an end-to-end clear-condition BEV behavioural-clonin
 | YOLO + stereo live demo | Present | YOLO can detect live objects; every front detection must still obtain valid SGM depth before it can support BEV. |
 | 64×64 BEV/state | Partial | Assembles a 64×64 visible/free/unknown/occupied/ego grid plus the 6-D scalar state; detected objects use estimated physical footprints. Route/lane/boundary overlays remain unimplemented. |
 | 6-D scalar state | Present | `[speed, progress, lateral deviation, heading error, curvature ahead, distance to goal]`. |
-| CNN + MLP BC policy | Implemented milestone | `bev_policy/` collects IDM-labelled clear, no-traffic data, trains the policy, and evaluates it in closed loop. Local clear-data, checkpoint, video, and paired synthetic-weather report artifacts may exist, but are ignored by Git and are not a published result. |
+| CNN + MLP BC policy | Implemented milestone | `bev_policy/` collects IDM-labelled clear or traffic demonstrations, trains the policy, and evaluates it in closed loop. The sparse-traffic five-demo checkpoint achieved 90% success, 10% collision, and 0% off-road over 10 held-out clear sparse-traffic seeds at density 0.05. |
 | Weather robustness evaluation | Preliminary tooling | The evaluator can apply paired synthetic image corruption to perception frames. It does not change vehicle dynamics or road friction, and is not evidence of physical fog/rain robustness or adaptive driving. |
 | PPO and energy/control-effort study | Missing | PPO, an energy model/reward term, and a validated control-effort/jerk study have not been implemented. |
 
@@ -219,7 +219,7 @@ The current closed-loop evaluator reports success, collision and off-road rates,
 
 ## Generated artifacts and Git
 
-Git ignores local environments, caches, demo data (`*.npz`), weights/checkpoints (`*.pt`, `*.pth`, `*.onnx`), videos, local configuration (`.env`), YOLO output, and standard experiment-run directories. Store artifacts externally or release them deliberately when exact reproduction is needed.
+Git ignores local environments, caches, demo data (`*.npz`), non-project weights (`*.pth`, `*.onnx`), videos, local configuration (`.env`), YOLO output, and standard experiment-run directories. Project BC checkpoints (`*.pt`) are deliberately versionable so the RL stage can begin from an exact BC policy. Commit only the selected checkpoints; do not add downloaded third-party model weights without checking their licence and size.
 
 Ignore rules do not remove a file that was already committed. Before pushing a large artifact, verify it with:
 
@@ -229,3 +229,20 @@ git ls-files -- <path>
 ```
 
 The first command shows the ignore rule; the second shows whether the path is already tracked.
+
+## Controlled visibility
+
+The evaluator accepts `--visibility-range-m` as a privileged controlled-visibility intervention that masks forward BEV cells. It is not camera-inferred physical fog range and must not be presented as adaptive weather control.
+
+## BC-to-RL handoff baseline
+
+The handoff package is a BC initialization, not a completed safety or weather-adaptive controller. The recommended RL starting checkpoint is `bev_policy/checkpoints/bc_sparse_traffic_5eps.pt`. It was trained from five arrival-filtered demonstrations in `bev_policy/data/sparse_traffic_5eps/` and tested in clear weather on seed-disjoint scenarios (seeds 1000--1009) with traffic density 0.05:
+
+| Metric | Result |
+|---|---:|
+| Success rate | 0.90 (9/10) |
+| Collision rate | 0.10 (1/10) |
+| Off-road rate | 0.00 (0/10) |
+| Mean speed | 8.13 m/s |
+
+The structured report is `bev_policy/outputs/traffic_comparison/sparse_traffic_5eps/none_level_0.50_traffic_0.05_visibility_default_seed_1000_n_10.{json,csv}`. For ablations, retain `bc_clear_5eps_without_traffic.pt` as the no-traffic baseline. The RL owner should report results against both checkpoints under matched traffic, weather, and seed contracts.

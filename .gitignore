@@ -13,7 +13,7 @@ my_saved_images/
 visualization_output/
 
 # Local model weights are downloaded by Ultralytics when needed
-*.pt
+# Project BC checkpoints use .pt and are intentionally versioned for handoff.
 *.pth
 *.onnx
 
@@ -43,6 +43,8 @@ data/train/*.npz
 camera/captured_frames_stereo/
 integrated_output/
 weather_benchmark_output/
+bev_policy/outputs/
+bev_policy/eval-10-eps
 
 # Log files
 *.log
