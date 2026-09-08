@@ -29,6 +29,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--traffic-density", type=float, default=0.35)
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
     parser.add_argument("--yolo-model", default="yolov8n.pt")
+    parser.add_argument("--visibility-range-m", type=float, default=None,
+                        help="Privileged forward BEV horizon in metres; not camera-inferred fog range.")
+    parser.add_argument("--exact-ego-footprint", action="store_true",
+                        help="Show the literal policy-grid ego footprint instead of the compact presentation icon.")
     parser.add_argument("--max-steps", type=int, default=0, help="0 runs until Q is pressed.")
     parser.add_argument("--spawn-target-distance", type=float, default=0.0,
                         help="System-test only: spawn a stationary vehicle this many metres ahead in the ego lane.")
@@ -37,11 +41,12 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def colourise_bev(grid: np.ndarray) -> np.ndarray:
+def colourise_bev(grid: np.ndarray, *, exact_ego_footprint: bool = False) -> np.ndarray:
     """Render each 64x64 BEV cell as an exact 8x8 display square.
 
-    ``INTER_NEAREST`` is deliberate: this is a visual magnification only.  No
-    interpolation, crop, or geometric rescaling is applied to the policy grid.
+    ``INTER_NEAREST`` is deliberate. The default hides literal ego cells and
+    overlays a compact presentation icon; all other BEV cells are magnified
+    without interpolation, crop, or geometric rescaling.
     """
 
     image = np.zeros((*grid.shape, 3), dtype=np.uint8)
@@ -49,7 +54,7 @@ def colourise_bev(grid: np.ndarray) -> np.ndarray:
     image[np.isclose(grid, 0.0)] = (20, 20, 35)        # visible free: navy-black
     image[np.isclose(grid, 0.5)] = (0, 220, 255)       # route/lane: yellow (BGR)
     image[np.isclose(grid, 0.8)] = (0, 145, 255)       # boundary: orange (when supplied)
-    image[np.isclose(grid, 0.9)] = (70, 235, 70)       # ego: green
+    image[np.isclose(grid, 0.9)] = (70, 235, 70) if exact_ego_footprint else (20, 20, 35)
     image[np.isclose(grid, 1.0)] = (45, 45, 235)       # occupied object: red
     cell_pixels = 8
     image = cv2.resize(image, (64 * cell_pixels, 64 * cell_pixels), interpolation=cv2.INTER_NEAREST)
@@ -62,19 +67,41 @@ def colourise_bev(grid: np.ndarray) -> np.ndarray:
         cv2.line(image, (coordinate, 0), (coordinate, image.shape[0] - 1), colour, thickness)
         cv2.line(image, (0, coordinate), (image.shape[1] - 1, coordinate), colour, thickness)
     cv2.putText(image, "far +17.5m", (8, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (220, 220, 220), 1, cv2.LINE_AA)
-    cv2.putText(image, "ego row 56", (8, 500), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (220, 220, 220), 1, cv2.LINE_AA)
+    # The policy footprint is 1.9m x 4.6m and legitimately reaches the rear
+    # edge of this -2.5m..+17.5m grid. The default icon is presentation-only.
+    ego_x, ego_y = 32 * cell_pixels, 56 * cell_pixels
+    if exact_ego_footprint:
+        cv2.drawMarker(image, (ego_x, ego_y), (255, 255, 255), cv2.MARKER_CROSS, 11, 1, cv2.LINE_AA)
+        label = "exact policy footprint; reference y=0m"
+    else:
+        icon_half_width, icon_length = 12, 34
+        points = np.asarray([
+            (ego_x, ego_y - icon_length // 2),
+            (ego_x + icon_half_width, ego_y - icon_length // 4),
+            (ego_x + icon_half_width, ego_y + icon_length // 2),
+            (ego_x - icon_half_width, ego_y + icon_length // 2),
+            (ego_x - icon_half_width, ego_y - icon_length // 4),
+        ], dtype=np.int32)
+        cv2.fillPoly(image, [points], (70, 235, 70))
+        cv2.polylines(image, [points], True, (235, 235, 235), 1, cv2.LINE_AA)
+        cv2.drawMarker(image, (ego_x, ego_y), (255, 255, 255), cv2.MARKER_CROSS, 7, 1, cv2.LINE_AA)
+        label = "compact presentation icon; policy cells unchanged"
+    cv2.putText(image, label, (8, 500), cv2.FONT_HERSHEY_SIMPLEX, 0.38, (220, 220, 220), 1, cv2.LINE_AA)
     return image
 
 
-def add_text_panel(bev_image: np.ndarray, state, weather: str, perception_weather: bool) -> np.ndarray:
+def add_text_panel(bev_image: np.ndarray, state, weather: str, perception_weather: bool,
+                   visibility_range_m: float | None, exact_ego_footprint: bool) -> np.ndarray:
     panel = np.full((512, 480, 3), 20, dtype=np.uint8)
     lines = [
         "BEV state integration test",
         f"weather={weather}; perception={'weathered' if perception_weather else 'clean'}",
-        "grid: unknown charcoal | free navy | ego green | occupied red",
+        "grid: unknown charcoal | free navy | occupied red",
         "route/lane yellow | boundary orange (when those BEV layers exist)",
         "display: 64x64 cells, enlarged 8x with nearest-neighbour only",
         "extent: x=-10..+10m; y=-2.5..+17.5m; 0.3125m/cell",
+        f"visibility: {'default geometry' if visibility_range_m is None else f'{visibility_range_m:.1f}m privileged mask'}",
+        "ego: compact presentation icon (default)" if not exact_ego_footprint else "ego: literal 1.9m x 4.6m policy footprint",
         "",
         "scalar state:",
         f" speed_mps                 {state.scalar_state[0]:8.3f}",
@@ -90,7 +117,7 @@ def add_text_panel(bev_image: np.ndarray, state, weather: str, perception_weathe
         lines.append(f" {obj.label:<9} x={obj.x_right_m:+5.1f} y={obj.y_forward_m:+5.1f} {obj.depth_method}")
     if len(state.objects) > 10:
         lines.append(f" ... {len(state.objects) - 10} additional objects")
-    lines += ["", "W/A/S/D drive; Q quit", "Object outside 17.5m front grid is not painted."]
+    lines += ["", "W/A/S/D drive; Q quit", "Objects beyond the active forward horizon are not painted."]
     for row, line in enumerate(lines):
         y = 24 + row * 20
         if y >= 505:
@@ -103,6 +130,8 @@ def main() -> int:
     args = parse_args()
     if not 0.0 <= args.level <= 1.0:
         raise ValueError("--level must be between 0 and 1.")
+    if args.visibility_range_m is not None and args.visibility_range_m < 0.0:
+        raise ValueError("--visibility-range-m must be greater than or equal to zero.")
     if args.spawn_target_distance and not 3.0 <= args.spawn_target_distance <= 15.0:
         raise ValueError("--spawn-target-distance must be between 3m and 15m so it remains inside the BEV.")
 
@@ -182,11 +211,16 @@ def main() -> int:
             perception_frames = shown_frames if args.perception_weather else raw_frames
             detections = {name: run_yolo(model, perception_frames[name]) for name in YOLO_CAMERAS}
             state = assembler.assemble(
-                env=env, info=info, detections_by_camera=detections, frames=perception_frames
+                env=env, info=info, detections_by_camera=detections, frames=perception_frames,
+                visibility_range_m=args.visibility_range_m,
             )
             front = annotate_with_depth(shown_frames["front_left_camera"], detections["front_left_camera"], state.front_depth)
             front = cv2.resize(front, (683, 512), interpolation=cv2.INTER_AREA)
-            dashboard = add_text_panel(colourise_bev(state.bev_grid), state, args.weather, args.perception_weather)
+            dashboard = add_text_panel(
+                colourise_bev(state.bev_grid, exact_ego_footprint=args.exact_ego_footprint),
+                state, args.weather, args.perception_weather, args.visibility_range_m,
+                args.exact_ego_footprint,
+            )
             top_row = np.hstack((front, dashboard))
             cv2.imshow(window, np.vstack((top_row, np.full((25, top_row.shape[1], 3), 20, dtype=np.uint8))))
             step += 1

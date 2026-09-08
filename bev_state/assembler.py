@@ -122,6 +122,7 @@ class BEVStateAssembler:
         info: Mapping[str, Any] | None = None,
         detections_by_camera: Mapping[str, Sequence[Mapping[str, Any]]] | None = None,
         frames: Mapping[str, np.ndarray] | None = None,
+        visibility_range_m: float | None = None,
     ) -> StateObservation:
         """Return a policy-ready observation.
 
@@ -152,7 +153,7 @@ class BEVStateAssembler:
                 }
 
         objects = self.objects_from_detections(detections_by_camera, front_depth)
-        bev_grid = self.build_bev_grid(objects)
+        bev_grid = self.build_bev_grid(objects, visibility_range_m=visibility_range_m)
         scalar_state = self.extract_scalar_state(env, info)
 
         return StateObservation(
@@ -221,14 +222,27 @@ class BEVStateAssembler:
 
         return prior_width, prior_length
 
-    def build_bev_grid(self, objects: Sequence[ObjectFootprint]) -> np.ndarray:
-        """Build a 64x64 grid with unknown/free/occupied/ego semantics."""
+    def build_bev_grid(
+        self,
+        objects: Sequence[ObjectFootprint],
+        visibility_range_m: float | None = None,
+    ) -> np.ndarray:
+        """Build a grid, optionally masking the forward observable horizon.
+
+        ``visibility_range_m`` is a privileged experimental intervention, not
+        a camera-inferred physical visibility estimate. When supplied, every
+        cell ahead of that ego-frame forward distance is unknown and detections
+        whose centres are beyond the same horizon are omitted.
+        """
 
         cfg = self.config
+        visibility_range_m = self._validate_visibility_range(visibility_range_m)
         grid = np.full((cfg.grid_size, cfg.grid_size), cfg.values.unknown, dtype=np.float32)
         self._mark_visible_free_space(grid)
 
         for obj in objects:
+            if visibility_range_m is not None and obj.y_forward_m > visibility_range_m:
+                continue
             self._draw_oriented_footprint(
                 grid,
                 obj.x_right_m,
@@ -239,6 +253,8 @@ class BEVStateAssembler:
             )
 
         self._draw_oriented_footprint(grid, 0.0, 0.0, cfg.ego_width_m, cfg.ego_length_m, cfg.values.ego)
+        if visibility_range_m is not None:
+            self._mask_beyond_visibility_range(grid, visibility_range_m)
         return grid
 
     def ego_to_grid(self, x_right_m: float, y_forward_m: float) -> tuple[int, int] | None:
@@ -273,6 +289,22 @@ class BEVStateAssembler:
                 angle = math.atan2(x_right_m, y_forward_m)
                 if any(abs(self._angle_diff(angle, yaw)) <= half_fov for yaw in camera_yaws.values()):
                     grid[row, col] = cfg.values.free
+
+    def _mask_beyond_visibility_range(self, grid: np.ndarray, visibility_range_m: float) -> None:
+        """Set forward cells beyond an explicitly supplied horizon to unknown."""
+
+        cfg = self.config
+        y_values = np.linspace(cfg.forward_range_m, -cfg.rear_range_m, cfg.grid_size)
+        grid[y_values > visibility_range_m, :] = cfg.values.unknown
+
+    @staticmethod
+    def _validate_visibility_range(visibility_range_m: float | None) -> float | None:
+        if visibility_range_m is None:
+            return None
+        value = float(visibility_range_m)
+        if not math.isfinite(value) or value < 0.0:
+            raise ValueError("visibility_range_m must be a finite value greater than or equal to zero.")
+        return value
 
     def _draw_oriented_footprint(
         self,
