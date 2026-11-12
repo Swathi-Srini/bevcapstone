@@ -1,0 +1,11 @@
+**Measured degradation of the GitHub stereo-depth + YOLO perception under the GitHub weather augmentation (vs MetaDrive truth)**
+
+| condition | n (vehicle-frames) | YOLO detection rate [95% CI] | stereo depth valid at truth pixel | median |depth err| m | 90th pct |depth err| m | share of detections with |rel err|>20% | detections with valid box depth |
+|---|---|---|---|---|---|---|---|
+| none:0.0 | 72 | 0.722 [0.61, 0.81] | 0.875 | 0.98 | 5.95 | 0.096 | 1.000 |
+| fog:0.6 | 144 | 0.722 [0.64, 0.79] | 0.799 | 0.76 | 3.72 | 0.096 | 1.000 |
+| fog:0.8 | 144 | 0.590 [0.51, 0.67] | 0.632 | 0.48 | 1.85 | 0.141 | 1.000 |
+| fog:1.0 | 144 | 0.306 [0.24, 0.39] | 0.493 | 0.36 | 1.74 | 0.091 | 1.000 |
+| rain:0.3 | 144 | 0.569 [0.49, 0.65] | 0.833 | 0.81 | 5.46 | 0.110 | 1.000 |
+| rain:0.6 | 144 | 0.153 [0.10, 0.22] | 0.812 | 0.82 | 3.65 | 0.000 | 1.000 |
+| rain:1.0 | 144 | 0.014 [0.00, 0.05] | 0.674 | 0.67 | 4.00 | 0.000 | 1.000 |

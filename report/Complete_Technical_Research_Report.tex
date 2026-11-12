@@ -1,0 +1,62 @@
+% Complete Technical Research Report. Build from the folder report/:  pdflatex Complete_Technical_Research_Report.tex  (run twice)
+\documentclass[11pt,a4paper]{article}
+\input{shared/preamble}
+\input{tables/image_only_numbers}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small Complete Technical Research Report}
+\fancyhead[R]{\small Driving models that read a bird's-eye view, tested in MetaDrive}
+\fancyfoot[C]{\thepage}
+
+\title{\textbf{Complete Technical Research Report}\\[4pt]
+\large Driving models that read a bird's-eye view, tested in the MetaDrive simulator:\\
+what was built, how it was trained, what worked, what failed and why,\\
+and how it compares with the project's GitHub repository}
+\author{Prepared for the project director\\ Repository state of 12 November 2026}
+\date{}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+\noindent This report documents the whole project in plain language and in full technical detail. It explains what each model is, what goes into it, how it was trained, and how it was tested; it records every result that is supported by enough test episodes, every failed experiment (including the four reinforcement-learning attempts), the measurement of how simulated fog and rain damage the camera perception, the failure analysis, and the front-camera videos. It compares every component and result with the project's GitHub repository, lists every file created, and ends with the research directions that the evidence supports and with verified related work from 2025 and 2026.
+
+\medskip\noindent\textbf{Main findings} (200 paired test episodes unless stated):
+\begin{itemize}
+\item The \emph{Proposed Bird's-Eye-View Driving Model} succeeds in \textbf{92.5\%} of clear-weather, sparse-traffic episodes, against \textbf{85.0\%} and \textbf{74.5\%} for the two baseline models committed on GitHub (differences $+0.075$, $p=0.0007$, and $+0.180$, $p<0.0001$). It matches the rule-based teacher it learned from (95.0\%).
+\item Simulated fog and rain remove most vehicle detections (the detector finds 72\% of vehicles in clear weather and 1.4\% in the heaviest rain), but this does \emph{not} lower driving success in sparse traffic (89--91\% in all four weather conditions). No robustness or adaptation claim can be made.
+\item None of four reinforcement-learning attempts improved a driving model; the only one tested on 200 episodes made it worse in every weather condition (by 6.5 to 11.5 percentage points).
+\item Of the proposed model's 15 failed episodes, the collision-aware teacher solves 14, and 8 end within 12 seconds: the remaining failures are mostly imitation failures caused by what the model's input cannot show.
+\item The GitHub README reports 90\% success (9 of 10 episodes) for the traffic-trained baseline; on 200 episodes it is 74.5\%. GitHub contains only the two baseline models; everything else in this report is local only.
+\end{itemize}
+\end{abstract}
+
+\newpage
+\tableofcontents
+\newpage
+
+\input{technical/00_overview}
+\input{technical/00b_terminology}
+\input{technical/02_repository_map}
+\input{technical/02b_comparison_with_github}
+\input{technical/03_experimental_setup}
+\input{technical/04_perception_measurement}
+\input{technical/05_model_architectures}
+\input{technical/06_training_strategies}
+\input{technical/07_model_catalogue}
+\input{technical/08_results_headline}
+\input{technical/09_results_weather_and_robustness}
+\input{technical/09b_caution_comparison}
+\input{technical/10_reinforcement_learning}
+\input{technical/11_failure_analysis}
+\input{technical/12_videos}
+\input{technical/13_what_worked_what_did_not}
+\input{technical/14_paper_directions}
+\input{technical/15_related_work}
+
+\appendix
+\input{technical/appendix_a_file_inventory}
+\input{technical/appendix_b_reproduction_commands}
+\input{technical/appendix_c_honesty_notes}
+
+\end{document}

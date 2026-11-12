@@ -1,0 +1,74 @@
+\section{Weather, caution, input design and robustness to pose error}\label{sec:weather}
+
+This section contains the results that bear on the original question (``can the policy keep driving, and drive more economically, when its perception degrades?''), in the order in which the evidence was produced.
+
+\subsection{Detector-dropout proxy: no effect (pilot, 40 episodes)}
+With the dropout proxy (each vehicle removed from the grid with the measured retention probability of the weather), three models were evaluated on seeds 1010--1049 (Table~\ref{tab:dropout}). The success rates are \emph{identical} across weather conditions for the unmodified-grid student and differ by at most one episode (0.025) for the other two models. Even at rain 1.0, where only 4\% of the vehicles survive, nothing changes.
+\begin{table}[H]\centering\small
+\caption{Success under the detector-dropout proxy, sparse traffic, seeds 1010--1049 (pilot; 40 episodes per cell). ``Share of vehicles kept'' is the measured detector retention used by the proxy.}\label{tab:dropout}
+\resizebox{\textwidth}{!}{\input{tables/weather_detector_dropout_40_episodes}}
+\end{table}
+
+\subsection{Calibrated degradation: no effect (reported, 200 episodes)}
+After the measurement of Section~\ref{sec:perception} the environment was rebuilt so that vehicles can both disappear and be displaced by a wrong stereo range (\pth{bev_rl/adaptive/degraded_env.py}); weather conditions: clear, fog 1.0, rain 0.6, rain 1.0.
+Following the pre-registration, the first test (H1) asked whether a clean-trained model gets \emph{worse} under the calibrated degradation: headline model, 100 paired episodes, seeds 5000--5099: clear 0.89, fog 1.0: 0.90, rain 0.6: 0.89, rain 1.0: 0.89 (exact McNemar $p=1.0$ for every degraded cell against clear). \textbf{H1 failed}: the pre-registered consequence is that adaptation cannot be demonstrated on success in sparse traffic, and everything that follows is exploratory.
+On 200 episodes four models give the picture of Figure~\ref{fig:weather}.
+
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{figures/fig_success_by_weather_calibrated_perception_200_episodes.pdf}
+\caption{Success rate in four weather conditions under the calibrated degradation (200 episodes per bar; black lines are 95\% Wilson intervals). The headline model and the degraded-perception student are flat across weather; reinforcement learning started from the student is worse in every condition (Section~\ref{sec:rl}); the baseline is flat and low.}
+\label{fig:weather}
+\end{figure}
+\begin{table}[H]\centering\small
+\caption{Full numbers for Figure~\ref{fig:weather}.}\label{tab:weather}
+\resizebox{\textwidth}{!}{\input{tables/weather_calibrated_perception}}
+\end{table}
+
+\paragraph{Pre-registered hypotheses, final status.}
+\textbf{H0} (the perturbation is real): confirmed, for the detector and for stereo-depth validity (Section~\ref{sec:perception}).
+\textbf{H1} (it hurts a clean-trained policy): \emph{not} confirmed.
+\textbf{H2} (a weather-input policy beats its non-adaptive control): \emph{not testable}; the reinforcement-learning run with the weather input died after step 0, and the non-adaptive control got worse than its start.
+\textbf{H3} (training under degradation helps): \emph{not} confirmed (the degraded-perception student 0.888 pooled over the three degraded cells against 0.895 for the headline model).
+
+\paragraph{Why weather does not matter here (explanations, partly tested).}
+(i)~What is lost is almost only the \emph{detection} of vehicles (Section~\ref{sec:perception}); the map, the road and the car's own state are unaffected. (ii)~In sparse traffic few episodes involve a vehicle near the route in the first place; the failures that exist (Section~\ref{sec:failure}) are dominated by sudden crossings and oncoming vehicles that appear late anyway.
+(iii)~Weather has no dynamics effect in this setup, so the road remains as grippy as in clear weather. Explanations (ii) and (iii) were not tested by a dedicated experiment.
+
+\subsection{Caution coupled to perception reliability: a speed--energy trade-off (pilot, 40 episodes)}
+The caution study tested whether a network that receives a caution value derived from the measured reliability of the detector ($c=1-\text{retention}$) drives more slowly and economically when perception is poor.
+\begin{table}[H]\centering\small
+\caption{Caution study, sparse traffic, seeds 1010--1049 (40 episodes per cell, pilot).}\label{tab:caution}
+\resizebox{\textwidth}{!}{\input{tables/caution_study_40_episodes}}
+\end{table}
+Findings: the caution mechanism works as designed (mean speed falls from 8.0 to 5.6--6.2\,m/s and the estimated energy from 84.7 to 56--59\,Wh/km as soon as weather is present), at the price of more timeouts (7.5--15\%, because the slower car does not always finish within 800 steps) and, at rain 1.0, a lower success (0.85).
+Success is \emph{not} higher than without caution (the fixed-zero control reached 0.975 on these 40 episodes but 0.895 on 200). So the evidence supports a \textbf{speed--energy trade-off} controlled by the caution value, but not a safety benefit; and since weather does not hurt the baseline policy in the first place, there was no loss for caution to recover.
+
+\subsection{Input design (pilot, 10 episodes)}
+Five input designs were compared early in the project with one training seed each and 10 episodes per cell, hence wide intervals (Table~\ref{tab:ablation}).
+\begin{table}[H]\centering\small
+\caption{Input-design ablation, seeds 1000--1009 (10 episodes per cell). Intervals are 95\% Wilson intervals and are very wide.}\label{tab:ablation}
+\resizebox{\textwidth}{!}{\input{tables/input_design_ablation_10_episodes}}
+\end{table}
+What can be said: (a)~the overlay grid with all scalars removed is the worst design (0.30 / 0.10), so the grid alone is not enough when the lane geometry is only in the overlay and the car's speed is unknown;
+(b)~scalars alone drive sparse traffic acceptably (0.70) but fail dense traffic (0.10), which is what one expects when no vehicle is visible; (c)~the headline design is nominally the best in both traffic densities but the intervals overlap completely with three others.
+The earlier-stage hypothesis that ``some scalars hurt the clone'' (causal confusion; the early scalar ablation found that removing curvature or lateral offset improved a plain multilayer-perceptron clone in zero traffic) motivated the split design and is consistent with these numbers but is \emph{not} established at this sample size.
+
+\subsection{Robustness to an error in the car's pose against the map (pilot, 40 episodes)}
+The overlay depends on knowing where the car is relative to the map. A persistent pose error (random sign; the map is drawn from the wrong pose) was applied with five magnitudes; for scalar-only inputs the same error was added to the lateral and heading scalars.
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{figures/fig_success_versus_localisation_error.pdf}
+\caption{Success versus persistent pose error for the headline model, the unmodified-grid student and the sparse-traffic baseline (40 episodes per point, bands = 95\% Wilson intervals). The headline model tolerates up to 0.5\,m of lateral error and then degrades; at 2\,m all models are at 0.15--0.30.}
+\label{fig:localisation}
+\end{figure}
+\begin{table}[H]\centering\small
+\caption{Numbers for Figure~\ref{fig:localisation}.}\label{tab:localisation}
+\resizebox{\textwidth}{!}{\input{tables/localisation_error_40_episodes}}
+\end{table}
+Then four further models were trained with random pose error (Table~\ref{tab:variants}) and evaluated on the same error draws (Figure~\ref{fig:posetrained}).
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{figures/fig_success_versus_localisation_error_pose_trained_models.pdf}
+\caption{Success versus pose error for the headline model and four models trained with random pose error (40 episodes per point). Training with pose error alone does \emph{not} help when the map is the only source of lane position (dashed lines). Adding a \emph{second, independent} noisy lane cue (two scalars, standing in for an on-board lane detector; noise level 0.33 of the maximum) keeps the success at 0.88--0.95 up to 2\,m of map error (solid green and pink).}
+\label{fig:posetrained}
+\end{figure}
+\textbf{Interpretation.} Redundancy, not augmentation, is what removes the sensitivity: with one cue a shifted map cannot be recovered from; with two cues the network can learn to trust the one that agrees with the car's motion. The second cue is a noisy copy of simulator truth, so the flat curve shows that the \emph{architecture can use redundancy}, not that a real lane detector would deliver that accuracy.
+At the highest second-cue noise level (1.0 of maximum) the conditioned model drops to 0.675--0.70 at 1--2\,m of map error while the unconditioned one stays at 0.85--0.875, so being told the error size did not help consistently (single training seed, 40 episodes: differences of $\pm0.1$ are within noise).

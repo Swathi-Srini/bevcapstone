@@ -1,0 +1,18 @@
+\begin{tabular}{@{}llrrrr@{}}\toprule
+Weather & Compared model & Difference in success & Only caution-aware model succeeded & Only compared model succeeded & Exact McNemar $p$\\\midrule
+Clear & Baseline Driving Model Trained Without Traffic & +0.040 & 11 & 3 & 0.0574\\
+ & Baseline Driving Model Trained With Traffic & +0.145 & 32 & 3 & $<0.0001$\\
+ & Proposed Bird's-Eye-View Driving Model & -0.035 & 3 & 10 & 0.0923\\
+\midrule
+Fog (intensity 1.0) & Baseline Driving Model Trained Without Traffic & +0.035 & 24 & 17 & 0.3489\\
+ & Baseline Driving Model Trained With Traffic & +0.145 & 44 & 15 & 0.0002\\
+ & Proposed Bird's-Eye-View Driving Model & +0.000 & 19 & 19 & 1.0000\\
+\midrule
+Rain (intensity 0.6) & Baseline Driving Model Trained Without Traffic & +0.040 & 29 & 21 & 0.3222\\
+ & Baseline Driving Model Trained With Traffic & +0.135 & 45 & 18 & 0.0009\\
+ & Proposed Bird's-Eye-View Driving Model & -0.010 & 20 & 22 & 0.8776\\
+\midrule
+Rain (intensity 1.0) & Baseline Driving Model Trained Without Traffic & -0.030 & 24 & 30 & 0.4966\\
+ & Baseline Driving Model Trained With Traffic & +0.065 & 41 & 28 & 0.1480\\
+ & Proposed Bird's-Eye-View Driving Model & -0.080 & 17 & 33 & 0.0328\\
+\bottomrule\end{tabular}

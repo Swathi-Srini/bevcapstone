@@ -1,0 +1,66 @@
+\section{Reproduction commands}\label{app:commands}
+
+All commands are run from the repository root (\pth{D:/bev_Fresh/bevcapstone}) with the project's environment, in PowerShell. Long runs were executed in the background and write to \pth{logs/}. One MetaDrive process at a time is advisable on a CPU laptop (about 3.5\,GB of memory each).
+
+\subsection{Environment}
+\begin{lstlisting}
+py -3.11 -m venv venv
+.\venv\Scripts\python.exe -m pip install -r requirements.txt
+.\venv\Scripts\python.exe -m pip install --upgrade --force-reinstall torch torchvision --index-url https://download.pytorch.org/whl/cpu
+\end{lstlisting}
+
+\subsection{Training (examples; each takes about 1.5 to 2 hours)}
+\begin{lstlisting}
+# proposed model: map-overlay grid, vehicle-state inputs speed/progress/goal, stock driver model as teacher
+.\venv\Scripts\python.exe -m bev_rl.adaptive.dagger_base --name ov_split --overlay --scalar-keep 0,1,5 --iters 5
+# plain grid, six vehicle-state inputs
+.\venv\Scripts\python.exe -m bev_rl.adaptive.dagger_base --name base_a --iters 5
+# student of the collision-aware teacher
+.\venv\Scripts\python.exe -m bev_rl.adaptive.dagger_base --name sparse_overlay_split_safe_teacher --safe-teacher --overlay --scalar-keep 0,1,5 --densities 0.0,0.05,0.1 --val-densities 0.05
+# weather-degradation-trained model, then reinforcement learning (attempt 4) from it
+.\venv\Scripts\python.exe -m bev_rl.adaptive.degraded_dagger --name deg_base --iters 5
+.\venv\Scripts\python.exe -m bev_rl.adaptive.ppo_adaptive --name ppo_plain --base bev_rl/adaptive/runs/deg_base/best.pt --variant plain
+# image-only model
+.\venv\Scripts\python.exe -m bev_rl.adaptive.vanilla_camera_cnn train --name vcam --episodes0 40 --dagger-iters 3 --dagger-episodes 20
+\end{lstlisting}
+(The arguments of the proposed-model run were reconstructed from the logged settings and the queue scripts; the run folder \pth{bev_rl/adaptive/runs/ov_split/} contains the log of the original run.)
+
+\subsection{Evaluation}
+\begin{lstlisting}
+# 200 clear-weather episodes, six models (seeds 5000-5199) and their paired statistics
+.\venv\Scripts\python.exe -m bev_rl.adaptive.evaluate_final_200seed_sparse --n 200 --seed0 5000
+.\venv\Scripts\python.exe -m bev_rl.adaptive.paired_stats_final_200seed
+# image-only model, same 200 episodes
+.\venv\Scripts\python.exe -m bev_rl.adaptive.vanilla_camera_cnn eval --name vcam --n 200 --seed0 5000 --conds clear
+# perception measurement (corrected) and its fitted model
+.\venv\Scripts\python.exe -m bev_rl.adaptive.measure_depth_error
+.\venv\Scripts\python.exe -m bev_rl.adaptive.fit_depth_error_model
+# calibrated-degradation evaluation
+.\venv\Scripts\python.exe -m bev_rl.adaptive.evaluate_degraded --help
+\end{lstlisting}
+
+\subsection{Videos}
+\begin{lstlisting}
+.\venv\Scripts\python.exe -m bev_rl.adaptive.record_camera_plain --out report\videos_raw --seeds 5169 --arms repo_bc_clear repo_bc_sparse ov_split --weather clear:0.0 fog:1.0 rain:0.6 rain:1.0
+.\venv\Scripts\python.exe -m bev_rl.adaptive.record_pixel_policy_video --seed 5169 --weather clear:0.0 fog:1.0 rain:0.6 rain:1.0 --out report\videos
+.\venv\Scripts\python.exe report\make_video_assets.py
+\end{lstlisting}
+(The first command writes files named by the old internal nicknames; they were renamed to the descriptive pattern of Section~\ref{sec:videos} and moved to \pth{report/videos/}.)
+
+\subsection{Both documents}
+\begin{lstlisting}
+.\venv\Scripts\python.exe report\make_report_figures.py
+.\venv\Scripts\python.exe report\make_report_tables.py
+.\venv\Scripts\python.exe report\make_input_examples.py
+.\venv\Scripts\python.exe report\make_video_assets.py
+.\venv\Scripts\python.exe report\make_figure_blocks.py
+.\venv\Scripts\python.exe report\make_file_inventory.py
+powershell -File report\build_documents.ps1        # builds both PDFs, twice each, with a clean PATH
+\end{lstlisting}
+The LaTeX distribution used was MiKTeX 25.12 (user installation) with automatic installation of missing packages. Required packages: \code{geometry, lmodern, microtype, amsmath, graphicx, booktabs, longtable, array, tabularx, xcolor, float, caption, enumitem, url, fancyhdr, listings, tcolorbox, tikz, hyperref}.
+
+\subsection{Reorganisation scripts}
+\begin{lstlisting}
+.\venv\Scripts\python.exe repository_tools\organise_trained_models.py        # copies the 33 models into trained_models/ with descriptive names
+.\venv\Scripts\python.exe repository_tools\write_model_name_mapping.py       # writes the old-to-new name mapping and verifies every hash
+\end{lstlisting}

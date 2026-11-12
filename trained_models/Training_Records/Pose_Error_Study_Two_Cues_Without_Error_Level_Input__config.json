@@ -1,0 +1,12 @@
+{
+ "name": "pose_cam_unconditioned",
+ "iters": 4,
+ "eps_per_iter": 45,
+ "epochs": 6,
+ "noise": 0.1,
+ "seed": 0,
+ "val_n": 10,
+ "condition": false,
+ "safe_teacher": false,
+ "cam_cue": true
+}

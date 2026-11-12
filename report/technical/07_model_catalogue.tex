@@ -1,0 +1,54 @@
+\section{Model catalogue}\label{sec:catalogue}
+
+\begin{plainwords}
+Thirty-three model files were saved. This section names every one, says what goes into it, who labelled its training data, how it was trained, and where it was evaluated. The model names used everywhere in this report are the descriptive names in the first column. The \emph{internal nickname} in the second column is how the model appears in old logs, result files and run folders; it is given once, here, so that nothing has to be decoded. The file name of every model and its hash are in Appendix~\ref{app:inventory}, and the mapping from the previous to the current file names is in \pth{trained_models/MODEL_NAME_MAPPING.md}.
+\end{plainwords}
+
+\paragraph{How to read the ``selected round'' column.} Training proceeds in rounds (Section~\ref{sec:training}); the round whose model is kept is the one with the highest validation success, and \emph{ties keep the earliest round}. Because validation uses only ten episodes and reaches 1.0 in sparse traffic, ties are frequent, and in four runs the kept model is round 0, in which the teacher drives and the model is simply behaviour-cloned from the teacher's own demonstrations. These are marked \textbf{round 0}.
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{3.7cm}>{\raggedright\arraybackslash}p{1.9cm}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}p{2.0cm}>{\raggedright\arraybackslash}p{1.9cm}@{}}
+\caption{Catalogue of the trained models. ``GitHub'' states whether the checkpoint is committed on the GitHub repository (only the two baseline models are).}\label{tab:catalogue}\\
+\toprule Descriptive name & Internal nickname & Input & Labels & Selected round; data & GitHub; evidence\\\midrule\endfirsthead
+\toprule Descriptive name & Internal nickname & Input & Labels & Selected round; data & GitHub; evidence\\\midrule\endhead
+\midrule\multicolumn{6}{r}{\emph{continued on the next page}}\\\endfoot
+\bottomrule\endlastfoot
+\multicolumn{6}{@{}l}{\textbf{A. Baseline models supplied by the teammates}}\\
+Baseline Driving Model Trained Without Traffic & repo\_bc\_clear & Plain grid; six vehicle-state inputs & Stock driver model; 5 episodes, no other vehicles & Supervised only & \textbf{Yes}; 200 episodes: 0.850\\
+Baseline Driving Model Trained With Traffic & repo\_bc\_sparse & Plain grid; six vehicle-state inputs & Stock driver model; 5 episodes, traffic 0.05 & Supervised only & \textbf{Yes}; 200 episodes: 0.745\\
+\multicolumn{6}{@{}l}{\textbf{B. Imitation-trained models (dataset aggregation)}}\\
+\textbf{Proposed Bird's-Eye-View Driving Model} & ov\_split & Map-overlay grid; speed, route progress, distance to goal & Stock driver model & Round 5; 73\,032 samples; validation 1.0 sparse, 0.5 dense & No; \textbf{200 episodes: 0.925}\\
+Ablation: Plain BEV With Six State Inputs & base\_a & Plain grid; six vehicle-state inputs & Stock driver model & Round 5; 66\,956; 1.0 / 0.4 & No; 10 and 40 episodes\\
+Ablation: Map-Overlay BEV With Six State Inputs & ov\_both & Map-overlay grid; six inputs & Stock driver model & Round 5; 71\,642; 1.0 / 0.5 & No; 10 episodes\\
+Ablation: Map-Overlay BEV Without State Inputs & ov\_bev\_only & Map-overlay grid only & Stock driver model & Round 4; 60\,590; 0.5 / 0.2 & No; 10 episodes (worst)\\
+Ablation: Plain BEV Without State Inputs & arch\_bev\_only & Plain grid only & Stock driver model & \textbf{Round 0}; 11\,388; 0.0 / 0.0 & No; not evaluated further\\
+Ablation: Six State Inputs Without BEV & arch\_scalar\_only & Six vehicle-state inputs only & Stock driver model & \textbf{Round 0}; 11\,388; 1.0 / 0.3 & No; 10 episodes\\
+Proposed BEV Model Trained From the Collision-Aware Teacher & sparse\_overlay\_ split\_safe\_ teacher & As the proposed model & Collision-aware teacher & \textbf{Round 0}; 18\,824; 1.0 (sparse) & No; \emph{not evaluated on 200 episodes}\\
+Weather-Degradation-Trained Driving Model & deg\_base & Map-overlay grid under measured degradation; three vehicle-state inputs & Collision-aware teacher & Round 5; 104\,292; validation 0.933 & No; 200 episodes in four weather conditions\\
+C. Caution study & & & & &\\
+\quad Caution-Study Caution-Aware Driving Model & caut\_a & As proposed + caution input & Caution-aware stock model & Round 1; 35\,503 & No; 40 episodes\\
+\quad Caution-Study Control Model (caution input fixed to zero) & ctrl\_nocaut & As proposed + input fixed 0 & Caution-aware stock model & \textbf{Round 0}; 16\,835 & No; 200 episodes: 0.895\\
+D. Position-error study (four models) & pose\_aug\_*, pose\_cam\_* & Map overlay drawn from a wrong position; two variants with a second noisy lane cue; two with the error level as input & Stock model on the true state & Rounds 2 to 4; 56\,646 to 96\,706 & No; 40 episodes\\
+\multicolumn{6}{@{}l}{\textbf{E. Reinforcement-learning models (Section~\ref{sec:rl})}}\\
+Reinforcement Learning Attempt 1: privileged teachers (runs C2, Probe C, C3) and their initialisation & C2, probe\_C, C3, bc\_init & Simulator state (12 numbers) & Reward version 1 & 1.5, 1 and 0.3 million steps & No; 70 episodes\\
+Reinforcement Learning Attempt 2: Fine-Tuned Proposed Model With Weather Input & pilot\_cond & Proposed model + weather input & Reward version 1 & 120\,000 steps & No; validation only\\
+Reinforcement Learning Attempt 3: Reward Sweep (five models) & rl\_plain, rl\_energy, rl\_safe, rl\_head, rl\_full & Proposed model + caution input & Five reward combinations & 150\,000 steps each & No; validation only\\
+Reinforcement Learning Attempt 4: Fine-Tuned Without Weather Input & ppo\_plain & As the weather-degradation-trained model & Reward version 3 & 300\,000 steps & No; 200 episodes in four weather conditions\\
+Reinforcement Learning Attempt 4: With Weather Input (INCOMPLETE, untrained) & ppo\_ada & As above + weather input & Reward version 3 & Step 0 only & No; unusable\\
+\multicolumn{6}{@{}l}{\textbf{F. Image-only model and third-party weights}}\\
+Image-Only Driving Model (Front Camera) & vcam & Front-camera picture (128 by 96 pixels) & Collision-aware teacher & Behaviour cloning on 40 episodes, then three dataset-aggregation rounds & No; \textbf{200 episodes} (Section~\ref{sec:headline})\\
+YOLO Version 8 Nano Object Detector Weights (third party) & yolov8n & Camera image & Pretrained by Ultralytics & Not trained here & No (local copy)\\
+\multicolumn{6}{@{}l}{\textbf{G. Superseded early experiment (not used for results)}}\\
+Early Camera-View Version 2 Models (three) & bcv2\_* & Seven-channel camera view; six inputs; with or without weather input & Stock driver model; 40 episodes, no traffic & Supervised only & No; open-loop only\\
+\end{longtable}
+}
+
+\subsection{What each family is for}
+\begin{description}[leftmargin=0.4cm,style=nextline]
+\item[Baseline models (A).] The comparison points supplied with the project; the README recommends the traffic-trained one as the starting point for reinforcement learning.
+\item[Imitation-trained models (B).] Five input designs (the proposed model and four ablations) isolate where the proposed model's performance comes from: moving the lane geometry out of the numeric inputs and into the map overlay, or removing either input entirely. The collision-aware-teacher variant and the weather-degradation-trained model test the teacher and the perception conditions.
+\item[Caution study (C).] Tests the idea that a driver should become more careful when its perception is less reliable: a ``caution'' input derived from measured detector retention, a teacher whose speed and gap depend on it, and a control with identical data and network but the input fixed at zero.
+\item[Position-error study (D).] Tests robustness to an error in the car's own position against the map, a realistic failure of map-based localisation.
+\item[Reinforcement-learning models (E).] Section~\ref{sec:rl}.
+\item[Image-only model (F).] A control: it reads the camera picture itself instead of the grid, and shows what the grid representation contributes.
+\end{description}

@@ -1,0 +1,63 @@
+\section{Experimental setup}\label{sec:setup}
+
+\begin{plainwords}
+Every model is tested in the same simulator, on the same driving scenarios, and counted the same way. This section defines the simulator, how an episode ends, which scenarios are used for training, for choosing a model and for the final test, the measures reported, and the statistics used to say whether one model is really better than another.
+\end{plainwords}
+
+
+\subsection{Simulator, scenarios and outcomes}
+All experiments use MetaDrive version 0.4.3 (pinned in \pth{requirements.txt}) on a CPU laptop. A scenario is determined by an integer \emph{seed} that selects a procedurally generated road network (random number of lanes and
+lane width, intersections and roundabouts occur), the route to the destination, the initial position of the ego car and the initial positions of the traffic vehicles. The decision frequency is 10\,Hz. An episode ends with exactly one outcome:
+\begin{description}[leftmargin=3.2cm,style=nextline]
+\item[success] the ego car arrives at the destination (MetaDrive flag \code{arrive_dest});
+\item[collision] any of the flags \code{crash_vehicle}, \code{crash_object}, \code{crash_building}, \code{crash_human};
+\item[left the road] the flag \code{out_of_road} (also triggered by leaving the planned route);
+\item[timeout] the horizon (800 steps $=$ 80\,s in all evaluations, 600 steps during dataset-aggregation training) is reached without one of the above.
+\end{description}
+Traffic is controlled by the density parameter: \textbf{0.05 (sparse)} for all reported results, \textbf{0.2 (dense)} for diagnostics. The action contract is MetaDrive's two-dimensional action
+\code{[steering, throttle/brake]} in $[-1,1]^2$. The rule-based driver (stock intelligent driver model) cruises at about 8.3\,m/s (30\,km/h), so the mean speeds in this report are 7--9\,m/s.
+
+\subsection{Why the policies do not run on live camera pixels}\label{sec:surrogate}
+The teammates' full perception chain renders five cameras at 1200$\times$900, runs YOLO on the views, estimates depth with stereo block matching and assembles the grid. Measured on this laptop it costs 1.7--2.5\,s per step
+(about 4\,GB of memory; Section~\ref{sec:perception}), which makes training and 200-episode evaluations infeasible. The policy-side work therefore uses a \textbf{camera-free surrogate environment} (\pth{bev_rl/adaptive/env.py}, class \code{AdaptiveEnv} and its subclasses):
+\begin{itemize}
+\item The grid is built by the teammates' \emph{unmodified} function \code{build_bev_grid} from the list of vehicles that MetaDrive reports inside the grid window (an ideal detector), with the ego footprint and unknown/free cells as in the teammates' encoding.
+\item The scalar state is the same six-dimensional vector \code{[speed, route progress, lateral offset, heading error, curvature ahead, distance to goal]}.
+\item \textbf{Weather} acts only through perception. It never changes the vehicle dynamics or tyre friction in any reported result. Two stand-ins for the perception loss are used: (i) \emph{detector dropout}, where each vehicle is removed from the grid with probability one minus the measured detector retention
+  for that weather; (ii) \emph{calibrated degradation}, built from the measurement of Section~\ref{sec:perception}, where a vehicle can additionally be displaced because of a wrong stereo range.
+\item The equivalence of the optimised perception path with the original path was tested (\pth{bev_rl/validate_lazy_perception.py}; notes in \pth{docs/project_history/research_log_2026-11-01_environment_and_audit/04_LAZY_PERCEPTION_EQUIVALENCE.md}): 70 of 70 frames were bit-identical, \emph{but only one of those frames contained an occupied grid cell}, so the stereo branch was exercised rarely; the evidence is weak and is listed as a limitation (Appendix~\ref{app:honesty}).
+  A cached free-space mask used for speed was found identical to \code{build_bev_grid} over 400 grids.
+\end{itemize}
+\textbf{Consequence for claims:} what is reported here is the quality of the \emph{policies given a perception model}, not of the end-to-end camera system. The front-camera videos (Section~\ref{sec:videos}) therefore show the camera frames next to the policy's behaviour but the policies do not read those pixels.
+One exception: the Image-Only Driving Model (Section~\ref{sec:catalogue}) does read camera frames.
+
+\subsection{Seed blocks}
+Disjoint blocks of seeds are used so that no evaluation scenario was used for training, validation or model selection (Table~\ref{tab:seeds}).
+\begin{table}[H]\centering\small
+\caption{Seed blocks and their use. Seeds 5000--5003 were additionally used once for a superseded early pilot of the camera-view-version-2 models (a development run, never used to select any reported model).}\label{tab:seeds}
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X@{}}\toprule
+Seeds & Use\\\midrule
+2000--2999 & Training scenarios for dataset aggregation and reinforcement learning.\\
+3000--3003 & Calibration of the earlier surface classifier (camera-view-version-2 experiment, superseded).\\
+3100--3139 & Validation: choice of the best training round (3100--3109 for dataset aggregation; 3100--3139 for reinforcement learning with reward version 3).\\
+1000--1009 & First reserved test block ($n=10$): input-ablation pilot.\\
+1010--1049 & Second test block ($n=40$): caution, localisation-error and detector-dropout pilots.\\
+\textbf{5000--5199} & \textbf{Final test block ($n=200$)}: every reported number in Sections~\ref{sec:headline}--\ref{sec:weather} unless stated.\\
+7000--7039 & Measurement of the detector and stereo degradation (Section~\ref{sec:perception}).\\
+4000--4039 & Early demonstrations of the superseded camera-view-version-2 experiment.\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Metrics}
+\begin{itemize}
+\item \textbf{Success rate} with the 95\% Wilson score interval, and the shares of collision, left-the-road and timeout.
+\item \textbf{Mean speed} (m/s) and \textbf{route completion} (fraction of the route driven; 1.0 at the destination).
+\item \textbf{Estimated traction energy} in watt-hours per kilometre (\pth{bev_rl/energy.py}). It is the mechanical work at the wheels for a declared virtual vehicle (drag coefficient 0.23, frontal area 2.22\,m$^2$, rolling resistance 0.01, mass from the simulator vehicle), integrated exactly
+  for linear speed change within each 0.1\,s step, with no regenerative braking and no gradient. It is \emph{not} battery electricity and not a MetaDrive quantity; only differences between models are meaningful.
+\item \textbf{Paired comparison.} Because every model is evaluated on the same 200 seeds, two models are compared with the exact McNemar test on the discordant episodes and a 5000-sample paired bootstrap interval of the difference in success rates. This is much more powerful than comparing two overlapping Wilson intervals.
+\end{itemize}
+
+\subsection{Reproducibility caveat}\label{sec:repro}
+A replay of the same model on the same seed in different process histories can give different episodes: the map, route, ego pose and initial traffic positions are identical, but the traffic random-number generator is not reseeded at reset, so traffic behaviour can diverge
+(base model, seed 1012: 638 steps alone, 510 steps after seed 1040, 509 after seed 1039, a crash at 374 steps in a video run). Repeating the \emph{same evaluation order in a fresh process} is reproducible; comparing across different run orders is not exact.
+This matters for the videos (Section~\ref{sec:videos}), where outcomes were re-checked rather than assumed.

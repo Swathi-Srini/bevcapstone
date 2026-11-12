@@ -1,0 +1,61 @@
+\section{Orientation: purpose, conventions and how to read this document}
+
+\subsection{What this project is}
+The project builds driving policies for the MetaDrive simulator that act from a \emph{bird's-eye view} (a top-down 64$\times$64 grid around the car, abbreviated BEV in the
+code and in the teammates' documents, but written out here) plus a few scalar quantities, and asks how well such policies drive in traffic and when the
+perception that feeds the grid is degraded by simulated fog and rain. The repository has three layers of work:
+\begin{enumerate}
+\item \textbf{Teammates' modules} (on the public GitHub repository): a vector-observation behaviour-cloning baseline, a five-camera rig with stereo depth, a YOLO object-detector with
+  an image-space weather filter, the assembly of detections into the bird's-eye-view grid, and a behaviour-cloning policy on that grid.
+\item \textbf{Policy-side work done in this project} (so far only on this machine, not on GitHub): fast camera-free environments, teacher policies, dataset-aggregation training,
+  reinforcement-learning experiments, evaluation harnesses, perception measurements, diagnostics and recordings.
+\item \textbf{This report} and the clean-up of the repository around it (Section~\ref{sec:cleanup}).
+\end{enumerate}
+
+\subsection{Naming conventions used in this document}
+Names in the code were chosen quickly during experiments and are often abbreviations. In this document and in every figure and table, models and methods are
+called by \emph{descriptive names}. Wherever a model also has a short code name (the name of its folder or of its result file), that code name is shown
+once in typewriter font so that it can be found in the files. Table~\ref{tab:glossary} translates every abbreviation and code name that appears in the files.
+
+\begin{table}[H]\centering\small
+\caption{Glossary: abbreviations and code names used in file names, in the code and in earlier notes, with the full descriptive name used in this report.}
+\label{tab:glossary}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.6cm}X@{}}\toprule
+Code name or abbreviation & Meaning in this report\\\midrule
+BEV & Bird's-eye view: a 64$\times$64 grid, 20\,m wide and 20\,m long (17.5\,m ahead of the car, 2.5\,m behind), cell size 0.3125\,m, centred on the ego car.\\
+IDM / stock IDM & Intelligent driver model: MetaDrive's built-in rule-based car-following controller. Used as a teacher; it sees exact simulator positions of all vehicles.\\
+SafeTeacher / \code{safe_teacher} & The collision-aware teacher: the intelligent driver model with lane changes switched off plus a predictive braking layer (Section~\ref{sec:teachers}).\\
+BC / behaviour cloning & Supervised imitation of recorded expert actions (regression of steering and throttle).\\
+DAgger / dataset aggregation & Iterative imitation: the learner drives, the teacher labels the states the learner visited, and the labelled states are added to the training set (Ross et al., 2011).\\
+PPO / proximal policy optimisation & The reinforcement-learning algorithm used in every reinforcement-learning attempt.\\
+HD map & High-definition map: here the lane centre line and the road boundaries read from the simulator's map; treated as a legitimate structured input.\\
+\code{repo_bc_clear} & Baseline behaviour cloning, trained on five demonstrations \emph{without} traffic (\pth{bc_clear_5eps_without_traffic.pt}).\\
+\code{repo_bc_sparse} & Baseline behaviour cloning, trained on five demonstrations \emph{with} sparse traffic (\pth{bc_sparse_traffic_5eps.pt}). The repository calls it the recommended starting checkpoint.\\
+\code{base_a} & Dataset-aggregation student on the teammates' unmodified one-channel view and all six scalars (no map overlay).\\
+\code{ov_both}, \code{ov_bev_only} & Map-overlay view with all six scalars / with no scalars. (\code{ov} = overlay.)\\
+\code{ov_split} & \textbf{The headline model}: map-overlay view and three scalars (speed, route progress, distance to goal); the three lane-geometry quantities were moved from the scalars into the overlay.\\
+\code{arch_bev_only}, \code{arch_scalar_only} & Input-ablation models: view only / scalars only (\code{arch} = architecture ablation).\\
+\code{caut_a}, \code{ctrl_nocaut}, \code{caut_c0}, \code{caut_auto} & Caution study: caution-conditioned network; its control with the caution input always zero; the same conditioned network evaluated with caution 0 and with caution derived from weather.\\
+\code{deg_base} & Dataset-aggregation student trained under the calibrated degraded perception.\\
+\code{ppo_plain}, \code{ppo_ada} & Reinforcement learning from \code{deg_base} without / with a weather input (\code{ada} = adaptive; this run did not finish).\\
+\code{rl_plain}, \code{rl_energy}, \code{rl_safe}, \code{rl_head}, \code{rl_full} & Reward-combination sweep, reinforcement learning from the headline model (base reward; plus energy; plus safe-speed and scaled crash penalty; plus headway; all terms).\\
+\code{C2}, \code{C3}, \code{probe_C}, \code{pilot_cond} & Early reinforcement-learning attempts (privileged teacher trained with PPO).\\
+\code{pose_aug_*}, \code{pose_cam_*} & Pose-error study: map-pose-error augmentation (and two-cue variant with a noisy lane detector), conditioned or not on the error level.\\
+\code{vcam} & Pixel policy: a small convolutional network that sees only a front-camera image.\\
+Seed / seed block & Integer that selects the MetaDrive map, route and initial traffic. Disjoint blocks are used for training, validation and testing (Table~\ref{tab:seeds}).\\
+Density & MetaDrive \code{traffic_density}: probability-like parameter controlling the amount of traffic. 0.05 = sparse, 0.2 = dense.\\
+Wh/km & Estimated traction energy per kilometre from the declared virtual-vehicle model in \pth{bev_rl/energy.py}; not battery electricity.\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Evidence levels}
+Every quantitative statement in the document carries its sample size. Three levels are used:
+\textbf{reported} ($n\ge 200$ paired episodes, confidence intervals and paired tests given),
+\textbf{pilot} ($n=10$ to $40$ episodes; wide intervals; used to choose what to run next, not to claim),
+\textbf{diagnostic} (one or two replayed episodes that explain a mechanism but do not measure a rate).
+
+\subsection{How to read the document}
+Sections~\ref{sec:repomap}--\ref{sec:perception} explain the setting; Sections~\ref{sec:arch}--\ref{sec:catalogue} describe the models; Sections~\ref{sec:headline}--\ref{sec:failure}
+give the results and failures; Section~\ref{sec:videos} describes the videos; Section~\ref{sec:lessons} summarises what worked and what did not; Section~\ref{sec:directions} lists
+paper directions and the evidence behind each; Section~\ref{sec:related} lists related 2025--2026 papers. Appendix~\ref{app:inventory} lists every file created or changed, and
+Appendix~\ref{app:honesty} lists known defects and invalid runs.

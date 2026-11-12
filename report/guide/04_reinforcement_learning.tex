@@ -1,0 +1,66 @@
+\section{Reinforcement learning: the four attempts}\label{sec:g-rl}
+
+\begin{plainwords}
+Reinforcement learning teaches a driver by trial and error: it drives, a formula (the \emph{reward}) scores each step, and the driver is changed to score more. We hoped it would improve the imitation-trained drivers, make them energy-aware and make them weather-adaptive. We tried four times with different starting models and rewards. \textbf{No attempt produced a better driver, and the last one, the only one tested on 200 drives, made the driver worse in every weather condition.}
+Each attempt below is drawn as a flow from the starting model to what happened, followed by the reward, the settings, the number of training steps, the evaluation, why it failed and what we learned.
+\end{plainwords}
+
+\paragraph{The reward in words.} Version 1 (attempts 1--3) pays for forward progress and subtracts for lateral error, heading error, jerky control, braking, speeding, standing still and for crashes (penalty 50; success +20). Version 3 (attempt 4) pays for progress, subtracts for lateral and heading error, for a predicted collision within 3 seconds, for being closer than 6 metres to the car ahead, for energy used and for jerky control, has \emph{no} braking penalty, and pays $+50$ for success and $-100$ for a crash. The full formulas are in the technical report.
+
+\subsection*{Attempt 1: a ``privileged teacher'' trained by reinforcement learning (runs C2, Probe C, C3)}
+\rlflow{A small network that sees \emph{simulator state} (12 numbers), not the grid.}
+{Cloned from the stock driver model on the same input, then 20 warm-up drives.}
+{No traffic; mixed weather; rain lowered tyre grip (an assumption, later removed). Reward version 1, speed cap 12 m/s, crash penalty 50.}
+{Proximal policy optimisation, learning rate $3\cdot10^{-4}$ (C3: $5\cdot10^{-5}$), 4 parallel environments. C2: 1.5 million steps; Probe C: 1 million; C3: 0.3 of 1.5 million planned.}
+{16 of 70 test drives succeed (stock driver model: 47 of 70); all failures leave the road; faster, more energy.}{softred}
+\begin{center}\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.2cm}X@{}}\toprule
+Why it failed & Reward kept rising (C2 +9\%, Probe C +41\%) while success did not ($0.59\to0.45$; $0.62\to0.60$) and the driver became much faster (10.4--10.7 against 7.9 m/s): consistent with the reward paying more for speed than it costs to leave the road occasionally (a hypothesis; no ablation).\\
+What we learned & A rising reward is not evidence of better driving; a teacher worse than the rule-based one gives nothing to copy, so the project moved to rule-based teachers.\\\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection*{Attempt 2: fine-tuning the Proposed Bird's-Eye-View Driving Model with a weather input}
+\rlflow{The Proposed Bird's-Eye-View Driving Model (map-overlay grid, three vehicle-state numbers).}
+{Weights copied; a new weather input connected with zero weights, so it starts exactly identical.}
+{Eight weather conditions with detector dropout; traffic density 0.1; rain lowered grip (assumption). Reward version 1, speed cap 10 m/s, crash penalty 50.}
+{Proximal policy optimisation, learning rate $5\cdot10^{-5}$, 3 environments. 120\,000 of 480\,000 planned steps.}
+{Validation 0.675 at the start, 0.65 at 60\,000 steps, 0.675 at 120\,000: no change.}{softred}
+\begin{center}\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.2cm}X@{}}\toprule
+Why it did not help & The driver was already close to what its input allows, and the grip coupling confounded the effect of weather. Not separated experimentally.\\
+What we learned & A weather input cannot help a driver that weather does not hurt; the grip coupling was removed from later work.\\\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection*{Attempt 3: five reward combinations from the proposed model}
+\rlflow{The Proposed Bird's-Eye-View Driving Model.}
+{Extended by a ``caution'' input with zero weights: identical behaviour at step 0 (checked: difference 0.0).}
+{Dense traffic (0.1 and 0.2), eight weather conditions. Reward version 1 plus: nothing / an energy term / a caution-dependent speed limit with a crash penalty scaled by caution / a headway term / all.}
+{Proximal policy optimisation, learning rate $5\cdot10^{-5}$, 2 environments, 150\,000 steps per run (about 2 hours each), five runs.}
+{Validation 0.325--0.400 against a common start of 0.350 (40 drives): no learning visible; no energy saving.}{softred}
+\begin{center}\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.2cm}X@{}}\toprule
+Why it did not help & With 40 drives one drive is 0.025 and the interval of a value is about $\pm0.15$. The failures come from crossing and merging vehicles that the grid shows late; trial and error cannot learn to avoid what the driver cannot see.\\
+What we learned & 40 validation drives cannot choose a model; a reward cannot add missing information; an energy term needs a speed-matched control.\\\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection*{Attempt 4: reward version 3 under the measured perception damage}
+\rlflow{The Weather-Degradation-Trained Driving Model.}
+{Weights copied. Two variants planned: without and with a weather input (zero-weight branch).}
+{Measured perception damage in training; weather mix of clear, fog and rain; traffic 0.05--0.1. Reward version 3.}
+{Proximal policy optimisation, learning rate $10^{-4}$, 3 environments, validation on 12 drives. Without weather input: 300\,000 steps. With weather input: stopped after step 0.}
+{\textbf{Success lower in every condition} (200 test drives): $-0.065$ clear, $-0.115$ fog, $-0.115$ rain 0.6, $-0.095$ rain 1.0.}{softred}
+\begin{center}\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.2cm}X@{}}\toprule
+Why it failed & Collisions roughly doubled (0.20 against 0.11 in rain 1.0), speed rose from about 7.9 to 8.8 m/s and energy from about 86 to 103 watt-hours per kilometre: the same signature as attempt 1. Hypothesis: a crash penalty of 100 is small compared with the progress earned over hundreds of steps.\\
+What we learned & Validation on 12 drives at 1.0 hid the loss; the weather-input run did not run, so the pre-registered adaptation test could not be done.\\\bottomrule
+\end{tabularx}
+\end{center}
+
+\input{figure_blocks/fig_reinforcement_learning_before_and_after}
+
+\begin{implicationbox}[Research implication of the four attempts]
+Reinforcement learning is a documented \emph{negative result with a mechanism}: the reward let the driver trade safety for speed, the starting driver was already near what its input allows, and the evaluation during training was too small to notice. A fair second attempt would start from the Collision-Aware-Teacher student, validate each candidate on at least 200 paired drives, use a crash penalty large enough to dominate speed gains, constrain the new policy to stay near the old one, and give the driver the information it lacks.
+\end{implicationbox}

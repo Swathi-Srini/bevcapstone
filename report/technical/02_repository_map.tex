@@ -1,0 +1,81 @@
+\section{Repository map: where everything is}\label{sec:repomap}
+
+\begin{plainwords}
+All work lives in one folder, \pth{D:/bev_Fresh/bevcapstone}, which is a git repository connected to \url{https://github.com/Swathi-Srini/bevcapstone}. Part of the folder is the teammates' code, which \emph{is} on GitHub; the rest was produced in this project and exists \emph{only on this computer}. This section lists both, marks every item with ``on GitHub'' or ``local only'', and shows how the folder was reorganised on 11 and 12 November 2026. The detailed comparison with GitHub is in Section~\ref{sec:github}.
+\end{plainwords}
+
+\subsection{What is on GitHub (the teammates' modules)}
+Fetched on 12 November 2026: the remote's newest commit is \code{7c4e9ae} (8 September 2026), identical to the local \code{main}; all eleven remote branches are merged. The repository holds 40 commits and 120 tracked files (56 of them saved camera frames).
+\begin{table}[H]\centering\small
+\caption{The teammates' modules, all committed on GitHub (read from the repository files and their README files).}
+\label{tab:teammates}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.6cm}X@{}}\toprule
+Folder & Content\\\midrule
+\pth{baseline/bc_metadrive/} & Preserved comparison experiment: 259-dimensional MetaDrive vector observation, multilayer-perceptron behaviour cloning. Not used by this project's results; kept untouched.\\
+\pth{camera/} & Five-camera MetaDrive rig (front-left and front-right stereo pair, left, right, rear) with capture script and a front depth map from semi-global block matching; 56 example frames are tracked.\\
+\pth{YOLO+weather module/} & Live YOLO version 8 object detection on the camera views, \emph{image-space} synthetic fog and rain (\pth{weather/weather_utils.py}), reusable stereo depth (\pth{stereo_depth/}), a ground-truth stereo benchmark and a unit-test suite.\\
+\pth{bev_state/} & Assembles detections and depth into the 64 by 64 bird's-eye-view grid and the six-dimensional vehicle state (class \code{BEVStateAssembler}; grid values: $-1$ unknown, 0 free, 0.5 route, 0.8 road boundary, 0.9 ego car, 1.0 detected vehicle).\\
+\pth{bev_policy/} & Behaviour-cloning driving model (convolutional neural network on the grid and multilayer perceptron on the six numbers), demonstration collector, evaluator, metrics, plotting, and the two baseline checkpoints.\\
+\pth{tests/} and \pth{.github/workflows/} & Unit tests for the grid assembly and metrics; a GitHub Actions workflow that verifies the repository on Windows with Python 3.11.\\
+\pth{docs/} & The architecture specification (\pth{AV_Carla_BEV (1).pdf}) that fixes the grid layout, values and reward structure.\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{What is local only (produced in this project)}
+\begin{table}[H]\centering\small
+\caption{Folders created in this project. None of them is committed or pushed.}\label{tab:localfolders}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{4.4cm}X@{}}\toprule
+Folder & Content\\\midrule
+\pth{bev_rl/} & The policy-side work: camera-free environments, the two teachers, imitation and reinforcement-learning training scripts, evaluation harnesses, diagnostics, recorders. \pth{bev_rl/adaptive/} holds the experiments; its \pth{runs/}, \pth{results/} and \pth{logs/} hold every training run, every per-episode result and every log.\\
+\pth{trained_models/} & All 33 final models in one folder, descriptive names, a manifest with hashes, and the mapping from the previous file names.\\
+\pth{report/} & The two documents (Director's Research Guide and Complete Technical Research Report), their figures, tables, data copies, videos and the scripts that generate them.\\
+\pth{repository_tools/} & Scripts that organise the repository (copy and rename models, write the mapping, verify hashes).\\
+\pth{docs/project_history/} & Dated notes of 1 to 5 November (architecture state, decisions, experiment log, known limitations, preliminary literature review, research plan, environment and audit logs).\\
+\pth{archive/} & Material kept for the record but not needed: earlier paper drafts and figures, the removed scripts and early runs, and version 1 of this report.\\
+\pth{tests/test_bev_rl_*.py} & Two policy-side test files (energy model, reinforcement-learning policy).\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Teammates' files that were modified locally}
+The root \pth{README.md} was edited (a ``Start here'' pointer to the report and the new layout; the teammates' text is kept). Three tracked files in \pth{bev_policy/} carry uncommitted changes (+56 and $-$17 lines). All three add an \emph{optional} extra-input branch and are backwards compatible: the defaults reproduce the original behaviour and the two baseline checkpoints load unchanged.
+\begin{itemize}
+\item \pth{bev_policy/model.py}: class \code{BEVScalarPolicy} gained the argument \code{weather_dim} (default 0). When positive, a one-layer encoder maps an extra vector to 16 features that are concatenated before the action head. This branch is reused for the caution input, the position-error level and the weather vector.
+\item \pth{bev_policy/dataset.py}: loading of a stored weather array and of unsigned 8-bit grids.
+\item \pth{bev_policy/train_bc.py}: options \code{--weather-input}, \code{--only-clear} and \code{--val-count} for the early camera-view-version-2 experiments.
+\end{itemize}
+
+\subsection{Layout after the reorganisation}\label{sec:cleanup}
+No code module was renamed (the scripts import each other by module name; the names are explained in this report instead), no teammate file was moved, and nothing was deleted except the superseded videos.
+
+\begin{figure}[H]
+\begin{lstlisting}[frame=single,basicstyle=\ttfamily\scriptsize]
+bevcapstone/
+|-- README.md                      overview: the teammates' text plus a pointer to the reports
+|-- report/                        Directors_Research_Guide.pdf, Complete_Technical_Research_Report.pdf, sources,
+|                                  figures/, tables/, data/, videos/, make_*.py
+|-- trained_models/                ALL final trained models (copies, descriptive names) + MODEL_MANIFEST.json + MODEL_NAME_MAPPING.md
+|   |-- 01_Baseline_Models_From_Teammates/       the two baseline models (also on GitHub)
+|   |-- 02_Superseded_Early_Experiments/         early camera-view-version-2 models (not used for results)
+|   |-- 03_Imitation_Trained_Driving_Models/     proposed model, ablations, caution, position-error, weather-degradation models
+|   |-- 04_Reinforcement_Learning_Attempts/      every reinforcement-learning checkpoint that was kept
+|   |-- 05_Image_Only_Model/                     the image-only control model
+|   |-- 06_Third_Party_Perception_Weights/       YOLO version 8 nano weights (not trained here)
+|   `-- Training_Records/                        training curve, selection record and settings of every run
+|-- bev_policy/ bev_state/ camera/ baseline/ "YOLO+weather module"/    teammates' modules (on GitHub)
+|-- bev_rl/                        policy-side code; bev_rl/adaptive/{runs,results,logs} = training workspace and results
+|-- repository_tools/              scripts that organise the repository
+|-- tests/                         teammates' tests + tests/test_bev_rl_*.py
+|-- docs/                          specification pdf; project_history/ = dated earlier notes
+|-- archive/                       earlier paper drafts, removed scripts and early runs, version 1 of the report
+|-- logs/ weights/ requirements.txt requirements-lock.txt venv/
+\end{lstlisting}
+\caption{Repository layout after the reorganisation (11 and 12 November 2026).}\label{fig:tree}
+\end{figure}
+
+\paragraph{Rules applied.}
+\begin{enumerate}
+\item \textbf{All models in one folder with descriptive names.} \pth{trained_models/} holds a byte-identical copy of the \emph{selected} checkpoint of each of the 33 models. Names say what the model is (for example \pth{Proposed_BEV_Driving_Model.pt}, \pth{Baseline_Driving_Model_Trained_With_Traffic.pt}). The manifest gives the original path, the SHA-256 hash, the size and a description; the mapping file gives the previous file name of each model. The hash of every copy was verified against the original checkpoint. The originals stay in \pth{bev_rl/adaptive/runs/} because the evaluation scripts load \pth{runs/<run>/best.pt}.
+\item \textbf{Figures.} The 42 figures of the earlier drafts were archived, not edited, in \pth{archive/paper_earlier_drafts/}. The documents use 16 figures generated from the saved result files by \pth{report/make_report_figures.py}, with one colour per role: \textcolor{proposedblue}{\textbf{blue}} = the proposed model and its variants, \textcolor{baselineorange}{\textbf{orange}} = the two baseline models, \textcolor{ruleblack}{\textbf{grey}} = rule-based teachers that see simulator truth, teal = the image-only model, violet and pink = other learned models; green, red, yellow and grey in outcome charts always mean success, collision, left the road and timeout.
+\item \textbf{Videos.} The 146 earlier videos (about 1.2\,GB) were deleted and replaced by the recordings of Section~\ref{sec:videos}.
+\item \textbf{Old notes} moved to \pth{docs/project_history/} with dated names. \textbf{Superseded material} (earlier paper drafts, removed scripts, early runs, and the first version of this report) is in \pth{archive/}; nothing there is imported by any code.
+\end{enumerate}

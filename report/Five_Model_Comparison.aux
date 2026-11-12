@@ -1,0 +1,84 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {1}What this document is}{3}{section.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces The five models. ``Teacher'' is the rule-based driver whose actions the model copies. Models 1 and 2 were built by the teammates and are on GitHub; models 3 to 5 exist only on the local machine.}}{3}{table.caption.2}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{tab:fivemodels}{{1}{3}{The five models. ``Teacher'' is the rule-based driver whose actions the model copies. Models 1 and 2 were built by the teammates and are on GitHub; models 3 to 5 exist only on the local machine}{table.caption.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Strong against weak.}{3}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Plain-language rule used throughout.}{3}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}How every model is tested (the same way for all five)}{3}{section.2}\protected@file@percent }
+\newlabel{sec:testing}{{2}{3}{How every model is tested (the same way for all five)}{section.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}The test}{3}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}How the weather reaches each model}{4}{subsection.2.2}\protected@file@percent }
+\newlabel{sec:weatherreach}{{2.2}{4}{How the weather reaches each model}{subsection.2.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {Detector retention measured at different fog and rain intensities, and the probability that the driving model keeps a vehicle.} In 20 scenes (seeds 1000 to 1019, traffic density 0.3, stationary car, up to three vehicles placed around it) the same camera frames were passed through the teammates' vehicle detector twice: once clean and once with the weather filter at each intensity (two random weather draws per scene). Retention is the number of vehicles found with weather divided by the number found without weather. Grey dots are single scenes, the blue line is the mean over scenes with its 95\% interval, the orange dashed line is the measured retention capped at 1, which is the probability that the weather proxy keeps a vehicle in the driving model's grid. Dotted vertical lines mark the intensities used in the 200-episode weather tests.}}{5}{figure.caption.5}\protected@file@percent }
+\newlabel{fig:detectorretention}{{1}{5}{\textbf {Detector retention measured at different fog and rain intensities, and the probability that the driving model keeps a vehicle.} In 20 scenes (seeds 1000 to 1019, traffic density 0.3, stationary car, up to three vehicles placed around it) the same camera frames were passed through the teammates' vehicle detector twice: once clean and once with the weather filter at each intensity (two random weather draws per scene). Retention is the number of vehicles found with weather divided by the number found without weather. Grey dots are single scenes, the blue line is the mean over scenes with its 95\% interval, the orange dashed line is the measured retention capped at 1, which is the probability that the weather proxy keeps a vehicle in the driving model's grid. Dotted vertical lines mark the intensities used in the 200-episode weather tests}{figure.caption.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}The numbers reported, and their formulas}{5}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}How energy is computed (identical for all five models)}{6}{subsection.2.4}\protected@file@percent }
+\newlabel{sec:energy}{{2.4}{6}{How energy is computed (identical for all five models)}{subsection.2.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Energy computation per model. The formula is the same; only the speed history differs.}}{6}{table.caption.6}\protected@file@percent }
+\newlabel{tab:energy}{{2}{6}{Energy computation per model. The formula is the same; only the speed history differs}{table.caption.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Results of all five models together}{7}{section.3}\protected@file@percent }
+\newlabel{sec:allresults}{{3}{7}{Results of all five models together}{section.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces All metrics, five models, four weather conditions, 200 episodes each (seeds 5000--5199, sparse traffic, 800-step limit). Collision, left road and timeout are shares of the episodes. Energy is the estimate of Section~\ref {sec:energy}. ``not yet evaluated'' marks a run that had not finished when this document was built.}}{7}{table.caption.7}\protected@file@percent }
+\newlabel{tab:allmetrics}{{3}{7}{All metrics, five models, four weather conditions, 200 episodes each (seeds 5000--5199, sparse traffic, 800-step limit). Collision, left road and timeout are shares of the episodes. Energy is the estimate of Section~\ref {sec:energy}. ``not yet evaluated'' marks a run that had not finished when this document was built}{table.caption.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {Success rate of the five models in four weather conditions.} Each bar is the share of 200 episodes that reached the destination; the black line is the 95\% interval. Weather becomes stronger from left to right.}}{7}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:fivesuccess}{{2}{7}{\textbf {Success rate of the five models in four weather conditions.} Each bar is the share of 200 episodes that reached the destination; the black line is the 95\% interval. Weather becomes stronger from left to right}{figure.caption.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {How the episodes ended, per model and weather.} Each horizontal bar is one model in one weather condition; its coloured parts add up to the 200 episodes: green = destination reached, red = collision, yellow = left the road, grey = time limit reached.}}{8}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:fiveoutcomes}{{3}{8}{\textbf {How the episodes ended, per model and weather.} Each horizontal bar is one model in one weather condition; its coloured parts add up to the 200 episodes: green = destination reached, red = collision, yellow = left the road, grey = time limit reached}{figure.caption.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {Estimated energy and mean speed of the five models.} Top: estimated traction energy in watt-hours per kilometre. Bottom: mean speed in metres per second. Same four weather conditions.}}{9}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:fiveenergy}{{4}{9}{\textbf {Estimated energy and mean speed of the five models.} Top: estimated traction energy in watt-hours per kilometre. Bottom: mean speed in metres per second. Same four weather conditions}{figure.caption.10}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Paired comparison of every model against the image-only model on the same episodes. Positive differences favour the model named in the second column.}}{9}{table.caption.11}\protected@file@percent }
+\newlabel{tab:pairedimage}{{4}{9}{Paired comparison of every model against the image-only model on the same episodes. Positive differences favour the model named in the second column}{table.caption.11}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Paired comparison among the four grid-based models in clear weather (200 episodes). From the technical report.}}{10}{table.caption.12}\protected@file@percent }
+\newlabel{tab:pairedgrid}{{5}{10}{Paired comparison among the four grid-based models in clear weather (200 episodes). From the technical report}{table.caption.12}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Model 1 and model 2: the two baseline driving models (teammates)}{10}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}What they are}{10}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}What they see and the network}{10}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}How they were trained}{10}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}How they were tested}{11}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Results}{11}{subsection.4.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}What we can and cannot say}{11}{subsection.4.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Model 3: the Proposed Bird's-Eye-View Driving Model}{11}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}What it is}{11}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}What it sees and the network}{11}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}How it was trained}{11}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}How it was tested}{12}{subsection.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Results}{12}{subsection.5.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6}What we can and cannot say}{12}{subsection.5.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Model 4: the Caution-Study Caution-Aware Driving Model}{12}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}What it is}{12}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}What it sees and the network}{13}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}How it was trained}{13}{subsection.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}How it was tested}{13}{subsection.6.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}Results}{13}{subsection.6.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.6}Why it differs from the proposed model in clear weather}{13}{subsection.6.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.7}Longer time limit (post-hoc check)}{13}{subsection.6.7}\protected@file@percent }
+\newlabel{sec:longer}{{6.7}{13}{Longer time limit (post-hoc check)}{subsection.6.7}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Caution-aware model with the 80-second and the 160-second limit, next to the proposed model (80 seconds). 200 episodes each.}}{13}{table.caption.13}\protected@file@percent }
+\newlabel{tab:longer}{{6}{13}{Caution-aware model with the 80-second and the 160-second limit, next to the proposed model (80 seconds). 200 episodes each}{table.caption.13}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Paired comparison of the caution-aware model at 160 seconds with the proposed model at 80 seconds.}}{14}{table.caption.14}\protected@file@percent }
+\newlabel{tab:longerpaired}{{7}{14}{Paired comparison of the caution-aware model at 160 seconds with the proposed model at 80 seconds}{table.caption.14}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.8}What we can and cannot say}{14}{subsection.6.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Model 5: the Image-Only Driving Model (front camera)}{14}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}What it is}{14}{subsection.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}What it sees and the network}{14}{subsection.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}How it was trained}{15}{subsection.7.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}How it was tested}{15}{subsection.7.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.5}Results}{15}{subsection.7.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.6}What we can and cannot say}{15}{subsection.7.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Reinforcement learning: what we tried (two-page record)}{15}{section.8}\protected@file@percent }
+\newlabel{sec:rlrecord}{{8}{15}{Reinforcement learning: what we tried (two-page record)}{section.8}{}}
+\@writefile{toc}{\contentsline {paragraph}{State (what the network is given).}{15}{section*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Reward version 1 (attempts 1 to 3), per 0.1\,s step:}{16}{section*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Reward version 3 (attempt 4):}{16}{section*.17}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces The four reinforcement-learning attempts. ``Validation'' means the small set of episodes used during training; ``test'' means seeds never used for training.}}{16}{table.caption.18}\protected@file@percent }
+\newlabel{tab:rlfour}{{8}{16}{The four reinforcement-learning attempts. ``Validation'' means the small set of episodes used during training; ``test'' means seeds never used for training}{table.caption.18}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {9}Which wording each result supports}{17}{section.9}\protected@file@percent }
+\newlabel{sec:wording}{{9}{17}{Which wording each result supports}{section.9}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Claim, evidence and allowed wording.}}{17}{table.caption.19}\protected@file@percent }
+\newlabel{tab:wording}{{9}{17}{Claim, evidence and allowed wording}{table.caption.19}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {10}Where the files are}{17}{section.10}\protected@file@percent }
+\gdef \@abspage@last{17}

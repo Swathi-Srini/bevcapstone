@@ -1,0 +1,16 @@
+policy,lateral error (m),heading error (rad),n,success,success 95% CI,crash,off-road,timeout
+"DAgger, map-overlay BEV (ov_split)",0,0,40,0.925,"[0.80, 0.97]",0.075,0.000,0.000
+"DAgger, map-overlay BEV (ov_split)",0.25,0.02,40,0.900,"[0.77, 0.96]",0.075,0.025,0.000
+"DAgger, map-overlay BEV (ov_split)",0.5,0.05,40,0.900,"[0.77, 0.96]",0.075,0.025,0.000
+"DAgger, map-overlay BEV (ov_split)",1,0.1,40,0.700,"[0.55, 0.82]",0.050,0.250,0.000
+"DAgger, map-overlay BEV (ov_split)",2,0.2,40,0.275,"[0.16, 0.43]",0.025,0.700,0.000
+"DAgger, GitHub BEV (base_a)",0,0,40,0.875,"[0.74, 0.95]",0.075,0.025,0.025
+"DAgger, GitHub BEV (base_a)",0.25,0.02,40,0.750,"[0.60, 0.86]",0.050,0.200,0.000
+"DAgger, GitHub BEV (base_a)",0.5,0.05,40,0.500,"[0.35, 0.65]",0.025,0.450,0.025
+"DAgger, GitHub BEV (base_a)",1,0.1,40,0.275,"[0.16, 0.43]",0.025,0.625,0.075
+"DAgger, GitHub BEV (base_a)",2,0.2,40,0.300,"[0.18, 0.45]",0.000,0.625,0.075
+Repo BC (sparse traffic),0,0,40,0.775,"[0.62, 0.88]",0.075,0.150,0.000
+Repo BC (sparse traffic),0.25,0.02,40,0.600,"[0.45, 0.74]",0.025,0.375,0.000
+Repo BC (sparse traffic),0.5,0.05,40,0.550,"[0.40, 0.69]",0.075,0.375,0.000
+Repo BC (sparse traffic),1,0.1,40,0.225,"[0.12, 0.38]",0.050,0.725,0.000
+Repo BC (sparse traffic),2,0.2,40,0.150,"[0.07, 0.29]",0.050,0.800,0.000

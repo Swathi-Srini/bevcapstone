@@ -1,0 +1,46 @@
+\section{The models we trained and where they are}\label{sec:g-models}
+
+\begin{plainwords}
+Thirty-three model files were saved, all in the folder \pth{trained_models/} with descriptive file names (for example \pth{Proposed_BEV_Driving_Model.pt}). Only the two baseline drivers are also on GitHub. The table names each model, says what question it was built to answer, and gives the internal nickname that appears in old logs, once.
+\end{plainwords}
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{4.6cm}>{\raggedright\arraybackslash}p{6.6cm}>{\raggedright\arraybackslash}p{2.2cm}>{\raggedright\arraybackslash}p{1.6cm}@{}}
+\caption{The models, the question each one answers, and where it is.}\label{tab:g-models}\\
+\toprule Model (descriptive name) & Question it answers & Old nickname & On GitHub\\\midrule\endfirsthead
+\toprule Model (descriptive name) & Question it answers & Old nickname & On GitHub\\\midrule\endhead
+\bottomrule\endlastfoot
+Baseline Driving Model Trained Without Traffic & What does the teammates' behaviour cloning achieve from five recordings with no other vehicles? & repo\_bc\_clear & yes\\
+Baseline Driving Model Trained With Traffic & Same, with traffic in the recordings (the repository's recommended start). & repo\_bc\_sparse & yes\\
+\textbf{Proposed Bird's-Eye-View Driving Model} & How good is a driver taught by repeated drive-and-correct, shown the grid with the map overlay and three vehicle-state numbers? & ov\_split & no\\
+Five input-design variants (plain grid or overlay; six, three or no vehicle-state numbers; or numbers only) & Which input matters? & base\_a, ov\_both, ov\_bev\_only, arch\_bev\_only, arch\_scalar\_only & no\\
+Proposed Model Trained From the Collision-Aware Teacher & Does a better teacher give a better driver? (not yet tested on 200 drives) & sparse\_overlay\_split\_safe\_teacher & no\\
+Weather-Degradation-Trained Driving Model & Does training under the measured perception damage help? & deg\_base & no\\
+Caution-Study Caution-Aware Model and its Control (caution fixed to zero) & Should a driver be more careful when its perception is less reliable? & caut\_a, ctrl\_nocaut & no\\
+Four Position-Error-Study Models & Can the map-overlay driver survive a wrong position estimate? & pose\_aug\_*, pose\_cam\_* & no\\
+Reinforcement-learning models (attempts 1 to 4; 12 files) & Can trial and error improve a driver? & C2, probe\_C, C3, pilot\_cond, rl\_*, ppo\_plain, ppo\_ada & no\\
+Image-Only Driving Model (Front Camera) & Can a driver read the camera picture directly, without the grid? & vcam & no\\
+Early Camera-View Version 2 Models (3 files) & Superseded early experiment, not used for results. & bcv2\_* & no\\
+YOLO Version 8 Nano Object Detector Weights & The third-party detector used by the perception pipeline. & yolov8n & no (local copy)\\
+\end{longtable}
+}
+
+\begin{cautionbox}[Where the models are]
+\begin{itemize}[leftmargin=1.2em,itemsep=1pt]
+\item \textbf{All 33 models:} \pth{D:/bev_Fresh/bevcapstone/trained_models/}, in six folders named by purpose. Every file is a byte-identical copy of the original checkpoint (hash verified). \pth{MODEL_NAME_MAPPING.md} gives each model's previous file name; \pth{MODEL_MANIFEST.json} gives hashes and descriptions.
+\item \textbf{On GitHub:} the two baseline files in \pth{bev_policy/checkpoints/}. Nothing else.
+\end{itemize}
+\end{cautionbox}
+
+\section{How we tested}
+
+\begin{plainwords}
+Every model drove the \emph{same 200 scenarios} that nobody had used for training or for choosing models. A drive counts as a success only if it reaches the destination without a collision and without leaving the road. Because every model drives the same scenarios, two models can be compared on the drives where they differ, which detects a difference of 7.5 percentage points with 200 drives.
+\end{plainwords}
+\begin{itemize}
+\item \textbf{Simulator and scenarios.} MetaDrive 0.4.3; a scenario seed fixes the road, route and traffic; traffic is sparse (density 0.05) for all main results and dense (0.2) only for diagnostics; 800 steps of 0.1 s = 80 s per drive.
+\item \textbf{Separate scenario blocks:} training seeds 2000--2999; validation seeds 3100--3139 (to choose models); test seeds 1010--1049 (40 drives, pilot) and 5000--5199 (200 drives, the main test).
+\item \textbf{Four ways a drive ends:} success, collision, left the road, timeout.
+\item \textbf{Statistics:} 95\% Wilson confidence intervals; exact McNemar test and bootstrap interval for paired differences.
+\item \textbf{What the drivers see during the tests.} The full camera pipeline costs about two seconds per step, so the drivers were tested in a \emph{camera-free surrogate}: the grid is built from the simulator's list of vehicles (an ideal detector), then degraded by the measured weather effect where weather is studied. This departs from a rule written in the GitHub README (Section~\ref{sec:g-github}); results are valid for the driving models, not for the camera system as a whole.
+\end{itemize}

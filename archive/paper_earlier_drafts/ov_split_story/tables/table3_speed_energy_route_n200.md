@@ -1,0 +1,7 @@
+**Driving efficiency, 200 seeds, clear, density 0.05 (figure: dots = mean, whiskers = 95% CI)**
+
+| policy | mean speed m/s | Wh/km | route completion |
+|---|---|---|---|
+| Repo BC, sparse-traffic | 8.075 | 90.719 | 0.883 |
+| Repo BC, clear/no-traffic | 8.094 | 85.943 | 0.918 |
+| ov_split (ours) | 7.868 | 96.172 | 0.939 |

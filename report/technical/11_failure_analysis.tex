@@ -1,0 +1,60 @@
+\section{Where the models fail and why}\label{sec:failure}
+
+\begin{plainwords}
+A good evaluation does not stop at ``92.5\% succeed''; it asks where the other 7.5\% go wrong and why. This section examines the proposed model's 15 failed episodes, the limits of the bird's-eye-view input, the difficulty of dense traffic, and what the baselines' failures look like.
+\end{plainwords}
+\begin{cautionbox}[Compared with GitHub]
+The limitation of the grid (vehicles drawn without heading, a window of 17.5 metres ahead, a centre-based inclusion rule) is in the teammates' own code on GitHub, \pth{bev_state/assembler.py}. It is therefore a property of the repository, shared by every model that uses that grid, including the two committed baselines. A fix would belong in that module.
+\end{cautionbox}
+
+
+\subsection{The proposed model's 15 failures}
+Of the 200 episodes the proposed model fails 15: 12 collisions, 2 episodes that leave the road and 1 timeout. Table~\ref{tab:failures} shows what each other model did on exactly those seeds.
+\begin{table}[H]\centering\small
+\caption{The 15 episodes (of 200, clear weather, sparse traffic) that the proposed model fails, and the outcome of the other five models on the same seeds. The number in brackets is the step (10 per second) at which the proposed model's episode ended.}\label{tab:failures}
+\resizebox{\textwidth}{!}{\input{tables/headline_model_failed_episodes}}
+\end{table}
+Three observations follow directly from the table:
+\begin{enumerate}
+\item \textbf{The collision-aware teacher succeeds in 14 of the 15.} The failures are therefore \emph{imitation failures}, not unsolvable scenes: there is a policy that handles them, and the student does not reproduce it.
+\item \textbf{Eight of the 15 episodes end within the first 12 seconds: seven collisions at steps 81--100 and one episode that leaves the road at step 118.} On the seven collisions, the stock driver model and both baselines collide as well (the caution control in six of them); only the collision-aware teacher survives. These are scenes in which another vehicle crosses, merges or approaches in the first seconds of the episode, a situation that a controller that only looks at the vehicle ahead in its own lane
+  (the stock model, which also sees exact simulator state) does not handle, and that the predictive braking of the collision-aware teacher does.
+\item \textbf{The other models' failures overlap heavily with the proposed model's:} the stock driver model fails 11 of the same 15, the caution control 11, the two baselines 13 each. Across the 200 episodes no episode is failed by all six models.
+\end{enumerate}
+The unevaluated candidate that follows from this is the student of the collision-aware teacher (Section~\ref{sec:catalogue}), which has the same input as the proposed model but was labelled by the teacher that survives these scenes; it exists, was validated (1.0 on 10 sparse episodes), and has \emph{not} been evaluated on the 200-episode block.
+
+\subsection{The bird's-eye view shows the vehicle too late and too coarsely}
+A replay tool (\pth{bev_rl/adaptive/diagnose_bev_fidelity.py}) compared, step by step before a collision, the true gap between the oriented rectangles of the ego car and the nearest vehicle with the gap that the 64$\times$64 grid actually shows. Two crashes of the unmodified-grid student were analysed (Figure~\ref{fig:fidelity}).
+\input{figure_blocks/fig_birds_eye_view_fidelity_before_collision}
+What the teammates' grid builder does (read from \pth{bev_state/assembler.py}, unmodified): (i)~every vehicle is drawn as an \emph{axis-aligned} block parallel to the ego car, without its heading, centred on its true centre and rounded to 0.3125\,m cells; a vehicle crossing at 70--110 degrees is therefore drawn 1.9\,m wide although its 4.6\,m length lies across the ego's path, and the drawn gap exceeded the true gap by 0.5--1.7\,m;
+(ii)~the window is $\pm10$\,m laterally, 17.5\,m ahead and 2.5\,m behind, and a vehicle is kept only if its \emph{centre} is inside; at a closing speed of 13--15\,m/s an oncoming vehicle first appears about 0.9\,s before the impact, and a crossing vehicle that is 3\,m behind the ego centre vanishes from the grid 0.1\,s before the collision.
+The collision-aware teacher, in contrast, sees ground truth out to 45\,m: part of the gap between teacher and student is an \emph{information gap}, not only imitation error. These findings come from two replayed episodes (diagnostic level) and apply to every model that uses this grid.
+
+\subsection{Dense traffic is not solved, not even by the teachers}
+At traffic density 0.2 the rule-based teachers themselves fail most episodes (Figure~\ref{fig:teacher}, 20 episodes each): the stock driver model succeeds in 40\% and crashes in 45\%; disabling lane changes, enlarging the gap or adding predictive braking changes the success only to 0.45 (the predictive braking reduces crashes from 0.45 to 0.30 but converts them into timeouts, 0.25).
+A diagnosis of the stock model's crashes showed that they are almost always into vehicles that merge, cut in or cross from the side. A learned student cannot exceed such a teacher, which is why the whole study was moved to sparse traffic. No learned model's dense-traffic number is reported with more than 10 episodes.
+\input{figure_blocks/fig_teacher_ceiling_dense_traffic}
+
+\subsection{Failure modes of the baseline behaviour cloning}
+The sparse-traffic baseline fails 25.5\% of the 200 episodes: 12\% collisions and 13.5\% off-road. The off-road share is the signature of covariate shift (Section~\ref{sec:training}): a small lateral error is never corrected because the five demonstrations contain no recoveries. The proposed model leaves the road in 1.0\% of the episodes. The no-traffic baseline fails 15\% (12.5\% collisions): it never saw a vehicle during training.
+
+\subsection{Sensitivity to the car's pose against the map}
+Section~\ref{sec:weather} shows that the overlay-based models are insensitive to errors up to 0.5\,m and collapse beyond 1\,m (0.70 at 1\,m, 0.275 at 2\,m), and that adding a second, independent lane cue removes the sensitivity. The overlay makes the model accurate when the map alignment is exact and fragile when it is not; this is a limitation of the proposed design, not a measurement of any real localisation system.
+
+\subsection{Evaluation noise inside the simulator}
+The divergence of the same model and seed across process histories (Section~\ref{sec:repro}) means that a single replayed episode is a sample, not a deterministic fact. It affects the videos and the replays above, and means that paired comparisons are paired on the scenario (map, route, initial traffic), not on every random event.
+
+\subsection{Summary of failure mechanisms}
+\begin{table}[H]\centering\small
+\caption{Failure mechanisms, the evidence for each and its level.}\label{tab:mechanisms}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{4.4cm}X>{\raggedright\arraybackslash}p{2.6cm}@{}}\toprule
+Mechanism & Evidence & Level\\\midrule
+Late or mis-sized vehicle in the grid (no heading, short window, centre rule) & Replay of two crashes: appearance 0.9\,s before impact; gap overstated by up to 1.7\,m; vehicle vanishes 0.1\,s before impact & Diagnostic (2 episodes)\\
+Information gap between teacher (45\,m, exact state) and student (17.5\,m grid) & 14 of the proposed model's 15 failures are solved by the collision-aware teacher; 8 are early crossings/oncoming & Reported (200 episodes) for the overlap; mechanism inferred\\
+Same-lane-only controller cannot react to merging or crossing vehicles & Teacher crash analysis; success 0.40--0.45 in dense traffic whatever the variant & Pilot (20 episodes)\\
+Covariate shift of behaviour cloning & Off-road share 13.5\% of the sparse-traffic baseline against 1.0\% of the proposed model & Reported\\
+Map pose error & Success 0.925 $\to$ 0.275 from 0 to 2\,m & Pilot (40 episodes)\\
+Reinforcement learning trades safety for speed & Speed +0.9\,m/s, collisions $\times2$, success $-0.065$ to $-0.115$ & Reported (200 episodes); mechanism hypothesised\\
+Weather & No measurable effect on success in sparse traffic & Reported (200 episodes)\\\bottomrule
+\end{tabularx}
+\end{table}

@@ -1,0 +1,34 @@
+[
+ {
+  "run": "arch_scalar_only",
+  "ckpt": "best",
+  "density": 0.05,
+  "n": 10,
+  "success": 0.7,
+  "success_ci95": [
+   0.39677321997956516,
+   0.892210712513788
+  ],
+  "crash": 0.2,
+  "off_road": 0.1,
+  "timeout": 0.0,
+  "mean_speed": 8.08327539261526,
+  "wh_per_km": 83.0063204306434
+ },
+ {
+  "run": "arch_scalar_only",
+  "ckpt": "best",
+  "density": 0.2,
+  "n": 10,
+  "success": 0.1,
+  "success_ci95": [
+   0.01787574951572113,
+   0.4041563854975721
+  ],
+  "crash": 0.8,
+  "off_road": 0.1,
+  "timeout": 0.0,
+  "mean_speed": 7.802125648630532,
+  "wh_per_km": 115.26991769169403
+ }
+]

@@ -1,0 +1,236 @@
+{
+ "models": [
+  {
+   "file": "01_Baseline_Models_From_Teammates/Baseline_Driving_Model_Trained_Without_Traffic.pt",
+   "original_path": "bev_policy/checkpoints/bc_clear_5eps_without_traffic.pt",
+   "sha256": "d66e8d393a1b40c29aaeec4558fcc8c47b97ef5c5dc022e24ffd1c204d64cc02",
+   "size_kilobytes": 438.3,
+   "description": "Teammates' behaviour-cloning baseline. 5 clear-weather demonstrations of the intelligent driver model, NO other vehicles. Input: camera-derived bird's-eye view (1 channel) + 6 scalars."
+  },
+  {
+   "file": "01_Baseline_Models_From_Teammates/Baseline_Driving_Model_Trained_With_Traffic.pt",
+   "original_path": "bev_policy/checkpoints/bc_sparse_traffic_5eps.pt",
+   "sha256": "175fd1fa5b3eaf647558677921174fc637fa93cefed2dddc254b51ee695e204c",
+   "size_kilobytes": 438.7,
+   "description": "Teammates' behaviour-cloning baseline. 5 demonstrations with sparse traffic (density 0.05). Input as above. Recommended starting point of the reinforcement-learning stage in the repository README."
+  },
+  {
+   "file": "02_Superseded_Early_Experiments/Early_Camera_View_Version2_Model_Clear_Weather_Only.pt",
+   "original_path": "bev_policy/checkpoints/bcv2_clear_none.pt",
+   "sha256": "928b59a3b15d6a1517202c2e7a14d843c824886e4055774ba6dc91666b721ae7",
+   "size_kilobytes": 457.4,
+   "description": "Early experiment (2026-11-02): behaviour cloning on the 7-channel camera bird's-eye view version 2, clear weather only. Superseded; the 7-channel pipeline was not used for the final results."
+  },
+  {
+   "file": "02_Superseded_Early_Experiments/Early_Camera_View_Version2_Model_Mixed_Weather_Without_Weather_Input.pt",
+   "original_path": "bev_policy/checkpoints/bcv2_mixed_none.pt",
+   "sha256": "b0035afa9626d61c5a2dface34d5708c6911ce0a87a97707b20cd427a52f2b9c",
+   "size_kilobytes": 458.0,
+   "description": "Early experiment: version-2 bird's-eye view, mixed clear/fog/rain demonstrations, no weather input. Superseded."
+  },
+  {
+   "file": "02_Superseded_Early_Experiments/Early_Camera_View_Version2_Model_Mixed_Weather_With_Weather_Input.pt",
+   "original_path": "bev_policy/checkpoints/bcv2_mixed_explicit.pt",
+   "sha256": "602388c71a7fe302908d8668009d063da8d1bdb1c303b9d9384c42500e6ef2a1",
+   "size_kilobytes": 467.1,
+   "description": "Early experiment: version-2 bird's-eye view, mixed demonstrations, explicit weather input. Superseded."
+  },
+  {
+   "file": "03_Imitation_Trained_Driving_Models/Proposed_BEV_Driving_Model.pt",
+   "original_path": "bev_rl/adaptive/runs/ov_split/best.pt",
+   "sha256": "33971e72f944ef91f2bee3bc488be25ad6a6ecac60b228f4f5fa1986df0de161",
+   "size_kilobytes": 437.2,
+   "description": "PROPOSED MODEL (code name ov_split; called the headline model in earlier notes). Dataset-aggregation student. Input: bird's-eye view with the route centre line and road boundaries drawn in from the map + 3 scalars (speed, route progress, distance to goal). Lateral offset, heading error and curvature were moved out of the scalars into the map overlay."
+  },
+  {
+   "file": "03_Imitation_Trained_Driving_Models/Ablation_Plain_BEV_With_Six_State_Inputs.pt",
+   "original_path": "bev_rl/adaptive/runs/base_a/best.pt",
+   "sha256": "6be2d15bd515e7ff2040883cee2b3579d07404aa68efa71f070b92a5a2b5e890",
+   "size_kilobytes": 437.2,
+   "description": "Dataset-aggregation student (code name base_a) on the teammates' unmodified 1-channel bird's-eye view + all 6 scalars. The direct dataset-aggregation counterpart of the baseline behaviour-cloning models."
+  },
+  {
+   "file": "03_Imitation_Trained_Driving_Models/Ablation_Map_Overlay_BEV_With_Six_State_Inputs.pt",
+   "original_path": "bev_rl/adaptive/runs/ov_both/best.pt",
+   "sha256": "ad906a77d921524dac65956ed33c9148c81e999ecedd971dc61fa130efb76ad2",
+   "size_kilobytes": 437.2,
+   "description": "Ablation (code name ov_both): map overlay AND all 6 scalars (information duplicated in both inputs)."
+  },
+  {
+   "file": "03_Imitation_Trained_Driving_Models/Ablation_Map_Overlay_BEV_Without_State_Inputs.pt",
+   "original_path": "bev_rl/adaptive/runs/ov_bev_only/best.pt",
+   "sha256": "4c7f96c08cd535c584b6c90bc01ab5f54e7de451d60473e17831f755a9d0bff5",
+   "size_kilobytes": 437.2,
+   "description": "Ablation (code name ov_bev_only): map overlay, scalars hidden."
+  },
+  {
+   "file": "03_Imitation_Trained_Driving_Models/Ablation_Plain_BEV_Without_State_Inputs.pt",
+   "original_path": "bev_rl/adaptive/runs/arch_bev_only/best.pt",
+   "sha256": "2113e3612343cdec9c15de68bef1fae3c6ba784e45cf18896e32db4c0ca8acce",
+   "size_kilobytes": 437.2,
+   "description": "Ablation (code name arch_bev_only): unmodified bird's-eye view, scalars hidden."
+  },
+  {
+   "file": "03_Imitation_Trained_Driving_Models/Ablation_Six_State_Inputs_Without_BEV.pt",
+   "original_path": "bev_rl/adaptive/runs/arch_scalar_only/best.pt",
+   "sha256": "2a6b1db6b17c48221d05604daa7a4c47b9952126285705464edc9d00f6c9dd3f",
+   "size_kilobytes": 437.2,
+   "description": "Ablation (code name arch_scalar_only): bird's-eye view replaced by zeros, all 6 scalars visible."
+  },
+  {
+   "file": "03_Imitation_Trained_Driving_Models/Proposed_BEV_Driving_Model_Trained_From_Collision_Aware_Teacher.pt",
+   "original_path": "bev_rl/adaptive/runs/sparse_overlay_split_safe_teacher/best.pt",
+   "sha256": "edb944f285364c678f80ce8887f759479b7db1eeb1c63ea1f8a3e4bb64f19d2f",
+   "size_kilobytes": 437.2,
+   "description": "Same input design as the headline model, but labelled by the collision-aware teacher (intelligent driver model + predictive braking layer) instead of the stock driver model. Trained at densities 0, 0.05, 0.1."
+  },
+  {
+   "file": "03_Imitation_Trained_Driving_Models/Caution_Study_Caution_Aware_Driving_Model.pt",
+   "original_path": "bev_rl/adaptive/runs/caut_a/best.pt",
+   "sha256": "c9a0b3649c247b61d2d6a80b78e6d3307361f8dd3754a1fd7c48c375b03d2aa6",
+   "size_kilobytes": 445.7,
+   "description": "Caution study (code name caut_a): proposed model's input design + one extra 'caution' input derived from measured detector reliability; trained with detector dropout and a caution-aware teacher."
+  },
+  {
+   "file": "03_Imitation_Trained_Driving_Models/Caution_Study_Control_Model_Caution_Input_Fixed_To_Zero.pt",
+   "original_path": "bev_rl/adaptive/runs/ctrl_nocaut/best.pt",
+   "sha256": "6090e8bd6d9cd734cae73356249a20604df1184de6f3160078ca20474aa3e79e",
+   "size_kilobytes": 445.7,
+   "description": "Control of the caution study (code name ctrl_nocaut): identical data and architecture, caution input always 0."
+  },
+  {
+   "file": "03_Imitation_Trained_Driving_Models/Weather_Degradation_Trained_Driving_Model.pt",
+   "original_path": "bev_rl/adaptive/runs/deg_base/best.pt",
+   "sha256": "730436cd0de6d430450904019ca607b954c10f81dff27862111ec48dfa11e7fd",
+   "size_kilobytes": 437.2,
+   "description": "Code name deg_base. Dataset aggregation where the student sees the calibrated degraded perception (missed detections and wrong ranges measured from the stereo+detector pipeline); labels from the collision-aware teacher on ground truth."
+  },
+  {
+   "file": "03_Imitation_Trained_Driving_Models/Pose_Error_Study_Map_Only_Without_Error_Level_Input.pt",
+   "original_path": "bev_rl/adaptive/runs/pose_aug_unconditioned/best.pt",
+   "sha256": "f50ccc1af75bf38057a79b49a99d1251d80b8a356dc3b8a1f69a05f6205b34f8",
+   "size_kilobytes": 445.8,
+   "description": "Pose-error study (code name pose_aug_unconditioned): trained with random ego-pose error against the map, reliability input fixed to 0 (control)."
+  },
+  {
+   "file": "03_Imitation_Trained_Driving_Models/Pose_Error_Study_Map_Only_With_Error_Level_Input.pt",
+   "original_path": "bev_rl/adaptive/runs/pose_aug_conditioned/best.pt",
+   "sha256": "33095bb91738d35b6e113367d0918068f5d6179cea0730533d4504c00da4cea1",
+   "size_kilobytes": 445.8,
+   "description": "Pose-error study (code name pose_aug_conditioned): same, but the pose-error level is given to the network as an input."
+  },
+  {
+   "file": "03_Imitation_Trained_Driving_Models/Pose_Error_Study_Two_Cues_Without_Error_Level_Input.pt",
+   "original_path": "bev_rl/adaptive/runs/pose_cam_unconditioned/best.pt",
+   "sha256": "40a12180a0347e522d7be447c6b7cb8a4c028c06d8e4f0eacc22ddd54432295e",
+   "size_kilobytes": 445.8,
+   "description": "Pose-error study, two-cue variant (code name pose_cam_unconditioned): additional noisy lane-detector scalars (lateral offset, heading error); reliability input 0."
+  },
+  {
+   "file": "03_Imitation_Trained_Driving_Models/Pose_Error_Study_Two_Cues_With_Error_Level_Input.pt",
+   "original_path": "bev_rl/adaptive/runs/pose_cam_conditioned/best.pt",
+   "sha256": "57a3a218ea685c4b12d786eef1a18139674340e2f24c36916328625d95af6afc",
+   "size_kilobytes": 445.8,
+   "description": "Pose-error study, two-cue variant (code name pose_cam_conditioned): both reliability levels given as input."
+  },
+  {
+   "file": "04_Reinforcement_Learning_Attempts/Reinforcement_Learning_Attempt_4_Fine_Tuned_Without_Weather_Input.pt",
+   "original_path": "bev_rl/adaptive/runs/ppo_plain/best.pt",
+   "sha256": "51dc9f5b0af7a024cc76773b60724838581bb159b63ab349d41943d0fc4d4c1e",
+   "size_kilobytes": 437.1,
+   "description": "Code name ppo_plain. Proximal policy optimisation, reward version 3, starting from the degraded-perception student. 300 000 steps, 3 parallel environments, learning rate 1e-4. Validation success was 1.0 (12 episodes) at EVERY checkpoint including step 0, so validation could not discriminate; the saved 'best' is step 300000 only by the tie-break rule (later iterate wins)."
+  },
+  {
+   "file": "04_Reinforcement_Learning_Attempts/Reinforcement_Learning_Attempt_4_With_Weather_Input_INCOMPLETE_Untrained.pt",
+   "original_path": "bev_rl/adaptive/runs/ppo_ada/best.pt",
+   "sha256": "bedd1f159f66958e8cb1b5d2226466bd5ddbb0c9b967f6989d777553f6464b83",
+   "size_kilobytes": 445.9,
+   "description": "Code name ppo_ada. The run DIED after step 0 (process stopped); this file is the untrained start (= the degraded-perception student with a zero-initialised weather branch). Do not report it as a trained model."
+  },
+  {
+   "file": "04_Reinforcement_Learning_Attempts/Reinforcement_Learning_Attempt_3_Reward_Sweep_Base_Reward.zip",
+   "original_path": "bev_rl/adaptive/runs/rl_plain/best.zip",
+   "sha256": "aecbcdd8c90a66687c46ccf88d52748dced4c73b07cf5f42462b36a194f3dfe5",
+   "size_kilobytes": 2796.0,
+   "description": "Code name rl_plain. PPO (Stable-Baselines3 container) from the headline model, base reward, density 0.2 validation. Reward-combination sweep, 150 000 steps."
+  },
+  {
+   "file": "04_Reinforcement_Learning_Attempts/Reinforcement_Learning_Attempt_3_Reward_Sweep_Plus_Energy_Term.zip",
+   "original_path": "bev_rl/adaptive/runs/rl_energy/best.zip",
+   "sha256": "8bb3c6ee60faf938a4436d7223b2501439c204430415b3b19e713cf9caee6b91",
+   "size_kilobytes": 2797.1,
+   "description": "Code name rl_energy. As rl_plain + energy penalty."
+  },
+  {
+   "file": "04_Reinforcement_Learning_Attempts/Reinforcement_Learning_Attempt_3_Reward_Sweep_Plus_Safe_Speed_And_Crash_Scaling.zip",
+   "original_path": "bev_rl/adaptive/runs/rl_safe/best.zip",
+   "sha256": "2b5bdbba74ffc5015d206638de6f3db4bfa69532123fda57191fababb2856b17",
+   "size_kilobytes": 2797.1,
+   "description": "Code name rl_safe. As rl_plain + visibility-coupled speed limit and risk-scaled crash penalty."
+  },
+  {
+   "file": "04_Reinforcement_Learning_Attempts/Reinforcement_Learning_Attempt_3_Reward_Sweep_Plus_Headway_Term.zip",
+   "original_path": "bev_rl/adaptive/runs/rl_head/best.zip",
+   "sha256": "02a166c1e53164e1c6bdc112275ac74e9d7bcf221e7302fe3d47e92ff1963eb0",
+   "size_kilobytes": 2797.1,
+   "description": "Code name rl_head. As rl_plain + headway (gap) term."
+  },
+  {
+   "file": "04_Reinforcement_Learning_Attempts/Reinforcement_Learning_Attempt_3_Reward_Sweep_All_Reward_Terms.zip",
+   "original_path": "bev_rl/adaptive/runs/rl_full/best.zip",
+   "sha256": "037e7a596722bc750788f8c6ce28bfcd44f7454b8c81aeb2aabb0ed0eec6f22e",
+   "size_kilobytes": 2797.1,
+   "description": "Code name rl_full. As rl_plain + energy + safe speed + headway + crash scaling."
+  },
+  {
+   "file": "04_Reinforcement_Learning_Attempts/Reinforcement_Learning_Attempt_1_Privileged_Teacher_Run_C2.zip",
+   "original_path": "bev_rl/adaptive/checkpoints/C2_final_1.5M.zip",
+   "sha256": "771147fdeef77d49def46379b58d15a7902f58f542ed6418b4ffe4a403e6278a",
+   "size_kilobytes": 474.2,
+   "description": "Code name C2. First reinforcement-learning attempt: PPO teacher on privileged simulator observations with an explicit weather input, warm-started from behaviour cloning of the driver model (bc_init), 1.5 M steps, speed cap 12 m/s, crash penalty 50. Reserved-seed evaluation: clear 2/10 success, fog 5/10, rain 9/50; failures were almost all off-road."
+  },
+  {
+   "file": "04_Reinforcement_Learning_Attempts/Reinforcement_Learning_Attempt_1_Privileged_Teacher_Run_Probe_C.zip",
+   "original_path": "bev_rl/adaptive/checkpoints/probe_C_final_1M.zip",
+   "sha256": "73e420da0f433645e2cc916bfcaf1591bbd1c429e59cfc80b5676e4ab0d357b3",
+   "size_kilobytes": 474.2,
+   "description": "Code name probe_C. Probe run of the privileged PPO teacher (same set-up as C2, 1 M steps, speed cap 12 m/s). Reserved-seed evaluation: clear 3/10 success, fog 3/10, rain 10/50; failures almost all off-road."
+  },
+  {
+   "file": "04_Reinforcement_Learning_Attempts/Reinforcement_Learning_Attempt_1_Initialisation_Behaviour_Cloned_Privileged_Expert.pt",
+   "original_path": "bev_rl/adaptive/checkpoints/bc_init.pt",
+   "sha256": "2e84941d77584a9fe079cca5f22b8bcffc70b50097679f92f9d4442ce346de09",
+   "size_kilobytes": 74.6,
+   "description": "Code name bc_init. Behaviour-cloned privileged expert used to warm-start the PPO teacher (avoids the stand-still optimum)."
+  },
+  {
+   "file": "04_Reinforcement_Learning_Attempts/Reinforcement_Learning_Attempt_1_Privileged_Teacher_Run_C3.zip",
+   "original_path": "archive/removed_scripts_and_early_runs_2026-11-05/runs/C3/best.zip",
+   "sha256": "35ae898ed38ca115d92009586635e16a754d14aa23c0013f5e45036e246c0c3c",
+   "size_kilobytes": 474.2,
+   "description": "Early PPO attempt (code name C3): as C2 but speed cap 10 m/s and learning rate 5e-5, 1.5 M steps planned. Best validation checkpoint was at 100 000 steps (validation success 0.4). Kept for the failure record."
+  },
+  {
+   "file": "04_Reinforcement_Learning_Attempts/Reinforcement_Learning_Attempt_2_Fine_Tuned_Proposed_Model_With_Weather_Input.zip",
+   "original_path": "archive/removed_scripts_and_early_runs_2026-11-05/runs/pilot_cond/best.zip",
+   "sha256": "25148b20f70128bcc3b059b5b23ad7f385060d9fdcf1a89861f412625aa10ab0",
+   "size_kilobytes": 2821.1,
+   "description": "Reinforcement-learning attempt 2 (code name pilot_cond): PPO fine-tuning of the proposed model (map overlay, three state inputs) with an added weather input, detector dropout at the measured retention, learning rate 5e-5, 3 parallel environments, speed cap 10 m/s, crash penalty 50. Planned 480 000 steps; the run ended after 120 000. Validation success 0.675 at step 0, 0.65 at 60 000, 0.675 at 120 000 (40 episodes)."
+  },
+  {
+   "file": "05_Image_Only_Model/Image_Only_Driving_Model_Front_Camera.pt",
+   "original_path": "bev_rl/adaptive/runs/vcam/best.pt",
+   "sha256": "9ba7d924bf5e2564e62a796801d6147dd137d1f16fb657383c7adfe7876e362c",
+   "size_kilobytes": 804.8,
+   "description": "Code name vcam. Convolutional network that sees ONLY a front-camera image (no bird's-eye view, no scalars). Control experiment showing that image corruptions hurt a pixel policy."
+  },
+  {
+   "file": "06_Third_Party_Perception_Weights/Third_Party_YOLOv8_Nano_Object_Detector_Weights.pt",
+   "original_path": "weights/yolov8n.pt",
+   "sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+   "size_kilobytes": 6396.3,
+   "description": "Pretrained YOLO version 8 nano object detector (Ultralytics, third-party weights) used by the teammates' perception pipeline. Not trained in this project."
+  }
+ ],
+ "missing_sources": []
+}

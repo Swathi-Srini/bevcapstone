@@ -1,0 +1,1335 @@
+{
+ "arm": "base_a",
+ "cells": {
+  "clear:0.0": {
+   "n": 40,
+   "keep_prob": 1.0,
+   "success": 0.875,
+   "success_ci": [
+    0.7388757932976187,
+    0.9454058022645873
+   ],
+   "crash_or_offroad": 0.1,
+   "timeout": 0.025,
+   "retention_vs_clear": 1.0
+  },
+  "fog:1.0": {
+   "n": 40,
+   "keep_prob": 0.2666666666666667,
+   "success": 0.875,
+   "success_ci": [
+    0.7388757932976187,
+    0.9454058022645873
+   ],
+   "crash_or_offroad": 0.1,
+   "timeout": 0.025,
+   "retention_vs_clear": 1.0
+  },
+  "rain:0.6": {
+   "n": 40,
+   "keep_prob": 0.15833333333333333,
+   "success": 0.875,
+   "success_ci": [
+    0.7388757932976187,
+    0.9454058022645873
+   ],
+   "crash_or_offroad": 0.1,
+   "timeout": 0.025,
+   "retention_vs_clear": 1.0
+  },
+  "rain:1.0": {
+   "n": 40,
+   "keep_prob": 0.03958333333333334,
+   "success": 0.875,
+   "success_ci": [
+    0.7388757932976187,
+    0.9454058022645873
+   ],
+   "crash_or_offroad": 0.1,
+   "timeout": 0.025,
+   "retention_vs_clear": 1.0
+  }
+ },
+ "episodes": [
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1010,
+   "outcome": "success",
+   "route": 0.9832613213757883,
+   "speed": 8.029873145732868
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1011,
+   "outcome": "timeout",
+   "route": 0.2996056188973245,
+   "speed": 1.4207006662152961
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1012,
+   "outcome": "success",
+   "route": 0.9881359885539989,
+   "speed": 7.242825399527432
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1013,
+   "outcome": "success",
+   "route": 0.9848488588214762,
+   "speed": 7.619859140412472
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1014,
+   "outcome": "success",
+   "route": 0.9787348566779615,
+   "speed": 7.987902222633868
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1015,
+   "outcome": "success",
+   "route": 0.9921983719681602,
+   "speed": 8.142972103278332
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1016,
+   "outcome": "success",
+   "route": 0.9839820055774318,
+   "speed": 7.983053919739906
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1017,
+   "outcome": "success",
+   "route": 0.985943188329668,
+   "speed": 8.052927801226977
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1018,
+   "outcome": "success",
+   "route": 0.9885542710608335,
+   "speed": 8.0941061676321
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1019,
+   "outcome": "crash",
+   "route": 0.7967011105595692,
+   "speed": 7.78151429497024
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1020,
+   "outcome": "success",
+   "route": 0.9806937157430652,
+   "speed": 7.914337361407362
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1021,
+   "outcome": "success",
+   "route": 0.9884089324232106,
+   "speed": 8.046124582150549
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1022,
+   "outcome": "success",
+   "route": 0.9897171348353504,
+   "speed": 8.060818510182727
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1023,
+   "outcome": "success",
+   "route": 0.9842514779093269,
+   "speed": 8.033660942101779
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1024,
+   "outcome": "success",
+   "route": 0.9907487444920736,
+   "speed": 7.492244220852422
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1025,
+   "outcome": "success",
+   "route": 0.9837931100317291,
+   "speed": 7.842296998328842
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1026,
+   "outcome": "success",
+   "route": 0.9906009425258342,
+   "speed": 7.930489130346114
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1027,
+   "outcome": "success",
+   "route": 0.98573719842307,
+   "speed": 7.731902682712125
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1028,
+   "outcome": "success",
+   "route": 0.9812039146274619,
+   "speed": 7.916081859638855
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1029,
+   "outcome": "success",
+   "route": 0.983242930844999,
+   "speed": 7.970898282943095
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1030,
+   "outcome": "success",
+   "route": 0.9856052941564818,
+   "speed": 7.330516560418253
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1031,
+   "outcome": "success",
+   "route": 0.990211735041989,
+   "speed": 8.117570808810898
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1032,
+   "outcome": "success",
+   "route": 0.9826284435703273,
+   "speed": 7.9512446572766695
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1033,
+   "outcome": "success",
+   "route": 0.9884282511226175,
+   "speed": 8.045447800240458
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1034,
+   "outcome": "off_road",
+   "route": 0.34370632474088286,
+   "speed": 3.4055027877783446
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1035,
+   "outcome": "success",
+   "route": 0.9870831769734941,
+   "speed": 8.080578747756675
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1036,
+   "outcome": "success",
+   "route": 0.9808792677011876,
+   "speed": 7.971141861078822
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1037,
+   "outcome": "success",
+   "route": 0.9862635551898907,
+   "speed": 8.021551461779167
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1038,
+   "outcome": "success",
+   "route": 0.9853414098007962,
+   "speed": 7.821407956644441
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1039,
+   "outcome": "crash",
+   "route": 0.8257772969792585,
+   "speed": 7.942895993815349
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1040,
+   "outcome": "crash",
+   "route": 0.1880733363501324,
+   "speed": 6.793178733108125
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1041,
+   "outcome": "success",
+   "route": 0.9884235443166554,
+   "speed": 7.416527034011786
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1042,
+   "outcome": "success",
+   "route": 0.9853085862980229,
+   "speed": 8.002548972251764
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1043,
+   "outcome": "success",
+   "route": 0.9900366913635369,
+   "speed": 7.987287533714737
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1044,
+   "outcome": "success",
+   "route": 0.9835898961770062,
+   "speed": 7.998189549481772
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1045,
+   "outcome": "success",
+   "route": 0.9892953272696383,
+   "speed": 8.067985655448378
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1046,
+   "outcome": "success",
+   "route": 0.9915821125058029,
+   "speed": 8.183388087795315
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1047,
+   "outcome": "success",
+   "route": 0.9783865346225901,
+   "speed": 7.9426034867807065
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1048,
+   "outcome": "success",
+   "route": 0.9909433751969394,
+   "speed": 7.955448941222188
+  },
+  {
+   "arm": "base_a",
+   "weather": "clear:0.0",
+   "seed": 1049,
+   "outcome": "success",
+   "route": 0.9884140376503974,
+   "speed": 7.989386283151548
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1010,
+   "outcome": "success",
+   "route": 0.9832611340506575,
+   "speed": 8.029871444212267
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1011,
+   "outcome": "timeout",
+   "route": 0.2996138576010454,
+   "speed": 1.4205620450195697
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1012,
+   "outcome": "success",
+   "route": 0.9873207293009238,
+   "speed": 7.270380070224621
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1013,
+   "outcome": "success",
+   "route": 0.9848508324072336,
+   "speed": 7.619861225740757
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1014,
+   "outcome": "success",
+   "route": 0.9787348566776564,
+   "speed": 7.987902236665354
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1015,
+   "outcome": "success",
+   "route": 0.9921982165366376,
+   "speed": 8.14297132555319
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1016,
+   "outcome": "success",
+   "route": 0.9849440658795269,
+   "speed": 7.989776132203692
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1017,
+   "outcome": "success",
+   "route": 0.9859430893317791,
+   "speed": 8.052927384906921
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1018,
+   "outcome": "success",
+   "route": 0.9885553760749032,
+   "speed": 8.094112237374983
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1019,
+   "outcome": "crash",
+   "route": 0.8004026254197415,
+   "speed": 7.854187518186224
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1020,
+   "outcome": "success",
+   "route": 0.980693729604769,
+   "speed": 7.914336951131045
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1021,
+   "outcome": "success",
+   "route": 0.988409027173538,
+   "speed": 8.046124418850008
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1022,
+   "outcome": "success",
+   "route": 0.9897171348351063,
+   "speed": 8.060818550788818
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1023,
+   "outcome": "success",
+   "route": 0.9842511310229903,
+   "speed": 8.033659712598556
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1024,
+   "outcome": "success",
+   "route": 0.9913776211590032,
+   "speed": 7.43927948883354
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1025,
+   "outcome": "success",
+   "route": 0.9837930143076743,
+   "speed": 7.842296469054201
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1026,
+   "outcome": "success",
+   "route": 0.9903164609453925,
+   "speed": 7.245496715062256
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1027,
+   "outcome": "success",
+   "route": 0.9856781974852427,
+   "speed": 7.8553269619074175
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1028,
+   "outcome": "success",
+   "route": 0.981204350136579,
+   "speed": 7.916083835988289
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1029,
+   "outcome": "success",
+   "route": 0.9832431081158606,
+   "speed": 7.970900848951309
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1030,
+   "outcome": "success",
+   "route": 0.9854712262910579,
+   "speed": 7.348295455565386
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1031,
+   "outcome": "success",
+   "route": 0.9902116855291306,
+   "speed": 8.11757114948455
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1032,
+   "outcome": "success",
+   "route": 0.982628347668676,
+   "speed": 7.951244335727176
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1033,
+   "outcome": "success",
+   "route": 0.9884282485829529,
+   "speed": 8.045447723425642
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1034,
+   "outcome": "off_road",
+   "route": 0.34370670396876607,
+   "speed": 3.405509748699005
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1035,
+   "outcome": "success",
+   "route": 0.9870830611613349,
+   "speed": 8.080577523433583
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1036,
+   "outcome": "success",
+   "route": 0.9808793151189739,
+   "speed": 7.971142048555457
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1037,
+   "outcome": "success",
+   "route": 0.9862634491106155,
+   "speed": 8.021551894216149
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1038,
+   "outcome": "off_road",
+   "route": 0.8973637547563734,
+   "speed": 7.965500873262043
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1039,
+   "outcome": "crash",
+   "route": 0.8260393847658933,
+   "speed": 7.929596237867838
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1040,
+   "outcome": "success",
+   "route": 0.9868643014038176,
+   "speed": 7.9945023297716435
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1041,
+   "outcome": "success",
+   "route": 0.9884275112914109,
+   "speed": 7.416542182786162
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1042,
+   "outcome": "success",
+   "route": 0.9853071768365127,
+   "speed": 8.00253737538864
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1043,
+   "outcome": "success",
+   "route": 0.9890051231810396,
+   "speed": 7.971711260435896
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1044,
+   "outcome": "success",
+   "route": 0.9835900449039989,
+   "speed": 7.998189127917521
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1045,
+   "outcome": "success",
+   "route": 0.9892953321473128,
+   "speed": 8.067985720025398
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1046,
+   "outcome": "success",
+   "route": 0.9915829716974919,
+   "speed": 8.18339324413069
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1047,
+   "outcome": "success",
+   "route": 0.9783856363608892,
+   "speed": 7.942597216622868
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1048,
+   "outcome": "success",
+   "route": 0.9906101705736191,
+   "speed": 7.9454215128397125
+  },
+  {
+   "arm": "base_a",
+   "weather": "fog:1.0",
+   "seed": 1049,
+   "outcome": "success",
+   "route": 0.9884140970823896,
+   "speed": 7.98938744653623
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1010,
+   "outcome": "success",
+   "route": 0.983258563240429,
+   "speed": 8.029850414089033
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1011,
+   "outcome": "timeout",
+   "route": 0.2996126614651002,
+   "speed": 1.4206705119296266
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1012,
+   "outcome": "success",
+   "route": 0.9876569802677376,
+   "speed": 7.271274608611717
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1013,
+   "outcome": "success",
+   "route": 0.9848516085111647,
+   "speed": 7.619863611987283
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1014,
+   "outcome": "success",
+   "route": 0.9787349591515654,
+   "speed": 7.987901161596497
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1015,
+   "outcome": "success",
+   "route": 0.9921982942368868,
+   "speed": 8.142971654670914
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1016,
+   "outcome": "success",
+   "route": 0.9850862414038722,
+   "speed": 7.989674965874489
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1017,
+   "outcome": "success",
+   "route": 0.9859431457863058,
+   "speed": 8.052926885116635
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1018,
+   "outcome": "success",
+   "route": 0.9885554932853838,
+   "speed": 8.094114821726457
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1019,
+   "outcome": "crash",
+   "route": 0.8004134905381687,
+   "speed": 7.854484763169811
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1020,
+   "outcome": "success",
+   "route": 0.9806938084423771,
+   "speed": 7.9143376407218815
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1021,
+   "outcome": "success",
+   "route": 0.988408931701884,
+   "speed": 8.046123735929433
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1022,
+   "outcome": "success",
+   "route": 0.9897172060363527,
+   "speed": 8.06081855589646
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1023,
+   "outcome": "success",
+   "route": 0.9842510807914547,
+   "speed": 8.033658670137608
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1024,
+   "outcome": "success",
+   "route": 0.9914267898826309,
+   "speed": 7.4867336549401475
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1025,
+   "outcome": "success",
+   "route": 0.9837929787759372,
+   "speed": 7.842296387311121
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1026,
+   "outcome": "success",
+   "route": 0.9902964599548044,
+   "speed": 7.872431829275936
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1027,
+   "outcome": "success",
+   "route": 0.9861132499066481,
+   "speed": 7.997738290128914
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1028,
+   "outcome": "success",
+   "route": 0.981203911750709,
+   "speed": 7.916081479200738
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1029,
+   "outcome": "success",
+   "route": 0.9832429308449993,
+   "speed": 7.970898166049265
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1030,
+   "outcome": "success",
+   "route": 0.9849960228694402,
+   "speed": 7.341458083318224
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1031,
+   "outcome": "success",
+   "route": 0.9902116393300815,
+   "speed": 8.117571560704071
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1032,
+   "outcome": "success",
+   "route": 0.9826284076075312,
+   "speed": 7.951244378351635
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1033,
+   "outcome": "success",
+   "route": 0.9884282464796367,
+   "speed": 8.0454475769026
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1034,
+   "outcome": "off_road",
+   "route": 0.3437071594589476,
+   "speed": 3.40551700642937
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1035,
+   "outcome": "success",
+   "route": 0.9870830446084519,
+   "speed": 8.080577576628652
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1036,
+   "outcome": "success",
+   "route": 0.9808793239945544,
+   "speed": 7.971142799986098
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1037,
+   "outcome": "success",
+   "route": 0.986263736128749,
+   "speed": 8.0215515512341
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1038,
+   "outcome": "off_road",
+   "route": 0.8973132093340159,
+   "speed": 7.965296783700324
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1039,
+   "outcome": "crash",
+   "route": 0.8260377493251422,
+   "speed": 7.929591745115851
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1040,
+   "outcome": "success",
+   "route": 0.9868642636948054,
+   "speed": 7.994502358749715
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1041,
+   "outcome": "success",
+   "route": 0.9884275191280897,
+   "speed": 7.416543340907272
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1042,
+   "outcome": "success",
+   "route": 0.9853075915263553,
+   "speed": 8.00254062791309
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1043,
+   "outcome": "success",
+   "route": 0.9885137493409801,
+   "speed": 8.014857910707255
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1044,
+   "outcome": "success",
+   "route": 0.983589950719075,
+   "speed": 7.99818948860936
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1045,
+   "outcome": "success",
+   "route": 0.989295320341848,
+   "speed": 8.06798598964338
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1046,
+   "outcome": "success",
+   "route": 0.9915812493938473,
+   "speed": 8.183381039935904
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1047,
+   "outcome": "success",
+   "route": 0.9783854261209475,
+   "speed": 7.942595991379611
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1048,
+   "outcome": "success",
+   "route": 0.990497271856203,
+   "speed": 7.977831999543535
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:0.6",
+   "seed": 1049,
+   "outcome": "success",
+   "route": 0.9884142081553943,
+   "speed": 7.989386826912427
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1010,
+   "outcome": "success",
+   "route": 0.9832603963312619,
+   "speed": 8.029864552153018
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1011,
+   "outcome": "timeout",
+   "route": 0.29961028543582957,
+   "speed": 1.4211202789430115
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1012,
+   "outcome": "success",
+   "route": 0.9897954833658017,
+   "speed": 7.272518228327568
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1013,
+   "outcome": "success",
+   "route": 0.9848515335392313,
+   "speed": 7.619861874384335
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1014,
+   "outcome": "success",
+   "route": 0.9787348566776568,
+   "speed": 7.987902214092291
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1015,
+   "outcome": "success",
+   "route": 0.9921982384361168,
+   "speed": 8.142971703211442
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1016,
+   "outcome": "success",
+   "route": 0.9851064096994557,
+   "speed": 7.989930779270507
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1017,
+   "outcome": "success",
+   "route": 0.9859432545377415,
+   "speed": 8.0529279878909
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1018,
+   "outcome": "success",
+   "route": 0.9885537479365017,
+   "speed": 8.094100592928935
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1019,
+   "outcome": "crash",
+   "route": 0.7988444846391588,
+   "speed": 7.871910117480371
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1020,
+   "outcome": "success",
+   "route": 0.9806937306618401,
+   "speed": 7.91433797351651
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1021,
+   "outcome": "success",
+   "route": 0.988408930752507,
+   "speed": 8.046124102337764
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1022,
+   "outcome": "success",
+   "route": 0.9897170737360816,
+   "speed": 8.060818387821932
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1023,
+   "outcome": "success",
+   "route": 0.9842512274213588,
+   "speed": 8.0336596605849
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1024,
+   "outcome": "off_road",
+   "route": 0.36499609313570663,
+   "speed": 5.133468701920726
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1025,
+   "outcome": "success",
+   "route": 0.9837930400813943,
+   "speed": 7.842296313055922
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1026,
+   "outcome": "success",
+   "route": 0.9904253201053087,
+   "speed": 7.941455356152182
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1027,
+   "outcome": "success",
+   "route": 0.9859559209830918,
+   "speed": 8.014363842808644
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1028,
+   "outcome": "success",
+   "route": 0.9812039117507092,
+   "speed": 7.916081653218591
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1029,
+   "outcome": "success",
+   "route": 0.9832429308449995,
+   "speed": 7.970898296563395
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1030,
+   "outcome": "success",
+   "route": 0.9871037941305321,
+   "speed": 7.45681289282173
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1031,
+   "outcome": "success",
+   "route": 0.9902117246509046,
+   "speed": 8.117571332585827
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1032,
+   "outcome": "success",
+   "route": 0.9826284881985945,
+   "speed": 7.951244487424572
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1033,
+   "outcome": "success",
+   "route": 0.988428172722026,
+   "speed": 8.04544759713142
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1034,
+   "outcome": "off_road",
+   "route": 0.3437064674328948,
+   "speed": 3.4055035138464285
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1035,
+   "outcome": "success",
+   "route": 0.9870831209174309,
+   "speed": 8.080579195831078
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1036,
+   "outcome": "success",
+   "route": 0.9808795842301433,
+   "speed": 7.971143190861115
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1037,
+   "outcome": "success",
+   "route": 0.9862635501504735,
+   "speed": 8.021551696323485
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1038,
+   "outcome": "success",
+   "route": 0.987542881584956,
+   "speed": 7.981795255430956
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1039,
+   "outcome": "crash",
+   "route": 0.8260377510432867,
+   "speed": 7.92958453022333
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1040,
+   "outcome": "success",
+   "route": 0.9868821505597056,
+   "speed": 7.994777695621302
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1041,
+   "outcome": "success",
+   "route": 0.9884267057250106,
+   "speed": 7.416539135667807
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1042,
+   "outcome": "success",
+   "route": 0.9853083765439499,
+   "speed": 8.002548407238303
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1043,
+   "outcome": "success",
+   "route": 0.9893743635167401,
+   "speed": 8.071939246517019
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1044,
+   "outcome": "success",
+   "route": 0.9835899518070619,
+   "speed": 7.998189994126
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1045,
+   "outcome": "success",
+   "route": 0.9892953300672095,
+   "speed": 8.067985794283567
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1046,
+   "outcome": "success",
+   "route": 0.9915827550946095,
+   "speed": 8.183393759760024
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1047,
+   "outcome": "success",
+   "route": 0.9783845397859975,
+   "speed": 7.942590353338251
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1048,
+   "outcome": "success",
+   "route": 0.9906722167314121,
+   "speed": 6.988510195027827
+  },
+  {
+   "arm": "base_a",
+   "weather": "rain:1.0",
+   "seed": 1049,
+   "outcome": "success",
+   "route": 0.988414261649822,
+   "speed": 7.989386712483846
+  }
+ ]
+}

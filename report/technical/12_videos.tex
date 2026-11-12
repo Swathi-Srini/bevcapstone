@@ -1,0 +1,45 @@
+\section{Front-camera videos of one seed under four weather conditions}\label{sec:videos}
+
+\begin{plainwords}
+Videos make the results tangible. We recorded one scenario, number 5169, in which both baseline drivers crash and the proposed driver does not, in four weather conditions, with the front camera only and with smooth, real-time playback. The image-only driver, which really does read these pictures, was recorded as well.
+\end{plainwords}
+\begin{cautionbox}[Compared with GitHub]
+The video format follows the teammates' reference recording (the front-left camera frame with the weather filter applied, ten frames per second, one frame per simulation step). The recordings themselves are local only and excluded from git by the repository's \code{*.mp4} rule.
+\end{cautionbox}
+
+
+\subsection{What was recorded and why}
+All 146 earlier videos (about 1.2\,GB: top-down and bird's-eye-view panels, laggy camera panels, and a front-camera set at a different seed with 13 models) were deleted. They are replaced by one small, consistent set, as requested: \textbf{front-camera frames only, one seed, four models, four weather conditions} (16 videos, \pth{report/videos/}).
+The camera is the front-left camera of the teammates' rig (1200$\times$900 pixels) with the teammates' weather augmentation applied to each frame, written at 10 frames per second, \emph{one frame per simulation step} (so playback is in real time and smooth), with no text, boxes or overlays.
+
+\paragraph{The four models:} the two baseline models (trained without and with traffic), the proposed model, and the Image-Only Driving Model. The first three drive from the simulator-built grid; the image-only model drives from camera pixels: a second camera with the same mounting and field of view renders a 320 by 240 picture, with the same weather applied, which is resized to 128 by 96 and given to the model, while the 1200 by 900 picture of the first camera is what is written to the video (script \pth{bev_rl/adaptive/record_pixel_policy_video.py}).
+\paragraph{The four weather conditions:} clear, fog 1.0, rain 0.6, rain 1.0 (the cells of the 200-episode evaluation).
+
+\subsection{How the seed was chosen}
+The seed was searched in the 200-episode result files (\pth{bev_rl/adaptive/results/n200_all_weather/} and \pth{final_200seed/}) for episodes in which \emph{both baselines fail and the proposed model succeeds}, preferring seeds where this holds in all four weather cells.
+Seven seeds satisfy the clear-weather condition with two collisions (5006, 5060, 5102, 5119, 5161, 5169, 5181). Of these, only \textbf{seed 5169} has the sparse-traffic baseline crashing in all four weather conditions \emph{and} the proposed model succeeding in all four (the no-traffic baseline was evaluated in clear weather only at this sample size, where it crashes as well).
+The videos were then recorded and their outcomes compared with the evaluation: in all conditions recorded the outcome is identical to the evaluation's and the episode length differs by at most a few steps (Section~\ref{sec:repro} explains why exact equality is not guaranteed).
+
+\subsection{Result}
+\begin{table}[H]\centering\small
+\caption{The sixteen recorded videos (seed 5169, sparse traffic, front-left camera). File names in \code{report/videos/} follow the pattern \code{front_camera__seed5169__<model>__<weather>__<outcome>.mp4}.}\label{tab:videos}
+\resizebox{\textwidth}{!}{\input{tables/video_outcomes}}
+\end{table}
+
+\input{figure_blocks/fig_seed5169_front_camera_frames}
+
+\subsection{How to read the videos correctly}
+\begin{itemize}
+\item \textbf{The policies do not read these pixels.} They drive from the simulator-derived grid (Section~\ref{sec:surrogate}), with weather acting through detector dropout / calibrated degradation. The video shows what the real camera would be looking at under the same weather level next to the behaviour of the policy.
+  That the baselines crash and the proposed model does not, identically in every weather condition, \emph{is the weather result of Section~\ref{sec:weather} in video form}: the weather in the picture does not change what the models do.
+\item The weather augmentation draws fresh random noise at every frame (as in the teammates' pipeline), so the rain texture flickers; this is expected.
+\item The videos are not part of any statistic. They illustrate one scenario that was selected \emph{because} the baselines fail on it; they must not be used to estimate how often that happens (the 200-episode result does).
+\end{itemize}
+
+\subsection{How to regenerate}
+\begin{lstlisting}
+venv\Scripts\python.exe -m bev_rl.adaptive.record_camera_plain --out report\videos_raw --seeds 5169 ^
+    --arms repo_bc_clear repo_bc_sparse ov_split --weather clear:0.0 fog:1.0 rain:0.6 rain:1.0
+venv\Scripts\python.exe report\make_video_assets.py --finalise
+\end{lstlisting}
+Recording takes about 50 s per baseline video and 2.5 minutes per proposed-model video (longer episode).

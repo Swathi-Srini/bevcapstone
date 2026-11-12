@@ -1,0 +1,6 @@
+run,reward terms,val success @0,val success @150k,best,Wh/km @150k
+rl_full,energy + safe-speed + headway + crash-scaling,0.350,0.375,0.400,156
+rl_plain,base reward,0.350,0.400,0.425,159
+rl_energy,+ energy term,0.350,0.325,0.375,148
+rl_safe,"+ safe-speed, crash-scaling",0.350,0.400,0.400,149
+rl_head,+ headway term,0.350,0.325,0.400,151

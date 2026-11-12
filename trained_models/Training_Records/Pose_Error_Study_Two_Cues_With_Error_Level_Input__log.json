@@ -1,0 +1,75 @@
+[
+ {
+  "iter": 0,
+  "beta": 1.0,
+  "samples": 19400,
+  "train_loss": 0.004752081353217363,
+  "rollout_outcomes": {
+   "crash": 6,
+   "timeout": 3,
+   "success": 36
+  },
+  "val_success": 0.8666666666666667,
+  "val_fail": 0.13333333333333333,
+  "t_min": 19.999041819572447
+ },
+ {
+  "iter": 1,
+  "beta": 0.5,
+  "samples": 39648,
+  "train_loss": 0.01656300015747547,
+  "rollout_outcomes": {
+   "crash": 2,
+   "timeout": 4,
+   "success": 39
+  },
+  "val_success": 0.9333333333333333,
+  "val_fail": 0.06666666666666667,
+  "t_min": 38.365281236171725
+ },
+ {
+  "iter": 2,
+  "beta": 0.25,
+  "samples": 58383,
+  "train_loss": 0.0029980246908962727,
+  "rollout_outcomes": {
+   "off_road": 1,
+   "crash": 3,
+   "timeout": 3,
+   "success": 38
+  },
+  "val_success": 0.9666666666666667,
+  "val_fail": 0.03333333333333333,
+  "t_min": 58.57418289581935
+ },
+ {
+  "iter": 3,
+  "beta": 0.125,
+  "samples": 77513,
+  "train_loss": 0.0059456597082316875,
+  "rollout_outcomes": {
+   "off_road": 5,
+   "crash": 4,
+   "timeout": 5,
+   "success": 31
+  },
+  "val_success": 1.0,
+  "val_fail": 0.0,
+  "t_min": 81.73977365891139
+ },
+ {
+  "iter": 4,
+  "beta": 0.0625,
+  "samples": 96525,
+  "train_loss": 0.04539965093135834,
+  "rollout_outcomes": {
+   "off_road": 2,
+   "crash": 6,
+   "timeout": 3,
+   "success": 34
+  },
+  "val_success": 1.0,
+  "val_fail": 0.0,
+  "t_min": 106.60614217917124
+ }
+]

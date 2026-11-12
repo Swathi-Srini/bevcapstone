@@ -1,0 +1,150 @@
+\contentsline {section}{\numberline {1}Project overview in plain language}{6}{section.1}%
+\contentsline {subsection}{\numberline {1.1}The research question and how it changed}{6}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}What was built}{6}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}The four core models and the role of everything else}{7}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}What was found}{7}{subsection.1.4}%
+\contentsline {subsection}{\numberline {1.5}How to read this report}{8}{subsection.1.5}%
+\contentsline {section}{\numberline {2}Terminology: every technical term explained}{8}{section.2}%
+\contentsline {section}{\numberline {3}Repository map: where everything is}{11}{section.3}%
+\contentsline {subsection}{\numberline {3.1}What is on GitHub (the teammates' modules)}{12}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}What is local only (produced in this project)}{13}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Teammates' files that were modified locally}{13}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Layout after the reorganisation}{13}{subsection.3.4}%
+\contentsline {paragraph}{Rules applied.}{14}{section*.6}%
+\contentsline {section}{\numberline {4}Comparison with the current GitHub repository}{15}{section.4}%
+\contentsline {subsection}{\numberline {4.1}The state of GitHub}{15}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Component-by-component comparison}{16}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}The baseline number on GitHub versus this report}{17}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Where this project departs from the rules written on GitHub}{17}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}What would have to be pushed to make GitHub match this report}{18}{subsection.4.5}%
+\contentsline {section}{\numberline {5}Experimental setup}{18}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Simulator, scenarios and outcomes}{18}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Why the policies do not run on live camera pixels}{18}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Seed blocks}{19}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Metrics}{19}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Reproducibility caveat}{20}{subsection.5.5}%
+\contentsline {section}{\numberline {6}What fog and rain do to the perception: the measurement}{20}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Why it was measured}{20}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Protocol}{21}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Result}{21}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}How detector retention was measured at different intensities, and how the driving model receives it}{22}{subsection.6.4}%
+\contentsline {subsection}{\numberline {6.5}Consistency with the earlier retention table}{23}{subsection.6.5}%
+\contentsline {subsection}{\numberline {6.6}An invalid first measurement (kept for the record)}{24}{subsection.6.6}%
+\contentsline {subsection}{\numberline {6.7}Cost of the full perception chain}{24}{subsection.6.7}%
+\contentsline {section}{\numberline {7}Model architecture}{24}{section.7}%
+\contentsline {subsection}{\numberline {7.1}The shared network}{25}{subsection.7.1}%
+\contentsline {paragraph}{Inputs.}{25}{section*.13}%
+\contentsline {paragraph}{Output.}{26}{section*.15}%
+\contentsline {subsection}{\numberline {7.2}The actor--critic variant for reinforcement learning}{26}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}The Image-Only Driving Model}{26}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}Rule-based teachers (not learned)}{27}{subsection.7.4}%
+\contentsline {section}{\numberline {8}Training strategies}{27}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Behaviour cloning (the teammates' baselines)}{27}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Dataset aggregation (the main training strategy)}{28}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Variants of the dataset-aggregation recipe}{29}{subsection.8.3}%
+\contentsline {subsection}{\numberline {8.4}Reinforcement learning}{30}{subsection.8.4}%
+\contentsline {section}{\numberline {9}Model catalogue}{31}{section.9}%
+\contentsline {paragraph}{How to read the ``selected round'' column.}{31}{section*.18}%
+\contentsline {subsection}{\numberline {9.1}What each family is for}{33}{subsection.9.1}%
+\contentsline {section}{\numberline {10}Main result: 200 paired episodes in clear weather}{33}{section.10}%
+\contentsline {paragraph}{Protocol.}{34}{section*.19}%
+\contentsline {subsection}{\numberline {10.1}The Image-Only Driving Model on the same 200 episodes}{35}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}What the numbers say}{35}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}What this result does \emph {not} show}{38}{subsection.10.3}%
+\contentsline {section}{\numberline {11}Weather, caution, input design and robustness to pose error}{39}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Detector-dropout proxy: no effect (pilot, 40 episodes)}{39}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}Calibrated degradation: no effect (reported, 200 episodes)}{39}{subsection.11.2}%
+\contentsline {paragraph}{Pre-registered hypotheses, final status.}{41}{section*.30}%
+\contentsline {paragraph}{Why weather does not matter here (explanations, partly tested).}{41}{section*.31}%
+\contentsline {subsection}{\numberline {11.3}Caution coupled to perception reliability: learned adaptive behaviour (pilot at 40 episodes, confirmed at 200)}{41}{subsection.11.3}%
+\contentsline {subsection}{\numberline {11.4}Input design (pilot, 10 episodes)}{42}{subsection.11.4}%
+\contentsline {subsection}{\numberline {11.5}Robustness to an error in the car's pose against the map (pilot, 40 episodes)}{43}{subsection.11.5}%
+\contentsline {subsection}{\numberline {11.6}Caution-aware model against the proposed model and both baselines (200 episodes, four weather conditions)}{45}{subsection.11.6}%
+\contentsline {paragraph}{Longer time limit (post-hoc check).}{47}{section*.40}%
+\contentsline {section}{\numberline {12}Reinforcement learning: all four attempts, what happened and why}{48}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Common ingredients}{48}{subsection.12.1}%
+\contentsline {paragraph}{Algorithm.}{48}{section*.43}%
+\contentsline {paragraph}{Why start from an imitation-trained model.}{48}{section*.44}%
+\contentsline {paragraph}{The two reward functions.}{48}{section*.45}%
+\contentsline {subsection}{\numberline {12.2}Overview}{49}{subsection.12.2}%
+\contentsline {subsection}{\numberline {12.3}Attempt 1: a ``privileged teacher'' trained by reinforcement learning (runs C2, Probe C and C3)}{52}{subsection.12.3}%
+\contentsline {subsection}{\numberline {12.4}Attempt 2: fine-tuning the Proposed Bird's-Eye-View Driving Model with a weather input}{53}{subsection.12.4}%
+\contentsline {subsection}{\numberline {12.5}Attempt 3: five reward combinations from the Proposed Bird's-Eye-View Driving Model}{54}{subsection.12.5}%
+\contentsline {subsection}{\numberline {12.6}Attempt 4: reward version 3 under the measured perception degradation}{55}{subsection.12.6}%
+\contentsline {subsection}{\numberline {12.7}What the four attempts have in common}{56}{subsection.12.7}%
+\contentsline {section}{\numberline {13}Where the models fail and why}{56}{section.13}%
+\contentsline {subsection}{\numberline {13.1}The proposed model's 15 failures}{56}{subsection.13.1}%
+\contentsline {subsection}{\numberline {13.2}The bird's-eye view shows the vehicle too late and too coarsely}{57}{subsection.13.2}%
+\contentsline {subsection}{\numberline {13.3}Dense traffic is not solved, not even by the teachers}{58}{subsection.13.3}%
+\contentsline {subsection}{\numberline {13.4}Failure modes of the baseline behaviour cloning}{59}{subsection.13.4}%
+\contentsline {subsection}{\numberline {13.5}Sensitivity to the car's pose against the map}{59}{subsection.13.5}%
+\contentsline {subsection}{\numberline {13.6}Evaluation noise inside the simulator}{60}{subsection.13.6}%
+\contentsline {subsection}{\numberline {13.7}Summary of failure mechanisms}{60}{subsection.13.7}%
+\contentsline {section}{\numberline {14}Front-camera videos of one seed under four weather conditions}{60}{section.14}%
+\contentsline {subsection}{\numberline {14.1}What was recorded and why}{61}{subsection.14.1}%
+\contentsline {paragraph}{The four models:}{61}{section*.58}%
+\contentsline {paragraph}{The four weather conditions:}{61}{section*.59}%
+\contentsline {subsection}{\numberline {14.2}How the seed was chosen}{61}{subsection.14.2}%
+\contentsline {subsection}{\numberline {14.3}Result}{62}{subsection.14.3}%
+\contentsline {subsection}{\numberline {14.4}How to read the videos correctly}{63}{subsection.14.4}%
+\contentsline {subsection}{\numberline {14.5}How to regenerate}{64}{subsection.14.5}%
+\contentsline {section}{\numberline {15}What worked and what did not}{64}{section.15}%
+\contentsline {subsection}{\numberline {15.1}Lessons learned}{66}{subsection.15.1}%
+\contentsline {section}{\numberline {16}Possible paper directions, ranked by how well the evidence supports them}{66}{section.16}%
+\contentsline {subsection}{\numberline {16.1}Direction A: pitfalls of closed-loop evaluation of learned driving policies (strongest support)}{66}{subsection.16.1}%
+\contentsline {subsection}{\numberline {16.2}Direction B: where does perception degradation start to matter? A measured dose-response study (strong support, cheap)}{67}{subsection.16.2}%
+\contentsline {subsection}{\numberline {16.3}Direction C: the teacher--student information gap in bird's-eye-view driving (strong potential, one decisive experiment)}{67}{subsection.16.3}%
+\contentsline {subsection}{\numberline {16.4}Direction D: a thorough evaluation of imitation versus reinforcement learning in a camera-derived bird's-eye-view setting}{67}{subsection.16.4}%
+\contentsline {subsection}{\numberline {16.5}Direction E: robustness of map-overlay policies to localisation error through redundancy}{68}{subsection.16.5}%
+\contentsline {subsection}{\numberline {16.6}Direction F: reliability-coupled caution as learned adaptive behaviour}{68}{subsection.16.6}%
+\contentsline {subsection}{\numberline {16.7}Direction G: a reproducible benchmark and dataset}{68}{subsection.16.7}%
+\contentsline {subsection}{\numberline {16.8}Recommended combination}{68}{subsection.16.8}%
+\contentsline {section}{\numberline {17}Related work from arXiv, 2025--2026}{69}{section.17}%
+\contentsline {subsection}{\numberline {17.1}How this list was made, and what can and cannot be trusted}{69}{subsection.17.1}%
+\contentsline {paragraph}{The gap this project sits in.}{69}{section*.63}%
+\contentsline {subsection}{\numberline {17.2}MetaDrive and reinforcement-learning frameworks for driving}{70}{subsection.17.2}%
+\contentsline {paragraph}{MetaDrive: Composing Diverse Driving Scenarios for Generalizable Reinforcement Learning}{70}{section*.65}%
+\contentsline {paragraph}{Learning Safe Autonomous Driving Policies Using Predictive Safety Representations}{71}{section*.66}%
+\contentsline {paragraph}{Safety Interventions against Adversarial Patches in an Open-Source Driver Assistance System}{71}{section*.67}%
+\contentsline {paragraph}{V-Max: A Reinforcement Learning Framework for Autonomous Driving}{71}{section*.68}%
+\contentsline {paragraph}{Beyond Self-Play and Scale: A Behavior Benchmark for Generalization in Autonomous Driving}{71}{section*.69}%
+\contentsline {subsection}{\numberline {17.3}Robustness, weather and perturbation benchmarks}{72}{subsection.17.3}%
+\contentsline {paragraph}{Towards Benchmarking and Assessing the Safety and Robustness of Autonomous Driving on Safety-critical Scenarios}{72}{section*.70}%
+\contentsline {paragraph}{Bench2Drive-Robust: Benchmarking Closed-Loop Autonomous Driving under Deployment Perturbations}{72}{section*.71}%
+\contentsline {paragraph}{PerturbationDrive: A Framework for Perturbation-Based Testing of ADAS}{72}{section*.72}%
+\contentsline {paragraph}{FogDrive: A Multi-Modal Synthetic Driving Dataset for Perception under Graded Fog}{72}{section*.73}%
+\contentsline {paragraph}{Salience-Invariant Consistent Policy Learning for Generalization in Visual Reinforcement Learning}{73}{section*.74}%
+\contentsline {paragraph}{Adversarial Robustness Analysis of Cloud-Assisted Autonomous Driving Systems}{73}{section*.75}%
+\contentsline {subsection}{\numberline {17.4}Bird's-eye-view representations and perception}{73}{subsection.17.4}%
+\contentsline {paragraph}{ME$^3$-bird's-eye-view: Mamba-Enhanced Deep Reinforcement Learning for End-to-End Autonomous Driving with bird's-eye-view-Perception}{73}{section*.76}%
+\contentsline {paragraph}{Can bird's-eye-view Perception Gracefully Degrade under Sensor Failures?}{74}{section*.77}%
+\contentsline {paragraph}{RESBev: Making bird's-eye-view Perception More Robust}{74}{section*.78}%
+\contentsline {paragraph}{Progressive Bird's Eye View Perception for Safety-Critical Autonomous Driving: A Comprehensive Survey}{74}{section*.79}%
+\contentsline {subsection}{\numberline {17.5}Imitation, privileged teachers and on-policy distillation}{74}{subsection.17.5}%
+\contentsline {paragraph}{LEAD: Minimizing Learner--Expert Asymmetry in End-to-End Driving}{74}{section*.80}%
+\contentsline {paragraph}{Scaling Self-Play for End-to-End Driving}{75}{section*.81}%
+\contentsline {paragraph}{Distilling Realizable Students from Unrealizable Teachers}{75}{section*.82}%
+\contentsline {paragraph}{OPTED: On-Policy Fine-Tuning for End-to-End Driving using a Render-Free Teacher}{75}{section*.83}%
+\contentsline {paragraph}{RAIL: Representation-Aligned Imitation Learning for Student-Compatible Teacher Policies}{75}{section*.84}%
+\contentsline {section}{\numberline {A}Inventory of every file created or changed}{76}{appendix.A}%
+\contentsline {subsection}{\numberline {A.1}Teammate files modified locally (uncommitted)}{76}{subsection.A.1}%
+\contentsline {subsection}{\numberline {A.2}Policy-side code, first layer (\texttt {bev\_rl/})}{76}{subsection.A.2}%
+\contentsline {subsection}{\numberline {A.3}Policy-side code, experiments (\texttt {bev\_rl/adaptive/})}{76}{subsection.A.3}%
+\contentsline {subsection}{\numberline {A.4}Policy-side tests}{80}{subsection.A.4}%
+\contentsline {subsection}{\numberline {A.5}Report and repository tools}{81}{subsection.A.5}%
+\contentsline {subsection}{\numberline {A.6}Report sources (LaTeX)}{81}{subsection.A.6}%
+\contentsline {subsection}{\numberline {A.7}Data, results, logs and archives}{82}{subsection.A.7}%
+\contentsline {subsection}{\numberline {A.8}Trained models: new file name, previous file name, GitHub status and hash}{83}{subsection.A.8}%
+\contentsline {section}{\numberline {B}Reproduction commands}{85}{appendix.B}%
+\contentsline {subsection}{\numberline {B.1}Environment}{85}{subsection.B.1}%
+\contentsline {subsection}{\numberline {B.2}Training (examples; each takes about 1.5 to 2 hours)}{85}{subsection.B.2}%
+\contentsline {subsection}{\numberline {B.3}Evaluation}{85}{subsection.B.3}%
+\contentsline {subsection}{\numberline {B.4}Videos}{86}{subsection.B.4}%
+\contentsline {subsection}{\numberline {B.5}Both documents}{86}{subsection.B.5}%
+\contentsline {subsection}{\numberline {B.6}Reorganisation scripts}{86}{subsection.B.6}%
+\contentsline {section}{\numberline {C}Known defects, invalid runs and untested items}{86}{appendix.C}%
+\contentsline {subsection}{\numberline {C.1}Invalid or superseded results (kept for the record)}{86}{subsection.C.1}%
+\contentsline {subsection}{\numberline {C.2}Items that exist but were not evaluated or finished}{87}{subsection.C.2}%
+\contentsline {subsection}{\numberline {C.3}Corrections made when this version of the report was written}{87}{subsection.C.3}%
+\contentsline {subsection}{\numberline {C.4}Limits of the evidence}{88}{subsection.C.4}%
+\contentsline {subsection}{\numberline {C.5}How the numbers in this report were produced}{88}{subsection.C.5}%

@@ -1,0 +1,61 @@
+\section{The project on one page}
+
+\begin{plainwords}[What we built and what we found]
+We built software ``drivers'' for a car in a driving simulator. Each driver looks at a small top-down picture of its surroundings and a few numbers about the car, and decides how to steer and how much to accelerate or brake.
+We compared ways of \emph{teaching} such a driver, measured how fog and rain damage the camera system that would feed it, and tested whether that damage makes the drivers worse.
+\begin{itemize}[leftmargin=1.2em,itemsep=1pt]
+\item \textbf{Best driver:} the \emph{Proposed Bird's-Eye-View Driving Model} succeeds in \textbf{92.5\%} of 200 test drives. The two baseline drivers that are on GitHub succeed in \textbf{85.0\%} and \textbf{74.5\%}. It ties the rule-based teacher it learned from (95.0\%).
+\item \textbf{Weather:} simulated fog and rain make the object detector miss most vehicles (it finds 72\% in clear weather and 1.4\% in the heaviest rain), yet driving success in sparse traffic stays at \textbf{89--91\%}. The original idea, a driver that adapts to weather, has nothing to adapt to here.
+\item \textbf{Reinforcement learning} (teaching by trial and error with a score) was tried four times and \textbf{never improved a driver}; the last attempt made it worse in every weather condition.
+\item \textbf{Failures:} most of the remaining failures are crashes in the first seconds that a better-informed teacher avoids: the driver's input does not show enough.
+\item \textbf{GitHub:} it holds the teammates' modules and the two baseline drivers only. All other work and every finding in this document are on this computer only.
+\end{itemize}
+\end{plainwords}
+
+\subsection{What this document is}
+This is the \emph{Director's Research Guide}: about twenty pages that explain what we built, what we tried, what happened, why, and what to do next, without needing to know the code. Every model is called by its descriptive name; the internal nicknames of the old logs appear nowhere except in the table of Section~\ref{sec:g-models} (once) and the run labels C2, Probe C and C3 of reinforcement-learning attempt 1, which are part of their file names. The \emph{Complete Technical Research Report} contains every detail, every file and every number behind these pages; each section below says where to find it.
+
+\subsection{The question, and how it changed}
+The research plan asked: \emph{can a driving policy keep following its route, and use less energy, when its camera perception is degraded by fog and rain?} Answering it needed four pieces of work, and each one produced a finding:
+\begin{center}\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{4.6cm}X@{}}\toprule
+Piece of work & Finding\\\midrule
+1. A driving model that works & Teaching by repeated drive-and-correct (dataset aggregation) gives a driver that beats the baselines and ties its teacher.\\
+2. A measurement of the weather damage & Fog and rain remove most vehicle detections but do not make the distance estimates worse for the vehicles that are found.\\
+3. A test of whether the damage matters & It does not lower success in sparse traffic, so weather adaptation cannot be shown here.\\
+4. Reinforcement learning, including an energy-aware reward & Four attempts; none improved a driver; the reward let the driver trade safety for speed.\\\bottomrule
+\end{tabularx}
+\end{center}
+The research value is therefore in the evaluation, the measurement, the failure analysis, the negative results, and the directions they point to (Section~\ref{sec:g-next}).
+
+\section{How a driver works: the ideas in plain language}
+
+\begin{table}[H]\centering\small
+\caption{The key terms of this project. The Complete Technical Research Report has a full dictionary of every technical term.}\label{tab:g-terms}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{4.0cm}X@{}}\toprule
+Term & Meaning, and why it matters here\\\midrule
+Driving model (policy) & A function that turns what the car sees into two commands: steering, and throttle or brake. Every model in the project is one.\\
+MetaDrive simulator & The driving simulator. Each test is an \emph{episode} on a \emph{scenario seed}: a number that fixes the road, the route and the other cars, so every model can be tested on identical scenarios.\\
+Bird's-eye-view grid & The driver's main input: a 64 by 64 top-down picture around the car, 20\,m by 20\,m. Each cell says free, unknown, our car, or a detected vehicle.\\
+Map overlay & The route and the road edges, drawn into the grid from the map. It tells the driver where the road is.\\
+Vehicle-state numbers & Speed, route progress, distance to the goal, and (in some models) lateral offset, heading error and road curvature.\\
+Behaviour cloning & Teaching a driver by showing it a handful of recorded good drives. Cheap, but after one small mistake the driver is in a situation it never saw and cannot recover.\\
+Dataset aggregation & Teaching by repetition: the driver drives, a teacher says what it should have done in the situations the driver actually reached, and these corrections are added to the lessons. Fixes the recovery problem.\\
+Teacher and ``information gap'' & A teacher is a rule-based driver that sees the exact state of the simulator. The student sees only the grid, so there are decisions it cannot copy because it cannot see why.\\
+Reinforcement learning & Teaching by trial and error: the driver gets a score (the \emph{reward}) after every step and is changed to score more.\\
+Object detector and stereo depth & The two camera steps that put a vehicle into the grid: one finds it in the picture, the other estimates how far away it is.\\
+Success rate and confidence interval & The share of test drives that reach the destination, with the range of values compatible with that count. Two models are compared on the \emph{same} drives (a \emph{paired} test), which is far more sensitive.\\
+Pilot, reported, diagnostic & Pilot: 10--40 drives, a hint. Reported: 200 paired drives, a claim. Diagnostic: one or two replayed drives that explain a mechanism.\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{What the driver sees}
+\input{figure_blocks/fig_birds_eye_view_input_examples}
+
+\subsection{Three ways of teaching a driver}
+\begin{enumerate}
+\item \textbf{Copy a few recordings} (behaviour cloning). The two baseline drivers on GitHub were taught this way from five recordings.
+\item \textbf{Let it drive and correct it} (dataset aggregation). This produced the Proposed Bird's-Eye-View Driving Model.
+\item \textbf{Trial and error with a score} (reinforcement learning). Section~\ref{sec:g-rl}.
+\end{enumerate}
+The teacher in 1 and 2 is a rule-based driver. Two were used: MetaDrive's \emph{Stock Intelligent Driver Model} (keeps its lane and follows the car ahead) and a \emph{Collision-Aware Teacher} that adds predictive braking when a collision is foreseen within about 2.4 seconds.

@@ -1,0 +1,57 @@
+\section{Comparison with the current GitHub repository}\label{sec:github}
+
+\begin{plainwords}
+The project lives in a shared GitHub repository, \url{https://github.com/Swathi-Srini/bevcapstone}. This section states, as of 12 November 2026, what is \emph{on GitHub}, what exists \emph{only on this computer}, how the claims in the GitHub README compare with the measurements of this report, and where this project's work departs from the rules written in the README. Throughout the report, a ``baseline model'' means a checkpoint that is committed on GitHub; every other model is local only.
+\end{plainwords}
+
+\subsection{The state of GitHub}
+The remote was fetched on 12 November 2026. \code{origin/main} is commit \code{7c4e9ae}, dated 8 September 2026 (``Merge pull request \#11: Add sparse traffic BC handoff baseline''), identical to the local \code{main}; nothing newer exists. The remote has eleven branches, all already merged into \code{main} (one holds a single extra commit that removes generated camera captures). The repository contains 64 code and document files plus 56 saved camera frames, and exactly \textbf{two model files}: the two baseline checkpoints in \pth{bev_policy/checkpoints/}.
+\textbf{Everything else produced in this project is not on GitHub}: the 31 other trained models, the policy-side code \pth{bev_rl/}, the tests \pth{tests/test_bev_rl_*.py}, the results, the report, the videos, and the repository tools.
+
+\subsection{Component-by-component comparison}
+\begin{table}[H]\centering\small
+\caption{GitHub (README of 8 September 2026) compared with this project. ``Local only'' means not committed or pushed.}\label{tab:github}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}p{3.9cm}>{\raggedright\arraybackslash}X@{}}\toprule
+Component & What GitHub states or contains & What this project has (all local only unless stated)\\\midrule
+Simulator & MetaDrive 0.4.3, not CARLA. & Same simulator; no change.\\
+Five-camera rig, stereo depth, object detector, image-space weather filter & Present as prototypes and a live demonstrator. & Used \emph{unmodified}; this project measured how the weather filter degrades them (Section~\ref{sec:perception}).\\
+Bird's-eye-view grid and state assembly (\pth{bev_state/}) & ``Partial'': route, lane and boundary overlays ``remain unimplemented''. & The overlay was implemented as a policy-side wrapper in \pth{bev_rl/adaptive/spec_bev.py}; \pth{bev_state/} is unmodified.\\
+Driving policy network & Behaviour-cloning network on the grid plus six numbers. & Same network family; an optional extra-input branch was added in three local edits of \pth{bev_policy/} (Section~\ref{sec:repomap}).\\
+Training method & Behaviour cloning on five demonstrations. & Dataset aggregation with a rule-based teacher, a collision-aware teacher, caution, pose-error and degraded-perception variants (Section~\ref{sec:training}).\\
+Baseline result & Success 0.90 (9 of 10), collision 0.10, off-road 0.00, 8.13\,m/s, for the traffic-trained baseline. & 0.745 on 200 episodes (next subsection).\\
+Weather robustness & ``Preliminary tooling'': synthetic image corruption; ``not evidence of physical fog/rain robustness or adaptive driving''; vehicle dynamics unchanged. & A measurement of the corruption's effect on detector and depth, a calibrated environment, and a 200-episode test: no effect on success in sparse traffic (Sections~\ref{sec:perception}, \ref{sec:weather}).\\
+Reinforcement learning and energy & ``Missing''. & An energy estimate (\pth{bev_rl/energy.py}) and four documented reinforcement-learning attempts, all negative (Section~\ref{sec:rl}).\\
+Development curriculum & Behaviour cloning without traffic (done) $\to$ proximal policy optimisation without traffic $\to$ energy-aware reward $\to$ reduced visibility $\to$ traffic. & Done in a different order: traffic and dataset aggregation first; proximal policy optimisation without traffic was attempt 1; energy terms in attempts 3 and 4; visibility through the measured degradation.\\
+Tests and automatic checks & Unit tests for the grid and metrics; a workflow that verifies the repository on Windows. & Two further test files for the energy model and the reinforcement-learning policy (local only).\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{The baseline number on GitHub versus this report}
+\begin{table}[H]\centering\small
+\caption{The traffic-trained baseline model: success rate as stated on GitHub and as measured here.}\label{tab:githubbaseline}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{4.2cm}rrX@{}}\toprule
+Source & Episodes & Success (95\% interval) & How it was measured\\\midrule
+GitHub README & 10 (seeds 1000--1009) & 0.90 (0.596 to 0.982) & The repository's own evaluator with the full camera pipeline (object detector and stereo depth).\\
+This report, pilot & 40 (seeds 1010--1049) & 0.775 (0.62 to 0.88) & Camera-free environment with an ideal detector.\\
+This report, reported & 200 (seeds 5000--5199) & 0.745 (0.680 to 0.800) & Camera-free environment with an ideal detector.\\\bottomrule
+\end{tabularx}
+\end{table}
+The three numbers are not a contradiction: 0.745 lies inside the interval of the 10-episode README figure. But the README figure is far less precise than it looks (one episode changes it by 0.10), the scenarios and the perception differ (live camera pipeline against ideal detector), and the 200-episode value is the one that supports a comparison. The same baseline, evaluated through the calibrated degradation (which also applies the measured imperfection of clear weather), gives 0.75 on 200 episodes.
+
+\subsection{Where this project departs from the rules written on GitHub}
+\begin{cautionbox}[Departures that a reader must know]
+\begin{enumerate}
+\item \textbf{The README says: ``Do not feed exact simulator NPC positions/sizes to the learned policy.''} The camera-free surrogate environment does exactly that: it builds the grid from the simulator's list of vehicles (an \emph{ideal detector}), applying the measured loss only as a statistical degradation model. All results in this report are therefore results \emph{given a perception model}, not results of the camera pipeline. The equivalence test with the camera pipeline is weak (70 frames, one containing a vehicle; Appendix~\ref{app:honesty}). The justification is cost (about 2\,s against 0.2\,s per step), and the consequence is stated wherever it matters.
+\item \textbf{The baselines were evaluated through the surrogate, not through the repository's evaluator.} Their numbers here are for an ideal detector.
+\item \textbf{Three tracked files were edited locally} (optional extra-input branch; defaults unchanged).
+\item \textbf{The README says weather does not change dynamics.} That holds for all reported results. The first two reinforcement-learning attempts, however, lowered tyre friction in rain (a declared assumption, later removed).
+\item \textbf{The README recommends the traffic-trained baseline checkpoint as the starting point of reinforcement learning.} None of the four attempts in this report started from it; they started from a cloned privileged network, the Proposed Bird's-Eye-View Driving Model and the Weather-Degradation-Trained Driving Model. A reinforcement-learning policy class initialised from the baselines exists (\pth{bev_rl/policy.py}, tested), but only the start of a pilot run (\pth{bev_rl/runs_pilot_s0.log}) was recorded, with no result.
+\end{enumerate}
+\end{cautionbox}
+
+\subsection{What would have to be pushed to make GitHub match this report}
+The model folder (35\,MB), the policy-side code and tests, the report sources and figures, and the repository tools are small. The videos (about 270\,MB) are excluded by the repository's \code{*.mp4} rule and would need a release asset or an external store. The YOLO weights are third-party files and need a licence check before being committed.
+The first priority is that a collaborator can reproduce the 200-episode table from a clean clone: this needs \pth{bev_rl/}, the three modified \pth{bev_policy/} files and the two baseline checkpoints (already there).
+\begin{implicationbox}
+For the research record, GitHub currently documents the \emph{starting point} of the project (baselines, perception modules, a plan with reinforcement learning as the next step). All of the findings in this report, including the negative reinforcement-learning results, exist only locally. Publishing them closes the gap between the repository's stated plan and what was actually learned.
+\end{implicationbox}

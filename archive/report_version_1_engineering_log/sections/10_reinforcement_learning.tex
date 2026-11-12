@@ -1,0 +1,69 @@
+\section{Reinforcement learning: every attempt, what happened and why it did not work}\label{sec:rl}
+
+This section documents all four reinforcement-learning attempts. In every case the algorithm is proximal policy optimisation; the attempts differ in the policy that is trained, how it is initialised, the reward, and the perception it sees.
+\textbf{Summary: none of them produced a policy that is better than the imitation-trained policy it started from; one made it significantly worse.} Table~\ref{tab:rlsummary} gives the overview, and the subsections give the details.
+
+\begin{table}[H]\centering\small
+\caption{Overview of the four reinforcement-learning attempts. ``Start'' is the initialisation of the policy before reinforcement learning.}\label{tab:rlsummary}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}p{2.3cm}X@{}}\toprule
+Attempt & Start & Observation / perception & Reward & Outcome\\\midrule
+1. Privileged teacher PPO (\code{C2}, \code{probe_C}, \code{C3}) & Behaviour cloning of the driver model on the same observation & Simulator state + weather vector; no traffic; rain lowered friction (declared assumption) & Version 1 with energy weight 0; crash penalty 50 & Worse than the rule-based driver it started from: 16 of 70 episodes succeed against 47 of 70 for the driver; almost all failures are off-road; speed 10.7\,m/s, 210\,Wh/km.\\
+2. Fine-tuning the dataset-aggregation base on the grid (\code{ppo_bev}, \code{ppo_cond}) & Unmodified-grid student (\code{base_a}) & Grid + scalars + weather vector, detector dropout & Version 1 & No gain: validation 0.675 at the start and 0.675 after 120\,000 steps; additionally confounded by the friction coupling. No checkpoint of this run is in the repository.\\
+3. Reward-combination sweep (\code{rl_*}, five runs) & Headline model (+ zero-initialised caution input) & Overlay grid, dropout, dense traffic 0.2 & Version 1 + energy / safe speed / headway / scaled crash terms & Validation 0.325--0.425 against 0.350 at the start; no run clearly better than its start; no energy saving.\\
+4. Reward version 3 under calibrated degradation (\code{ppo_plain}; \code{ppo_ada} died) & Degraded-perception student (\code{deg_base}) & Overlay grid, calibrated degradation & Version 3 (time-to-collision, gap, energy; no brake penalty) & \textbf{Significantly worse than the start in all four weather cells} (0.065--0.115 lower success).\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Attempt 1: a privileged teacher trained with PPO (\code{C2}, \code{probe_C}, \code{C3}, \code{pilot_cond})}
+\paragraph{Idea.} Train a strong ``teacher'' by reinforcement learning on privileged simulator observations (six scalars, previous action, weather vector), then distil it into the camera-grid student. The weather input and the energy term (weight 0 in these runs) were to make it weather-adaptive and energy-aware.
+\paragraph{Initialisation.} The network was first behaviour-cloned from the stock driver model on the same observation (\code{bc_init}), then 20 warm-up roll-outs were collected, because a randomly initialised policy converges to the trivial optimum of standing still. Mixed weather in training; speed cap 12\,m/s (10\,m/s in \code{C3}); crash penalty 50; learning rate $5\cdot10^{-5}$ in \code{C3}; 1.5\,M steps (\code{C2}, \code{C3}), 1\,M (\code{probe_C}); four parallel environments.
+In these early runs rain lowered the tyre-road friction as a declared assumption; this coupling was removed from all later work (weather acts only through perception).
+\paragraph{What happened.} The training log of \code{probe_C} shows a mean episode return of $-378$ after 100\,000 steps, still $-168$ after 600\,000, and no successful training episode in the logged window. On reserved seeds the teachers reached 16 successes in 70 episodes (clear 2/10 and 3/10, fog 5/10 and 3/10, rain 9/50 and 10/50) against 47/70 for the rule-based driver on the same episodes; failures were off-road in 54 of 54 cases.
+The teachers also drove faster (10.7 and 10.4\,m/s against 7.9) and used more energy (210 and 189\,Wh/km against 92). \code{C3} (smaller speed cap and learning rate) reached its best validation success (0.4) at 100\,000 steps; its run ended at 300\,000 of the planned 1.5\,M steps (checkpoints at 100\,000, 200\,000, 300\,000). \code{pilot_cond} fine-tuned the headline model with a weather input; its run ended after 120\,000 of 480\,000 planned steps (checkpoints at 60\,000 and 120\,000). The reasons for stopping these two runs were not recorded.
+\paragraph{Where it fails and why (diagnosis).} Observed: the trained teachers drive faster than the rule-based driver they were initialised from (10.4--10.7 against 7.9\,m/s) and leave the road far more often. That the result is worse than the \emph{cloned initialisation} shows that reinforcement learning actively moved the policy away from a better solution.
+A mechanism has \emph{not} been established for this attempt. A plausible one (hypothesis, no ablation was run) is that the lateral and heading penalties and the crash penalty of 50 are small compared with the progress reward, so higher speed paid more than the occasional off-road termination cost. The reward audit of 1 November had already found one such flaw (a ``fast'' scripted behaviour scored higher than the cloned one and the progress credit and overspeed penalty were changed, Appendix~\ref{app:honesty}); the same family of issue is the first suspect again.
+
+\subsection{Attempt 2: PPO fine-tuning of the dataset-aggregation student on the grid}
+The unmodified-grid student (\code{base_a}) was fine-tuned with a weather-conditioned PPO (\pth{bev_rl/adaptive/ppo_bev.py}) with detector dropout at the measured retention. There was no gain (validation 0.675 at the start, 0.675 after 120\,000 steps); this was recorded in the architecture-change notes as a negative result; no checkpoint of this run is in the repository.
+The run was also confounded by the rain-to-friction coupling of the environment at the time.
+
+\subsection{Attempt 3: reward-combination sweep from the headline model (\code{rl_*})}
+\paragraph{Initialisation.} The headline model, extended by a caution input whose weights were set to zero, so that the PPO policy is \emph{function-identical} to the headline model at step 0 (the difference of the action means was measured to be exactly 0.0 in every run; log lines ``step-0 $|$PPO $-$ ov\_split$|$ = 0.0'').
+\paragraph{Reward.} The base reward of version 1 (progress, lateral error, heading error, smoothness, jerk, overspeed, terminal bonus/penalty), extended by one or more of: an energy penalty (0.05 per watt-hour), a visibility-coupled speed limit, a headway penalty on the gap to the car ahead (weight 0.5), a crash penalty scaled by caution.
+\paragraph{Setup.} Dense traffic 0.2 (where the headline model fails often, so there is room to improve), four weather conditions, detector dropout, 150\,000 steps per run (about 2--2.4 hours each), validation on seeds 3100--3109 $\times$ 4 weather conditions (40 episodes), the start itself being a candidate for ``best''.
+\begin{table}[H]\centering\small
+\caption{Reward-combination sweep (single training seed, 40 validation episodes, dense traffic 0.2). The start of every run is the same policy (0.350).}\label{tab:rlsweep}
+\resizebox{\textwidth}{!}{\input{tables/reinforcement_learning_reward_sweep}}
+\end{table}
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{figures/fig_reinforcement_learning_validation_curves.pdf}
+\caption{Left: validation success of the five reward combinations (40 episodes per point). All curves stay within 0.325--0.425 of the common start (0.350). Right: reward version 3 under calibrated degradation; validation (12 episodes) is 1.0 at every checkpoint including step 0, so it carries no information.}
+\label{fig:rlcurves}
+\end{figure}
+\paragraph{What happened.} All validation values lie between 0.325 and 0.425 around the common start of 0.350. With 40 episodes one episode is 0.025, and the 95\% interval of a single value is about $\pm0.15$, so these curves are consistent with no learning at all.
+The energy penalty did not reduce the energy measured on validation (148 against 148.5 at the start, and the other runs 149--159). \textbf{Failure analysis:} (a) too little signal: the policy's failures in dense traffic are caused by situations (crossing and merging vehicles) that appear in a small share of the roll-outs and that the grid shows too late, so a policy-gradient step cannot learn to avoid what it cannot perceive;
+(b) validation is far too small to select a checkpoint; (c) the initial policy is already a local optimum of the imitation loss, and the entropy-free PPO with learning rate $10^{-4}$ moves it randomly around that optimum.
+
+\subsection{Attempt 4: reward version 3 under calibrated degradation (\code{ppo_plain}, \code{ppo_ada})}
+\paragraph{Why a new reward.} The version-1 reward had no term about other vehicles (a crash was the only traffic signal, rare and late), penalised braking (exactly the behaviour that perception loss should call for), and its crash penalty was dominated by the progress reward. Reward version 3 (\pth{bev_rl/adaptive/reward_v3.py}) adds
+a dense time-to-collision penalty and a bumper-gap penalty computed from ground truth (privileged training signals only), removes the brake penalty, adds an anti-stationary term, a per-step energy cost and small comfort terms, caps the progress credit at the speed cap, and pays $+50$ for success and $-100$ for a crash or leaving the road.
+The weights were fixed before training and not changed afterwards.
+\paragraph{Setup.} Start: the degraded-perception student (\code{deg_base}). Two variants from the same start were planned: without a weather input (\code{ppo_plain}) and with a zero-initialised weather branch (\code{ppo_ada}); 300\,000 steps, three parallel environments, learning rate $10^{-4}$, validation on 12 episodes.
+\paragraph{What happened.} \code{ppo_plain} completed its 300\,000 steps (2.8 hours). Validation success was 1.0 on all 12 episodes at every checkpoint, including step 0, so validation could not detect the damage. The final test on 200 episodes per weather cell (Table~\ref{tab:ppoversus}) shows that PPO made the policy \textbf{worse in every condition}: success fell by 0.065 in clear weather and by 0.095--0.115 in the three degraded conditions (all $p\le0.03$);
+the mean speed rose from about 7.9 to 8.8\,m/s and the estimated energy from about 86 to 103--104\,Wh/km, while the collision rate roughly doubled (0.20 against 0.11 in rain 1.0).
+\code{ppo_ada} was started, wrote its step-0 checkpoint (about eight and a half minutes after the start) and then produced no further output: \textbf{the process ended without an error message} in its log; the cause was not determined. No result exists for the weather-input variant, which is why the pre-registered test H2 could not be carried out.
+\begin{table}[H]\centering\small
+\caption{Reward-version-3 PPO against its own starting point, calibrated perception, 200 paired episodes per weather condition.}\label{tab:ppoversus}
+\resizebox{\textwidth}{!}{\input{tables/ppo_versus_its_start_calibrated_perception}}
+\end{table}
+\paragraph{Diagnosis.} The signature (faster, more energy, more collisions) is the same as in attempt 1: the policy trades safety margin for speed. Because the terminal collision penalty ($-100$) is small compared with the accumulated per-step progress and the time saved by finishing earlier, a policy that crashes in 1 of 5 episodes but is 10\% faster can score higher, which is what the optimiser found.
+This is a hypothesis consistent with the logged speed and crash statistics; a direct test would be to vary the crash penalty and watch the speed (not done).
+
+\subsection{Common causes across the four attempts}
+\begin{enumerate}
+\item \textbf{The imitation policy is already near the best that its input allows.} Its failures are caused by information that the grid does not contain (Section~\ref{sec:failure}), which reinforcement learning cannot add.
+\item \textbf{The evaluation signal is too weak during training.} Validation sets of 10--40 episodes with a success rate of 0.9 or 0.35 resolve differences of only 0.15--0.2; checkpoint selection among nearly identical policies is random. The one clean test (200 episodes) showed a significant \emph{loss}.
+\item \textbf{The reward trades speed for safety.} Both runs that changed behaviour made the car faster.
+\item \textbf{Compute.} A 150\,000-step run costs about two hours; useful reinforcement learning for this problem would need orders of magnitude more steps or a much faster simulator.
+\end{enumerate}
+\paragraph{What would be needed to make reinforcement learning pay off.} A start from the collision-aware student, validation on at least 200 paired episodes per candidate, a crash penalty large enough to dominate speed gains, a policy-gradient method with a constraint on the distance to the start policy (to stop the drift), and an observation that contains the missing information (a wider grid and vehicle heading). None of these has been tried yet.

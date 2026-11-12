@@ -1,0 +1,9 @@
+**Success vs. map-pose lateral error (heading error scales with it), n=40 per level, clear, density 0.05. Injection mechanisms differ between model families.**
+
+| model | 0 m | 0.25 m | 0.5 m | 1.0 m | 2.0 m |
+|---|---|---|---|---|---|
+| Repo BC (sparse traffic) | 0.775 | 0.600 | 0.550 | 0.225 | 0.150 |
+| DAgger, GitHub BEV | 0.875 | 0.750 | 0.500 | 0.275 | 0.300 |
+| ov_split (ours) | 0.925 | 0.900 | 0.900 | 0.700 | 0.275 |
+| pose_aug_unconditioned | 0.900 | 0.725 | 0.775 | 0.500 | 0.250 |
+| pose_aug_conditioned | 0.850 | 0.900 | 0.800 | 0.425 | 0.275 |

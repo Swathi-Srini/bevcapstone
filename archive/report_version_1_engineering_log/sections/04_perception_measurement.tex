@@ -1,0 +1,40 @@
+\section{What fog and rain do to the perception: the measurement}\label{sec:perception}
+
+\subsection{Why it was measured}
+The teammates' weather module corrupts the camera images (Koschmieder-style fog with per-pixel depth, alpha-composited rain streaks), and the stereo depth that places a detected vehicle in the grid is computed from the corrupted image pair.
+An earlier policy-side proxy removed vehicles from the grid at random with a probability taken from an older measurement of the detector (``detector dropout''). Every policy was completely flat under that proxy, so no claim about adaptation could be tested.
+The project director's position was that weather also degrades the \emph{depth}; this had to be measured before anything was trained on it. The measurement (\pth{bev_rl/adaptive/measure_depth_error.py}) only \emph{calls} the teammates' functions
+(\code{apply_synchronized_stereo_weather}, \code{front_stereo_depth}, \code{object_stereo_depth}, \code{run_yolo}, \code{project_world_point}) and compares with the MetaDrive ground truth; it modifies nothing in the teammates' modules.
+Hypotheses and decision rules were written down \emph{before} the measurement (\pth{report/data/preregistration_depth_degradation.md}).
+
+\subsection{Protocol}
+Seeds 7000--7039 (40 scenes, traffic density 0.3), stationary ego car, traffic vehicles placed 5--19\,m ahead, each scene perceived clean and with two random weather draws per condition. Conditions: clear, fog 0.6, 0.8, 1.0 and rain 0.3, 0.6, 1.0
+(the number is the intensity parameter of the teammates' augmentation). For every vehicle in view the following were recorded: whether YOLO detected it, whether the stereo depth at the vehicle's pixel was valid, and the range error of the box depth.
+
+\subsection{Result}
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{figures/fig_measured_perception_degradation.pdf}
+\caption{Measured perception degradation (40 scenes, 72 vehicle-frames in clear weather and 144 in each weather condition). Left: share of vehicles the YOLO detector finds, with 95\% Wilson interval. Right: share of vehicle pixels at which the stereo block matching returns a valid depth.}
+\label{fig:perception}
+\end{figure}
+
+\begin{itemize}
+\item \textbf{Detection collapses with weather} (hypothesis H0 in the pre-registration is confirmed): 0.72 in clear weather, 0.72 in fog 0.6, 0.59 in fog 0.8, 0.31 in fog 1.0, 0.57 in rain 0.3, 0.15 in rain 0.6 and 0.014 in rain 1.0.
+\item \textbf{Stereo depth validity drops in fog} (0.88 clear, 0.63 in fog 0.8, 0.49 in fog 1.0) but much less in rain (0.81 at rain 0.6, 0.67 at rain 1.0).
+\item \textbf{For vehicles that are detected, the range estimate does not get worse}: the box depth was valid for 100\% of detections in every condition and the median absolute depth error is \emph{lower} in fog and rain (0.98\,m clear, 0.36\,m fog 1.0, 0.67\,m rain 1.0). The share of detections with a relative error above 20\% does not rise (0.096 clear; 0.091 at fog 1.0; 0 in rain).
+  The likely explanation is a selection effect (hypothesis, not tested): only close, large vehicles survive detection in heavy weather.
+\item Consequently the degradation that reaches a policy is almost entirely \emph{missed detections}, and the ``wrong range'' branch of the calibrated environment is rarely triggered. This is the reason why even the calibrated degradation does not hurt the policy in sparse traffic (Section~\ref{sec:weather}).
+\end{itemize}
+
+\subsection{Consistency with the earlier retention table}
+The detector-dropout proxy used a retention table measured earlier (\pth{bev_rl/adaptive/results/retention_table.json}): fog 1.0, rain 0.6 and rain 1.0 keep 0.27, 0.16 and 0.04 of the vehicles. The corrected measurement above gives 0.31, 0.15 and 0.014, i.e.\ the same order of magnitude;
+the table's bias suspected after the stale-camera error (below) therefore seems small for these three conditions, but it has not been re-fitted.
+
+\subsection{An invalid first measurement (kept for the record)}
+The first run of the measurement (20:31--20:52 on 10 November) was \textbf{invalid}. It called a helper that mounts the camera rig \emph{once per environment object} after every reset, so scenes 2--40 had stale cameras: stereo depth was valid for only 2 of 73 clean vehicle-frames and was identical in all weather conditions.
+The teammates' own benchmark script remounts the rig after every reset; the corrected run does the same. The invalid outputs were renamed \code{*.SUSPECT_*} and are kept; the pipeline stage (\code{hurt}) that had already used the invalid model was discarded and rerun. The same helper had been used by the earlier measurement that produced the retention table, which is why that table carries a caveat.
+\emph{Lesson:} a perception measurement must be validated by an ``is the effect identical across conditions'' check before use.
+
+\subsection{Cost of the full perception chain}
+Benchmark of the teammates' chain (30 steps, seed 1000, no traffic): full resolution 1200$\times$900 with YOLO costs 1.7\,s (clear), 2.1\,s (fog 0.6), 2.5\,s (rain 0.6) per step; rendering the cameras at 600$\times$450 with a cached fog transmission, a cropped morphology region and YOLO disabled when there is no traffic
+brings this to 0.20, 0.39 and 0.52\,s. Road-surface accuracy of the half-resolution variant was comparable (0.946 versus 0.945). Even so, a 100\,000-step reinforcement-learning run through this chain would take 50 hours or more, which is why the camera-free surrogate is used (Section~\ref{sec:surrogate}).

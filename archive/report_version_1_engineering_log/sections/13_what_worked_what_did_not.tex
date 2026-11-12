@@ -1,0 +1,36 @@
+\section{What worked and what did not}\label{sec:lessons}
+
+\begin{table}[H]\centering\small
+\caption{Every idea tried, its outcome and the strength of the evidence. ``Reported'' = 200 paired episodes; ``pilot'' = 10--40 episodes; ``diagnostic'' = replayed episodes.}\label{tab:lessons}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{4.2cm}>{\raggedright\arraybackslash}p{1.9cm}X>{\raggedright\arraybackslash}p{1.9cm}@{}}\toprule
+Idea & Verdict & What was observed & Evidence\\\midrule
+Dataset aggregation instead of five demonstrations & \textbf{Worked} & Success 0.925 against 0.850 / 0.745; off-road 1\% against 13.5\% & Reported\\
+Map overlay in the grid (route and boundaries) & Plausible, \emph{untested at $n=200$} & Overlay with three scalars is nominally the best input design (0.80/0.60 on 10 episodes); the no-scalar overlay is the worst & Pilot\\
+Moving lane geometry out of the scalars (split) & Plausible & 0.925 (headline) against 0.875 (six scalars) on 40 episodes, intervals overlap & Pilot\\
+Collision-aware teacher & \textbf{Worked as a teacher} & 0.950 success; solves 14 of the headline model's 15 failures; its student is untested at $n=200$ & Reported (teacher); untested (student)\\
+Stock driver model as teacher & Limited & 0.885; fails to react to merging and crossing vehicles & Reported\\
+Measuring the degradation before using it & \textbf{Worked} & Found that the loss is detection, not depth error; also exposed an invalid first measurement & Pilot (72--144 frames per condition)\\
+Weather robustness / adaptation of the policy & \textbf{No effect to adapt to} & Success 0.89--0.91 in every condition; pre-registered H1 failed & Reported\\
+Detector-dropout weather proxy & No effect & Identical success across weather cells & Pilot\\
+Caution coupled to reliability & Trade-off only & Speed 8.0 $\to$ 5.6--6.2\,m/s, energy 84.7 $\to$ 56--59\,Wh/km, more timeouts, no success gain & Pilot (40)\\
+Training under the degradation (\code{deg_base}) & No gain & 0.888 against 0.895 pooled over degraded cells & Reported\\
+Reinforcement learning (four attempts) & \textbf{Did not work} & None better than its start; one significantly worse (0.065--0.115) & Reported (attempt 4); pilot (others)\\
+Reward version 3 & Not validated & Produced a faster, less safe policy under PPO & Reported\\
+Pose-error augmentation alone & Did not help & 0.25 at 2\,m, like the baseline & Pilot (40)\\
+Pose-error training + second independent lane cue & \textbf{Worked (in simulation)} & 0.88--0.95 up to 2\,m of map error & Pilot (40)\\
+Pixel policy as control & Incomplete & Training finished but no evaluation was run; rollouts were mostly off-road & --\\
+Input hiding by constants (ablations) & Works as a tool & Used to compare designs with one network family & Pilot\\
+Camera-free surrogate environment & Enabled everything & 0.2 s/step rather than 2 s/step; equivalence evidence is thin (70 frames) & Weak\\
+Validation on 10--40 episodes for model selection & \textbf{Misleading} & Ties resolved to round 0 for 4 runs; RL validation at 1.0 predicted nothing & Reported\\
+Evaluation on 40 episodes & \textbf{Misleading} & Control: 0.975 on 40, 0.895 on 200 & Reported\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Lessons learned}
+\begin{enumerate}
+\item \textbf{Sample size decides what can be believed.} The single largest source of wrong conclusions in this project was an evaluation with too few episodes: a 0.975 became 0.895, validation at 1.0 hid a significant loss. Every claim above that stands is backed by 200 paired episodes.
+\item \textbf{Measure the perturbation before building on it}, and check that the measurement itself is not stale (the camera-mounting error made two successive weather results invalid or suspect).
+\item \textbf{A null result is a result when it is pre-registered.} Writing the hypotheses and thresholds down \emph{before} the measurement made it possible to state ``adaptation cannot be shown'' without ambiguity.
+\item \textbf{Know what the student cannot see.} The remaining failures are explained by information the student's grid lacks, which neither more data nor reinforcement learning can supply; the next gains are in the representation (heading, window) and in the teacher--student match.
+\item \textbf{Reinforcement learning on top of a good imitation policy needs a much stronger evaluation loop than imitation learning} (hundreds of episodes per candidate) and a reward in which safety dominates speed.
+\end{enumerate}

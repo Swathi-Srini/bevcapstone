@@ -1,0 +1,20 @@
+**Sparse traffic (density 0.05, seeds 1010-1049): success by policy and weather, with measured detector retention**
+
+| policy | weather | n | detector keep prob | success | success 95% CI | crash/off-road | timeout |
+|---|---|---|---|---|---|---|---|
+| Repo BC (sparse traffic) | clear | 40 | 1.00 | 0.775 | [0.62, 0.88] | 0.225 | 0.000 |
+| Repo BC (sparse traffic) | fog 1.0 | 40 | 0.27 | 0.800 | [0.65, 0.90] | 0.200 | 0.000 |
+| Repo BC (sparse traffic) | rain 0.6 | 40 | 0.16 | 0.800 | [0.65, 0.90] | 0.200 | 0.000 |
+| Repo BC (sparse traffic) | rain 1.0 | 40 | 0.04 | 0.800 | [0.65, 0.90] | 0.200 | 0.000 |
+| Repo BC (clear, no traffic) | clear | 40 | 1.00 | 0.875 | [0.74, 0.95] | 0.125 | 0.000 |
+| Repo BC (clear, no traffic) | fog 1.0 | 40 | 0.27 | 0.875 | [0.74, 0.95] | 0.125 | 0.000 |
+| Repo BC (clear, no traffic) | rain 0.6 | 40 | 0.16 | 0.875 | [0.74, 0.95] | 0.125 | 0.000 |
+| Repo BC (clear, no traffic) | rain 1.0 | 40 | 0.04 | 0.875 | [0.74, 0.95] | 0.125 | 0.000 |
+| DAgger, GitHub BEV (base_a) | clear | 40 | 1.00 | 0.875 | [0.74, 0.95] | 0.100 | 0.025 |
+| DAgger, GitHub BEV (base_a) | fog 1.0 | 40 | 0.27 | 0.875 | [0.74, 0.95] | 0.100 | 0.025 |
+| DAgger, GitHub BEV (base_a) | rain 0.6 | 40 | 0.16 | 0.875 | [0.74, 0.95] | 0.100 | 0.025 |
+| DAgger, GitHub BEV (base_a) | rain 1.0 | 40 | 0.04 | 0.875 | [0.74, 0.95] | 0.100 | 0.025 |
+| DAgger, map-overlay BEV (ov_split) | clear | 40 | 1.00 | 0.925 | [0.80, 0.97] | 0.075 | 0.000 |
+| DAgger, map-overlay BEV (ov_split) | fog 1.0 | 40 | 0.27 | 0.925 | [0.80, 0.97] | 0.075 | 0.000 |
+| DAgger, map-overlay BEV (ov_split) | rain 0.6 | 40 | 0.16 | 0.925 | [0.80, 0.97] | 0.075 | 0.000 |
+| DAgger, map-overlay BEV (ov_split) | rain 1.0 | 40 | 0.04 | 0.950 | [0.83, 0.99] | 0.050 | 0.000 |

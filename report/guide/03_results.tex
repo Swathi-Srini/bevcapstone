@@ -1,0 +1,39 @@
+\section{Results}
+
+\subsection{The main result: 200 drives in clear weather}
+\begin{plainwords}
+The Proposed Bird's-Eye-View Driving Model succeeds in 92.5\% of 200 drives, against 85.0\% and 74.5\% for the two baselines, and 95.0\% for the rule-based Collision-Aware Teacher it learned from. The proposed driver and its teacher cannot be told apart statistically. The image-only driver, which reads the camera picture instead of the grid, succeeds in only \ImOnSuccess{} of the drives.
+\end{plainwords}
+\input{figure_blocks/fig_headline_success_clear_weather_200_episodes}
+\input{figure_blocks/fig_paired_difference_headline_versus_others}
+
+\begin{cautionbox}[What the main result does not show]
+It does not separate \emph{why} the proposed driver is better: three things changed together (repeated drive-and-correct teaching instead of five recordings; the map overlay; the choice of three vehicle-state numbers). The plain-grid variant with six numbers was tested on only 10 and 40 drives (0.70 and 0.875 against 0.80 and 0.925), not on 200. Nothing is claimed about dense traffic, where even the teachers fail more than half of the drives. The results are for the camera-free surrogate.
+\end{cautionbox}
+
+\subsection{The image-only driver}
+The Image-Only Driving Model sees only a front-camera picture (128 by 96 pixels): no grid, no numbers. On the same 200 drives it succeeds in \ImOnSuccess{} (interval \ImOnLow{} to \ImOnHigh{}); \ImOnCollision{} of the drives end in a collision, \ImOnOffroad{} by leaving the road and \ImOnTimeout{} by timeout. Its mean speed is \ImOnSpeed{} metres per second and its estimated energy use \ImOnEnergy{} watt-hours per kilometre.
+\begin{implicationbox}
+Reading the picture directly is far harder than reading the grid. The grid (a compact, structured summary of the surroundings, produced by the detector and the stereo depth) is what makes the proposed driver possible at this amount of training and data. Whether a camera network trained with far more data could close the gap is not answered here.
+\end{implicationbox}
+
+\subsection{Does weather make driving worse?}
+\begin{plainwords}
+First we measured the damage. In clear weather the object detector finds 72\% of the vehicles in view; in the strongest fog 31\%; in rain of intensity 0.6 only 15\%; in the heaviest rain 1.4\%. The distance estimate for vehicles that \emph{are} found does not get worse, so the damage is almost entirely \emph{missed vehicles}.
+Then we tested the drivers with that damage applied. \textbf{Driving success did not fall:} 89--91\% for the proposed driver in all four weather conditions. A pre-registered hypothesis that the damage would hurt a driver trained without it was therefore \emph{not} confirmed.
+\end{plainwords}
+\input{figure_blocks/fig_measured_perception_degradation}
+\input{figure_blocks/fig_success_by_weather_calibrated_perception_200_episodes}
+
+\begin{implicationbox}[What this means for the original question]
+The question ``can the driver adapt to degraded perception?'' cannot be answered here, because the degradation does not hurt sparse-traffic driving. The research step that follows is to find the conditions in which weather \emph{does} start to matter (denser traffic, more severe loss of vehicles), which is Direction 2 in Section~\ref{sec:g-next}.
+\end{implicationbox}
+
+\subsection{Caution-aware driver against the proposed driver, 200 drives in each weather}
+On 200 drives per condition the caution-aware driver matches the proposed driver in clear weather (0.890 against 0.925, not significant), fog (0.895 against 0.895) and rain 0.6 (0.890 against 0.900), and is lower in the strongest rain (0.820 against 0.900, $p=0.033$, all extra failures are timeouts). In weather it uses about 35\% less estimated energy (59.7 to 62.7 against 93.0 to 96.5 watt-hours per kilometre). All the extra failures are timeouts: with a 160-second limit instead of 80 seconds (a post-hoc check) the caution-aware driver finishes 0.940, 0.955 and 0.935 in fog 1.0, rain 0.6 and rain 1.0, a tie with the proposed driver (no difference is significant) with fewer collisions. Full table, paired tests and figure: Complete Technical Research Report, section ``Caution-aware model against the proposed model and both baselines''.
+
+\subsection{Three side studies}
+\paragraph{Caution when perception is unreliable (40 drives, pilot).} A driver given a ``caution'' number derived from the measured detector reliability slowed from about 8.0 to 5.6--6.2 metres per second in weather and used about 30\% less estimated energy (84.7 to 56--59 watt-hours per kilometre), with more timeouts (7.5--15\%) and no gain in success. This is \emph{learned adaptive behaviour}: the driver was taught by a teacher whose speed and gap depend on caution, and reproduces that dependence by itself, while the control with caution fixed at zero does not slow down. The benefit is not shown (success did not rise; weather did not hurt the proposed driver anyway), and the caution value is supplied from the known weather rather than sensed by the driver.
+\paragraph{Which input matters (10 drives, pilot).} The map overlay with the three vehicle-state numbers was nominally the best design (0.80 in sparse and 0.60 in dense traffic); the overlay with no numbers was the worst (0.30 and 0.10). Intervals are very wide.
+\paragraph{A wrong position estimate (40 drives, pilot).}
+\input{figure_blocks/fig_success_versus_localisation_error_pose_trained_models}

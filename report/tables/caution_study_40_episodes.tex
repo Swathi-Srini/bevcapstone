@@ -1,0 +1,19 @@
+\begin{tabular}{@{}llrrrr@{}}\toprule
+Model & Weather & Success & Timeout & Speed (m/s) & Energy (Wh per km)\\\midrule
+Headline model & clear 0.0 & 0.925 & 0.000 & 7.94 & 93.0\\
+Headline model & fog 1.0 & 0.925 & 0.000 & 7.95 & 94.3\\
+Headline model & rain 0.6 & 0.900 & 0.000 & 7.95 & 93.6\\
+Headline model & rain 1.0 & 0.925 & 0.000 & 7.97 & 89.4\\
+Control: caution input fixed to 0 & clear 0.0 & 0.975 & 0.000 & 8.02 & 74.7\\
+Control: caution input fixed to 0 & fog 1.0 & 0.975 & 0.000 & 8.02 & 74.6\\
+Control: caution input fixed to 0 & rain 0.6 & 0.975 & 0.000 & 8.02 & 74.3\\
+Control: caution input fixed to 0 & rain 1.0 & 0.975 & 0.000 & 8.02 & 74.5\\
+Caution-conditioned network, caution 0 & clear 0.0 & 0.900 & 0.000 & 8.02 & 84.7\\
+Caution-conditioned network, caution 0 & fog 1.0 & 0.900 & 0.000 & 8.02 & 84.5\\
+Caution-conditioned network, caution 0 & rain 0.6 & 0.900 & 0.000 & 8.02 & 84.1\\
+Caution-conditioned network, caution 0 & rain 1.0 & 0.900 & 0.000 & 8.02 & 84.3\\
+Caution-conditioned network, caution from weather & clear 0.0 & 0.900 & 0.000 & 8.02 & 84.7\\
+Caution-conditioned network, caution from weather & fog 1.0 & 0.925 & 0.075 & 6.17 & 59.1\\
+Caution-conditioned network, caution from weather & rain 0.6 & 0.900 & 0.100 & 5.89 & 57.0\\
+Caution-conditioned network, caution from weather & rain 1.0 & 0.850 & 0.150 & 5.58 & 56.1\\
+\bottomrule\end{tabular}

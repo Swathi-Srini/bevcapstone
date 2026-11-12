@@ -1,0 +1,291 @@
+% Five-Model Comparison. Build from the folder report/:  pdflatex Five_Model_Comparison.tex  (run twice)  or  powershell -File build_documents.ps1
+\documentclass[11pt,a4paper]{article}
+\input{shared/preamble}
+\input{tables/five_model_numbers}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small Five-Model Comparison}
+\fancyhead[R]{\small Team working document}
+\fancyfoot[C]{\thepage}
+
+\title{\textbf{Five-Model Comparison}\\[4pt]
+\large Two baselines, the proposed model, the caution-aware model and an image-only model:\\ how each was built, trained, tested and what it achieved}
+\author{Working document for the project team\\ Repository state of 12 November 2026}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+% =====================================================================================================================================
+\section{What this document is}
+This document is for the people working on the project. It compares \textbf{five driving models}, one section each, with the same headings every time: what it sees, the network, how it was trained, how it was tested, how its energy is computed, what it achieved, which graph shows it, and \emph{what we are allowed to say about it}. A shorter story of the project is in the \emph{Director's Research Guide}; every detail, every experiment and every file is in the \emph{Complete Technical Research Report}.
+
+\begin{plainwords}[The five models in one table]
+All five models take the same job: drive a car from a start to a goal in the MetaDrive simulator, steering and using throttle or brake. They differ in \emph{what they look at} and \emph{how they were taught}. Four of them look at a small top-down picture (a ``bird's-eye-view grid''); one of them looks at the raw front-camera picture.
+\end{plainwords}
+
+\begin{table}[H]\centering\small
+\caption{The five models. ``Teacher'' is the rule-based driver whose actions the model copies. Models 1 and 2 were built by the teammates and are on GitHub; models 3 to 5 exist only on the local machine.}\label{tab:fivemodels}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.5cm}>{\raggedright\arraybackslash}p{3.7cm}>{\raggedright\arraybackslash}p{3.3cm}>{\raggedright\arraybackslash}p{3.6cm}X@{}}\toprule
+ & Model & What it looks at & How it was taught & Role in the comparison\\\midrule
+1 & Baseline Driving Model Trained Without Traffic & Bird's-eye-view grid, six vehicle-state numbers & Copy of 5 recorded drives, no other vehicles & Teammates' baseline (weaker)\\
+2 & Baseline Driving Model Trained With Traffic & Same & Copy of 5 recorded drives, sparse traffic & Teammates' baseline, supposedly stronger\\
+3 & Proposed Bird's-Eye-View Driving Model & Grid with the road drawn in, three vehicle-state numbers & Repeated drive-and-correct (dataset aggregation) & The strong method\\
+4 & Caution-Study Caution-Aware Driving Model & As model 3 plus one ``caution'' number & As model 3 but the teacher drives slower and keeps more distance when caution is high & Adaptive-behaviour candidate\\
+5 & Image-Only Driving Model (front camera) & Only the front-camera picture & Repeated drive-and-correct on camera images & The weak control: what you get without the grid\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Strong against weak.} Model 5 is deliberately the weakest design: no grid, no road drawing, no speed input. It shows what the other four gain from the bird's-eye-view grid. Models 1 and 2 are the teammates' starting point. Model 3 is the strong method. Model 4 asks whether the strong method can also adapt to weather.
+\paragraph{Plain-language rule used throughout.} Every model is called by its descriptive name. The code nicknames (for example \code{ov_split}) appear only in the file list at the end.
+
+% =====================================================================================================================================
+\section{How every model is tested (the same way for all five)}\label{sec:testing}
+\subsection{The test}
+\begin{itemize}
+\item \textbf{Simulator.} MetaDrive 0.4.3. A \emph{scenario seed} (a whole number) fixes the map, the route and the starting traffic, so every model drives exactly the same 200 scenarios (seeds 5000 to 5199). These seeds were never used for training or for choosing a model.
+\item \textbf{Traffic.} Sparse: traffic density 0.05. \textbf{Time limit:} 800 steps of 0.1 s = 80 seconds (a 160-second check is in Section~\ref{sec:longer}).
+\item \textbf{An episode ends} with exactly one of four outcomes: \emph{success} (destination reached), \emph{collision}, \emph{left the road}, or \emph{timeout}.
+\item \textbf{Weather conditions:} clear, fog 1.0, rain 0.6, rain 1.0 (the number is the intensity of the teammates' weather filter; 1.0 is the strongest).
+\end{itemize}
+
+\subsection{How the weather reaches each model}\label{sec:weatherreach}
+Weather never changes the road grip or the car's physics. It only damages perception.
+\begin{description}[leftmargin=3.2cm,style=nextline]
+\item[Models 1 to 4 (grid models)] They do not look at camera pictures in these tests. The grid is built from the simulator's list of vehicles, and \emph{each vehicle is removed from the grid with the probability that the detector was measured to miss it} at that weather intensity. That measurement is the detector retention in Figure~\ref{fig:detectorretention}. So the weather reaches these models \emph{indirectly}, through a measured number, not through pictures.
+\item[Model 5 (image-only)] It looks at the real camera picture, and the teammates' weather filter (fog haze, rain streaks) is applied to that picture directly. This is the strongest form of weather test, but it is applied to a different kind of input.
+\end{description}
+\begin{cautionbox}[Honest limit]
+Models 1 to 4 are tested with \emph{measured} detector retention but with an ideal detector otherwise (the grid is built from the simulator's vehicle list). The GitHub README asks that the policy never receives exact simulator positions; these tests depart from that rule, and the result says how the models behave under a measured loss of vehicles, not how a full camera system would behave.
+\end{cautionbox}
+\input{figure_blocks/fig_detector_retention_by_weather_intensity}
+
+\subsection{The numbers reported, and their formulas}
+Let $n=200$ be the number of episodes and $k$ the number that ended in success.
+\begin{description}[leftmargin=3.2cm,style=nextline]
+\item[Success rate] $\hat p=k/n$. Collision, left-road and timeout rates are computed the same way; the four rates add up to 1.
+\item[95\% interval (Wilson)] $\displaystyle \frac{\hat p+\frac{z^2}{2n}\;\pm\;z\sqrt{\frac{\hat p(1-\hat p)}{n}+\frac{z^2}{4n^2}}}{1+\frac{z^2}{n}},\; z=1.96$. It is the range of true success rates that is compatible with the 200 episodes we saw.
+\item[Paired comparison (exact McNemar test)] Two models are compared on the same seeds. Let $b$ be the number of episodes only model A solved and $c$ the number only model B solved. Under ``no difference'' each of these $b+c$ episodes is equally likely to go either way, so $p=\min\!\Big(1,\;2\sum_{i=0}^{\min(b,c)}\binom{b+c}{i}\,2^{-(b+c)}\Big)$. A small $p$ means the difference is unlikely to be chance.
+\item[Mean speed] Average of the car's speed over all steps of an episode (m/s), then averaged over the 200 episodes.
+\item[Route completion] Fraction of the planned route driven when the episode ended (1.0 = the destination).
+\item[Estimated energy] Same formula for every model, applied to the speed the model produced (below).
+\end{description}
+
+\subsection{How energy is computed (identical for all five models)}\label{sec:energy}
+MetaDrive has no electric-energy model. We therefore estimate the \emph{mechanical work at the wheels} of a declared virtual car, using only the speed history of each episode. The model does not influence the formula; a model uses less energy only because it drives differently (mostly slower or smoother). For one step of $\Delta t=0.1$\,s with start speed $v_0$ and end speed $v_1$ (speed assumed to change in a straight line inside the step):
+\begin{align*}
+W_{\text{inertia}} &= \tfrac12\, m\,(v_1^2-v_0^2) &&\text{(change of kinetic energy)}\\
+W_{\text{air}} &= k\,\Delta t\,\tfrac14\,(v_0^3+v_0^2v_1+v_0v_1^2+v_1^3), \quad k=\tfrac12\rho C_dA &&\text{(air drag)}\\
+W_{\text{roll}} &= C_{rr}\,m\,g\,\tfrac{v_0+v_1}{2}\,\Delta t &&\text{(tyre rolling resistance)}\\
+W_{\text{step}} &= \max\big(0,\;W_{\text{inertia}}+W_{\text{air}}+W_{\text{roll}}\big)
+\end{align*}
+with air density $\rho=1.225$\,kg/m$^3$, drag coefficient $C_d=0.23$, frontal area $A=2.22$\,m$^2$, rolling resistance $C_{rr}=0.01$, gravity $g=9.81$\,m/s$^2$ and the car mass $m$ taken from the simulator's vehicle. Then
+\[
+E_{\text{Wh}}=\frac{\sum_{\text{steps}}W_{\text{step}}}{3600},\qquad D_{\text{km}}=\frac{1}{1000}\sum_{\text{steps}}\tfrac{v_0+v_1}{2}\Delta t,\qquad \text{energy per kilometre}=\frac{E_{\text{Wh}}}{D_{\text{km}}}.
+\]
+Braking steps count as zero (the clip at 0): there is \emph{no regenerative braking}, so braking energy is lost, not recovered. Road slope is zero (the simulator's roads are flat). \textbf{Only differences between models are meaningful; this is not a battery measurement.} The reported value of a model is the mean over its 200 episodes of the per-episode energy per kilometre.
+\begin{table}[H]\centering\small
+\caption{Energy computation per model. The formula is the same; only the speed history differs.}\label{tab:energy}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{4.3cm}X@{}}\toprule
+Model & What determines its energy\\\midrule
+1, 2 Baselines & Their own speed history: they hold about 8.1\,m/s and brake little.\\
+3 Proposed & Its own speed history: about 7.9\,m/s; slightly more braking and accelerating than the baselines, hence slightly more energy.\\
+4 Caution-aware & Slower in fog and rain (5.6 to 6.2\,m/s), which lowers drag work strongly (drag grows with the cube of speed).\\
+5 Image-only & Fast and erratic (about 9\,m/s), with many accelerations; it uses much more energy per kilometre, but most episodes end early by leaving the road.\\\bottomrule
+\end{tabularx}
+\end{table}
+
+% =====================================================================================================================================
+\section{Results of all five models together}\label{sec:allresults}
+\begin{table}[H]\centering\scriptsize
+\caption{All metrics, five models, four weather conditions, 200 episodes each (seeds 5000--5199, sparse traffic, 800-step limit). Collision, left road and timeout are shares of the episodes. Energy is the estimate of Section~\ref{sec:energy}. ``not yet evaluated'' marks a run that had not finished when this document was built.}\label{tab:allmetrics}
+\resizebox{\textwidth}{!}{\input{tables/five_model_all_metrics}}
+\end{table}
+
+\explainedfigure{fig_five_model_success_by_weather}{0.95}{Success rate of the five models in four weather conditions}{Each bar is the share of 200 episodes that reached the destination; the black line is the 95\% interval. Weather becomes stronger from left to right.}{The proposed model and the caution-aware model stay between 0.82 and 0.93; the two baselines stay near 0.85 and 0.75; the image-only model is far below all of them. Weather barely moves any of the four grid-based models in the tests that apply it as a measured loss of vehicles; the one clear drop is the caution-aware model in rain 1.0 at the 80-second limit, which is caused by timeouts (Section~\ref{sec:longer}).}{The bird's-eye-view grid is what makes driving possible at this level; the training method (repeated correction) separates the proposed model from the baselines. The weather result is limited to loss of detected vehicles in sparse traffic.}{fig:fivesuccess}
+
+\explainedfigure{fig_five_model_outcome_mix_by_weather}{0.97}{How the episodes ended, per model and weather}{Each horizontal bar is one model in one weather condition; its coloured parts add up to the 200 episodes: green = destination reached, red = collision, yellow = left the road, grey = time limit reached.}{The baselines fail mainly by collisions (and, for the one trained with traffic, by leaving the road); the proposed model fails rarely and mostly by collision; the caution-aware model replaces collisions by timeouts as the weather gets stronger; the image-only model mostly leaves the road.}{Models fail in different ways, so success alone hides what to fix. Leaving the road points at steering and road understanding; collisions point at seeing and reacting to other vehicles; timeouts point at speed choice.}{fig:fiveoutcomes}
+
+\explainedfigure{fig_five_model_energy_and_speed}{0.95}{Estimated energy and mean speed of the five models}{Top: estimated traction energy in watt-hours per kilometre. Bottom: mean speed in metres per second. Same four weather conditions.}{Baselines and the proposed model use about 86 to 96 watt-hours per kilometre at about 8 metres per second. The caution-aware model drops to about 60 in fog and rain by driving at 5.6 to 6.2 metres per second. The image-only model is the fastest and the most energy-hungry.}{Lower energy came only from lower speed. A speed-matched comparison would be needed to say that the caution-aware model is more \emph{efficient} and not simply slower.}{fig:fiveenergy}
+
+\begin{table}[H]\centering\scriptsize
+\caption{Paired comparison of every model against the image-only model on the same episodes. Positive differences favour the model named in the second column.}\label{tab:pairedimage}
+\resizebox{\textwidth}{!}{\input{tables/five_model_paired_vs_image_only}}
+\end{table}
+
+\begin{table}[H]\centering\small
+\caption{Paired comparison among the four grid-based models in clear weather (200 episodes). From the technical report.}\label{tab:pairedgrid}
+\begin{tabularx}{\textwidth}{@{}Xrrrr@{}}\toprule
+Comparison & Difference in success & Only first succeeded & Only second succeeded & Exact McNemar $p$\\\midrule
+Proposed against Baseline without traffic & $+0.075$ & --- & --- & 0.0007\\
+Proposed against Baseline with traffic & $+0.180$ & --- & --- & $<0.0001$\\
+Caution-aware against Proposed & $-0.035$ & 3 & 10 & 0.092\\
+Caution-aware against Baseline without traffic & $+0.040$ & 11 & 3 & 0.057\\
+Caution-aware against Baseline with traffic & $+0.145$ & 32 & 3 & $<0.0001$\\\bottomrule
+\end{tabularx}
+\end{table}
+
+% =====================================================================================================================================
+\section{Model 1 and model 2: the two baseline driving models (teammates)}
+\subsection{What they are}
+Two copies of the same design, trained from five demonstrations each. Model 1 was trained on drives without other vehicles; model 2 on drives with sparse traffic. Both are on GitHub (\pth{bev_policy/checkpoints/}).
+\subsection{What they see and the network}
+A 64$\times$64 bird's-eye-view grid (20\,m wide and long: 17.5\,m ahead, 2.5\,m behind; cell 0.3125\,m) with values for unknown, free, own car and detected vehicle, \emph{no road drawing}, and six vehicle-state numbers (speed, route progress, sideways offset from the lane centre, heading error, curvature ahead, distance to goal). The network is the shared \code{BEVScalarPolicy} (110\,530 adjustable numbers): three convolution layers (32, 64, 96 maps) on the grid, a small network (6$\to$64$\to$32) on the numbers, and a head (160$\to$128$\to$2) with output steering and throttle or brake, each between $-1$ and $1$.
+\subsection{How they were trained}
+\emph{Behaviour cloning}: MetaDrive's stock driving rule (Intelligent Driver Model) drives five episodes, only episodes that reach the destination are kept, and the network is fitted to the recorded actions (mean squared error, at most 60 epochs, batch 64, learning rate $3\cdot10^{-4}$, early stopping after 10 epochs without improvement). \textbf{Weakness:} the network sees only places the expert visited, so after a small error it has no example of how to recover.
+\subsection{How they were tested}
+As in Section~\ref{sec:testing}. The weather proxy removes vehicles from the grid; the models are not given any weather input.
+\subsection{Results}
+Success 0.850 (without traffic) and 0.745 (with traffic) in clear weather, with 0.85--0.86 and 0.75--0.755 in the three weather conditions (Table~\ref{tab:allmetrics}). The one trained \emph{with} traffic is the \emph{worse} one: it leaves the road in 13.5\% of clear episodes (the other 2.5\%), collisions about 12\% in both. Energy 85.9 and 90.7 watt-hours per kilometre at 8.1\,m/s.
+\subsection{What we can and cannot say}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{5.2cm}X@{}}\toprule
+We can say & Because\\\midrule
+Training with traffic did not help these baselines; it was 0.105 worse in clear weather. & 200 paired episodes, 0.745 against 0.850.\\
+Both baselines are flat across the four weather conditions. & Success within 0.015 in each, in the vehicle-loss proxy.\\\midrule
+We cannot say & Because\\\midrule
+That 0.745 contradicts the README value 0.90. & The README reports 9 of 10 episodes (interval 0.596--0.982), which includes 0.745.\\
+That the baselines are robust to real fog and rain in the camera chain. & The perception damage is measured as vehicle loss only.\\\bottomrule
+\end{tabularx}
+
+% =====================================================================================================================================
+\section{Model 3: the Proposed Bird's-Eye-View Driving Model}
+\subsection{What it is}
+The same network family as the baselines, with two changes to what it \emph{sees} and a different way of \emph{teaching}.
+\subsection{What it sees and the network}
+\begin{itemize}
+\item The grid has the \textbf{road drawn in}: the route centre line (value 0.5) and the road boundaries (0.8), taken from the simulator's map in the car's frame.
+\item It gets \textbf{three} vehicle-state numbers (speed, route progress, distance to goal). Sideways offset, heading error and curvature are \emph{not} given as numbers, because the drawn road already shows them.
+\end{itemize}
+Network: the same \code{BEVScalarPolicy}, 110\,530 adjustable numbers.
+\subsection{How it was trained}
+\emph{Dataset aggregation}: the model drives, a rule-based teacher says what it should have done at each state the model reached, and these labels are added to the training data. Six rounds (0 to 5). Round 0: the teacher drives. Later rounds: the teacher's action is executed with probability $0.5^t$, otherwise the model's. Each round: 8 episodes at each of five traffic densities (0, 0.05, 0.1, 0.2, 0.3) on training seeds 2000--2999, Gaussian action noise 0.1, retraining on all data so far (Adam, learning rate $10^{-3}$, batch 128, mean squared error; 24 epochs in round 0, 8 later). The saved model is round 5, trained on 73\,032 labelled steps. Teacher: the stock Intelligent Driver Model on the exact simulator state.
+\subsection{How it was tested}
+As in Section~\ref{sec:testing}; no weather input; weather acts through vehicle loss only.
+\subsection{Results}
+Clear 0.925 (interval 0.880--0.954), fog 1.0 0.895, rain 0.6 0.900, rain 1.0 0.900. It is better than the baselines in clear weather by $+0.075$ ($p=0.0007$) and $+0.180$ ($p<0.0001$). 15 of 200 clear episodes fail; a collision-aware teacher solves 14 of those 15, which points to information that the model's grid does not contain (late, coarse view of other vehicles). Energy 93.0--96.5 watt-hours per kilometre at 7.9\,m/s.
+\subsection{What we can and cannot say}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{5.2cm}X@{}}\toprule
+We can say & Because\\\midrule
+Repeated drive-and-correct training with the road drawn in beats five-demonstration cloning. & $+0.075$ and $+0.180$ on 200 paired episodes.\\
+Loss of detected vehicles at the measured rates did not lower its success in sparse traffic. & 0.895--0.925 in all four conditions; the pre-registered test of harm failed.\\\midrule
+We cannot say & Because\\\midrule
+Which of the two changes (road drawing, training method) caused the gain. & They were not separated at 200 episodes.\\
+That it is better than its own teacher. & The collision-aware teacher scores 0.950; the difference is not significant.\\
+That it works with a real detector and camera. & Tests used a measured loss of vehicles on top of the simulator's vehicle list.\\\bottomrule
+\end{tabularx}
+
+% =====================================================================================================================================
+\section{Model 4: the Caution-Study Caution-Aware Driving Model}
+\subsection{What it is}
+The proposed design with \textbf{one extra number}, ``caution'' between 0 and 1. Caution is derived from the measured detector reliability: $c=1-\text{retention}$ (0 in clear weather).
+\subsection{What it sees and the network}
+Same grid and three vehicle-state numbers as model 3, plus caution through a small extra branch (1$\to$16) joined before the head (176$\to$128$\to$2); 112\,610 adjustable numbers. \emph{The caution value is given to the model from the known weather; the model does not sense it.}
+\subsection{How it was trained}
+Dataset aggregation as for model 3, but the \textbf{teacher also depends on caution}: at caution 0 it drives at 30\,km/h with a 10\,m gap; at caution 1 at 20\,km/h with a 25\,m gap. Five rounds of 40 episodes, 6 epochs per round, action noise 0.1, caution per episode half uniform in $[0,1]$ and half derived from weather. The saved model is the round with the best validation result, \emph{round 1} (35\,503 labelled steps). A control with the caution input fixed at 0 was trained the same way.
+\subsection{How it was tested}
+As in Section~\ref{sec:testing}, with caution computed from the weather condition (clear: 0).
+\subsection{Results}
+Success 0.890, 0.895, 0.890, 0.820 (clear, fog 1.0, rain 0.6, rain 1.0). In weather it slows to 5.6--6.2\,m/s and its estimated energy falls to 59.7--62.7 watt-hours per kilometre, about 35\% lower than the proposed model (93.0--96.5). Collisions fall to 3--5\%, but timeouts rise to 3.5\%, 6\% and 10.5\%.
+\subsection{Why it differs from the proposed model in clear weather}
+It is a different network, trained in a separate run on different labels, so it behaves differently even at caution 0. It solves 178 of 200 clear episodes, the proposed model 185; they disagree on 13 episodes (3 vs 10, $p=0.092$). The control trained the same way with caution fixed at 0 scores 0.895, the same as model 4, so run-to-run differences of a few points exist at 200 episodes.
+\subsection{Longer time limit (post-hoc check)}\label{sec:longer}
+Every extra failure of model 4 in weather was a timeout, so it was re-run in the three weather conditions with a 160-second limit (1600 steps; same seeds). The proposed model and the baselines had no timeouts in weather, so their results cannot change. The limit was changed \emph{after} seeing the timeouts.
+\begin{table}[H]\centering\scriptsize
+\caption{Caution-aware model with the 80-second and the 160-second limit, next to the proposed model (80 seconds). 200 episodes each.}\label{tab:longer}
+\resizebox{\textwidth}{!}{\input{tables/caution_longer_time_limit}}
+\end{table}
+\begin{table}[H]\centering\scriptsize
+\caption{Paired comparison of the caution-aware model at 160 seconds with the proposed model at 80 seconds.}\label{tab:longerpaired}
+\resizebox{\textwidth}{!}{\input{tables/caution_longer_time_limit_paired}}
+\end{table}
+At 160 seconds all timeouts disappear: 0.940, 0.955 and 0.935 in fog 1.0, rain 0.6 and rain 1.0, against 0.895, 0.900 and 0.900 for the proposed model; no difference is significant ($p=0.136$, $0.061$, $0.296$).
+\subsection{What we can and cannot say}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{5.2cm}X@{}}\toprule
+We can say & Because\\\midrule
+The model shows \emph{learned adaptive behaviour}: it slows down by itself when the caution value is high. & The control with caution fixed at 0 does not slow down; speed fell from about 8.0 to 5.6--6.2\,m/s.\\
+In fog and rain it used about 35\% less estimated energy with success tied to the proposed model at a 160-second limit. & Table~\ref{tab:longer}; no significant difference.\\
+At the original 80-second limit it was significantly lower in rain 1.0 (0.820 against 0.900, $p=0.033$) because of timeouts. & Table~\ref{tab:allmetrics}.\\\midrule
+We cannot say & Because\\\midrule
+That caution makes driving safer or more successful. & Success did not rise; weather did not hurt the proposed model in the first place.\\
+That it is more energy-\emph{efficient}. & It is slower; no speed-matched control exists.\\
+That the model senses the weather. & The caution value is supplied.\\
+That the 160-second result is pre-registered. & The limit was changed after the timeouts were seen.\\\bottomrule
+\end{tabularx}
+
+% =====================================================================================================================================
+\section{Model 5: the Image-Only Driving Model (front camera)}
+\subsection{What it is}
+A model that gets only the front-left camera picture and nothing else: no grid, no road drawing, no speed, no weather label. It is the weak control: ``what happens if we skip the bird's-eye-view grid.''
+\subsection{What it sees and the network}
+The camera picture is rendered at 320$\times$240, resized to 128$\times$96 and scaled to the range 0 to 1. Five convolution layers with batch normalisation (24, 36, 48, 64, 64 maps; kernels 5, 5, 3, 3, 3; all stride 2; output 64$\times$3$\times$4), then a head (768$\to$128, dropout 0.2, 128$\to$2, tanh). It is a different, smaller network type than models 1 to 4.
+\subsection{How it was trained}
+Behaviour cloning of the collision-aware teacher on 40 clean-weather episodes (teacher drives with action noise 0, 0.1 and 0.25, so that recoveries are in the data), followed by three dataset-aggregation rounds of 20 episodes (teacher mix 0.30, 0.20, 0.10), 37\,692 labelled pictures in total; Adam, learning rate $10^{-3}$ then $5\cdot10^{-4}$, 8 epochs per fit, mild brightness jitter. Training seeds 100--199. It was trained only on clean pictures.
+\subsection{How it was tested}
+The same 200 seeds and metrics. In weather, the teammates' fog or rain filter is applied to the picture it receives (a different seed stream per episode), at the same intensities as for the other models.
+\subsection{Results}
+Clear: success \VcamSuccessClear{} (interval \VcamLowClear{} to \VcamHighClear{}); 60.5\% of episodes end by leaving the road, 20.0\% by collision, 6.5\% by timeout; speed 9.20\,m/s, route completion 0.55, energy 276.6 watt-hours per kilometre. \VcamWeatherSentence
+\subsection{What we can and cannot say}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{5.2cm}X@{}}\toprule
+We can say & Because\\\midrule
+A camera-only model trained this way is far below the grid-based models. & 0.130 against 0.745--0.925 in clear weather, paired difference to the proposed model $+0.795$ (159 episodes where only the proposed model succeeded, none the other way).\\
+Its main failure is leaving the road. & 60.5\% of clear episodes.\\\midrule
+We cannot say & Because\\\midrule
+That cameras cannot drive. & This is one small network, 40 plus 60 teacher episodes, no road or speed input.\\
+That weather ``breaks'' it, if it already fails in clear weather. & Its clear-weather success is already near the floor; see the weather sentence above for what changes.\\\bottomrule
+\end{tabularx}
+
+% =====================================================================================================================================
+\section{Reinforcement learning: what we tried (two-page record)}\label{sec:rlrecord}
+Reinforcement learning is not part of the five-model comparison. It is recorded here so the team knows what was tried. In all four attempts the algorithm is proximal policy optimisation (PPO), the action is the same two numbers (steering, throttle or brake, each between $-1$ and $1$), and the network starts from an imitation-trained model, because a random start settles at standing still.
+
+\paragraph{State (what the network is given).} Attempt 1: 12 numbers of simulator state (six vehicle-state values, the previous action, a 4-number weather vector). Attempts 2 to 4: the bird's-eye-view grid and the vehicle-state numbers of the model they start from, plus (attempts 2 and 3) a weather or caution input.
+\paragraph{Reward version 1 (attempts 1 to 3), per 0.1\,s step:}
+\[
+r_t=\frac{\min(\Delta s,\,v_{cap}\Delta t)}{v_{ref}\Delta t}-0.5\,d^2-5\,\psi^2-0.1\lVert a_t-a_{t-1}\rVert^2-0.002\,j^2-0.2\max(0,-a^{thr}_t)-0.5\Big(\tfrac{(v-v_{cap})_+}{2}\Big)^2-0.2[v<0.5]+R_{end}
+\]
+$\Delta s$ distance driven, $v_{ref}=10$\,m/s, $d$ sideways offset from the lane centre, $\psi$ heading error, $j$ jerk, $a^{thr}$ throttle or brake command, $v_{cap}$ speed cap (10 or 12\,m/s), $R_{end}$ terminal reward ($+20$ for success, $-50$ for a collision or leaving the road).
+\paragraph{Reward version 3 (attempt 4):}
+\[
+r_t=\min\!\Big(\tfrac{\Delta s}{v_{ref}\Delta t},\tfrac{v_{cap}}{v_{ref}}\Big)-0.5d^2-5\psi^2-2\Big(1-\tfrac{\tau}{3}\Big)_+^2-\Big(1-\tfrac{g}{6}\Big)_+^2-0.1\lVert a_t-a_{t-1}\rVert^2-0.002j^2-0.02E_t-0.2[v<0.5]+R_{end}
+\]
+$\tau$ predicted time to collision (s), $g$ gap to the vehicle ahead (m), $E_t$ energy of the step (Wh); $R_{end}=+50$ for success and $-100$ for collision or leaving the road. The collision and gap terms use simulator truth during training only.
+
+\begin{table}[H]\centering\scriptsize
+\caption{The four reinforcement-learning attempts. ``Validation'' means the small set of episodes used during training; ``test'' means seeds never used for training.}\label{tab:rlfour}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.1cm}>{\raggedright\arraybackslash}p{2.2cm}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{2.7cm}>{\raggedright\arraybackslash}p{2.1cm}X@{}}\toprule
+Attempt & Start (initialisation) & Reward and what changed & Training (steps completed) & Testing & Result and lesson\\\midrule
+1. Privileged teacher (runs C2, Probe C, C3) & Small network cloned from the stock driver on simulator state & Version 1, speed cap 12 (C2, Probe C) or 10 (C3), crash penalty 50; rain lowered tyre grip (later removed) & Learning rate $3\cdot10^{-4}$ ($5\cdot10^{-5}$ in C3), 512 steps per update, batch 512, 10 epochs. C2 1.5 M steps; Probe C 1 M; C3 0.3 M of 1.5 M & 70 test episodes (10 clear, 10 fog, 50 rain); stock driver for reference & 16 of 70 succeed (stock driver 47 of 70); all failures leave the road; reward rose while success did not. \emph{Lesson:} a rising reward is not better driving.\\
+2. Fine-tune the proposed model with a weather input & Proposed model; zero-initialised weather branch & Version 1, eight weather mixes with vehicle loss, density 0.1 & Learning rate $5\cdot10^{-5}$, 256 steps per update, batch 128, clip 0.1. 120\,000 of 480\,000 steps & Validation on 40 episodes & 0.675, 0.65, 0.675: no change. \emph{Lesson:} a weather input cannot help a model that weather does not hurt.\\
+3. Five reward combinations & Proposed model with zero-initialised caution input & Version 1 plus: none; energy term $-0.05E_t$; caution-dependent speed limit and crash penalty; headway term; all & As attempt 2 with 2 environments. 150\,000 steps in each of five runs & Validation on 40 dense-traffic episodes & 0.325--0.400 against a start of 0.350: noise. Energy did not fall. \emph{Lesson:} 40 episodes cannot select a model; a reward cannot add missing information.\\
+4. Reward version 3 under measured degradation & Weather-Degradation-Trained Driving Model & Version 3: adds collision-time and gap terms, no brake penalty, energy cost, $+50/-100$ terminal rewards & Learning rate $10^{-4}$, 256 steps per update. 300\,000 steps; the run with a weather input stopped after step 0 & 200 test episodes in four weather conditions & Success lower by 0.065, 0.115, 0.115, 0.095 (significant). Faster, less safe. \emph{Lesson:} reward changes alone reduced safety; validation at 1.0 predicted nothing.\\\bottomrule
+\end{tabularx}
+\end{table}
+\textbf{Overall:} none of the four attempts beat the imitation-trained model it started from, and attempt 4 made it significantly worse. Training curves and before-and-after figures are in the technical report (reinforcement-learning section).
+
+% =====================================================================================================================================
+\section{Which wording each result supports}\label{sec:wording}
+\begin{table}[H]\centering\small
+\caption{Claim, evidence and allowed wording.}\label{tab:wording}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{4.2cm}>{\raggedright\arraybackslash}p{4.4cm}X@{}}\toprule
+Claim & Evidence & Allowed wording\\\midrule
+The proposed model beats the baselines & 200 paired episodes, $p=0.0007$ and $<0.0001$ & ``clearly better in sparse traffic in this simulator''\\
+The grid matters & Image-only 0.130 against 0.925 & ``a camera-only model of this kind is far worse''\\
+Weather does not hurt the proposed model & 0.895--0.925 in every condition & ``no measurable loss from vehicle loss at the measured rates in sparse traffic''; not ``robust to weather''\\
+The caution-aware model adapts & Slows down only when caution is high & ``learned adaptive behaviour''; not ``adaptive perception'' or ``senses weather''\\
+The caution-aware model saves energy & 35\% lower estimate at lower speed & ``lower estimated energy at lower speed''; not ``more efficient''\\
+Reinforcement learning did not help & Four attempts, one with 200 test episodes & ``did not improve; once worsened''; not ``cannot work''\\
+The image-only model breaks in weather & See Model 5 results & Only what the weather sentence states\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Where the files are}
+\begin{itemize}
+\item Models: \pth{trained_models/} (descriptive names; mapping in \pth{trained_models/MODEL_NAME_MAPPING.md}). Models 1 and 2 are also on GitHub (\pth{bev_policy/checkpoints/}).
+\item Code names (only here): model 1 \code{repo_bc_clear}, model 2 \code{repo_bc_sparse}, model 3 \code{ov_split}, model 4 \code{caut_a} (evaluated as \code{caut_auto}), model 5 \code{vcam}.
+\item Results: \pth{bev_rl/adaptive/results/n200_all_weather/}, \pth{bev_rl/adaptive/results/n200_horizon1600/}, \pth{bev_rl/adaptive/results/vanilla_camera/}.
+\item Evaluation code: \pth{bev_rl/adaptive/evaluate_n200_all_weather.py} (models 1 to 4), \pth{bev_rl/adaptive/vanilla_camera_cnn.py} (model 5). Energy: \pth{bev_rl/energy.py}.
+\item Figures and tables of this document: \pth{report/make_five_model_comparison.py}, \pth{report/make_detector_retention_figure.py}, \pth{report/make_caution_longer_time_limit.py}.
+\end{itemize}
+
+\end{document}

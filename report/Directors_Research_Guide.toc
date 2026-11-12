@@ -1,0 +1,25 @@
+\contentsline {section}{\numberline {1}The project on one page}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}What this document is}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}The question, and how it changed}{2}{subsection.1.2}%
+\contentsline {section}{\numberline {2}How a driver works: the ideas in plain language}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}What the driver sees}{4}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Three ways of teaching a driver}{4}{subsection.2.2}%
+\contentsline {section}{\numberline {3}The models we trained and where they are}{5}{section.3}%
+\contentsline {section}{\numberline {4}How we tested}{6}{section.4}%
+\contentsline {section}{\numberline {5}Results}{6}{section.5}%
+\contentsline {subsection}{\numberline {5.1}The main result: 200 drives in clear weather}{6}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}The image-only driver}{8}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Does weather make driving worse?}{9}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Caution-aware driver against the proposed driver, 200 drives in each weather}{10}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Three side studies}{11}{subsection.5.5}%
+\contentsline {paragraph}{Caution when perception is unreliable (40 drives, pilot).}{11}{section*.8}%
+\contentsline {paragraph}{Which input matters (10 drives, pilot).}{11}{section*.9}%
+\contentsline {paragraph}{A wrong position estimate (40 drives, pilot).}{11}{figure.caption.11}%
+\contentsline {section}{\numberline {6}Reinforcement learning: the four attempts}{12}{section.6}%
+\contentsline {paragraph}{The reward in words.}{12}{section*.12}%
+\contentsline {section}{\numberline {7}Where the drivers fail, and why}{15}{section.7}%
+\contentsline {section}{\numberline {8}Videos}{16}{section.8}%
+\contentsline {section}{\numberline {9}Comparison with the current GitHub repository}{17}{section.9}%
+\contentsline {section}{\numberline {10}What we can claim, and what we cannot}{18}{section.10}%
+\contentsline {section}{\numberline {11}What to do next}{18}{section.11}%
+\contentsline {section}{\numberline {12}Where to find everything}{19}{section.12}%

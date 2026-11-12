@@ -1,0 +1,104 @@
+% Consolidated project report. Build (from the folder report/):  pdflatex main.tex  (run twice for the table of contents and cross references)
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs,longtable,array,tabularx,multirow}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage[labelfont=bf,font=small]{caption}
+\usepackage{enumitem}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,fit,shapes.geometric,calc,backgrounds}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black,citecolor=blue!50!black]{hyperref}
+
+\definecolor{headlineblue}{HTML}{2A78D6}
+\definecolor{baselineorange}{HTML}{EB6834}
+\definecolor{ruleblack}{HTML}{8A8984}
+\definecolor{softgreen}{HTML}{1BAF7A}
+\definecolor{softred}{HTML}{E34948}
+
+\DeclareRobustCommand{\code}[1]{\texttt{\detokenize{#1}}}   % code names (underscores allowed; robust so that it survives section titles and the table of contents)
+\newcommand{\pth}[1]{\path{#1}}                   % file system paths (line-breakable)
+\newcommand{\codename}[1]{(code name \code{#1})}
+\newcommand{\todo}[1]{\textcolor{softred}{[#1]}}
+\newcommand{\headline}{\emph{headline model}}
+
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,frame=single,columns=fullflexible,keepspaces=true,
+        showstringspaces=false,backgroundcolor=\color{black!3}}
+\setlist{itemsep=2pt,topsep=3pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\sloppy
+\emergencystretch=2em
+\setcounter{tocdepth}{2}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small Consolidated project report}
+\fancyhead[R]{\small Camera-derived bird's-eye-view driving policies in MetaDrive}
+\fancyfoot[C]{\thepage}
+\renewcommand{\arraystretch}{1.12}
+
+\title{\textbf{Camera-Derived Bird's-Eye-View Driving Policies in MetaDrive}\\[4pt]
+\large Consolidated project report: where everything is, what every model is, how it was trained,\\
+what worked, what did not, what failed and why, and which paper directions the evidence supports}
+\author{Prepared for the project director\\ Written from the repository state of 11 November 2026}
+\date{}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+\noindent This document consolidates the whole project into one place. It explains the repository layout (including what is on the public
+GitHub remote and what exists only on this machine), every trained model with its architecture, input, labels and training strategy,
+the experimental protocol, all results that are supported by enough episodes to be reported, a dedicated account of every reinforcement-learning
+attempt, a failure analysis, the front-camera videos recorded for one seed under several weather conditions, an assessment of which paper
+directions are strongly supported by the evidence, and a verified list of related 2025--2026 papers on arXiv.
+
+\medskip\noindent\textbf{Headline findings (all numbers are from 200 paired episodes unless stated otherwise).}
+\begin{itemize}
+\item The best learned model (the \emph{headline model}: dataset-aggregation student with a map-overlay bird's-eye view and three scalars) reaches
+  \textbf{0.925} success in clear weather with sparse traffic, against \textbf{0.850} and \textbf{0.745} for the two behaviour-cloning baselines supplied in the
+  repository (paired exact McNemar $p=0.0007$ and $p<0.0001$). It is statistically indistinguishable from the collision-aware rule-based teacher it imitates (0.950).
+\item Under the weather perturbations that were measured and implemented, the headline model does \emph{not} get worse (0.89--0.91 in all four conditions), so
+  \emph{no robustness or adaptation claim can be made}. The measured degradation of the detector and stereo depth is real (the detector finds 72\% of vehicles in clear weather and 1\% in heavy rain) but
+  it hardly reaches the policy in sparse traffic.
+\item Reinforcement learning did not improve on the imitation-trained policies in any of the four attempts documented here; one attempt made the policy significantly worse (0.815 versus 0.880 for its own starting point, $p=0.029$).
+\item Failures of the headline model are concentrated in 15 of 200 episodes; in 14 of them the collision-aware teacher succeeds, so they are imitation failures, not intrinsically unsolvable scenes. Eight of the 15 end in the first 12 seconds.
+\item A single seed (5169) was found on which both baselines crash in all four weather conditions while the headline model succeeds in all four; front-camera videos of it are described in Section~\ref{sec:videos}.
+\end{itemize}
+\end{abstract}
+
+\newpage
+\tableofcontents
+\newpage
+
+\input{sections/01_orientation}
+\input{sections/02_repository_map}
+\input{sections/03_experimental_setup}
+\input{sections/04_perception_measurement}
+\input{sections/05_model_architectures}
+\input{sections/06_training_strategies}
+\input{sections/07_model_catalogue}
+\input{sections/08_results_headline}
+\input{sections/09_results_weather_and_robustness}
+\input{sections/10_reinforcement_learning}
+\input{sections/11_failure_analysis}
+\input{sections/12_videos}
+\input{sections/13_what_worked_what_did_not}
+\input{sections/14_paper_directions}
+\input{sections/15_related_work}
+
+\appendix
+\input{sections/appendix_a_file_inventory}
+\input{sections/appendix_b_reproduction_commands}
+\input{sections/appendix_c_honesty_notes}
+
+\end{document}

@@ -1,0 +1,74 @@
+[
+ {
+  "policy": "bc_sparse_traffic_5eps",
+  "density": 0.05,
+  "n": 10,
+  "success": 0.9,
+  "crash": 0.1,
+  "off_road": 0.0,
+  "timeout": 0.0,
+  "route_completion": 0.9539401796943924,
+  "mean_speed": 8.133959211409884,
+  "wh_per_km": 83.67672680241944
+ },
+ {
+  "policy": "bc_clear_5eps_without_traffic",
+  "density": 0.05,
+  "n": 10,
+  "success": 0.7,
+  "crash": 0.3,
+  "off_road": 0.0,
+  "timeout": 0.0,
+  "route_completion": 0.9319599432972758,
+  "mean_speed": 8.123734179508933,
+  "wh_per_km": 82.53914115237403
+ },
+ {
+  "policy": "IDM_expert",
+  "density": 0.05,
+  "n": 10,
+  "success": 0.8,
+  "crash": 0.1,
+  "off_road": 0.1,
+  "timeout": 0.0,
+  "route_completion": 0.9265421501293029,
+  "mean_speed": 7.876538700042242,
+  "wh_per_km": 106.28574767328405
+ },
+ {
+  "policy": "bc_sparse_traffic_5eps",
+  "density": 0.2,
+  "n": 10,
+  "success": 0.1,
+  "crash": 0.9,
+  "off_road": 0.0,
+  "timeout": 0.0,
+  "route_completion": 0.5255439300039725,
+  "mean_speed": 7.8246150595222606,
+  "wh_per_km": 126.15845131715938
+ },
+ {
+  "policy": "bc_clear_5eps_without_traffic",
+  "density": 0.2,
+  "n": 10,
+  "success": 0.0,
+  "crash": 1.0,
+  "off_road": 0.0,
+  "timeout": 0.0,
+  "route_completion": 0.49653782703389143,
+  "mean_speed": 7.858162032365959,
+  "wh_per_km": 123.7745654083059
+ },
+ {
+  "policy": "IDM_expert",
+  "density": 0.2,
+  "n": 10,
+  "success": 0.4,
+  "crash": 0.5,
+  "off_road": 0.1,
+  "timeout": 0.0,
+  "route_completion": 0.7355862923502089,
+  "mean_speed": 7.217162619197518,
+  "wh_per_km": 159.86982446043385
+ }
+]

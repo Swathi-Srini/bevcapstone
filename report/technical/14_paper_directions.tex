@@ -1,0 +1,56 @@
+\section{Possible paper directions, ranked by how well the evidence supports them}\label{sec:directions}
+
+\begin{plainwords}
+Seven possible papers, ranked by how much evidence already exists for each, what is still missing, and what it would cost to finish. The best single paper combines the first three directions.
+\end{plainwords}
+
+
+Each direction lists the claim, the evidence that already exists (with its level), what is missing, and an estimate of the cost. Cost is given in episodes; on this laptop one evaluation episode takes about 13 seconds (the 400-episode check of Section~\ref{sec:weather} took 89 minutes), so 200 episodes cost about 45 minutes.
+The directions are not exclusive: A, B and C together form one coherent paper (the ``thorough evaluation'' option at the end).
+
+\subsection{Direction A: pitfalls of closed-loop evaluation of learned driving policies (strongest support)}
+\textbf{Claim.} Common practices in evaluating driving policies in simulation (small test sets, validation-based selection, unpaired comparisons, unvalidated sensor perturbations, non-deterministic traffic) produce wrong conclusions, with a concrete catalogue of cases and a protocol that avoids them.
+\textbf{Evidence in hand.} (i)~A model's success of 0.975 on 40 episodes became 0.895 on 200 (selection of the best of several candidates; reported). (ii)~Reinforcement-learning validation of 1.0 at every checkpoint while the 200-episode test shows a significant loss of 0.065--0.115 (reported). (iii)~An invalid perturbation measurement from a stale sensor mount, detected only by a ``identical across conditions'' check (documented). (iv)~The same model and seed giving different episodes in different process histories (diagnostic).
+(v)~Ties in 10-episode validation resolved to round 0 in four runs (documented). (vi)~Paired exact tests detect a 0.075 difference at $n=200$ that overlapping Wilson intervals do not.
+\textbf{Missing.} A quantitative study of (i) by resampling from the per-episode data that already exists (selection bias as a function of the number of candidates and $n$); a determinism fix or a documented seeding protocol; a short checklist. \textbf{Cost:} mostly analysis of existing data; no new episodes needed for the first version.
+\textbf{Risk:} a methodology paper is judged on generality; the cases come from one simulator and one policy family.
+
+\subsection{Direction B: where does perception degradation start to matter? A measured dose-response study (strong support, cheap)}
+\textbf{Claim.} Under a measured model of detector and stereo-depth degradation under fog and rain, sparse-traffic driving is unaffected, and the paper maps the region of (traffic density, vehicle detection retention) in which success begins to fall, i.e.\ the conditions under which any weather-adaptive method would have something to adapt to.
+\textbf{Evidence in hand.} The measurement (Figure~\ref{fig:perception}, pilot level: 72--144 vehicle-frames per condition) with its finding that loss is detection, not range error; the calibrated environment; the null result at $n=200$ for four models in four weather cells and at $n=100$ against clear (pre-registered, reported); the dropout proxy (pilot) with the same null.
+My literature search found no 2025--2026 arXiv paper that evaluates weather-degraded perception in MetaDrive (Section~\ref{sec:related}), so the combination is open; this is a statement about my search, not proof of novelty.
+\textbf{Missing.} A grid of retention $\in\{1,0.75,0.5,0.25,0\}$ times density $\in\{0.05,0.1,0.2\}$ for two or three models; a larger measurement sample; ideally the same measurement with a second detector. \textbf{Cost:} 25 cells $\times$ 100 episodes $\approx$ 9 hours per model.
+
+\subsection{Direction C: the teacher--student information gap in bird's-eye-view driving (strong potential, one decisive experiment)}
+\textbf{Claim.} A large part of the remaining failures of an imitation-trained bird's-eye-view policy comes from what its grid cannot show (no heading, 17.5\,m window, centre rule), not from imitation error; a heading-aware, wider grid or a teacher restricted to the student's information closes the gap.
+\textbf{Evidence in hand.} The proposed model fails 15 of 200; the collision-aware teacher solves 14 of them; seven of the failures are collisions in the first 10 seconds in which every other model also collides (reported); the fidelity replay of two crashes (diagnostic).
+Related 2025--2026 work frames exactly this issue (learner--expert asymmetry, unrealizable teachers; Section~\ref{sec:related}).
+\textbf{Missing (decisive).} (1)~Evaluate the existing student of the collision-aware teacher on the 200-episode block (45 minutes); (2)~a teacher that sees only the student's window (to separate information gap from imitation error); (3)~a heading-aware grid (policy-side wrapper around the teammates' grid) and retraining; (4)~three training seeds. \textbf{Cost:} (1) 200 episodes, (2)--(3) about 1--2 days of training and 3 $\times$ 200 episodes.
+\textbf{Risk:} the improvement may be small if the remaining failures are dominated by other effects; the experiment answers that either way.
+
+\subsection{Direction D: a thorough evaluation of imitation versus reinforcement learning in a camera-derived bird's-eye-view setting}
+\textbf{Claim.} In sparse and dense MetaDrive traffic, dataset aggregation from a privileged rule-based teacher beats few-demonstration behaviour cloning and beats reinforcement-learning fine-tuning, with a full account of why four reinforcement-learning attempts failed.
+\textbf{Evidence in hand.} The 200-episode comparison of six models; the four reinforcement-learning attempts with their diagnoses; the reward-design audit trail.
+\textbf{Missing.} (1)~Several training seeds per method (all results are single training seeds, so between-seed variance is unknown); (2)~a reinforcement-learning baseline from scratch with an algorithm better matched to MetaDrive (a third-party summary of the MetaDrive paper states that value-based methods suited driving better than policy-gradient ones; not checked in the full text); (3)~a stronger reinforcement-learning attempt with the repairs listed in Section~\ref{sec:rl}; (4)~dense-traffic numbers at $n\ge100$.
+\textbf{Cost:} 3 seeds $\times$ about 2 hours of training per model, plus about 45 minutes per 200 evaluation episodes.
+
+\subsection{Direction E: robustness of map-overlay policies to localisation error through redundancy}
+\textbf{Claim.} A policy that reads lane geometry from a map overlay is brittle to an error in the car's pose against the map, but training with pose error \emph{and a second independent lane cue} removes the brittleness; augmentation alone does not.
+\textbf{Evidence in hand.} Success 0.925 $\to$ 0.275 from 0 to 2\,m of error for the proposed model; $0.88$--$0.95$ for the two-cue models over the same range; no benefit from augmentation alone (all pilot, 40 episodes per point, single training seed).
+\textbf{Missing.} 200 episodes per point; replace the simulated second cue by the output of the real lane/stereo pipeline; a time-varying (not constant) pose error; multiple seeds. Related benchmark work perturbs GPS and odometry in closed loop (Bench2Drive-Robust, Section~\ref{sec:related}).
+\textbf{Cost:} 5 levels $\times$ 200 episodes $\times$ 3 models $\approx$ 11 hours.
+
+\subsection{Direction F: reliability-coupled caution as learned adaptive behaviour}
+\textbf{Claim.} A single network conditioned on a perception-reliability value spans a controllable trade-off between speed, estimated energy and timeouts at roughly constant success.
+\textbf{Evidence in hand.} Pilot at 40 episodes: speed 8.0 $\to$ 5.6--6.2\,m/s, energy 84.7 $\to$ 56--59\,watt-hours per kilometre (30\% lower), success 0.85--0.925, timeouts 7.5--15\%.
+\textbf{Missing.} $n=200$; an energy model validated against a published vehicle model; a longer horizon so that timeouts do not confound slow driving; a Pareto front over several caution values; a control that simply lowers the target speed of the stock driver model (to show that learning adds anything). \textbf{Cost:} about 9 hours. \textbf{Risk:} the strongest alternative explanation, ``a slower car uses less energy'', must be excluded by the speed-matched control.
+
+\subsection{Direction G: a reproducible benchmark and dataset}
+\textbf{Claim.} A resource: the evaluation protocol, seed blocks, per-episode outcomes of more than ten policies, the perception measurement and the failure catalogue, packaged for others.
+\textbf{Evidence in hand.} Everything is stored (per-episode JSON, model manifest with hashes, scripts); the repository is organised for it (Section~\ref{sec:repomap}).
+\textbf{Missing.} Push to the remote, licence check of the third-party weights, determinism fix (Section~\ref{sec:repro}), documentation of the environment. \textbf{Cost:} one to two days of engineering.
+
+\subsection{Recommended combination}
+The most defensible \emph{single} paper with the data that exists is a \textbf{thorough evaluation paper} built from A, B and the existing part of D, with C as its central analysis: \emph{``Imitation, reinforcement learning and perception degradation for bird's-eye-view driving in MetaDrive: a paired evaluation, a measured weather model, and the information gap that limits the students''}.
+Its claims would be: (1) dataset aggregation from a privileged teacher beats few-demonstration cloning and reinforcement-learning fine-tuning (reported); (2) measured fog and rain remove detections but do not hurt sparse-traffic driving (reported, with the dose-response map from B added); (3) most remaining failures are information-gap failures (reported overlap, plus the experiment of C); (4) evaluation pitfalls (A).
+The experiments to add before writing are, in priority order: (i)~the collision-aware student and the unmodified-grid student on the 200-episode block (about 1.5 hours); (ii)~two more training seeds for the proposed model; (iii)~the dose-response grid; (iv)~the heading-aware grid test.

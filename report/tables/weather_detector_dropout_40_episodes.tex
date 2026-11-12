@@ -1,0 +1,19 @@
+\begin{tabular}{@{}llrrr@{}}\toprule
+Model & Weather & Share of vehicles kept & Success (40 episodes) & 95\% interval\\\midrule
+Baseline behaviour cloning, sparse-traffic demonstrations & clear & 1.00 & 0.775 & [0.62, 0.88]\\
+ & fog 1.0 & 0.27 & 0.800 & [0.65, 0.90]\\
+ & rain 0.6 & 0.16 & 0.800 & [0.65, 0.90]\\
+ & rain 1.0 & 0.04 & 0.800 & [0.65, 0.90]\\
+Baseline behaviour cloning, no-traffic demonstrations & clear & 1.00 & 0.875 & [0.74, 0.95]\\
+ & fog 1.0 & 0.27 & 0.875 & [0.74, 0.95]\\
+ & rain 0.6 & 0.16 & 0.875 & [0.74, 0.95]\\
+ & rain 1.0 & 0.04 & 0.875 & [0.74, 0.95]\\
+Dataset-aggregation student, unmodified view & clear & 1.00 & 0.875 & [0.74, 0.95]\\
+ & fog 1.0 & 0.27 & 0.875 & [0.74, 0.95]\\
+ & rain 0.6 & 0.16 & 0.875 & [0.74, 0.95]\\
+ & rain 1.0 & 0.04 & 0.875 & [0.74, 0.95]\\
+Headline model (map-overlay view) & clear & 1.00 & 0.925 & [0.80, 0.97]\\
+ & fog 1.0 & 0.27 & 0.925 & [0.80, 0.97]\\
+ & rain 0.6 & 0.16 & 0.925 & [0.80, 0.97]\\
+ & rain 1.0 & 0.04 & 0.950 & [0.83, 0.99]\\
+\bottomrule\end{tabular}

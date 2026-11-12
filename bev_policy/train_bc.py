@@ -26,8 +26,10 @@ def action_loss(prediction, target, brake_weight: float) -> torch.Tensor:
 def loss_on(model, loader, loss_fn, device):
     model.eval(); total = 0.0
     with torch.no_grad():
-        for bev, scalar, action in loader:
-            total += float(loss_fn(model(bev.to(device), scalar.to(device)), action.to(device))) * len(action)
+        for batch in loader:
+            bev, scalar, action = batch[:3]
+            w = batch[3].to(device) if len(batch) > 3 else None
+            total += float(loss_fn(model(bev.to(device), scalar.to(device), w), action.to(device))) * len(action)
     return total / len(loader.dataset)
 
 
@@ -43,15 +45,30 @@ def main() -> int:
                         help="Optional compatible BC checkpoint used to initialise the policy weights.")
     parser.add_argument("--brake-weight", type=float, default=1.0,
                         help="Longitudinal loss multiplier for expert braking samples (must be at least 1).")
+    parser.add_argument("--weather-input", choices=("none", "explicit"), default="none",
+                        help="'explicit' adds the 4-D weather conditioning branch (data must contain 'weather').")
+    parser.add_argument("--only-clear", action="store_true", help="Train only on episodes whose weather is clear (BC baseline).")
+    parser.add_argument("--val-count", type=int, default=0, help="Hold out this many episodes (spread across weather kinds) for validation.")
     args = parser.parse_args()
     if args.brake_weight < 1.0:
         raise ValueError("--brake-weight must be at least 1.")
-    train_files, val_files = split_files(episode_files(args.data_dir))
-    train = BEVDataset(train_files); val = BEVDataset(val_files, train.mean, train.std)
+    files = episode_files(args.data_dir)
+    if args.only_clear:
+        import json
+        import numpy as np
+        files = [f for f in files if json.loads(str(np.load(f)["metadata_json"]))["weather"][0] == "clear"]
+    if args.val_count:   # every k-th episode held out, so validation covers the weather schedule
+        k = max(1, len(files) // args.val_count)
+        val_files = files[::k][:args.val_count]
+        train_files = [f for f in files if f not in val_files]
+    else:
+        train_files, val_files = split_files(files)
+    ew = args.weather_input == "explicit"
+    train = BEVDataset(train_files, with_weather=ew); val = BEVDataset(val_files, train.mean, train.std, with_weather=ew)
     if train.bev.shape[1] != val.bev.shape[1]:
         raise ValueError("BEV channel count differs between train and validation episodes.")
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = BEVScalarPolicy(train.bev.shape[1]).to(device)
+    model = BEVScalarPolicy(train.bev.shape[1], 6, 4 if ew else 0).to(device)
     if args.init_checkpoint is not None:
         initial = torch.load(args.init_checkpoint, map_location=device, weights_only=True)
         if int(initial["in_channels"]) != train.bev.shape[1]:
@@ -64,14 +81,16 @@ def main() -> int:
     args.checkpoint.parent.mkdir(parents=True, exist_ok=True); best, stale = float("inf"), 0
     for epoch in range(1, args.epochs + 1):
         model.train()
-        for bev, scalar, action in train_loader:
-            loss = loss_fn(model(bev.to(device), scalar.to(device)), action.to(device)); optimiser.zero_grad(); loss.backward()
+        for batch in train_loader:
+            bev, scalar, action = batch[:3]
+            w = batch[3].to(device) if len(batch) > 3 else None
+            loss = loss_fn(model(bev.to(device), scalar.to(device), w), action.to(device)); optimiser.zero_grad(); loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 5.0); optimiser.step()
         train_mse, val_mse = loss_on(model, train_loader, loss_fn, device), loss_on(model, val_loader, loss_fn, device)
         print({"epoch": epoch, "train_mse": train_mse, "val_mse": val_mse})
         if val_mse < best:
             best, stale = val_mse, 0
-            torch.save({"model_state": model.state_dict(), "in_channels": int(train.bev.shape[1]),
+            torch.save({"model_state": model.state_dict(), "in_channels": int(train.bev.shape[1]), "weather_dim": 4 if ew else 0,
                         "scalar_mean": train.mean.tolist(), "scalar_std": train.std.tolist(), "best_val_mse": best,
                         "train_episodes": [p.name for p in train_files], "validation_episodes": [p.name for p in val_files],
                         "init_checkpoint": str(args.init_checkpoint) if args.init_checkpoint else None,

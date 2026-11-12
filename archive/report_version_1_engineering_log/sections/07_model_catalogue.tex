@@ -1,0 +1,52 @@
+\section{Model catalogue}\label{sec:catalogue}
+
+Table~\ref{tab:catalogue} lists every model that has a saved checkpoint, in the order of the folders of \pth{trained_models/}. ``Selected round'' is the dataset-aggregation round whose checkpoint was kept (rule: highest validation success; \emph{ties keep the earliest round}).
+Because validation uses only ten episodes and saturates at 1.0 in sparse traffic, ties are frequent, and in several runs the kept checkpoint is round 0, in which the teacher drives and the model is simply behaviour-cloned from the teacher's own demonstrations.
+This is a weakness of the selection rule and is stated explicitly here so that nobody reads ``dataset aggregation'' where the kept model is actually round 0.
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{3.7cm}>{\raggedright\arraybackslash}p{3.3cm}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{2.1cm}>{\raggedright\arraybackslash}p{3.0cm}@{}}
+\caption{Catalogue of the trained models. File names are those in \code{trained_models/}; ``Evidence'' points to the section with the results.}\label{tab:catalogue}\\
+\toprule
+Model (code name) & Input & Labels & Selected round; data & Evidence\\\midrule\endfirsthead
+\toprule Model (code name) & Input & Labels & Selected round; data & Evidence\\\midrule\endhead
+\midrule\multicolumn{5}{r}{\emph{continued on the next page}}\\\endfoot
+\bottomrule\endlastfoot
+\multicolumn{5}{@{}l}{\textbf{01 Baseline behaviour cloning (teammates)}}\\
+Behaviour cloning, demonstrations without traffic (\code{repo_bc_clear}) & Unmodified grid, six scalars & Stock model, 5 episodes without other vehicles & -- (supervised only) & 200 episodes: 0.850 (Section~\ref{sec:headline}).\\
+Behaviour cloning, demonstrations with sparse traffic (\code{repo_bc_sparse}) & Unmodified grid, six scalars & Stock model, 5 episodes with traffic 0.05 & -- (supervised only) & 200 episodes: 0.745; all weather cells.\\
+\multicolumn{5}{@{}l}{\textbf{02 Superseded early experiments (camera-view version 2, seven channels)}}\\
+Three behaviour-cloning models on the seven-channel view (\code{bcv2_*}) & Seven-channel camera view; six scalars; with/without weather input & Stock model, 40 episodes, zero traffic & -- & Open-loop only; closed-loop pilot (4 seeds) flat. Not used.\\
+\multicolumn{5}{@{}l}{\textbf{03 Dataset-aggregation students}}\\
+\textbf{Headline model} (\code{ov_split}) & Overlay grid; speed, progress, goal & Stock model & Round 5; 73\,032 samples; validation 1.0 (sparse), 0.5 (dense) & \textbf{200 episodes: 0.925.} Sections~\ref{sec:headline}--\ref{sec:weather}.\\
+Unmodified grid, six scalars (\code{base_a}) & Unmodified grid; six scalars & Stock model & Round 5; 66\,956; 1.0 / 0.4 & 10 and 40 episodes (Section~\ref{sec:weather}).\\
+Overlay grid, six scalars (\code{ov_both}) & Overlay grid; six scalars & Stock model & Round 5; 71\,642; 1.0 / 0.5 & 10 episodes.\\
+Overlay grid, no scalars (\code{ov_bev_only}) & Overlay grid & Stock model & Round 4; 60\,590; 0.5 / 0.2 & 10 episodes: worst design.\\
+Unmodified grid, no scalars (\code{arch_bev_only}) & Unmodified grid & Stock model & \textbf{Round 0}; 11\,388; 0.0 / 0.0 & Not evaluated further.\\
+No grid, six scalars (\code{arch_scalar_only}) & Six scalars & Stock model & \textbf{Round 0}; 11\,388; 1.0 / 0.3 & 10 episodes.\\
+Student of the collision-aware teacher (\pth{sparse_overlay_split_safe_teacher}) & As headline & Collision-aware teacher & \textbf{Round 0}; 18\,824; 1.0 (sparse) & Not evaluated on 200 episodes (listed as untested).\\
+Caution-conditioned (\code{caut_a}) & As headline + caution value & Caution-aware stock model & Round 1; 35\,503 & 40 episodes (Section~\ref{sec:weather}).\\
+Caution control (\code{ctrl_nocaut}) & As headline + input fixed 0 & Caution-aware stock model & \textbf{Round 0}; 16\,835 & 200 episodes: 0.895.\\
+Degraded-perception student (\code{deg_base}) & Overlay grid under calibrated degradation; speed, progress, goal & Collision-aware teacher & Round 5; 104\,292; validation 0.933 & 200 episodes, four weather cells.\\
+Pose-error students, four variants (\code{pose_aug_*}, \code{pose_cam_*}) & Overlay from wrong pose; (two cues) & Stock model on true state & Rounds 2--4; 56\,646--96\,706 & 40 episodes (Section~\ref{sec:weather}).\\
+\multicolumn{5}{@{}l}{\textbf{04 Reinforcement learning}}\\
+Reward-version-3 PPO from the degraded-perception student (\code{ppo_plain}) & As \code{deg_base} & Reward & Step 300\,000 (tie) & 200 episodes, four cells (Section~\ref{sec:rl}).\\
+Same with weather input (\code{ppo_ada}) & As above + weather & Reward & Died after step 0 & Unusable.\\
+PPO sweep from the headline model (\code{rl_*}, five runs) & As headline (+ caution input) & Five reward combinations & Step 30\,000--150\,000 & Validation only (Section~\ref{sec:rl}).\\
+Privileged teachers (\code{C2}, \code{probe_C}, \code{C3}, \code{pilot_cond}) & Simulator state (not grid) & Reward & -- & Section~\ref{sec:rl}.\\
+\multicolumn{5}{@{}l}{\textbf{05, 06 Pixel policy; third-party detector}}\\
+Pixel policy (\code{vcam}) & Front camera image only & Collision-aware teacher & Behaviour cloning on 40 episodes, then 3 dataset-aggregation rounds & Not evaluated: the run ended with a logging error after training; rollouts during training were mostly off-road (13 to 15 of 20).\\
+YOLO version 8 nano & Image & Pretrained (Ultralytics) & -- & Section~\ref{sec:perception}.\\
+\end{longtable}
+}
+
+\subsection{What each family is for}
+\begin{description}[leftmargin=0.4cm,style=nextline]
+\item[Baseline behaviour cloning.] The comparison point supplied by the teammates; their README recommends the traffic-trained model as the starting point for reinforcement learning.
+\item[Input ablations.] Five designs that isolate where the headline model's gain comes from: moving the lane geometry out of the scalar vector and into the map overlay, or removing either input entirely.
+\item[Caution study.] Tests the idea that a policy should become more cautious when the perception is less reliable: a ``caution'' input derived from measured detector retention, a teacher whose speed and gap depend on that input, and a control with identical data and architecture but the input fixed at zero.
+\item[Degraded-perception student.] Tests whether training \emph{under} the measured degradation helps.
+\item[Pose-error students.] Test robustness to an error in the car's own position against the map (a realistic failure of map-based localisation, in contrast to camera degradation).
+\item[Reinforcement-learning models.] Section~\ref{sec:rl}.
+\item[Pixel policy.] A control: it was meant to show that image corruptions \emph{do} hurt a policy that reads pixels, in contrast to the grid-based models. This experiment is \emph{incomplete} (no evaluation was run), so no statement about pixel policies is made in this report.
+\end{description}

@@ -1,0 +1,103 @@
+**Paired policy comparison on identical seeds (sparse traffic 0.05, seeds 1010-1049)**
+
+| condition | policy A | policy B | n seeds | success A | success B | A - B | paired 95% CI | A only | B only | McNemar p |
+|---|---|---|---|---|---|---|---|---|---|---|
+| pose error 0 m / 0 rad | base_a | ov_split | 40 | 0.875 | 0.925 | -0.050 | [-0.125, +0.000] | 0 | 2 | 0.5000 |
+| pose error 0 m / 0 rad | base_a | repo_bc_sparse | 40 | 0.875 | 0.775 | +0.100 | [-0.025, +0.225] | 6 | 2 | 0.2891 |
+| pose error 0 m / 0 rad | ov_split | repo_bc_sparse | 40 | 0.925 | 0.775 | +0.150 | [+0.050, +0.275] | 6 | 0 | 0.0312 |
+| pose error 0.25 m / 0.02 rad | base_a | ov_split | 40 | 0.750 | 0.900 | -0.150 | [-0.300, +0.000] | 2 | 8 | 0.1094 |
+| pose error 0.25 m / 0.02 rad | base_a | repo_bc_sparse | 40 | 0.750 | 0.600 | +0.150 | [-0.026, +0.350] | 11 | 5 | 0.2101 |
+| pose error 0.25 m / 0.02 rad | ov_split | repo_bc_sparse | 40 | 0.900 | 0.600 | +0.300 | [+0.125, +0.475] | 14 | 2 | 0.0042 |
+| pose error 0.5 m / 0.05 rad | base_a | ov_split | 40 | 0.500 | 0.900 | -0.400 | [-0.550, -0.250] | 0 | 16 | 0.0000 |
+| pose error 0.5 m / 0.05 rad | base_a | repo_bc_sparse | 40 | 0.500 | 0.550 | -0.050 | [-0.275, +0.175] | 9 | 11 | 0.8238 |
+| pose error 0.5 m / 0.05 rad | ov_split | repo_bc_sparse | 40 | 0.900 | 0.550 | +0.350 | [+0.175, +0.525] | 15 | 1 | 0.0005 |
+| pose error 1 m / 0.1 rad | base_a | ov_split | 40 | 0.275 | 0.700 | -0.425 | [-0.575, -0.275] | 0 | 17 | 0.0000 |
+| pose error 1 m / 0.1 rad | base_a | repo_bc_sparse | 40 | 0.275 | 0.225 | +0.050 | [-0.150, +0.250] | 9 | 7 | 0.8036 |
+| pose error 1 m / 0.1 rad | ov_split | repo_bc_sparse | 40 | 0.700 | 0.225 | +0.475 | [+0.300, +0.625] | 20 | 1 | 0.0000 |
+| pose error 2 m / 0.2 rad | base_a | ov_split | 40 | 0.300 | 0.275 | +0.025 | [-0.050, +0.100] | 2 | 1 | 1.0000 |
+| pose error 2 m / 0.2 rad | base_a | repo_bc_sparse | 40 | 0.300 | 0.150 | +0.150 | [-0.025, +0.325] | 10 | 4 | 0.1796 |
+| pose error 2 m / 0.2 rad | ov_split | repo_bc_sparse | 40 | 0.275 | 0.150 | +0.125 | [-0.050, +0.300] | 9 | 4 | 0.2668 |
+| weather clear:0.0 | base_a | caut_auto | 40 | 0.875 | 0.900 | -0.025 | [-0.125, +0.050] | 1 | 2 | 1.0000 |
+| weather clear:0.0 | base_a | caut_c0 | 40 | 0.875 | 0.900 | -0.025 | [-0.125, +0.050] | 1 | 2 | 1.0000 |
+| weather clear:0.0 | base_a | ctrl | 40 | 0.875 | 0.975 | -0.100 | [-0.200, -0.025] | 0 | 4 | 0.1250 |
+| weather clear:0.0 | base_a | ov_split | 40 | 0.875 | 0.925 | -0.050 | [-0.125, +0.000] | 0 | 2 | 0.5000 |
+| weather clear:0.0 | base_a | repo_bc_clear | 40 | 0.875 | 0.875 | +0.000 | [-0.100, +0.100] | 2 | 2 | 1.0000 |
+| weather clear:0.0 | base_a | repo_bc_sparse | 40 | 0.875 | 0.775 | +0.100 | [-0.025, +0.225] | 6 | 2 | 0.2891 |
+| weather clear:0.0 | caut_auto | caut_c0 | 40 | 0.900 | 0.900 | +0.000 | [+0.000, +0.000] | 0 | 0 | 1.0000 |
+| weather clear:0.0 | caut_auto | ctrl | 40 | 0.900 | 0.975 | -0.075 | [-0.175, +0.000] | 0 | 3 | 0.2500 |
+| weather clear:0.0 | caut_auto | ov_split | 40 | 0.900 | 0.925 | -0.025 | [-0.075, +0.000] | 0 | 1 | 1.0000 |
+| weather clear:0.0 | caut_auto | repo_bc_clear | 40 | 0.900 | 0.875 | +0.025 | [+0.000, +0.075] | 1 | 0 | 1.0000 |
+| weather clear:0.0 | caut_auto | repo_bc_sparse | 40 | 0.900 | 0.775 | +0.125 | [+0.025, +0.225] | 5 | 0 | 0.0625 |
+| weather clear:0.0 | caut_c0 | ctrl | 40 | 0.900 | 0.975 | -0.075 | [-0.175, +0.000] | 0 | 3 | 0.2500 |
+| weather clear:0.0 | caut_c0 | ov_split | 40 | 0.900 | 0.925 | -0.025 | [-0.075, +0.000] | 0 | 1 | 1.0000 |
+| weather clear:0.0 | caut_c0 | repo_bc_clear | 40 | 0.900 | 0.875 | +0.025 | [+0.000, +0.075] | 1 | 0 | 1.0000 |
+| weather clear:0.0 | caut_c0 | repo_bc_sparse | 40 | 0.900 | 0.775 | +0.125 | [+0.025, +0.225] | 5 | 0 | 0.0625 |
+| weather clear:0.0 | ctrl | ov_split | 40 | 0.975 | 0.925 | +0.050 | [+0.000, +0.125] | 2 | 0 | 0.5000 |
+| weather clear:0.0 | ctrl | repo_bc_clear | 40 | 0.975 | 0.875 | +0.100 | [+0.025, +0.200] | 4 | 0 | 0.1250 |
+| weather clear:0.0 | ctrl | repo_bc_sparse | 40 | 0.975 | 0.775 | +0.200 | [+0.075, +0.325] | 8 | 0 | 0.0078 |
+| weather clear:0.0 | ov_split | repo_bc_clear | 40 | 0.925 | 0.875 | +0.050 | [+0.000, +0.125] | 2 | 0 | 0.5000 |
+| weather clear:0.0 | ov_split | repo_bc_sparse | 40 | 0.925 | 0.775 | +0.150 | [+0.050, +0.275] | 6 | 0 | 0.0312 |
+| weather clear:0.0 | repo_bc_clear | repo_bc_sparse | 40 | 0.875 | 0.775 | +0.100 | [+0.000, +0.225] | 5 | 1 | 0.2188 |
+| weather fog:1.0 | base_a | caut_auto | 40 | 0.875 | 0.925 | -0.050 | [-0.175, +0.075] | 2 | 4 | 0.6875 |
+| weather fog:1.0 | base_a | caut_c0 | 40 | 0.875 | 0.900 | -0.025 | [-0.100, +0.050] | 1 | 2 | 1.0000 |
+| weather fog:1.0 | base_a | ctrl | 40 | 0.875 | 0.975 | -0.100 | [-0.200, -0.025] | 0 | 4 | 0.1250 |
+| weather fog:1.0 | base_a | ov_split | 40 | 0.875 | 0.925 | -0.050 | [-0.150, +0.050] | 1 | 3 | 0.6250 |
+| weather fog:1.0 | base_a | repo_bc_clear | 40 | 0.875 | 0.875 | +0.000 | [-0.100, +0.100] | 2 | 2 | 1.0000 |
+| weather fog:1.0 | base_a | repo_bc_sparse | 40 | 0.875 | 0.800 | +0.075 | [-0.050, +0.200] | 5 | 2 | 0.4531 |
+| weather fog:1.0 | caut_auto | caut_c0 | 40 | 0.925 | 0.900 | +0.025 | [-0.100, +0.150] | 4 | 3 | 1.0000 |
+| weather fog:1.0 | caut_auto | ctrl | 40 | 0.925 | 0.975 | -0.050 | [-0.150, +0.050] | 1 | 3 | 0.6250 |
+| weather fog:1.0 | caut_auto | ov_split | 40 | 0.925 | 0.925 | +0.000 | [-0.125, +0.125] | 3 | 3 | 1.0000 |
+| weather fog:1.0 | caut_auto | repo_bc_clear | 40 | 0.925 | 0.875 | +0.050 | [-0.075, +0.175] | 5 | 3 | 0.7266 |
+| weather fog:1.0 | caut_auto | repo_bc_sparse | 40 | 0.925 | 0.800 | +0.125 | [-0.025, +0.275] | 8 | 3 | 0.2266 |
+| weather fog:1.0 | caut_c0 | ctrl | 40 | 0.900 | 0.975 | -0.075 | [-0.175, +0.000] | 0 | 3 | 0.2500 |
+| weather fog:1.0 | caut_c0 | ov_split | 40 | 0.900 | 0.925 | -0.025 | [-0.075, +0.000] | 0 | 1 | 1.0000 |
+| weather fog:1.0 | caut_c0 | repo_bc_clear | 40 | 0.900 | 0.875 | +0.025 | [+0.000, +0.075] | 1 | 0 | 1.0000 |
+| weather fog:1.0 | caut_c0 | repo_bc_sparse | 40 | 0.900 | 0.800 | +0.100 | [+0.000, +0.225] | 5 | 1 | 0.2188 |
+| weather fog:1.0 | ctrl | ov_split | 40 | 0.975 | 0.925 | +0.050 | [+0.000, +0.125] | 2 | 0 | 0.5000 |
+| weather fog:1.0 | ctrl | repo_bc_clear | 40 | 0.975 | 0.875 | +0.100 | [+0.025, +0.200] | 4 | 0 | 0.1250 |
+| weather fog:1.0 | ctrl | repo_bc_sparse | 40 | 0.975 | 0.800 | +0.175 | [+0.075, +0.300] | 7 | 0 | 0.0156 |
+| weather fog:1.0 | ov_split | repo_bc_clear | 40 | 0.925 | 0.875 | +0.050 | [+0.000, +0.125] | 2 | 0 | 0.5000 |
+| weather fog:1.0 | ov_split | repo_bc_sparse | 40 | 0.925 | 0.800 | +0.125 | [+0.000, +0.250] | 6 | 1 | 0.1250 |
+| weather fog:1.0 | repo_bc_clear | repo_bc_sparse | 40 | 0.875 | 0.800 | +0.075 | [-0.050, +0.200] | 5 | 2 | 0.4531 |
+| weather rain:0.6 | base_a | caut_auto | 40 | 0.875 | 0.900 | -0.025 | [-0.150, +0.100] | 3 | 4 | 1.0000 |
+| weather rain:0.6 | base_a | caut_c0 | 40 | 0.875 | 0.900 | -0.025 | [-0.100, +0.050] | 1 | 2 | 1.0000 |
+| weather rain:0.6 | base_a | ctrl | 40 | 0.875 | 0.975 | -0.100 | [-0.200, -0.025] | 0 | 4 | 0.1250 |
+| weather rain:0.6 | base_a | ov_split | 40 | 0.875 | 0.925 | -0.050 | [-0.150, +0.050] | 1 | 3 | 0.6250 |
+| weather rain:0.6 | base_a | repo_bc_clear | 40 | 0.875 | 0.875 | +0.000 | [-0.100, +0.100] | 2 | 2 | 1.0000 |
+| weather rain:0.6 | base_a | repo_bc_sparse | 40 | 0.875 | 0.800 | +0.075 | [-0.050, +0.200] | 5 | 2 | 0.4531 |
+| weather rain:0.6 | caut_auto | caut_c0 | 40 | 0.900 | 0.900 | +0.000 | [-0.150, +0.150] | 4 | 4 | 1.0000 |
+| weather rain:0.6 | caut_auto | ctrl | 40 | 0.900 | 0.975 | -0.075 | [-0.175, +0.025] | 1 | 4 | 0.3750 |
+| weather rain:0.6 | caut_auto | ov_split | 40 | 0.900 | 0.925 | -0.025 | [-0.150, +0.100] | 3 | 4 | 1.0000 |
+| weather rain:0.6 | caut_auto | repo_bc_clear | 40 | 0.900 | 0.875 | +0.025 | [-0.125, +0.175] | 5 | 4 | 1.0000 |
+| weather rain:0.6 | caut_auto | repo_bc_sparse | 40 | 0.900 | 0.800 | +0.100 | [-0.050, +0.275] | 8 | 4 | 0.3877 |
+| weather rain:0.6 | caut_c0 | ctrl | 40 | 0.900 | 0.975 | -0.075 | [-0.175, +0.000] | 0 | 3 | 0.2500 |
+| weather rain:0.6 | caut_c0 | ov_split | 40 | 0.900 | 0.925 | -0.025 | [-0.075, +0.000] | 0 | 1 | 1.0000 |
+| weather rain:0.6 | caut_c0 | repo_bc_clear | 40 | 0.900 | 0.875 | +0.025 | [+0.000, +0.075] | 1 | 0 | 1.0000 |
+| weather rain:0.6 | caut_c0 | repo_bc_sparse | 40 | 0.900 | 0.800 | +0.100 | [+0.000, +0.225] | 5 | 1 | 0.2188 |
+| weather rain:0.6 | ctrl | ov_split | 40 | 0.975 | 0.925 | +0.050 | [+0.000, +0.125] | 2 | 0 | 0.5000 |
+| weather rain:0.6 | ctrl | repo_bc_clear | 40 | 0.975 | 0.875 | +0.100 | [+0.025, +0.200] | 4 | 0 | 0.1250 |
+| weather rain:0.6 | ctrl | repo_bc_sparse | 40 | 0.975 | 0.800 | +0.175 | [+0.075, +0.300] | 7 | 0 | 0.0156 |
+| weather rain:0.6 | ov_split | repo_bc_clear | 40 | 0.925 | 0.875 | +0.050 | [+0.000, +0.125] | 2 | 0 | 0.5000 |
+| weather rain:0.6 | ov_split | repo_bc_sparse | 40 | 0.925 | 0.800 | +0.125 | [+0.000, +0.250] | 6 | 1 | 0.1250 |
+| weather rain:0.6 | repo_bc_clear | repo_bc_sparse | 40 | 0.875 | 0.800 | +0.075 | [-0.050, +0.200] | 5 | 2 | 0.4531 |
+| weather rain:1.0 | base_a | caut_auto | 40 | 0.875 | 0.850 | +0.025 | [-0.100, +0.150] | 4 | 3 | 1.0000 |
+| weather rain:1.0 | base_a | caut_c0 | 40 | 0.875 | 0.900 | -0.025 | [-0.125, +0.075] | 2 | 3 | 1.0000 |
+| weather rain:1.0 | base_a | ctrl | 40 | 0.875 | 0.975 | -0.100 | [-0.200, -0.025] | 0 | 4 | 0.1250 |
+| weather rain:1.0 | base_a | ov_split | 40 | 0.875 | 0.950 | -0.075 | [-0.175, +0.025] | 1 | 4 | 0.3750 |
+| weather rain:1.0 | base_a | repo_bc_clear | 40 | 0.875 | 0.875 | +0.000 | [-0.125, +0.125] | 3 | 3 | 1.0000 |
+| weather rain:1.0 | base_a | repo_bc_sparse | 40 | 0.875 | 0.800 | +0.075 | [-0.075, +0.225] | 6 | 3 | 0.5078 |
+| weather rain:1.0 | caut_auto | caut_c0 | 40 | 0.850 | 0.900 | -0.050 | [-0.200, +0.100] | 4 | 6 | 0.7539 |
+| weather rain:1.0 | caut_auto | ctrl | 40 | 0.850 | 0.975 | -0.125 | [-0.250, +0.000] | 1 | 6 | 0.1250 |
+| weather rain:1.0 | caut_auto | ov_split | 40 | 0.850 | 0.950 | -0.100 | [-0.225, +0.025] | 2 | 6 | 0.2891 |
+| weather rain:1.0 | caut_auto | repo_bc_clear | 40 | 0.850 | 0.875 | -0.025 | [-0.175, +0.125] | 5 | 6 | 1.0000 |
+| weather rain:1.0 | caut_auto | repo_bc_sparse | 40 | 0.850 | 0.800 | +0.050 | [-0.125, +0.225] | 7 | 5 | 0.7744 |
+| weather rain:1.0 | caut_c0 | ctrl | 40 | 0.900 | 0.975 | -0.075 | [-0.175, +0.000] | 0 | 3 | 0.2500 |
+| weather rain:1.0 | caut_c0 | ov_split | 40 | 0.900 | 0.950 | -0.050 | [-0.125, +0.000] | 0 | 2 | 0.5000 |
+| weather rain:1.0 | caut_c0 | repo_bc_clear | 40 | 0.900 | 0.875 | +0.025 | [+0.000, +0.075] | 1 | 0 | 1.0000 |
+| weather rain:1.0 | caut_c0 | repo_bc_sparse | 40 | 0.900 | 0.800 | +0.100 | [+0.000, +0.225] | 5 | 1 | 0.2188 |
+| weather rain:1.0 | ctrl | ov_split | 40 | 0.975 | 0.950 | +0.025 | [+0.000, +0.075] | 1 | 0 | 1.0000 |
+| weather rain:1.0 | ctrl | repo_bc_clear | 40 | 0.975 | 0.875 | +0.100 | [+0.025, +0.200] | 4 | 0 | 0.1250 |
+| weather rain:1.0 | ctrl | repo_bc_sparse | 40 | 0.975 | 0.800 | +0.175 | [+0.075, +0.300] | 7 | 0 | 0.0156 |
+| weather rain:1.0 | ov_split | repo_bc_clear | 40 | 0.950 | 0.875 | +0.075 | [+0.000, +0.150] | 3 | 0 | 0.2500 |
+| weather rain:1.0 | ov_split | repo_bc_sparse | 40 | 0.950 | 0.800 | +0.150 | [+0.025, +0.275] | 7 | 1 | 0.0703 |
+| weather rain:1.0 | repo_bc_clear | repo_bc_sparse | 40 | 0.875 | 0.800 | +0.075 | [-0.050, +0.200] | 5 | 2 | 0.4531 |

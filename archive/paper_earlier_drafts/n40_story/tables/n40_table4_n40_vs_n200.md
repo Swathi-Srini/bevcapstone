@@ -1,0 +1,10 @@
+**Replication on fresh seeds. The 0.975 of ctrl_nocaut does not replicate.**
+
+| model | n=40 clear (1010-1049) | n=200 clear (5000-5199) | change |
+|---|---|---|---|
+| Repo BC (sparse traffic) | 0.775 [0.62, 0.88] | 0.745 [0.68, 0.80] | -0.030 |
+| Repo BC (clear, no traffic) | 0.875 [0.74, 0.95] | 0.850 [0.79, 0.89] | -0.025 |
+| ov_split (ours) | 0.925 [0.80, 0.97] | 0.925 [0.88, 0.95] | +0.000 |
+| ctrl_nocaut (round-0 BC) | 0.975 [0.87, 1.00] | 0.895 [0.84, 0.93] | -0.080 |
+| caut_c0 (caution off) | 0.900 [0.77, 0.96] | not run | - |
+| caut_auto (caution = weather) | 0.900 [0.77, 0.96] | not run | - |

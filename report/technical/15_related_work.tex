@@ -1,0 +1,177 @@
+\section{Related work from arXiv, 2025--2026}\label{sec:related}
+
+\begin{plainwords}
+Twenty papers on arXiv, from 2025 and 2026 (plus the 2021 paper that introduced the simulator), on MetaDrive, weather and robustness, bird's-eye-view perception, and teacher--student imitation. For each: what problem it addresses, what method it uses, what it achieved, and how it relates to this project. The finding that matters most: none of them studies weather-degraded perception in MetaDrive.
+\end{plainwords}
+
+
+\subsection{How this list was made, and what can and cannot be trusted}
+Search queries on arxiv.org covered: MetaDrive, weather and perception degradation in MetaDrive, robustness benchmarks in MetaDrive, bird's-eye-view representations in MetaDrive, bird's-eye-view perception robustness, and imitation with privileged teachers for driving (searched on 11 November 2026).
+For every paper listed below the arXiv abstract page was fetched and the identifier on the page matched the link (HTTP 200); title, authors, first-submission date, problem, method and headline numbers below are taken from that page and \emph{paraphrased} (the abstracts are not reproduced verbatim).
+\textbf{The full texts were not read.} Where a statement about the paper's body (for example ``uses MetaDrive'') comes from a search-result summary and not from the abstract page, it is marked \emph{(unverified)}. The one paper outside the 2025--2026 window (the 2021 simulator paper) is marked as such.
+
+\paragraph{The gap this project sits in.} \textbf{None of the abstract pages of the 20 papers below describes a study of weather- or fog/rain-degraded perception with MetaDrive as the simulator.} The closest items are a CARLA fog dataset (FogDrive), an image-perturbation testing framework (PerturbationDrive; simulator not named on the abstract page), and, \emph{(unverified)}, an OpenPilot study in which MetaDrive weather was modelled only as road friction.
+Bird's-eye-view driving policies with reinforcement learning exist (ME$^3$-bird's-eye-view, CARLA) but not in MetaDrive according to the abstract pages. This is a statement about this search, not a proof of novelty: it should be repeated with Google Scholar and the MetaDrive citation list before any novelty claim is written.
+
+\begin{table}[H]\centering\small
+\caption{What each paper covers according to its \emph{abstract page}. MD = MetaDrive, W = fog/rain/weather-degraded perception, B = bird's-eye view. ``(?)'' = mentioned only in a search summary of the body text; not verified.}\label{tab:related}
+\begin{tabularx}{\textwidth}{@{}lXccc@{}}\toprule
+arXiv & Short description (see below for details) & MD & W & B\\\midrule
+2109.12674 & MetaDrive simulator (2021, outside the window) & yes & -- & --\\
+2512.17586 & Predictive safety representations for safe reinforcement learning & (?) & -- & --\\
+2504.18990 & Safety interventions against adversarial patches in an open-source driver assistance system & (?) & (?) friction & --\\
+2503.08388 & V-Max: reinforcement-learning framework (Waymax) & -- & -- & --\\
+2605.10034 & BehaviorBench: behaviour benchmark for generalisation & (?) & -- & --\\
+2503.23708 & Safety and robustness benchmark on safety-critical scenarios & -- & -- & --\\
+2605.18059 & Bench2Drive-Robust: robustness under deployment perturbations & -- & -- & --\\
+2603.23661 & PerturbationDrive: perturbation testing of driver assistance & -- & yes (mimicked) & --\\
+2607.22698 & FogDrive: graded-fog dataset (CARLA) & -- & yes (fog) & --\\
+2502.08336 & Salience-invariant visual reinforcement learning & -- & (?) & --\\
+2604.04349 & Adversarial robustness of cloud-assisted driving (YOLOv8) & -- & -- & --\\
+2508.06074 & ME$^3$-bird's-eye-view: Mamba + bird's-eye-view + reinforcement learning (CARLA) & -- & -- & yes\\
+2605.30983 & Grace-bird's-eye-view: graceful degradation of bird's-eye-view fusion & -- & (?) & yes\\
+2603.09529 & RESBev: resilient bird's-eye-view perception & -- & -- & yes\\
+2508.07560 & Survey: progressive bird's-eye-view perception for safety & -- & yes (adverse weather) & yes\\
+2512.20563 & LEAD: learner--expert asymmetry & -- & -- & --\\
+2606.19641 & Scaling self-play for end-to-end driving & -- & -- & (prior work only)\\
+2505.09546 & Distilling realizable students from unrealizable teachers & -- & -- & --\\
+2609.20756 & OPTED: on-policy fine-tuning with a render-free teacher & -- & -- & --\\
+2611.12251 & RAIL: representation-aligned imitation learning & -- & -- & --\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{MetaDrive and reinforcement-learning frameworks for driving}
+
+\paragraph{MetaDrive: Composing Diverse Driving Scenarios for Generalizable Reinforcement Learning} (Q.~Li, Z.~Peng, L.~Feng et al.; arXiv v1 26 September 2021, v3 16 July 2022; \emph{outside the 2025--2026 window, included because it is the simulator used here}). \url{https://arxiv.org/abs/2109.12674}
+\begin{itemize}
+\item \textbf{Problem:} generalisation, safe exploration and multi-agent interaction in driving reinforcement learning were studied separately for lack of an integrated environment.
+\item \textbf{Method:} a compositional simulator that generates road networks and traffic by procedural generation and imports real-world data; single- and multi-agent tasks with baselines.
+\item \textbf{Results:} the abstract states (without numbers) that training on more diverse scenarios improves generalisation. Weather is not mentioned. Our environment configuration (random lane number and width) uses its procedural generation.
+\end{itemize}
+
+\paragraph{Learning Safe Autonomous Driving Policies Using Predictive Safety Representations} (M.~Keswani, R.~Bhattacharyya; 19 December 2025). \url{https://arxiv.org/abs/2512.17586}
+\begin{itemize}
+\item \textbf{Problem:} balancing safety and efficiency in safe reinforcement learning for driving. \textbf{Method:} the SRPL framework (a predictive model of future constraint violations used as a representation) applied to real-world driving data (Waymo Open Motion Dataset, nuPlan), including zero-shot transfer between datasets.
+\item \textbf{Results:} statistically significant improvements in success rate (effect sizes $r=0.65$--$0.86$) and in cost reduction ($r=0.70$--$0.83$, $p<0.05$).
+\item \textbf{MetaDrive:} not named on the abstract page; a search summary stated that scenarios were built in MetaDrive and that robustness to Gaussian observation noise was tested \emph{(unverified)}. \textbf{Relevance:} safe-RL baselines for a future reinforcement-learning attempt (Section~\ref{sec:rl}).
+\end{itemize}
+
+\paragraph{Safety Interventions against Adversarial Patches in an Open-Source Driver Assistance System} (C.~Chen, G.~Xiao, D.~Lee et al.; 26 April 2025). \url{https://arxiv.org/abs/2504.18990}
+\begin{itemize}
+\item \textbf{Problem:} vulnerability of a driver assistance system to attacks on its perception. \textbf{Method:} simulated safety mechanisms (timely human and automated intervention) evaluated against such attacks. \textbf{Results:} qualitative on the abstract page.
+\item \textbf{MetaDrive and weather:} not on the abstract page; a search summary of the body text said the evaluation used MetaDrive and modelled weather only through road friction (for example 50\% friction as heavy rain) \emph{(unverified)}. \textbf{Relevance:} if confirmed, the only item found that links MetaDrive and weather, and it does so through dynamics, which this project deliberately does not do.
+\end{itemize}
+
+\paragraph{V-Max: A Reinforcement Learning Framework for Autonomous Driving} (V.~Charraut, W.~Doulazmi, T.~Tournaire et al.; 11 March 2025). \url{https://arxiv.org/abs/2503.08388}
+\begin{itemize}
+\item \textbf{Problem:} reinforcement learning is rarely adopted for driving because there is no standard, efficient framework. \textbf{Method:} an open framework on the hardware-accelerated Waymax simulator, using ScenarioNet's approach to simulate several datasets. \textbf{Results:} no numbers on the abstract page.
+\item \textbf{Relevance:} compares simulators and reports (according to a search summary, \emph{unverified}) that reinforcement-learning agents degrade less than behaviour cloning under noisy initialisation; this agrees qualitatively with our finding that imitation-trained policies are strong in sparse traffic and with the difficulty of speed (a search summary of the body text, \emph{unverified}, says hardware-accelerated simulators are two to three orders of magnitude faster than CPU simulators such as MetaDrive; speed is the bottleneck of our reinforcement-learning attempts).
+\end{itemize}
+
+\paragraph{Beyond Self-Play and Scale: A Behavior Benchmark for Generalization in Autonomous Driving} (A.~Distelzweig, F.~Janjo\v{s}, A.~Look et al.; 11 May 2026). \url{https://arxiv.org/abs/2605.10034}
+\begin{itemize}
+\item \textbf{Problem:} large-scale reinforcement-learning driving policies are not evaluated on standard benchmarks, and existing benchmarks are too simple and use one rule-based traffic model. \textbf{Method:} BehaviorBench: an evaluation interface to nuPlan, an interaction-rich split derived from the Waymo Open Motion Dataset and diverse interactive traffic agents; a hybrid planner combining a proximal policy optimisation policy with a rule-based planner. \textbf{Results:} none on the abstract page.
+\item \textbf{Relevance:} supports the evaluation concerns of Direction A. All traffic in our experiments is MetaDrive's own rule-based traffic, a single behaviour model; this is a limitation. MetaDrive is mentioned only in a search summary \emph{(unverified)}.
+\end{itemize}
+
+\subsection{Robustness, weather and perturbation benchmarks}
+
+\paragraph{Towards Benchmarking and Assessing the Safety and Robustness of Autonomous Driving on Safety-critical Scenarios} (J.~Li, X.~Liu, S.~Wei et al.; 31 March 2025). \url{https://arxiv.org/abs/2503.23708}
+\begin{itemize}
+\item \textbf{Problem:} no clear definition of safety-critical driving scenarios and no standard safety evaluation. \textbf{Method:} a definition covering static scenarios (adversarial, distribution shift) and dynamic ones (accidents), and a testing platform for perception and system-level evaluation. \textbf{Results:} none on the abstract page.
+\item \textbf{Relevance:} a framework for Directions A and B: the eight early-crash scenes of Section~\ref{sec:failure} are dynamic safety-critical scenarios in this sense.
+\end{itemize}
+
+\paragraph{Bench2Drive-Robust: Benchmarking Closed-Loop Autonomous Driving under Deployment Perturbations} (Z.~Zhang, Z.~Jin, Y.~Peng et al.; 18 May 2026). \url{https://arxiv.org/abs/2605.18059}
+\begin{itemize}
+\item \textbf{Problem:} robustness of closed-loop end-to-end driving to \emph{deployment} imperfections rather than image-level corruption. \textbf{Method:} a closed-loop benchmark with camera-stream failures (frame drop, partial observation), ego-state errors (GPS noise, speed and odometry errors) and compute-induced control delay. \textbf{Results:} the abstract states that such perturbations can substantially degrade driving performance (no numbers).
+\item \textbf{Relevance:} Direction E (error in the car's pose against the map is the analogue of GPS offset); our pose-error curve (Figure~\ref{fig:localisation}) is a small instance of the same idea in MetaDrive.
+\end{itemize}
+
+\paragraph{PerturbationDrive: A Framework for Perturbation-Based Testing of ADAS} (H.~Leonhard, S.~C.~Lambertenghi, A.~Stocco; 24 March 2026). \url{https://arxiv.org/abs/2603.23661}
+\begin{itemize}
+\item \textbf{Problem:} deep-network driver assistance is vulnerable to input variations and out-of-distribution data. \textbf{Method:} a tool paper: more than 30 image perturbations that mimic weather, lighting or sensor quality, offline and online closed-loop testing, procedural road generation and search-based testing, ``in different simulators'' (not named on the abstract page). \textbf{Results:} none.
+\item \textbf{Relevance:} the closest tool to the teammates' weather module; a candidate for comparing the image-space fog and rain with other perturbation libraries.
+\end{itemize}
+
+\paragraph{FogDrive: A Multi-Modal Synthetic Driving Dataset for Perception under Graded Fog} (V.~Panwar, N.~Varshney, P.~W.~Patil; 18 July 2026, v2 9 November 2026). \url{https://arxiv.org/abs/2607.22698}
+\begin{itemize}
+\item \textbf{Problem:} fog degrades perception in every modality, and real-world capture cannot provide the same scene at known severities. \textbf{Method:} a CARLA dataset of about 660 scenes (about 133\,000 frames), each with a clear reference and three calibrated fog densities, physics-based fog on camera and LiDAR, four cameras, LiDAR, semantic LiDAR and radar.
+\item \textbf{Results:} mixing fog densities improves three-dimensional detection at no extra data cost; image-quality metrics (PSNR, SSIM) poorly predict the detection benefit of a dehazer; radar improves camera--LiDAR fusion at every density.
+\item \textbf{Relevance:} paired clear/fog frames with graded severity are the same idea as our measurement; the finding that image quality does not predict detection benefit parallels our finding that detection loss, not range error, is what reaches the policy.
+\end{itemize}
+
+\paragraph{Salience-Invariant Consistent Policy Learning for Generalization in Visual Reinforcement Learning} (J.~Sun, S.~Tu, Q.~Zhang et al.; 12 February 2025). \url{https://arxiv.org/abs/2502.08336}
+\begin{itemize}
+\item \textbf{Problem:} visual reinforcement-learning agents overfit to training observations and extract task-irrelevant features in unseen environments. \textbf{Method:} SCPL: a saliency-guided value-consistency module, a dynamics module trained with augmented data and a policy-consistency module with a KL constraint.
+\item \textbf{Results:} average improvements of 14\%, 39\% and 69\% on the DeepMind Control video-hard setting, a robotic hard setting and the CARLA benchmark. Weather shift in CARLA (wet, rain) is reported in a search summary \emph{(unverified)}.
+\item \textbf{Relevance:} the visual-policy view of the problem; our pixel-policy control (Section~\ref{sec:catalogue}) was meant to show the degradation that such methods address.
+\end{itemize}
+
+\paragraph{Adversarial Robustness Analysis of Cloud-Assisted Autonomous Driving Systems} (M.~Al~Islam, A.~S.~El-Wakeel; 6 April 2026). \url{https://arxiv.org/abs/2604.04349}
+\begin{itemize}
+\item \textbf{Problem:} cross-layer vulnerabilities where perception attacks and vehicle--cloud network impairments together undermine driving. \textbf{Method:} a hardware-in-the-loop testbed with a cloud-hosted YOLOv8 detector attacked by FGSM and PGD, plus network delay (150--250\,ms) and packet loss (0.5--5\%).
+\item \textbf{Results:} PGD lowers detection precision and recall from 0.73 and 0.68 (clean) to 0.22 and 0.15 at $\epsilon=0.04$. Not about weather.
+\item \textbf{Relevance:} another quantification of how much a YOLOv8 detector can lose; our measurement found a comparable loss (detection 0.72 to 0.15 at rain 0.6) from image-space weather instead of an attack.
+\end{itemize}
+
+\subsection{Bird's-eye-view representations and perception}
+
+\paragraph{ME$^3$-bird's-eye-view: Mamba-Enhanced Deep Reinforcement Learning for End-to-End Autonomous Driving with bird's-eye-view-Perception} (S.~Lu, R.~Liu, D.~Yang et al.; 8 August 2025). \url{https://arxiv.org/abs/2508.06074}
+\begin{itemize}
+\item \textbf{Problem:} modular pipelines suffer from error propagation; end-to-end learning is computationally heavy. \textbf{Method:} a Mamba-based spatio-temporal feature network on bird's-eye-view perception feeding an end-to-end deep reinforcement-learning policy. \textbf{Results:} on CARLA it is reported to outperform existing models in collision rate and trajectory accuracy (no numbers on the abstract page).
+\item \textbf{Relevance:} bird's-eye view plus reinforcement learning, the combination of our reinforcement-learning attempts; a point of comparison for a stronger reinforcement-learning design (they use a learned spatio-temporal encoder where we use a small network).
+\end{itemize}
+
+\paragraph{Can bird's-eye-view Perception Gracefully Degrade under Sensor Failures?} (H.~Zhang, Y.~Wang, Z.~Zuo; 29 May 2026, v2 5 November 2026). \url{https://arxiv.org/abs/2605.30983}
+\begin{itemize}
+\item \textbf{Problem:} multi-modal bird's-eye-view fusion models are brittle when a sensor corruption contaminates the shared representation. \textbf{Method:} Grace-bird's-eye-view, a lightweight robust-fusion framework for Lift-Splat-Shoot detectors with a LiDAR-independent visual expert, a ``TrustGate'' router, a ``FailSafe'' fusion block and three-phase training with modality dropout.
+\item \textbf{Results:} on nuScenes-R and nuScenes-C, baselines collapse to 0.0 mAP under complete LiDAR loss while Grace-bird's-eye-view restores up to 34.7 mAP and improves clean accuracy by up to 1.4 mAP with 1.2\,M extra parameters per detector.
+\item \textbf{Relevance:} gives the vocabulary for ``unknown'' versus ``free'' and for degrading gracefully; our grid has an explicit unknown value that the policies do not exploit, a possible extension.
+\end{itemize}
+
+\paragraph{RESBev: Making bird's-eye-view Perception More Robust} (L.~Zhuo, K.~Jin, Z.~Liu et al.; 10 March 2026, v2 30 May 2026). \url{https://arxiv.org/abs/2603.09529}
+\begin{itemize}
+\item \textbf{Problem:} bird's-eye-view perception suffers from sensor degradation and adversarial attacks. \textbf{Method:} a plug-and-play latent world model that predicts clean bird's-eye-view features to reconstruct corrupted observations, working at the semantic feature level of Lift-Splat-Shoot pipelines, with few-shot fine-tuning. \textbf{Results:} the abstract reports significantly improved robustness on nuScenes without numbers.
+\item \textbf{Relevance:} a perception-side counterpart to the policy-side robustness question of this project.
+\end{itemize}
+
+\paragraph{Progressive Bird's Eye View Perception for Safety-Critical Autonomous Driving: A Comprehensive Survey} (Y.~Gong, N.~Wang, J.~Lu et al.; 11 August 2025). \url{https://arxiv.org/abs/2508.07560}
+\begin{itemize}
+\item \textbf{Problem:} whether bird's-eye-view perception is safe and reliable under occlusion, adverse weather and dynamic traffic. \textbf{Method:} a survey of single-modality vehicle-side, multimodal vehicle-side and multi-agent collaborative bird's-eye-view perception, with datasets. \textbf{Results:} none (survey).
+\item \textbf{Relevance:} background for the representation choices of Section~\ref{sec:arch}.
+\end{itemize}
+
+\subsection{Imitation, privileged teachers and on-policy distillation}
+
+\paragraph{LEAD: Minimizing Learner--Expert Asymmetry in End-to-End Driving} (L.~Nguyen, M.~Fauth, B.~Jaeger et al.; 23 December 2025, v2 13 April 2026; accepted at CVPR 2026). \url{https://arxiv.org/abs/2512.20563}
+\begin{itemize}
+\item \textbf{Problem:} privileged experts see more and are more certain than sensor-based students, and navigational intent is under-specified, which limits imitation. \textbf{Method:} an empirical study of the asymmetries and practical interventions; the student is the TransFuser version 6 policy (CARLA). \textbf{Results:} 95 driving score on Bench2Drive and more than double the previous performance on Longest6~v2 and Town13.
+\item \textbf{Relevance:} \emph{the closest published statement of Direction C}: our teacher sees 45\,m of exact state while the student's grid ends at 17.5\,m.
+\end{itemize}
+
+\paragraph{Scaling Self-Play for End-to-End Driving} (L.~Rowe, R.~Girgis, R.~de~Schaetzen et al.; 17 June 2026, v2 19 June 2026). \url{https://arxiv.org/abs/2606.19641}
+\begin{itemize}
+\item \textbf{Problem:} models trained on offline demonstrations suffer compounding errors and have no closed-loop feedback. \textbf{Method:} large-scale self-play from pixels in ``Gigapixel'', a batched simulator with perspective rendering of a simplified bounding-box world; a reinforcement-learning teacher on vectorised observations is distilled with self-play dataset aggregation, followed by perception adaptation to real sensor data.
+\item \textbf{Results:} a throughput of 50\,000 agent steps per second and competitive performance on HUGSIM and NAVSIM version~2.
+\item \textbf{Relevance:} validates the teacher--student dataset-aggregation design and shows how far simulator speed can be pushed compared with the CPU simulator used here.
+\end{itemize}
+
+\paragraph{Distilling Realizable Students from Unrealizable Teachers} (Y.~Kim, N.~Chin, A.~Vasudev et al.; 14 May 2025). \url{https://arxiv.org/abs/2505.09546}
+\begin{itemize}
+\item \textbf{Problem:} information asymmetry between a privileged teacher and a student causes distribution shift and degraded policies. \textbf{Method:} an imitation-learning scheme that queries the teacher adaptively and a reinforcement-learning scheme that chooses where to start training from recovery states. \textbf{Results:} significant improvements over standard teacher--student baselines on simulated and real robotic tasks (no numbers on the abstract page).
+\item \textbf{Relevance:} describes the failure mode of Direction C and proposes remedies that could be tried here.
+\end{itemize}
+
+\paragraph{OPTED: On-Policy Fine-Tuning for End-to-End Driving using a Render-Free Teacher} (D.~Da~Col, M.~Igl, P.~Karkus et al.; 17 September 2026). \url{https://arxiv.org/abs/2609.20756}
+\begin{itemize}
+\item \textbf{Problem:} pre-trained end-to-end policies drift in closed loop and sensor-based reinforcement-learning post-training is expensive. \textbf{Method:} a teacher trained by reinforcement learning on vectorised inputs (high-definition map and bounding boxes) supervises a pre-trained camera-based student during closed-loop fine-tuning in AlpaSim, on three-dimensional Gaussian-splatting reconstructions of real logs (TransFuser and VaVAM).
+\item \textbf{Results:} driving scores increase by factors of 1.6 and 9.5 for the two models, with about three orders of magnitude fewer simulator interactions than direct reinforcement-learning post-training.
+\item \textbf{Relevance:} the strongest argument for distilling from a privileged teacher instead of fine-tuning the student with reinforcement learning, which is what our four attempts found.
+\end{itemize}
+
+\paragraph{RAIL: Representation-Aligned Imitation Learning for Student-Compatible Teacher Policies} (M.~Mammadov, P.~Zuidberg~Dos~Martires, J.~A.~Stork; 9 November 2026; accepted at NeurIPS 2026 according to the page's comments field). \url{https://arxiv.org/abs/2611.12251}
+\begin{itemize}
+\item \textbf{Problem:} when a privileged teacher cannot be imitated exactly from raw inputs an irreducible imitation gap remains. \textbf{Method:} contrastive learning of a latent representation shared by teacher and student observations; the teacher is trained in that space so that it stays imitable. \textbf{Results:} outperforms strong baselines and substantially reduces the gap (no numbers on the abstract page).
+\item \textbf{Relevance:} a method-level answer to the information gap of Section~\ref{sec:failure}.
+\end{itemize}

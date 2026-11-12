@@ -1,0 +1,1677 @@
+{
+ "arm": "pose_aug_conditioned",
+ "cells": {
+  "lat0.0_head0.0": {
+   "n": 40,
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "success": 0.85,
+   "success_ci": [
+    0.7092737396097997,
+    0.9293890829149256
+   ],
+   "crash": 0.1,
+   "off_road": 0.05,
+   "timeout": 0.0,
+   "c_fed": 0.0
+  },
+  "lat0.25_head0.02": {
+   "n": 40,
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "success": 0.9,
+   "success_ci": [
+    0.7694792561952611,
+    0.9604211124044252
+   ],
+   "crash": 0.075,
+   "off_road": 0.025,
+   "timeout": 0.0,
+   "c_fed": 0.16666666666666666
+  },
+  "lat0.5_head0.05": {
+   "n": 40,
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "success": 0.8,
+   "success_ci": [
+    0.6524239261814333,
+    0.8950013502683314
+   ],
+   "crash": 0.025,
+   "off_road": 0.175,
+   "timeout": 0.0,
+   "c_fed": 0.3333333333333333
+  },
+  "lat1.0_head0.1": {
+   "n": 40,
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "success": 0.425,
+   "success_ci": [
+    0.28509168524815875,
+    0.5780519956394001
+   ],
+   "crash": 0.05,
+   "off_road": 0.525,
+   "timeout": 0.0,
+   "c_fed": 0.6666666666666666
+  },
+  "lat2.0_head0.2": {
+   "n": 40,
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "success": 0.275,
+   "success_ci": [
+    0.1610785343314309,
+    0.4283525083312457
+   ],
+   "crash": 0.0,
+   "off_road": 0.725,
+   "timeout": 0.0,
+   "c_fed": 1.0
+  }
+ },
+ "episodes": [
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1010,
+   "outcome": "success",
+   "route": 0.9840833994222208
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1011,
+   "outcome": "success",
+   "route": 0.9879414322465966
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1012,
+   "outcome": "success",
+   "route": 0.9884385715470071
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1013,
+   "outcome": "success",
+   "route": 0.985428410879834
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1014,
+   "outcome": "success",
+   "route": 0.979953647929904
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1015,
+   "outcome": "success",
+   "route": 0.9935806104803443
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1016,
+   "outcome": "success",
+   "route": 0.9841035471613464
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1017,
+   "outcome": "success",
+   "route": 0.9862018998267678
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1018,
+   "outcome": "success",
+   "route": 0.9897170303609383
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1019,
+   "outcome": "crash",
+   "route": 0.7999677636933893
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1020,
+   "outcome": "success",
+   "route": 0.9814807533078096
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1021,
+   "outcome": "success",
+   "route": 0.9886911827848628
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1022,
+   "outcome": "success",
+   "route": 0.9881348450347417
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1023,
+   "outcome": "success",
+   "route": 0.9831065996965723
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1024,
+   "outcome": "success",
+   "route": 0.9914526550277675
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1025,
+   "outcome": "success",
+   "route": 0.9835259461641259
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1026,
+   "outcome": "success",
+   "route": 0.991033990652488
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1027,
+   "outcome": "off_road",
+   "route": 0.7072149380750671
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1028,
+   "outcome": "success",
+   "route": 0.9795370190193027
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1029,
+   "outcome": "success",
+   "route": 0.9835964609532016
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1030,
+   "outcome": "success",
+   "route": 0.9885980396059135
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1031,
+   "outcome": "success",
+   "route": 0.9897596920504772
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1032,
+   "outcome": "success",
+   "route": 0.9816363029724239
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1033,
+   "outcome": "success",
+   "route": 0.9888778047404575
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1034,
+   "outcome": "success",
+   "route": 0.9926403394156625
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1035,
+   "outcome": "success",
+   "route": 0.9867994126648048
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1036,
+   "outcome": "success",
+   "route": 0.9820663665637839
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1037,
+   "outcome": "success",
+   "route": 0.9859470911352064
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1038,
+   "outcome": "off_road",
+   "route": 0.6694293885727494
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1039,
+   "outcome": "crash",
+   "route": 0.8247148015812015
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1040,
+   "outcome": "crash",
+   "route": 0.1906923320256176
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1041,
+   "outcome": "success",
+   "route": 0.9883660717471725
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1042,
+   "outcome": "success",
+   "route": 0.9827817072602772
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1043,
+   "outcome": "crash",
+   "route": 0.7030105258958127
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1044,
+   "outcome": "success",
+   "route": 0.9829576485226712
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1045,
+   "outcome": "success",
+   "route": 0.9893275841365393
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1046,
+   "outcome": "success",
+   "route": 0.9913809367354883
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1047,
+   "outcome": "success",
+   "route": 0.9787575741744966
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1048,
+   "outcome": "success",
+   "route": 0.9914643609322208
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1049,
+   "outcome": "success",
+   "route": 0.9872927597724716
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1010,
+   "outcome": "success",
+   "route": 0.9843256664530365
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1011,
+   "outcome": "success",
+   "route": 0.9872732796916649
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1012,
+   "outcome": "success",
+   "route": 0.9885124546327003
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1013,
+   "outcome": "success",
+   "route": 0.9816751318901741
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1014,
+   "outcome": "success",
+   "route": 0.9790772713379368
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1015,
+   "outcome": "success",
+   "route": 0.993179816875388
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1016,
+   "outcome": "success",
+   "route": 0.984138054019169
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1017,
+   "outcome": "success",
+   "route": 0.9873850918823254
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1018,
+   "outcome": "success",
+   "route": 0.98974053174271
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1019,
+   "outcome": "crash",
+   "route": 0.7997533718788591
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1020,
+   "outcome": "success",
+   "route": 0.9816730356845718
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1021,
+   "outcome": "success",
+   "route": 0.9874235822417897
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1022,
+   "outcome": "success",
+   "route": 0.9884669296191468
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1023,
+   "outcome": "success",
+   "route": 0.9838781566033629
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1024,
+   "outcome": "success",
+   "route": 0.9917971000827727
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1025,
+   "outcome": "success",
+   "route": 0.982094829186581
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1026,
+   "outcome": "success",
+   "route": 0.9909640829681224
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1027,
+   "outcome": "success",
+   "route": 0.9850025972557482
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1028,
+   "outcome": "success",
+   "route": 0.978116928849749
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1029,
+   "outcome": "success",
+   "route": 0.9819601988266538
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1030,
+   "outcome": "success",
+   "route": 0.9858809189449063
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1031,
+   "outcome": "success",
+   "route": 0.9907679288996657
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1032,
+   "outcome": "success",
+   "route": 0.980407073720871
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1033,
+   "outcome": "success",
+   "route": 0.9874128214533253
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1034,
+   "outcome": "success",
+   "route": 0.9934054140209402
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1035,
+   "outcome": "success",
+   "route": 0.9878018267033979
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1036,
+   "outcome": "success",
+   "route": 0.9827816785969108
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1037,
+   "outcome": "success",
+   "route": 0.9855558423034805
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1038,
+   "outcome": "off_road",
+   "route": 0.8972184784488894
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1039,
+   "outcome": "crash",
+   "route": 0.8255544415156985
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1040,
+   "outcome": "crash",
+   "route": 0.18509204893147702
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1041,
+   "outcome": "success",
+   "route": 0.9878741109871527
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1042,
+   "outcome": "success",
+   "route": 0.9853667509245516
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1043,
+   "outcome": "success",
+   "route": 0.9900536227216973
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1044,
+   "outcome": "success",
+   "route": 0.9845266882859918
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1045,
+   "outcome": "success",
+   "route": 0.989691244407444
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1046,
+   "outcome": "success",
+   "route": 0.9908874058824604
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1047,
+   "outcome": "success",
+   "route": 0.9790957056844686
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1048,
+   "outcome": "success",
+   "route": 0.9901897163945425
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1049,
+   "outcome": "success",
+   "route": 0.9892254750040488
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1010,
+   "outcome": "success",
+   "route": 0.9835346813049489
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1011,
+   "outcome": "success",
+   "route": 0.9874593541610599
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1012,
+   "outcome": "success",
+   "route": 0.9873199090824956
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1013,
+   "outcome": "off_road",
+   "route": 0.6026905459329198
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1014,
+   "outcome": "success",
+   "route": 0.9786019908153024
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1015,
+   "outcome": "success",
+   "route": 0.9919285914497704
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1016,
+   "outcome": "success",
+   "route": 0.9833502695075623
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1017,
+   "outcome": "success",
+   "route": 0.9867900606268695
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1018,
+   "outcome": "success",
+   "route": 0.9890211347642949
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1019,
+   "outcome": "success",
+   "route": 0.9828163238932094
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1020,
+   "outcome": "success",
+   "route": 0.9802438601254797
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1021,
+   "outcome": "success",
+   "route": 0.9876576052156811
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1022,
+   "outcome": "success",
+   "route": 0.9895486704146856
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1023,
+   "outcome": "success",
+   "route": 0.9847046982633032
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1024,
+   "outcome": "success",
+   "route": 0.9914166718729378
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1025,
+   "outcome": "success",
+   "route": 0.9845490694865833
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1026,
+   "outcome": "success",
+   "route": 0.98958233060636
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1027,
+   "outcome": "success",
+   "route": 0.9860897461957308
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1028,
+   "outcome": "success",
+   "route": 0.9805269341590905
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1029,
+   "outcome": "success",
+   "route": 0.9841424813844534
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1030,
+   "outcome": "off_road",
+   "route": 0.07546705511638782
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1031,
+   "outcome": "success",
+   "route": 0.990774268910892
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1032,
+   "outcome": "success",
+   "route": 0.9826917062822248
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1033,
+   "outcome": "success",
+   "route": 0.987796023791946
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1034,
+   "outcome": "success",
+   "route": 0.9934173262680246
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1035,
+   "outcome": "success",
+   "route": 0.9863397581655549
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1036,
+   "outcome": "success",
+   "route": 0.9820668485637372
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1037,
+   "outcome": "success",
+   "route": 0.9874096665855719
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1038,
+   "outcome": "off_road",
+   "route": 0.6662097365286379
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1039,
+   "outcome": "off_road",
+   "route": 0.1507140808568025
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1040,
+   "outcome": "crash",
+   "route": 0.1849964214322248
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1041,
+   "outcome": "off_road",
+   "route": 0.7090093511079817
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1042,
+   "outcome": "success",
+   "route": 0.9853674777869886
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1043,
+   "outcome": "success",
+   "route": 0.9894922769663099
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1044,
+   "outcome": "off_road",
+   "route": 0.23712081950549213
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1045,
+   "outcome": "success",
+   "route": 0.9898791068948654
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1046,
+   "outcome": "success",
+   "route": 0.99104392103004
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1047,
+   "outcome": "success",
+   "route": 0.9783812672310306
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1048,
+   "outcome": "success",
+   "route": 0.9890937885256035
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1049,
+   "outcome": "off_road",
+   "route": 0.05706248973042246
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1010,
+   "outcome": "success",
+   "route": 0.9825550754878715
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1011,
+   "outcome": "off_road",
+   "route": 0.2121524233844542
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1012,
+   "outcome": "off_road",
+   "route": 0.11648858358416318
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1013,
+   "outcome": "off_road",
+   "route": 0.053854194091254665
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1014,
+   "outcome": "success",
+   "route": 0.9781040069019686
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1015,
+   "outcome": "off_road",
+   "route": 0.030622665392362067
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1016,
+   "outcome": "off_road",
+   "route": 0.1004247040853607
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1017,
+   "outcome": "off_road",
+   "route": 0.11509898439912146
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1018,
+   "outcome": "off_road",
+   "route": 0.06598426970136792
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1019,
+   "outcome": "crash",
+   "route": 0.7987486176445091
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1020,
+   "outcome": "success",
+   "route": 0.9829661300543416
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1021,
+   "outcome": "success",
+   "route": 0.9878762841123518
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1022,
+   "outcome": "success",
+   "route": 0.9895909740014578
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1023,
+   "outcome": "success",
+   "route": 0.983926737368958
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1024,
+   "outcome": "success",
+   "route": 0.9905134032065138
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1025,
+   "outcome": "success",
+   "route": 0.982975257668964
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1026,
+   "outcome": "success",
+   "route": 0.9901587821180048
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1027,
+   "outcome": "off_road",
+   "route": 0.07190031495872796
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1028,
+   "outcome": "off_road",
+   "route": 0.11652270961133299
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1029,
+   "outcome": "success",
+   "route": 0.9817471880799884
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1030,
+   "outcome": "off_road",
+   "route": 0.054620192255456994
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1031,
+   "outcome": "success",
+   "route": 0.9903365601368499
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1032,
+   "outcome": "off_road",
+   "route": 0.06539452348822315
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1033,
+   "outcome": "off_road",
+   "route": 0.06931446280724864
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1034,
+   "outcome": "off_road",
+   "route": 0.21988010610980857
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1035,
+   "outcome": "success",
+   "route": 0.988104337704432
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1036,
+   "outcome": "off_road",
+   "route": 0.06153066877360173
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1037,
+   "outcome": "success",
+   "route": 0.9871711642483029
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1038,
+   "outcome": "success",
+   "route": 0.9878844714943817
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1039,
+   "outcome": "off_road",
+   "route": 0.5712975272919029
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1040,
+   "outcome": "crash",
+   "route": 0.18201921301334997
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1041,
+   "outcome": "off_road",
+   "route": 0.05085294419623603
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1042,
+   "outcome": "success",
+   "route": 0.984340647390206
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1043,
+   "outcome": "off_road",
+   "route": 0.037596337971022256
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1044,
+   "outcome": "off_road",
+   "route": 0.26754509885123023
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1045,
+   "outcome": "off_road",
+   "route": 0.08910246933620258
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1046,
+   "outcome": "success",
+   "route": 0.9920721808578256
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1047,
+   "outcome": "success",
+   "route": 0.9784112100461897
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1048,
+   "outcome": "off_road",
+   "route": 0.2538307398371894
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1049,
+   "outcome": "off_road",
+   "route": 0.042317544271454004
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1010,
+   "outcome": "off_road",
+   "route": 0.8586551480711404
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1011,
+   "outcome": "success",
+   "route": 0.9885503949095753
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1012,
+   "outcome": "success",
+   "route": 0.9881063379402127
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1013,
+   "outcome": "off_road",
+   "route": 0.5803298456937109
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1014,
+   "outcome": "off_road",
+   "route": 0.18577929107506366
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1015,
+   "outcome": "success",
+   "route": 0.9941002282312625
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1016,
+   "outcome": "off_road",
+   "route": 0.8311733104641011
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1017,
+   "outcome": "success",
+   "route": 0.9883838805980285
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1018,
+   "outcome": "success",
+   "route": 0.9891801864951548
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1019,
+   "outcome": "off_road",
+   "route": 0.0956542772296909
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1020,
+   "outcome": "off_road",
+   "route": 0.5593354841571854
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1021,
+   "outcome": "off_road",
+   "route": 0.15677937451636767
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1022,
+   "outcome": "off_road",
+   "route": 0.10559468667830511
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1023,
+   "outcome": "off_road",
+   "route": 0.14607531499406584
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1024,
+   "outcome": "off_road",
+   "route": 0.1216100718079592
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1025,
+   "outcome": "off_road",
+   "route": 0.16827440490637025
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1026,
+   "outcome": "off_road",
+   "route": 0.39887564471316955
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1027,
+   "outcome": "off_road",
+   "route": 0.7210455136506123
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1028,
+   "outcome": "success",
+   "route": 0.980878811152161
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1029,
+   "outcome": "off_road",
+   "route": 0.09878705478525811
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1030,
+   "outcome": "off_road",
+   "route": 0.4871598482003333
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1031,
+   "outcome": "off_road",
+   "route": 0.09517606717776093
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1032,
+   "outcome": "success",
+   "route": 0.9818465374957609
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1033,
+   "outcome": "success",
+   "route": 0.987876310458466
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1034,
+   "outcome": "off_road",
+   "route": 0.08152562589759646
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1035,
+   "outcome": "success",
+   "route": 0.9869253185974373
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1036,
+   "outcome": "off_road",
+   "route": 0.06915539546729528
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1037,
+   "outcome": "off_road",
+   "route": 0.1514398195288009
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1038,
+   "outcome": "off_road",
+   "route": 0.1434983180314472
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1039,
+   "outcome": "off_road",
+   "route": 0.0692618293739999
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1040,
+   "outcome": "off_road",
+   "route": 0.09058999372671253
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1041,
+   "outcome": "off_road",
+   "route": 0.04557473534271718
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1042,
+   "outcome": "off_road",
+   "route": 0.09955284894090555
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1043,
+   "outcome": "off_road",
+   "route": 0.5983800642951821
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1044,
+   "outcome": "off_road",
+   "route": 0.06014550714845526
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1045,
+   "outcome": "success",
+   "route": 0.9901480171771883
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1046,
+   "outcome": "success",
+   "route": 0.9910793746829957
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1047,
+   "outcome": "off_road",
+   "route": 0.29003963338366034
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1048,
+   "outcome": "off_road",
+   "route": 0.06954125149602297
+  },
+  {
+   "arm": "pose_aug_conditioned",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1049,
+   "outcome": "off_road",
+   "route": 0.05153686059844892
+  }
+ ]
+}

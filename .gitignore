@@ -51,3 +51,5 @@ bev_policy/eval-10-eps
 
 # NumPy arrays
 *.npy
+trained_models/06_Third_Party_Perception_Weights/
+archive/paper_earlier_drafts/literature/downloaded_pdfs/

@@ -1,0 +1,7 @@
+**Episode outcomes, 200 seeds, clear, density 0.05**
+
+| policy | success | crash | off_road | timeout |
+|---|---|---|---|---|
+| Repo BC, sparse-traffic | 0.745 | 0.120 | 0.135 | 0.000 |
+| Repo BC, clear/no-traffic | 0.850 | 0.125 | 0.025 | 0.000 |
+| ov_split (ours) | 0.925 | 0.060 | 0.010 | 0.005 |

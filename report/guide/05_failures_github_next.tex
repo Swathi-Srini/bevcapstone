@@ -1,0 +1,86 @@
+\section{Where the drivers fail, and why}
+
+\begin{plainwords}
+The proposed driver fails 15 of 200 drives: 12 collisions, 2 times leaving the road, 1 timeout. The Collision-Aware Teacher succeeds in \textbf{14 of those 15}, so the failures are not unsolvable scenes: they are things the student cannot copy. Eight of the 15 end within the first 12 seconds, and in seven of them every other model also collides; only the collision-aware teacher survives.
+\end{plainwords}
+\input{figure_blocks/fig_birds_eye_view_fidelity_before_collision}
+\begin{itemize}
+\item \textbf{The driver's view is late and coarse.} Vehicles are drawn as blocks without heading and the grid ends 17.5\,m ahead, while the teacher sees every vehicle up to 45\,m with exact velocities. This is an \emph{information gap}; it is in the teammates' own grid code on GitHub (\pth{bev_state/assembler.py}), so every model using the grid, including the two baselines, shares it.
+\item \textbf{Dense traffic is unsolved}, even by the rule-based teachers (success 40--45\%), so no driver trained from them can do better; the main results are restricted to sparse traffic.
+\item \textbf{The baselines fail differently:} the traffic-trained baseline leaves the road in 13.5\% of the drives (the proposed driver: 1.0\%), the signature of drifting after a small error with only five recordings to learn from.
+\item \textbf{The map overlay has a price:} a constant error of 1\,m in the car's estimated position lowers the proposed driver's success from 0.925 to 0.70, and 2\,m to 0.275; a second, independent lane measurement repairs it (0.875--0.95), so redundancy, not noise training, is what protects it.
+\end{itemize}
+
+\section{Videos}
+\begin{plainwords}
+One scenario (number 5169) was recorded in four weather conditions with the front camera only, in smooth real time, for the two baselines, the proposed driver and the image-only driver. Both baselines collide in all four conditions; the proposed driver succeeds in all four. The image-only driver fails in all four (see the table in the technical report). Files are in \pth{report/videos/}.
+\end{plainwords}
+\input{figure_blocks/fig_seed5169_front_camera_frames}
+
+\section{Comparison with the current GitHub repository}\label{sec:g-github}
+\begin{plainwords}
+GitHub (checked 12 November 2026; newest commit of 8 September 2026) contains the teammates' modules and exactly two model files, the two baselines. Everything produced in this project is on this computer only.
+\end{plainwords}
+\begin{center}\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}p{4.4cm}X@{}}\toprule
+Component & On GitHub & In this project (local only)\\\midrule
+Models & Two baseline checkpoints & 33 models, including the proposed driver and four groups of reinforcement-learning models\\
+Training & Behaviour cloning from five recordings & Dataset aggregation, two teachers, caution, position-error and degraded-perception variants\\
+Grid & Plain grid; map overlay ``unimplemented'' & Map overlay as a policy-side wrapper (the grid code is unmodified)\\
+Weather & ``Preliminary tooling'', no measurement & Measured detector and depth degradation; 200-drive test\\
+Reinforcement learning & ``Missing''; the traffic-trained baseline is recommended as the start & Four attempts, none from that checkpoint; all negative\\
+Baseline success & 0.90 (9 of 10 drives) & 0.745 on 200 drives (interval 0.680 to 0.800)\\\bottomrule
+\end{tabularx}
+\end{center}
+\begin{cautionbox}[Departures from rules written on GitHub]
+\begin{itemize}[leftmargin=1.2em,itemsep=1pt]
+\item The README says not to feed exact simulator vehicle positions to a learned model. The camera-free surrogate does (an ideal detector), degraded statistically where weather is studied.
+\item The baselines were evaluated through that surrogate, not through the repository's evaluator.
+\item Three teammate files carry local edits (an optional extra-input branch; defaults unchanged).
+\item The first two reinforcement-learning attempts coupled rain to tyre grip, against the README's statement that weather does not change dynamics (later removed).
+\end{itemize}
+\end{cautionbox}
+
+\section{What we can claim, and what we cannot}
+\begin{center}\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{5.4cm}X@{}}\toprule
+We can claim (200 paired drives) & We cannot claim\\\midrule
+The proposed driver beats both baselines and ties its teacher in sparse traffic. & That the map overlay (rather than the training method) causes the gain: untested at 200 drives.\\
+Simulated fog and rain remove most detections but do not lower sparse-traffic success. & Any robustness or weather adaptation, or any result for physical rain or fog.\\
+Four reinforcement-learning attempts failed, one significantly (mechanism hypothesised). & That reinforcement learning cannot work: only that these attempts did not.\\
+Most remaining failures are imitation failures solved by a better-informed teacher. & Results for dense traffic, for the live camera pipeline, or between training seeds (one seed per model).\\\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{What to do next}\label{sec:g-next}
+\begin{plainwords}
+Seven possible papers exist. The best \emph{single} paper combines the first three: a thorough evaluation of training strategies (imitation against reinforcement learning), the measured weather model with its null result, and the information gap that limits the drivers.
+\end{plainwords}
+\begin{center}\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.7cm}>{\raggedright\arraybackslash}p{4.3cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.6cm}@{}}\toprule
+\# & Direction & Evidence in hand, and what is missing & Cost\\\midrule
+1 & Pitfalls of closed-loop evaluation & 0.975 on 40 drives became 0.895 on 200; validation of 1.0 hid a real loss; invalid first measurement; non-repeatable traffic. Missing: a resampling study of the selection bias. & Analysis of existing data\\
+2 & Where does perception damage start to matter? & Measurement and the null result exist. Missing: a grid of detector loss against traffic density. & About 9 hours per model\\
+3 & The teacher--student information gap & 14 of 15 failures solved by the collision-aware teacher. Missing: the unevaluated student of that teacher, a heading-aware grid, three training seeds. & 1 to 2 days\\
+4 & Imitation against reinforcement learning & Six models at 200 drives, four documented failures. Missing: seeds, a stronger reinforcement-learning attempt. & About 2 hours per model\\
+5 & Robustness to position error by redundancy & Curves at 40 drives. Missing: 200 drives, a real second cue. & About 11 hours\\
+6 & Learned adaptive behaviour: caution from perception reliability & About 35\% less estimated energy at 200 drives, success tied at a 160-second limit. Missing: a regime where weather hurts, and a speed-matched control. & About 9 hours\\
+7 & Benchmark and dataset release & Everything is stored with hashes. Missing: push to GitHub, licence check, repeatable traffic. & 1 to 2 days\\\bottomrule
+\end{tabularx}
+\end{center}
+\textbf{Experiments to add first, in order:} (i) evaluate the student of the collision-aware teacher and the plain-grid six-number student on the 200 test drives (about 1.5 hours); (ii) two more training seeds for the proposed driver; (iii) the detector-loss against traffic-density grid; (iv) a heading-aware grid.
+
+\section{Where to find everything}
+\begin{center}\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{5.2cm}X@{}}\toprule
+What & Where (under \pth{D:/bev_Fresh/bevcapstone/})\\\midrule
+This guide & \pth{report/Directors_Research_Guide.pdf}\\
+Complete technical report (about 80 pages, every detail, file inventory) & \pth{report/Complete_Technical_Research_Report.pdf}\\
+All 33 models, mapping of old to new names, hashes & \pth{trained_models/} (\pth{MODEL_NAME_MAPPING.md}, \pth{MODEL_MANIFEST.json})\\
+Front-camera videos (scenario 5169) & \pth{report/videos/}\\
+Figures and the scripts that produce them & \pth{report/figures/}, \pth{report/make\_report\_figures.py}\\
+Code of this project (not on GitHub) & \pth{bev_rl/} (results in \pth{bev_rl/adaptive/results/})\\
+Teammates' modules (on GitHub) & \pth{bev_policy/}, \pth{bev_state/}, \pth{camera/}, \pth{YOLO+weather module/}, \pth{baseline/}\\
+Earlier drafts, first version of the report & \pth{archive/}\\\bottomrule
+\end{tabularx}
+\end{center}

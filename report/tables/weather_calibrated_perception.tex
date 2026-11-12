@@ -1,0 +1,19 @@
+\begin{tabular}{llrrrrrr}\toprule
+Model & Weather & Success & 95\% interval & Collision & Left road & Timeout & Energy (Wh per km) \\\midrule
+Proposed Bird's-Eye-View Driving Model & clear 0.0 & 0.900 & [0.851, 0.934] & 0.075 & 0.020 & 0.005 & 97.9 \\
+Proposed Bird's-Eye-View Driving Model & fog 1.0 & 0.890 & [0.839, 0.926] & 0.085 & 0.020 & 0.005 & 96.2 \\
+Proposed Bird's-Eye-View Driving Model & rain 0.6 & 0.905 & [0.856, 0.938] & 0.090 & 0.005 & 0.000 & 95.2 \\
+Proposed Bird's-Eye-View Driving Model & rain 1.0 & 0.890 & [0.839, 0.926] & 0.105 & 0.005 & 0.000 & 91.9 \\
+Weather-Degradation-Trained Driving Model & clear 0.0 & 0.880 & [0.828, 0.918] & 0.110 & 0.000 & 0.010 & 88.8 \\
+Weather-Degradation-Trained Driving Model & fog 1.0 & 0.895 & [0.845, 0.930] & 0.105 & 0.000 & 0.000 & 86.8 \\
+Weather-Degradation-Trained Driving Model & rain 0.6 & 0.880 & [0.828, 0.918] & 0.120 & 0.000 & 0.000 & 86.9 \\
+Weather-Degradation-Trained Driving Model & rain 1.0 & 0.890 & [0.839, 0.926] & 0.110 & 0.000 & 0.000 & 86.2 \\
+Reinforcement-Learning-Fine-Tuned Model & clear 0.0 & 0.815 & [0.755, 0.863] & 0.170 & 0.015 & 0.000 & 104.0 \\
+Reinforcement-Learning-Fine-Tuned Model & fog 1.0 & 0.780 & [0.718, 0.832] & 0.195 & 0.025 & 0.000 & 104.2 \\
+Reinforcement-Learning-Fine-Tuned Model & rain 0.6 & 0.765 & [0.702, 0.818] & 0.215 & 0.020 & 0.000 & 104.2 \\
+Reinforcement-Learning-Fine-Tuned Model & rain 1.0 & 0.795 & [0.734, 0.845] & 0.200 & 0.005 & 0.000 & 103.4 \\
+Baseline Driving Model Trained With Traffic & clear 0.0 & 0.750 & [0.686, 0.805] & 0.120 & 0.130 & 0.000 & 90.8 \\
+Baseline Driving Model Trained With Traffic & fog 1.0 & 0.755 & [0.691, 0.809] & 0.120 & 0.125 & 0.000 & 90.5 \\
+Baseline Driving Model Trained With Traffic & rain 0.6 & 0.755 & [0.691, 0.809] & 0.120 & 0.125 & 0.000 & 90.5 \\
+Baseline Driving Model Trained With Traffic & rain 1.0 & 0.755 & [0.691, 0.809] & 0.120 & 0.125 & 0.000 & 90.5 \\
+\bottomrule\end{tabular}

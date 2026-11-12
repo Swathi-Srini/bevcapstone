@@ -1,0 +1,62 @@
+\section{Main result: 200 paired episodes in clear weather}\label{sec:headline}
+
+\paragraph{Protocol.} Seeds 5000--5199, sparse traffic (density 0.05), clear weather, horizon 800 steps; the same 200 scenarios for every model; script \pth{bev_rl/adaptive/evaluate_final_200seed_sparse.py}; per-episode results in \pth{bev_rl/adaptive/results/final_200seed/}.
+No model was trained, validated or selected on these seeds. Six models are compared: the two rule-based teachers (which see the exact simulator state), the headline model, the caution-study control, and the two behaviour-cloning baselines.
+
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{figures/fig_headline_success_clear_weather_200_episodes.pdf}
+\caption{Success rate of six models on the same 200 clear-weather episodes with sparse traffic. Orange = the two baseline behaviour-cloning models of the repository; blue = learned models of this project; grey = rule-based teachers with access to the exact simulator state.}
+\label{fig:headline}
+\end{figure}
+
+\begin{table}[H]\centering\small
+\caption{Result table for the 200 clear-weather episodes (95\% Wilson intervals; ``Left road'' includes leaving the planned route; energy is the estimate of Section~\ref{sec:setup}).}\label{tab:headline}
+\resizebox{\textwidth}{!}{\input{tables/headline_200_episodes}}
+\end{table}
+
+\subsection{What the numbers say}
+\begin{itemize}
+\item \textbf{The headline model is clearly better than both baselines.} 0.925 against 0.850 (no-traffic baseline) and 0.745 (sparse-traffic baseline). The paired differences are $+0.075$ (95\% interval $[+0.035,+0.120]$, exact McNemar $p=0.0007$) and $+0.180$ ($[+0.125,+0.240]$, $p<0.0001$); see Figure~\ref{fig:paired} and Table~\ref{tab:paired}.
+  The baselines' failures are of a different kind: the sparse-traffic baseline leaves the road in 13.5\% of the episodes (headline model: 1.0\%), a sign of lateral drift, and the no-traffic baseline collides in 12.5\%.
+\item \textbf{The headline model is statistically indistinguishable from the collision-aware teacher} it is trained to imitate (difference $-0.025$, interval $[-0.070,+0.020]$, $p=0.40$), and $+0.040$ better than the stock driver model (interval $[0.000,+0.080]$, $p=0.077$, i.e.\ not significant at the 5\% level).
+\item \textbf{The caution-study control (0.895) is not significantly different from the headline model} ($+0.030$, $p=0.18$). Its apparent 0.975 on 40 episodes (Section~\ref{sec:weather}) was a selection effect of a small sample: the best of several candidates evaluated on 40 episodes regresses towards its true value when re-evaluated on 200.
+\item \textbf{Energy.} The headline model uses an estimated 96.2\,Wh/km at 7.87\,m/s, similar to the stock driver model (97.9\,Wh/km) and the collision-aware teacher (101.3). The two behaviour-cloning baselines use less (85.9 and 90.7\,Wh/km) \emph{and drive faster} (8.09 and 8.07\,m/s) because they are less careful. The caution-study control is the cheapest model (80.4\,Wh/km) at 7.98\,m/s with 89.5\% success;
+  the reason for its lower consumption has not been investigated (Figure~\ref{fig:energy}).
+\end{itemize}
+
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{figures/fig_outcome_breakdown_200_episodes.pdf}
+\caption{How the 200 episodes end for each model. The headline model's failures are almost all collisions; the sparse-traffic baseline loses a further 13.5\% by leaving the road.}
+\label{fig:outcomes}
+\end{figure}
+
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{figures/fig_paired_difference_headline_versus_others.pdf}
+\caption{Paired difference in success between the headline model and each other model on the same 200 seeds (point) with the 95\% paired bootstrap interval (line).}
+\label{fig:paired}
+\end{figure}
+
+\begin{table}[H]\centering\small
+\caption{Paired comparison of the headline model with each other model. ``Only headline'' counts the seeds on which the headline model succeeded and the other model did not; the exact McNemar test uses only these discordant seeds.}\label{tab:paired}
+\resizebox{\textwidth}{!}{\input{tables/paired_headline_versus_others}}
+\end{table}
+
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{figures/fig_per_episode_outcome_strips.pdf}
+\caption{Outcome of each of the 200 episodes for each model, with the episodes sorted by how many of the six models fail them. Most episodes are solved by everybody; the hard ones are shared, but the baselines additionally fail many episodes that all the other models solve.}
+\label{fig:strips}
+\end{figure}
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.95\textwidth]{figures/fig_speed_versus_energy_200_episodes.pdf}
+\caption{Mean speed and estimated traction energy of the six models (200 episodes). The estimate is the mechanical work at the wheels of a declared virtual vehicle, not battery electricity; only differences are meaningful.}
+\label{fig:energy}
+\end{figure}
+
+\subsection{What this result does \emph{not} show}
+\begin{itemize}
+\item It does not separate the \emph{causes} of the headline model's gain over the baselines. Three things changed at once relative to the baseline behaviour cloning: (i) dataset aggregation instead of five demonstrations (the main suspect), (ii) the map overlay in the grid, (iii) the split of the scalars. A student with the unmodified grid and all six scalars (\code{base_a}) was evaluated on 10 and 40 episodes only (0.70/0.875, not significantly different from the headline model's 0.80/0.925);
+  \textbf{it has not been evaluated on the 200-episode block}, so the contribution of the overlay at this sample size is untested (Section~\ref{sec:directions}).
+\item It does not show anything about dense traffic: no learned model solves it (Section~\ref{sec:failure}).
+\item It is a result of the camera-free surrogate (Section~\ref{sec:surrogate}), not of the live camera pipeline.
+\end{itemize}

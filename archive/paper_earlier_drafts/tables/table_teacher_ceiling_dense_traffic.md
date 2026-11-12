@@ -1,0 +1,8 @@
+**IDM teacher variants, clear weather, density 0.2, seeds 3100-3119**
+
+| teacher | n | success | crash | timeout |
+|---|---|---|---|---|
+| stock IDM | 20 | 0.4 | 0.45 | 0.15 |
+| IDM, no lane change | 20 | 0.45 | 0.45 | 0.1 |
+| IDM, no lane change, larger gap | 20 | 0.45 | 0.4 | 0.15 |
+| IDM + predictive safety layer | 20 | 0.45 | 0.3 | 0.25 |

@@ -1,0 +1,85 @@
+[
+ {
+  "iter": 0,
+  "beta": 1.0,
+  "samples": 18213,
+  "train_loss": 0.0017480497481301427,
+  "rollout_outcomes": {
+   "timeout": 8,
+   "crash": 2,
+   "success": 30
+  },
+  "val_success": 0.9333333333333333,
+  "val_fail": 0.06666666666666667,
+  "t_min": 25.989242017269135
+ },
+ {
+  "iter": 1,
+  "beta": 0.5,
+  "samples": 35413,
+  "train_loss": 0.01245859358459711,
+  "rollout_outcomes": {
+   "timeout": 5,
+   "success": 35
+  },
+  "val_success": 0.9333333333333333,
+  "val_fail": 0.06666666666666667,
+  "t_min": 48.7469693462054
+ },
+ {
+  "iter": 2,
+  "beta": 0.25,
+  "samples": 51750,
+  "train_loss": 0.003908779937773943,
+  "rollout_outcomes": {
+   "timeout": 3,
+   "crash": 3,
+   "success": 34
+  },
+  "val_success": 0.9333333333333333,
+  "val_fail": 0.06666666666666667,
+  "t_min": 73.73504126469294
+ },
+ {
+  "iter": 3,
+  "beta": 0.125,
+  "samples": 69328,
+  "train_loss": 0.011841535568237305,
+  "rollout_outcomes": {
+   "timeout": 3,
+   "crash": 3,
+   "success": 34
+  },
+  "val_success": 0.9333333333333333,
+  "val_fail": 0.06666666666666667,
+  "t_min": 100.65337977806728
+ },
+ {
+  "iter": 4,
+  "beta": 0.0625,
+  "samples": 85998,
+  "train_loss": 0.013442154042422771,
+  "rollout_outcomes": {
+   "timeout": 6,
+   "crash": 4,
+   "success": 30
+  },
+  "val_success": 0.9333333333333333,
+  "val_fail": 0.06666666666666667,
+  "t_min": 128.21531298160554
+ },
+ {
+  "iter": 5,
+  "beta": 0.03125,
+  "samples": 104292,
+  "train_loss": 0.01755480282008648,
+  "rollout_outcomes": {
+   "timeout": 6,
+   "crash": 3,
+   "success": 31
+  },
+  "val_success": 0.9333333333333333,
+  "val_fail": 0.06666666666666667,
+  "t_min": 158.72053660551708
+ }
+]

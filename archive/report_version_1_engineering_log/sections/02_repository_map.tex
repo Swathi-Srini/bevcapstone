@@ -1,0 +1,113 @@
+\section{Repository map: where everything is}\label{sec:repomap}
+
+\subsection{The GitHub remote}
+The folder \pth{D:/bev_Fresh/bevcapstone} is a git repository with one remote, \code{origin} $=$ \url{https://github.com/Swathi-Srini/bevcapstone}. Checked on 11 November 2026:
+\begin{itemize}
+\item The local branch \code{main} is up to date with \code{origin/main} (after a fetch). The last commit on the remote is dated 8 September 2026 (``Merge pull request \#11: Add sparse traffic BC handoff baseline'').
+\item The remote has eleven branches (\code{main}, \code{bev-bc-nominal-baseline}, \code{camera}, \code{docs/consolidate-readmes}, and six \code{rachana/*} branches for camera-stereo fixes, ground-truth validation of the stereo depth, and the YOLO-weather audit, hand-off and test suite).
+  All of them are already merged into \code{main} except for one commit on \code{rachana/stereo-ground-truth-validation} that only removes generated camera captures; \emph{nothing of substance on the other branches is missing locally}.
+\item The repository history has 40 commits. The tracked content is 120 files, 56 of which are saved camera frames; the rest is the teammates' code and documentation listed in Table~\ref{tab:teammates}.
+\item \textbf{Nothing produced in this project's policy-side work has been committed or pushed.} All of \pth{bev_rl/}, the tests \pth{tests/test_bev_rl_*.py}, the three trained models of the earlier camera-view-version-2 experiment, this report and the trained-model folder are untracked. Three tracked teammate files are modified locally (next subsection).
+\item \code{.gitignore} excludes \code{*.npz} demonstrations, all video files, every \code{runs/} folder and \code{logs/}. The new folder \pth{trained_models/} is \emph{not} ignored (model files are small: 35\,MB in total), but \pth{report/videos/} is ignored because of the \code{*.mp4} rule.
+\end{itemize}
+
+\begin{table}[H]\centering\small
+\caption{What the teammates' modules on the GitHub repository contain (read from the repository files and their README files).}
+\label{tab:teammates}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.6cm}X@{}}\toprule
+Folder & Content\\\midrule
+\pth{baseline/bc_metadrive/} & Preserved comparison experiment: 259-dimensional MetaDrive vector observation, multilayer-perceptron behaviour cloning. Not used by this project's results; kept untouched.\\
+\pth{camera/} & Five-camera MetaDrive rig (front-left and front-right stereo pair, left, right, rear) with capture script and a front depth map from semi-global block matching; 80 example frames are tracked.\\
+\pth{YOLO+weather module/} & Live YOLO version 8 object detection on the camera views, \emph{image-space} synthetic fog and rain (\pth{weather/weather_utils.py}), reusable stereo depth (\pth{stereo_depth/}), a ground-truth stereo benchmark and a unit-test suite.\\
+\pth{bev_state/} & Assembles detections and depth into the 64$\times$64 grid and the six-dimensional scalar state (class \code{BEVStateAssembler}; grid encoding: $-1$ unknown, 0 free, 0.5 route, 0.8 road boundary, 0.9 ego, 1.0 detected vehicle).\\
+\pth{bev_policy/} & Behaviour-cloning policy (CNN on the grid + multilayer perceptron on the scalars), demonstration collector, evaluator, metrics, plotting and the two baseline checkpoints.\\
+\pth{tests/} and \pth{.github/workflows/} & Unit tests for the grid assembly and metrics; a GitHub Actions workflow that verifies the repository on Windows with Python 3.11.\\
+\pth{docs/} & The architecture specification (\pth{AV_Carla_BEV (1).pdf}) that fixes the grid layout, values and reward structure.\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Teammates' files that were modified locally}
+The root \pth{README.md} was edited on 11 November 2026 (a ``Start here'' pointer to this report and the new folder layout; all of the teammates' text is kept). In addition, three tracked files in \pth{bev_policy/} carry uncommitted changes (\texttt{git diff} shows +56 / $-$17 lines). All three add an \emph{optional} weather-input branch and are backwards compatible
+(the defaults reproduce the original behaviour, and the two baseline checkpoints load unchanged):
+\begin{itemize}
+\item \pth{bev_policy/model.py}: class \code{BEVScalarPolicy} gained the argument \code{weather_dim} (default 0). When positive, a one-layer encoder maps a weather vector to 16 features that are concatenated before the action head. Without it, the network is exactly the original.
+  This branch is later reused as a generic ``extra input'' for the caution, pose-error and weather-aware models.
+\item \pth{bev_policy/dataset.py}: loading of a stored weather array and of unsigned 8-bit grids; optional return of the weather vector.
+\item \pth{bev_policy/train_bc.py}: options \code{--weather-input}, \code{--only-clear} and \code{--val-count} for the early camera-view-version-2 experiments.
+\end{itemize}
+
+\subsection{Layout after the clean-up}\label{sec:cleanup}
+The repository was reorganised on 11 November 2026 at the project director's request. No code module was renamed (the evaluation scripts import each other by module name and the names are
+recorded in this report instead), no teammate file was moved, and nothing was deleted except the superseded videos (see below).
+Figure~\ref{fig:tree} shows the result; the following rules explain it.
+
+\begin{figure}[H]
+\small
+\begin{lstlisting}[frame=single,basicstyle=\ttfamily\scriptsize]
+bevcapstone/
+|-- README.md                      project overview (teammates' text + pointer to this report)
+|-- report/                        THIS REPORT: main.tex, sections/, figures/, tables/, data/, videos/, make_*.py
+|-- trained_models/                ALL final trained models in one folder (copies) + MODEL_MANIFEST.json
+|   |-- 01_baseline_behaviour_cloning/       the teammates' two baselines
+|   |-- 02_superseded_early_experiments/     early camera-view-version-2 models (not used for results)
+|   |-- 03_dataset_aggregation_students/     headline model, ablations, caution, pose-error, degraded-perception students
+|   |-- 04_reinforcement_learning/           every reinforcement-learning checkpoint that was kept
+|   |-- 05_camera_pixel_policy/              the image-only control policy
+|   |-- 06_third_party_perception/           YOLO version 8 nano weights (not trained here)
+|   `-- training_records/                    log.json / best.json / config.json of every run
+|-- bev_policy/  bev_state/  camera/  baseline/  YOLO+weather module/   teammates' modules (see Table 2)
+|-- bev_rl/                        policy-side code of this project (environments, teachers, training, evaluation, diagnostics)
+|   `-- adaptive/                  all experiments of the dataset-aggregation / caution / degraded-perception phase
+|       |-- runs/                  training workspace: every iteration of every run (kept: scripts read best.pt here)
+|       |-- results/               evaluation result files (json/csv), per-episode outcomes
+|       `-- logs/                  text logs of training and evaluation runs
+|-- repository_tools/              scripts that organise the repository (copy models, ...)
+|-- tests/                         teammates' tests + tests/test_bev_rl_*.py (policy-side tests)
+|-- docs/                          specification pdf; project_history/ = earlier notes (dated names)
+|-- archive/                       material kept for the record but not needed: earlier paper drafts, removed scripts, early runs
+|-- logs/                          queue and recording logs
+|-- weights/                       third-party YOLO weights used by the perception code
+`-- requirements.txt, requirements-lock.txt, venv/
+\end{lstlisting}
+\caption{Repository layout after the clean-up of 11 November 2026.}\label{fig:tree}
+\end{figure}
+
+\paragraph{Rules applied.}
+\begin{enumerate}
+\item \textbf{All models in one folder.} \pth{trained_models/} holds a copy of the \emph{selected} checkpoint of each of the 33 models, named by what the model is (not by the folder it was trained in), together with
+  the training records and a manifest (\pth{MODEL_MANIFEST.json}) that gives, for each file, the original path, the SHA-256 hash, the size and a plain-language description. The originals stay in \pth{bev_rl/adaptive/runs/} because the evaluation scripts load
+  \pth{runs/<run>/best.pt}; those folders also contain every intermediate iteration and are treated as the training workspace, not as a place to look for models.
+\item \textbf{Figures.} The report's figures are regenerated from the saved result files by \pth{report/make_report_figures.py}; the 42 figures of the earlier drafts were archived, not edited (Section~\ref{sec:figclean}).
+\item \textbf{Videos.} The 146 earlier videos (about 1.2\,GB: top-down and bird's-eye-view panels, laggy camera panels, and a front-camera set at a different seed) were deleted and replaced by the front-camera recordings of Section~\ref{sec:videos}.
+\item \textbf{Old notes.} The six notes in the repository root (architecture, decisions, experiment log, known limitations, preliminary literature review, research plan, all written in the first week of November) moved to \pth{docs/project_history/}
+  with dated names; the folder \pth{research_log/} moved there as well.
+\item \textbf{Superseded material.} The earlier paper folder (\pth{paper/}, including the draft in IEEE format and the hand-off documents) and the folder \pth{_to_delete_review_2026-11-05/} are in \pth{archive/}. Nothing in \pth{archive/} is imported by any code.
+\end{enumerate}
+
+\subsection{Figures: which are needed and which are not}\label{sec:figclean}
+The earlier drafts accumulated 42 figure files in seven folders with duplication (the same headline chart existed twice) and with colour schemes that changed from figure to figure.
+All of them are now in \pth{archive/paper_earlier_drafts/}. The report uses fifteen figures, listed in Table~\ref{tab:figures}, each generated from the saved result files (and not drawn by hand) with one colour per role:
+\textcolor{headlineblue}{\textbf{blue}} = the headline model and its variants, \textcolor{baselineorange}{\textbf{orange}} = the two baseline behaviour-cloning models, \textcolor{ruleblack}{\textbf{grey}} = rule-based teachers that see simulator truth,
+violet and pink = other learned models; green, red, yellow and grey in the outcome charts always mean success, collision, left the road and timeout.
+
+\begin{table}[H]\centering\small
+\caption{The figures of this report and what each one is for.}\label{tab:figures}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{6.6cm}X@{}}\toprule
+File in \pth{report/figures/} & Purpose\\\midrule
+\pth{fig_headline_success_clear_weather_200_episodes} & The main result: success with confidence intervals for six models.\\
+\pth{fig_outcome_breakdown_200_episodes} & How each model fails (collision, left the road, timeout).\\
+\pth{fig_per_episode_outcome_strips} & Which episodes each model fails; shows that failures overlap.\\
+\pth{fig_paired_difference_headline_versus_others} & Paired differences with intervals (the statistical comparison).\\
+\pth{fig_speed_versus_energy_200_episodes} & Speed and estimated energy of each model.\\
+\pth{fig_measured_perception_degradation} & Measured detector and stereo-depth degradation under fog and rain.\\
+\pth{fig_success_by_weather_calibrated_perception_200_episodes} & Success per weather condition for four models.\\
+\pth{fig_success_versus_localisation_error} & Sensitivity to an error in the car's pose against the map.\\
+\pth{fig_dataset_aggregation_validation_curves} & Validation success per training round for five input designs.\\
+\pth{fig_reinforcement_learning_validation_curves} & Validation success during the reinforcement-learning runs.\\
+\pth{fig_teacher_ceiling_dense_traffic} & Success of the rule-based teachers in dense traffic.\\
+\pth{fig_birds_eye_view_fidelity_before_collision} & True gap versus the gap drawn in the grid before two collisions.\\
+\pth{fig_success_versus_localisation_error_pose_trained_models} & Effect of training with pose error and of a second lane cue.\\
+\pth{fig_birds_eye_view_input_examples} & The two grid encodings drawn from a real scenario.\\
+\pth{fig_seed5169_front_camera_frames} & Frames of the recorded videos (Section~\ref{sec:videos}).\\\bottomrule
+\end{tabularx}
+\end{table}

@@ -1,0 +1,51 @@
+{
+  "bc": {
+    "episode_reward": 144.01740899314126,
+    "route_completion": 0.4370421506365743,
+    "success": 0.0,
+    "mean_speed_mps": 7.757421920509416,
+    "steps": 200.0,
+    "rms_lateral_m": 0.28677246774443854,
+    "outcomes": [
+      "timeout"
+    ]
+  },
+  "stationary": {
+    "episode_reward": -40.04648426619759,
+    "route_completion": 0.01372135047663042,
+    "success": 0.0,
+    "mean_speed_mps": 0.004134156130651367,
+    "steps": 200.0,
+    "rms_lateral_m": 1.4314218255151445e-08,
+    "outcomes": [
+      "timeout"
+    ]
+  },
+  "crawl": {
+    "episode_reward": -73.91327781781008,
+    "route_completion": 0.11920982339634886,
+    "success": 0.0,
+    "mean_speed_mps": 1.939267670472558,
+    "steps": 200.0,
+    "rms_lateral_m": 1.01988391625309,
+    "outcomes": [
+      "timeout"
+    ]
+  },
+  "fast": {
+    "episode_reward": 11.267985761967255,
+    "route_completion": 0.10473297746870429,
+    "success": 0.0,
+    "mean_speed_mps": 7.172338297411123,
+    "steps": 48.0,
+    "rms_lateral_m": 0.6171895400207048,
+    "outcomes": [
+      "off_road"
+    ]
+  },
+  "perception_audit": {
+    "audits": 29,
+    "mismatches": 0
+  },
+  "ordering_ok": false
+}

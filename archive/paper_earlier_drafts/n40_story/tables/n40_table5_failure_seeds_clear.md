@@ -1,0 +1,14 @@
+**Seeds where at least one model fails (clear). S success, C crash, O off-road, T timeout.**
+
+| seed | Repo BC (sparse traffic) | Repo BC (clear, no traffic) | ov_split (ours) | ctrl_nocaut (round-0 BC) | caut_c0 (caution off) | caut_auto (caution = weather) | cause (from earlier trace) |
+|---|---|---|---|---|---|---|---|
+| 1019 | C | C | C | C | C | C | vehicle pulls out of a side lane |
+| 1020 | O | S | S | S | S | S |  |
+| 1026 | O | S | S | S | S | S |  |
+| 1027 | O | S | S | S | S | S |  |
+| 1038 | O | O | S | S | C | C |  |
+| 1039 | O | C | C | S | C | C | oncoming vehicle sideswipes ego (ego centred) |
+| 1040 | C | C | C | S | C | C | roundabout merge |
+| 1043 | C | S | S | S | S | S |  |
+| 1044 | O | S | S | S | S | S |  |
+| 1045 | S | C | S | S | S | S |  |

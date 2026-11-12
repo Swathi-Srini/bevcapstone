@@ -1,0 +1,55 @@
+\section{Project overview in plain language}\label{sec:overview}
+
+\begin{plainwords}[What this project is in five sentences]
+We built and tested software ``drivers'' for a car in a driving simulator. Each driver looks at a small top-down picture of the surroundings of the car (a \emph{bird's-eye-view grid}) plus a few numbers about the car, and outputs steering and throttle or brake commands.
+We compared several ways of \emph{training} such a driver: copying a handful of recorded demonstrations, repeatedly letting the driver drive and asking a rule-based teacher what it should have done, and trial-and-error learning with a reward (reinforcement learning).
+We also measured how simulated fog and rain damage the camera-based perception that would feed such a driver, and tested whether that damage makes the drivers worse.
+The best driver we trained (the \emph{Proposed Bird's-Eye-View Driving Model}) clearly beats the two baseline drivers that were supplied with the project, and ties the rule-based teacher it learned from. Weather, as we measured and implemented it, does not hurt it, and none of our four reinforcement-learning attempts improved on the imitation-trained drivers.
+\end{plainwords}
+
+\subsection{The research question and how it changed}
+The original question, written in the research plan, was: \emph{can an autonomous driving policy keep following its route and use less energy when its visual perception is progressively degraded by fog and rain?} Answering it required four things, which became the four parts of the work:
+\begin{enumerate}
+\item \textbf{A driving model that works} in the simulator. This is the imitation-trained family of models (Sections~\ref{sec:arch}--\ref{sec:catalogue}) and its main result (Section~\ref{sec:headline}).
+\item \textbf{A measured, not assumed, model of the weather damage} to the perception. We measured how often the object detector and the stereo-depth algorithm fail in simulated fog and rain (Section~\ref{sec:perception}).
+\item \textbf{A test of whether that damage affects driving}, and whether a driver that is told about the weather or trained under it does better (Section~\ref{sec:weather}).
+\item \textbf{An attempt to improve the drivers with reinforcement learning}, including an energy-aware reward (Section~\ref{sec:rl}).
+\end{enumerate}
+The answer to part 3 turned out to be ``no measurable effect in sparse traffic'', which removed the original premise of weather adaptation. The research value of the project is therefore in the evaluation, the measurement, the failure analysis and the negative results, and in several directions that the evidence supports (Section~\ref{sec:directions}).
+
+\subsection{What was built}
+\begin{itemize}
+\item A \textbf{fast, camera-free test environment} in which a driver receives the same bird's-eye-view grid that the camera pipeline would produce, so that training and 200-episode evaluations are possible on a laptop (Section~\ref{sec:surrogate}).
+\item \textbf{Two rule-based teachers} that see the exact state of the simulator: MetaDrive's stock Intelligent Driver Model, and a Collision-Aware Teacher that adds predictive braking (Section~\ref{sec:teachers}).
+\item \textbf{Thirty-three saved models} in the folder \pth{trained_models/}, including the Proposed Bird's-Eye-View Driving Model, five input-design variants, a caution study, models trained under degraded perception, models trained under position error, four groups of reinforcement-learning models and an image-only model (Section~\ref{sec:catalogue}).
+\item \textbf{An evaluation protocol} with disjoint seed blocks, 200 paired test episodes, confidence intervals and exact paired tests (Section~\ref{sec:setup}).
+\item \textbf{A perception measurement} of the detector and stereo-depth degradation under fog and rain (Section~\ref{sec:perception}).
+\item \textbf{Diagnostics}: failure analysis of individual episodes, bird's-eye-view fidelity replays, teacher ceilings, and front-camera videos of one scenario (Sections~\ref{sec:failure}, \ref{sec:videos}).
+\end{itemize}
+
+\subsection{The four core models and the role of everything else}
+The results of this report rest on four core driving models: the \textbf{Proposed Bird's-Eye-View Driving Model}, the two \textbf{Baseline Driving Models} supplied by the teammates (trained without and with traffic), and the \textbf{Caution-Study Caution-Aware Driving Model}; the image-only model is the camera-only control. All other saved models are kept as evidence. The four reinforcement-learning attempts are documented as a record of what was tried (Section~\ref{sec:rl}): for each, the starting model, the observation the network sees, the action it outputs, the reward, the training settings, how it was trained and how it was tested. They are not part of the claims about the core models. The weather conditions reach the core models only indirectly, through the measured detector retention (Figure~\ref{fig:detectorretention}).
+
+\subsection{What was found}
+\begin{table}[H]\centering\small
+\caption{The main findings, with the strength of the evidence. ``Reported'' means 200 paired test episodes; ``pilot'' means 10 to 40 episodes (a hint, not a claim).}\label{tab:findings}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{5.2cm}X>{\raggedright\arraybackslash}p{1.9cm}@{}}\toprule
+Finding & Numbers & Evidence\\\midrule
+The Proposed Bird's-Eye-View Driving Model beats the two baseline drivers & Success 0.925 against 0.850 and 0.745; paired differences $+0.075$ ($p=0.0007$) and $+0.180$ ($p<0.0001$) & Reported\\
+It matches its rule-based teacher & 0.925 against 0.950 for the Collision-Aware Teacher; difference $-0.025$, interval $-0.070$ to $+0.020$ & Reported\\
+Simulated fog and rain destroy most vehicle detections & Detector finds 72\% of vehicles in clear weather, 31\% in the strongest fog, 15\% in rain 0.6 and 1.4\% in rain 1.0 & Pilot (72--144 observations per condition)\\
+That damage does not lower driving success in sparse traffic & Proposed model 0.89 to 0.91 in all four weather conditions; the pre-registered test of harm failed & Reported\\
+Reinforcement learning did not help and once hurt & Four attempts; the last one lowered success by 0.065 to 0.115 in every weather condition & Reported (attempt 4); pilot (others)\\
+Remaining failures are mostly imitation failures caused by what the grid cannot show & The Collision-Aware Teacher solves 14 of the proposed model's 15 failed episodes; 8 of the 15 end within 12 seconds & Reported\\
+A wrong position estimate breaks map-overlay models, a second lane cue repairs it & 0.925 $\to$ 0.275 at 2\,m of error; 0.875--0.95 with a second cue & Pilot (40 episodes)\\
+An image-only driver is far worse than the grid-based drivers & Success 0.130 (interval 0.090 to 0.184); 60.5\% of the episodes end by leaving the road; paired difference to the proposed model $+0.795$ & Reported\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{How to read this report}
+\begin{itemize}
+\item Every technical term is explained in the terminology table of Section~\ref{sec:terminology}: its full name, what it means, why it was used, and what it contributes. Models are always called by their \emph{descriptive names}; the internal nicknames used in file names and old logs appear only in the model-name table of Section~\ref{sec:catalogue} and in the file inventory.
+\item Every figure has a title, labelled axes with units, a legend naming every model, a caption saying what is shown, a plain-English reading, and a statement of the research implication.
+\item Blue boxes (``In plain words'') summarise a section in everyday language; green boxes give research implications; red boxes warn about limits of the evidence.
+\item A shorter companion document, the \emph{Director's Research Guide}, covers the same story in about 20 pages.
+\end{itemize}

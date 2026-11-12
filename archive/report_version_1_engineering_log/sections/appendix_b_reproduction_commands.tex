@@ -1,0 +1,54 @@
+\section{Reproduction commands}\label{app:commands}
+
+All commands are run from the repository root (\pth{D:/bev_Fresh/bevcapstone}) with the project's environment, in PowerShell. Long runs were executed in the background and write to \pth{logs/}. One MetaDrive process at a time is advisable on a CPU laptop (about 3.5\,GB of memory each).
+
+\subsection{Environment}
+\begin{lstlisting}
+py -3.11 -m venv venv
+.\venv\Scripts\python.exe -m pip install -r requirements.txt
+.\venv\Scripts\python.exe -m pip install --upgrade --force-reinstall torch torchvision --index-url https://download.pytorch.org/whl/cpu
+\end{lstlisting}
+
+\subsection{Training (examples; each takes about 1.5--2 hours)}
+\begin{lstlisting}
+# headline model: overlay grid, scalars speed/progress/goal, stock driver model as teacher
+.\venv\Scripts\python.exe -m bev_rl.adaptive.dagger_base --name ov_split --overlay --scalar-keep 0,1,5 --iters 5
+# unmodified grid, six scalars
+.\venv\Scripts\python.exe -m bev_rl.adaptive.dagger_base --name base_a --iters 5
+# student of the collision-aware teacher
+.\venv\Scripts\python.exe -m bev_rl.adaptive.dagger_base --name sparse_overlay_split_safe_teacher --safe-teacher --overlay --scalar-keep 0,1,5 --densities 0.0,0.05,0.1 --val-densities 0.05
+# degraded-perception student, then reinforcement learning from it
+.\venv\Scripts\python.exe -m bev_rl.adaptive.degraded_dagger --name deg_base --iters 5
+.\venv\Scripts\python.exe -m bev_rl.adaptive.ppo_adaptive --name ppo_plain --base bev_rl/adaptive/runs/deg_base/best.pt --variant plain
+\end{lstlisting}
+(The exact arguments of the headline run were reconstructed from the logged settings and the queue scripts; the run folder \pth{bev_rl/adaptive/runs/ov_split/} contains the log of the original run.)
+
+\subsection{Evaluation}
+\begin{lstlisting}
+# 200 clear-weather episodes, six models (seeds 5000-5199)
+.\venv\Scripts\python.exe -m bev_rl.adaptive.evaluate_final_200seed_sparse --n 200 --seed0 5000
+.\venv\Scripts\python.exe -m bev_rl.adaptive.paired_stats_final_200seed
+# measurement of the detector / stereo degradation (corrected), and the fitted model
+.\venv\Scripts\python.exe -m bev_rl.adaptive.measure_depth_error
+.\venv\Scripts\python.exe -m bev_rl.adaptive.fit_depth_error_model
+# calibrated-degradation evaluation
+.\venv\Scripts\python.exe -m bev_rl.adaptive.evaluate_degraded --help
+\end{lstlisting}
+
+\subsection{Report}
+\begin{lstlisting}
+.\venv\Scripts\python.exe report\make_report_figures.py
+.\venv\Scripts\python.exe report\make_report_tables.py
+.\venv\Scripts\python.exe report\make_input_examples.py
+.\venv\Scripts\python.exe report\make_video_assets.py
+.\venv\Scripts\python.exe report\make_file_inventory.py
+cd report
+pdflatex main.tex ; pdflatex main.tex       # twice, for the table of contents
+\end{lstlisting}
+The LaTeX distribution used for the check build was MiKTeX 25.12 (user installation) with automatic installation of missing packages.
+Required packages: \code{geometry, lmodern, microtype, amsmath, graphicx, booktabs, longtable, array, tabularx, xcolor, float, caption, enumitem, url, fancyhdr, listings, tikz, hyperref}.
+
+\subsection{Reorganisation scripts}
+\begin{lstlisting}
+.\venv\Scripts\python.exe repository_tools\organise_trained_models.py   # copies the 33 models into trained_models/ and writes the manifest
+\end{lstlisting}

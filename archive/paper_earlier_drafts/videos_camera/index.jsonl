@@ -1,0 +1,8 @@
+{"arm": "repo_bc_sparse", "seed": 1039, "weather": "clear:0.0", "outcome": "off_road", "steps": 241, "mean_speed": 6.663476702890691, "file": "repo_bc_sparse__seed1039__clear.mp4", "perception_s_per_frame": 0.4031900346279144}
+{"arm": "repo_bc_clear", "seed": 1039, "weather": "clear:0.0", "outcome": "crash", "steps": 314, "mean_speed": 6.989439347394225, "file": "repo_bc_clear__seed1039__clear.mp4", "perception_s_per_frame": 0.25124698418837327}
+{"arm": "base_a", "seed": 1039, "weather": "clear:0.0", "outcome": "crash", "steps": 318, "mean_speed": 6.86856713323357, "file": "base_a__seed1039__clear.mp4", "perception_s_per_frame": 0.2541354287345454}
+{"arm": "ov_split", "seed": 1039, "weather": "clear:0.0", "outcome": "success", "steps": 378, "mean_speed": 7.070197001168482, "file": "ov_split__seed1039__clear.mp4", "perception_s_per_frame": 0.2871481842464871}
+{"arm": "ctrl_nocaut", "seed": 1039, "weather": "clear:0.0", "outcome": "success", "steps": 377, "mean_speed": 7.0517389280401614, "file": "ctrl_nocaut__seed1039__clear.mp4", "perception_s_per_frame": 0.3089621543884277}
+{"arm": "caut_c0", "seed": 1039, "weather": "clear:0.0", "outcome": "crash", "steps": 317, "mean_speed": 6.883033203229067, "file": "caut_c0__seed1039__clear.mp4", "perception_s_per_frame": 0.3005767958504813}
+{"arm": "safe_student", "seed": 1039, "weather": "clear:0.0", "outcome": "crash", "steps": 318, "mean_speed": 6.8791713265079295, "file": "safe_student__seed1039__clear.mp4", "perception_s_per_frame": 0.2691659724937295}
+{"arm": "stock_idm", "seed": 1039, "weather": "clear:0.0", "outcome": "crash", "steps": 319, "mean_speed": 6.900552930694133, "file": "stock_idm__seed1039__clear.mp4", "perception_s_per_frame": 0.30926464413696864}

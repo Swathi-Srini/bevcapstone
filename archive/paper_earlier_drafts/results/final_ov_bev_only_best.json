@@ -1,0 +1,34 @@
+[
+ {
+  "run": "ov_bev_only",
+  "ckpt": "best",
+  "density": 0.05,
+  "n": 10,
+  "success": 0.3,
+  "success_ci95": [
+   0.10778928748621183,
+   0.6032267800204347
+  ],
+  "crash": 0.3,
+  "off_road": 0.4,
+  "timeout": 0.0,
+  "mean_speed": 9.711036288186298,
+  "wh_per_km": 248.87019107104425
+ },
+ {
+  "run": "ov_bev_only",
+  "ckpt": "best",
+  "density": 0.2,
+  "n": 10,
+  "success": 0.1,
+  "success_ci95": [
+   0.01787574951572113,
+   0.4041563854975721
+  ],
+  "crash": 0.7,
+  "off_road": 0.0,
+  "timeout": 0.2,
+  "mean_speed": 6.801604642614963,
+  "wh_per_km": 229.68997100381756
+ }
+]

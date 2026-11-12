@@ -1,0 +1,27 @@
+% Director's Research Guide. Build from the folder report/:  pdflatex Directors_Research_Guide.tex  (run twice)
+\documentclass[11pt,a4paper]{article}
+\input{shared/preamble}
+\input{tables/image_only_numbers}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small Director's Research Guide}
+\fancyhead[R]{\small Driving models that read a bird's-eye view, tested in MetaDrive}
+\fancyfoot[C]{\thepage}
+
+\title{\textbf{Director's Research Guide}\\[4pt]
+\large What we built, what we tried, what happened, and what to do next\\
+(driving models that read a bird's-eye view, tested in the MetaDrive simulator)}
+\author{Prepared for the project director\\ Repository state of 12 November 2026}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\input{guide/01_summary_and_concepts}
+\input{guide/02_models_and_testing}
+\input{guide/03_results}
+\input{guide/04_reinforcement_learning}
+\input{guide/05_failures_github_next}
+
+\end{document}

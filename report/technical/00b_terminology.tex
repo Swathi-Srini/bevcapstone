@@ -1,0 +1,59 @@
+\section{Terminology: every technical term explained}\label{sec:terminology}
+
+\begin{plainwords}
+This table is the dictionary of the report. For each term it gives the \emph{full name}, \emph{what it means}, \emph{why it was used in this project}, and \emph{what it contributes to the research}. Abbreviations are shown only in brackets next to the full name.
+\end{plainwords}
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{3.1cm}>{\raggedright\arraybackslash}p{4.6cm}>{\raggedright\arraybackslash}p{3.7cm}>{\raggedright\arraybackslash}p{4.0cm}@{}}
+\caption{Terminology.}\label{tab:terms}\\
+\toprule Term (full name) & What it means & Why it was used here & What it contributes to the research\\\midrule\endfirsthead
+\toprule Term (full name) & What it means & Why it was used here & What it contributes to the research\\\midrule\endhead
+\midrule\multicolumn{4}{r}{\emph{continued on the next page}}\\\endfoot
+\bottomrule\endlastfoot
+\multicolumn{4}{@{}l}{\textbf{The driving task and the simulator}}\\
+Driving policy (also ``driving model'' or ``driver'') & A function that turns what the car senses into two commands: steering, and throttle or brake. & Every model in the project is a driving policy. & It is the object that is trained, compared and analysed.\\
+MetaDrive simulator & An open-source driving simulator (version 0.4.3) that generates random road networks and traffic. & Cheap, repeatable tests on a laptop with no graphics card. & Provides every scenario; all conclusions are valid for this simulator only.\\
+Scenario seed & A whole number that fixes the map, the route, the start of the car and the initial traffic. & Lets every model be tested on exactly the same scenarios. & Makes paired comparison possible, which gives much sharper statistics.\\
+Episode & One complete drive from the start position until success, failure or the time limit (800 steps = 80 seconds). & The unit of evaluation. & Success rates are counts of episodes.\\
+Traffic density & MetaDrive parameter for the amount of other vehicles: 0.05 is sparse, 0.2 is dense. & Dense traffic was too hard even for the teachers, so the main study uses sparse traffic. & Defines the regime in which the results hold.\\
+Success, collision, left the road, timeout & The four ways an episode ends: destination reached; any collision; leaving the road or the planned route; time limit reached. & To count how a model fails and not only whether. & Distinguishes drift (leaving the road) from collisions with other vehicles.\\
+Training, validation and test seeds & Separate blocks of scenarios: models learn on training seeds, are chosen on validation seeds, and are finally reported on test seeds that were never used before. & Prevents reporting results on scenarios that influenced the model. & Protects every reported number from selection bias.\\
+\multicolumn{4}{@{}l}{\textbf{What a model sees}}\\
+Bird's-eye-view grid (BEV) & A 64 by 64 top-down picture around the car: 20\,m wide and 20\,m long (17.5\,m ahead, 2.5\,m behind), one cell = 0.3125\,m. Cells say free, unknown, the car itself, or a detected vehicle. & The teammates' common input format for all models; compact and easy for a neural network. & The representation whose content and fidelity limit what a model can do.\\
+Map overlay & The route centre line and the road boundaries, read from the simulator's map and drawn into the grid. & Gives the model the road geometry directly. & Main difference between the proposed model and the baselines' input.\\
+Vehicle-state inputs (the ``scalars'') & Up to six numbers: speed, route progress, lateral offset from the lane centre, heading error, curvature ahead, distance to the goal. & Standard information a real car also has. & Their selection (three instead of six) is one of the studied input designs.\\
+Camera-free surrogate environment & A test environment in which the grid is built from the simulator's vehicle list instead of from camera images. & The full camera pipeline costs about 2\,s per step; the surrogate costs about 0.2\,s. & Makes training and 200-episode tests possible; limits claims to the policies, not the camera system.\\
+Image-only model & A model whose only input is a front-camera picture (128 by 96 pixels). & A control to see whether the grid is necessary. & Shows how much the grid representation helps.\\
+\multicolumn{4}{@{}l}{\textbf{How models are trained}}\\
+Neural network (convolutional) & A function with many adjustable numbers; a convolutional network processes images with small sliding filters. & The common building block of all driving models (110\,530 adjustable numbers). & Keeps the comparison fair: models differ in input and training, not in size.\\
+Behaviour cloning (BC) & Supervised learning from recorded demonstrations: the model is taught to output the action the expert took in each recorded situation. & How the teammates' two baselines were trained (five demonstrations). & The baseline strategy the project tries to beat.\\
+Covariate shift & After a small mistake the model reaches situations the demonstrations never contained, so it has no example of how to recover. & Explains the baselines' drift off the road. & Motivates iterative training.\\
+Dataset aggregation (DAgger) & Iterative imitation: the model drives, a teacher labels what it should have done in the states the model actually reached, and the labels are added to the training data. & The main training strategy of the project. & Produced the proposed model and the main result.\\
+Teacher and privileged information & A teacher is a rule-based controller that sees the exact simulator state; ``privileged'' means the student does not have this information. & Gives cheap, correct labels in every state. & Creates an information gap that explains the remaining failures.\\
+Intelligent Driver Model (IDM) & MetaDrive's built-in rule-based driver: keeps its lane and follows the car ahead. & Used as the stock teacher. & Reference point; fails in merging and crossing situations.\\
+Collision-Aware Teacher & The stock driver model with lane changes switched off and a predictive braking layer that brakes when a collision is predicted within about 2.4 seconds. & The stock teacher crashed in 45\% of dense-traffic episodes. & The teacher that solves 14 of the proposed model's 15 failures.\\
+Information gap & The teacher knows things the student cannot see (all vehicles up to 45\,m, exact velocities). & Explains why a student cannot copy every teacher decision. & Leading explanation of the remaining failures.\\
+Reinforcement learning & Trial-and-error learning: the model drives, receives a numerical reward, and is changed to collect more reward. & Tested as a way to improve on imitation. & Four attempts, all negative (Section~\ref{sec:rl}).\\
+Proximal policy optimisation (PPO) & A reinforcement-learning algorithm that makes small, clipped changes to the model after each batch of experience. & A standard and stable choice. & The algorithm of all four reinforcement-learning attempts.\\
+Reward function & The formula that gives a number after every step, rewarding progress and penalising crashes, lateral error, jerk, energy, and so on. & It defines what the model is trained to want. & A badly balanced reward made the models faster and less safe.\\
+Initialisation (warm start) & The starting weights of a model before reinforcement learning, here copied from an imitation-trained model. & Random starts settle in the useless ``stand still'' optimum. & Decides what reinforcement learning can improve on.\\
+Time-to-collision and gap & Time until a predicted collision if nothing changes; distance between bumpers to the vehicle ahead. & Used in the safety layer of the teacher and in reward version 3. & Give early, dense warning signals instead of a single crash penalty.\\
+Ablation & Removing or hiding one part (for example an input) to see what it contributes. & To find which input matters. & Isolates the contribution of the map overlay and the vehicle-state inputs.\\
+\multicolumn{4}{@{}l}{\textbf{Perception and weather}}\\
+YOLO object detector (version 8 nano) & A pretrained neural network that finds vehicles in a camera image and draws boxes. & Part of the teammates' perception pipeline. & Its failures in fog and rain are what the weather study measures.\\
+Stereo depth & Distance estimation from two cameras by matching their images (semi-global block matching). & Places a detected vehicle at a distance in the grid. & Its failures (invalid depth) remove vehicles from the grid.\\
+Weather augmentation & The teammates' image filter that adds fog (depth-dependent haze) or rain streaks to camera images. & MetaDrive has no built-in fog or rain rendering. & The only weather effect used; it never changes road grip or vehicle dynamics.\\
+Detector dropout & Removing each vehicle from the grid with the probability measured for the weather. & First, cheap stand-in for perception loss. & Showed no effect on driving.\\
+Calibrated degradation & A second stand-in built from the measurement: vehicles can disappear or be placed at a wrong distance with measured frequencies. & More faithful than dropout alone. & The condition under which the weather results of Section~\ref{sec:weather} were obtained.\\
+Position (localisation) error & A constant error in where the car believes it is on the map. & The map overlay depends on knowing this. & Reveals the proposed model's main vulnerability.\\
+Caution input & An extra number, derived from measured detector reliability, that tells the model how much to trust perception. & Tests whether a model should be more careful when perception is poor. & Produced learned adaptive behaviour (slower, less energy in weather); no gain in success shown.\\
+\multicolumn{4}{@{}l}{\textbf{Evaluation and statistics}}\\
+Success rate and Wilson confidence interval & Share of episodes that succeed; the interval is the range of true rates compatible with the observed count (95\% level). & Honest reporting of uncertainty. & Every reported rate carries an interval.\\
+Paired comparison and exact McNemar test & Comparing two models on the same episodes and testing only the episodes where they differ. & Much more sensitive than comparing two separate intervals. & Detects a difference of 0.075 with 200 episodes.\\
+Bootstrap interval & An interval obtained by resampling the episodes many times. & Gives an interval for a paired difference. & Shown in the paired-difference figure.\\
+Pre-registration & Writing hypotheses and decision rules down before the experiment. & To prevent after-the-fact interpretation. & Made the weather null result unambiguous.\\
+Estimated energy (watt-hours per kilometre) & Mechanical work at the wheels of a declared virtual vehicle from the speed history; no regenerative braking. & MetaDrive has no electric-energy model. & Allows comparing models; not a real battery measurement.\\
+Pilot, reported and diagnostic evidence & Pilot: 10 to 40 episodes, a hint. Reported: 200 paired episodes. Diagnostic: one or two replayed episodes that explain a mechanism. & Tells the reader how much to trust each statement. & Keeps claims proportional to evidence.\\
+\end{longtable}
+}

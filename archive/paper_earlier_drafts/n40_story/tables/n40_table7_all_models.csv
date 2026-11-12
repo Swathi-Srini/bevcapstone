@@ -1,0 +1,32 @@
+model,harness,weather,n,success,95% CI,crash,off-road,timeout,speed m/s,Wh/km,route compl.
+Repo BC (sparse traffic),A,clear,40,0.775,"[0.62, 0.88]",0.075,0.150,0.000,8.09,not recorded,0.897
+Repo BC (sparse traffic),A,fog 1.0,40,0.800,"[0.65, 0.90]",0.050,0.150,0.000,8.12,not recorded,0.918
+Repo BC (sparse traffic),A,rain 0.6,40,0.800,"[0.65, 0.90]",0.050,0.150,0.000,8.12,not recorded,0.918
+Repo BC (sparse traffic),A,rain 1.0,40,0.800,"[0.65, 0.90]",0.050,0.150,0.000,8.12,not recorded,0.918
+"Repo BC (clear, no traffic)",A,clear,40,0.875,"[0.74, 0.95]",0.100,0.025,0.000,8.08,not recorded,0.954
+"Repo BC (clear, no traffic)",A,fog 1.0,40,0.875,"[0.74, 0.95]",0.100,0.025,0.000,8.08,not recorded,0.954
+"Repo BC (clear, no traffic)",A,rain 0.6,40,0.875,"[0.74, 0.95]",0.100,0.025,0.000,8.08,not recorded,0.954
+"Repo BC (clear, no traffic)",A,rain 1.0,40,0.875,"[0.74, 0.95]",0.100,0.025,0.000,8.08,not recorded,0.954
+ov_split (ours),A,clear,40,0.925,"[0.80, 0.97]",0.075,0.000,0.000,7.94,93.0,0.958
+ov_split (ours),A,fog 1.0,40,0.925,"[0.80, 0.97]",0.075,0.000,0.000,7.96,94.3,0.958
+ov_split (ours),A,rain 0.6,40,0.925,"[0.80, 0.97]",0.075,0.000,0.000,7.96,93.6,0.958
+ov_split (ours),A,rain 1.0,40,0.950,"[0.83, 0.99]",0.050,0.000,0.000,7.97,89.4,0.962
+ctrl_nocaut (round-0 BC),B,clear,40,0.975,"[0.87, 1.00]",0.025,0.000,0.000,8.02,74.7,0.981
+ctrl_nocaut (round-0 BC),B,fog 1.0,40,0.975,"[0.87, 1.00]",0.025,0.000,0.000,8.02,74.6,0.982
+ctrl_nocaut (round-0 BC),B,rain 0.6,40,0.975,"[0.87, 1.00]",0.025,0.000,0.000,8.02,74.3,0.982
+ctrl_nocaut (round-0 BC),B,rain 1.0,40,0.975,"[0.87, 1.00]",0.025,0.000,0.000,8.02,74.5,0.982
+caut_c0 (caution off),B,clear,40,0.900,"[0.77, 0.96]",0.100,0.000,0.000,8.02,84.7,0.953
+caut_c0 (caution off),B,fog 1.0,40,0.900,"[0.77, 0.96]",0.100,0.000,0.000,8.02,84.5,0.953
+caut_c0 (caution off),B,rain 0.6,40,0.900,"[0.77, 0.96]",0.100,0.000,0.000,8.02,84.1,0.953
+caut_c0 (caution off),B,rain 1.0,40,0.900,"[0.77, 0.96]",0.100,0.000,0.000,8.02,84.3,0.953
+caut_auto (caution = weather),B,clear,40,0.900,"[0.77, 0.96]",0.100,0.000,0.000,8.02,84.7,0.953
+caut_auto (caution = weather),B,fog 1.0,40,0.925,"[0.80, 0.97]",0.000,0.000,0.075,6.17,59.1,0.979
+caut_auto (caution = weather),B,rain 0.6,40,0.900,"[0.77, 0.96]",0.000,0.000,0.100,5.89,57.0,0.976
+caut_auto (caution = weather),B,rain 1.0,40,0.850,"[0.71, 0.93]",0.000,0.000,0.150,5.58,56.1,0.970
+"DAgger, GitHub BEV (base_a)",A,clear,40,0.875,"[0.74, 0.95]",0.075,0.025,0.025,7.61,not recorded,0.924
+"DAgger, GitHub BEV (base_a)",A,fog 1.0,40,0.875,"[0.74, 0.95]",0.050,0.050,0.025,7.63,not recorded,0.942
+"DAgger, GitHub BEV (base_a)",A,rain 0.6,40,0.875,"[0.74, 0.95]",0.050,0.050,0.025,7.65,not recorded,0.942
+"DAgger, GitHub BEV (base_a)",A,rain 1.0,40,0.875,"[0.74, 0.95]",0.050,0.050,0.025,7.57,not recorded,0.929
+"Stock IDM (teacher, rule-based)",ceiling,clear only,40,0.950,"[0.83, 0.99]",0.050,0.000,0.000,7.93,97.9,0.962
+"IDM, lane change off (rule-based)",ceiling,clear only,40,0.950,"[0.83, 0.99]",0.050,0.000,0.000,7.93,97.7,0.962
+"SafeTeacher (rule-based, TTC layer)",ceiling,clear only,40,1.000,"[0.91, 1.00]",0.000,0.000,0.000,7.88,101.7,0.986

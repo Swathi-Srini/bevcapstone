@@ -1,0 +1,7 @@
+**Success on 200 fresh seeds, clear, density 0.05**
+
+| policy | n | success | 95% CI |
+|---|---|---|---|
+| Repo BC, sparse-traffic | 200 | 0.745 | [0.680, 0.800] |
+| Repo BC, clear/no-traffic | 200 | 0.850 | [0.794, 0.893] |
+| ov_split (ours) | 200 | 0.925 | [0.880, 0.954] |

@@ -1,0 +1,57 @@
+\section{Main result: 200 paired episodes in clear weather}\label{sec:headline}
+
+\begin{plainwords}
+Seven drivers (and two rule-based teachers) drove the same 200 scenarios. The driver we propose succeeds in 92.5\% of them. The two baseline drivers that are committed on GitHub succeed in 85.0\% and 74.5\%. The proposed driver is statistically as good as the teacher it learned from.
+\end{plainwords}
+\begin{cautionbox}[Compared with GitHub]
+The GitHub README states 90\% success (9 of 10 episodes) for the traffic-trained baseline. On 200 episodes the same checkpoint scores 74.5\% (interval 0.680 to 0.800); the README figure comes from ten episodes with the full camera pipeline, whose interval (0.60 to 0.98) is compatible with it. Table~\ref{tab:githubbaseline} gives the comparison.
+\end{cautionbox}
+
+
+\paragraph{Protocol.} Seeds 5000--5199, sparse traffic (density 0.05), clear weather, horizon 800 steps; the same 200 scenarios for every model; script \pth{bev_rl/adaptive/evaluate_final_200seed_sparse.py}; per-episode results in \pth{bev_rl/adaptive/results/final_200seed/}.
+No model was trained, validated or selected on these seeds. Six models are compared: the two rule-based teachers (which see the exact simulator state), the proposed model, the caution-study control, and the two behaviour-cloning baselines.
+
+\input{figure_blocks/fig_headline_success_clear_weather_200_episodes}
+
+\begin{table}[H]\centering\small
+\caption{Result table for the 200 clear-weather episodes (95\% Wilson intervals; ``Left road'' includes leaving the planned route; energy is the estimate of Section~\ref{sec:setup}).}\label{tab:headline}
+\resizebox{\textwidth}{!}{\input{tables/headline_200_episodes}}
+\end{table}
+
+\subsection{The Image-Only Driving Model on the same 200 episodes}
+The Image-Only Driving Model (front-camera picture of 128 by 96 pixels as its only input; Section~\ref{sec:arch}) was evaluated on the same 200 scenarios with the same metrics (script \pth{bev_rl/adaptive/vanilla_camera_cnn.py eval}; per-episode results in \pth{bev_rl/adaptive/results/vanilla_camera/}). It differs from the other models in the harness only in what it reads: it is driven by a rendered 320 by 240 camera image instead of the grid, so no detector or degradation model is involved (clear weather).
+Result: success \ImOnSuccess{} (95\% interval \ImOnLow{} to \ImOnHigh{}); collisions \ImOnCollision{}, left the road \ImOnOffroad{}, timeouts \ImOnTimeout{}; mean speed \ImOnSpeed{} metres per second; estimated energy \ImOnEnergy{} watt-hours per kilometre. It is included in the figures and tables of this section.
+\begin{implicationbox}
+A driver that reads the picture directly is far below every driver that reads the grid. The grid is a compact, structured summary produced by the object detector and the stereo depth; with the amount of training here, a network cannot recover that summary from raw pixels. Whether more data would close the gap is not tested.
+\end{implicationbox}
+
+\subsection{What the numbers say}
+\begin{itemize}
+\item \textbf{The proposed model is clearly better than both baselines.} 0.925 against 0.850 (no-traffic baseline) and 0.745 (sparse-traffic baseline). The paired differences are $+0.075$ (95\% interval $[+0.035,+0.120]$, exact McNemar $p=0.0007$) and $+0.180$ ($[+0.125,+0.240]$, $p<0.0001$); see Figure~\ref{fig:paired} and Table~\ref{tab:paired}.
+  The baselines' failures are of a different kind: the sparse-traffic baseline leaves the road in 13.5\% of the episodes (proposed model: 1.0\%), a sign of lateral drift, and the no-traffic baseline collides in 12.5\%.
+\item \textbf{The proposed model is statistically indistinguishable from the collision-aware teacher} it is trained to imitate (difference $-0.025$, interval $[-0.070,+0.020]$, $p=0.40$), and $+0.040$ better than the stock driver model (interval $[0.000,+0.080]$, $p=0.077$, i.e.\ not significant at the 5\% level).
+\item \textbf{The caution-study control (0.895) is not significantly different from the proposed model} ($+0.030$, $p=0.18$). Its apparent 0.975 on 40 episodes (Section~\ref{sec:weather}) was a selection effect of a small sample: the best of several candidates evaluated on 40 episodes regresses towards its true value when re-evaluated on 200.
+\item \textbf{Energy.} The proposed model uses an estimated 96.2\,watt-hours per kilometre at 7.87\,m/s, similar to the stock driver model (97.9\,watt-hours per kilometre) and the collision-aware teacher (101.3). The two behaviour-cloning baselines use less (85.9 and 90.7\,watt-hours per kilometre) \emph{and drive faster} (8.09 and 8.07\,m/s) because they are less careful. The caution-study control is the cheapest model (80.4\,watt-hours per kilometre) at 7.98\,m/s with 89.5\% success;
+  the reason for its lower consumption has not been investigated (Figure~\ref{fig:energy}).
+\end{itemize}
+
+\input{figure_blocks/fig_outcome_breakdown_200_episodes}
+
+\input{figure_blocks/fig_paired_difference_headline_versus_others}
+
+\begin{table}[H]\centering\small
+\caption{Paired comparison of the proposed model with each other model. ``Only proposed model'' counts the seeds on which the proposed model succeeded and the other model did not; the exact McNemar test uses only these discordant seeds.}\label{tab:paired}
+\resizebox{\textwidth}{!}{\input{tables/paired_headline_versus_others}}
+\end{table}
+
+\input{figure_blocks/fig_per_episode_outcome_strips}
+
+\input{figure_blocks/fig_speed_versus_energy_200_episodes}
+
+\subsection{What this result does \emph{not} show}
+\begin{itemize}
+\item It does not separate the \emph{causes} of the proposed model's gain over the baselines. Three things changed at once relative to the baseline behaviour cloning: (i) dataset aggregation instead of five demonstrations (the main suspect), (ii) the map overlay in the grid, (iii) the split of the vehicle-state inputs. A student with the unmodified grid and all six vehicle-state inputs was evaluated on 10 and 40 episodes only (0.70/0.875, not significantly different from the proposed model's 0.80/0.925);
+  \textbf{it has not been evaluated on the 200-episode block}, so the contribution of the overlay at this sample size is untested (Section~\ref{sec:directions}).
+\item It does not show anything about dense traffic: no learned model solves it (Section~\ref{sec:failure}).
+\item It is a result of the camera-free surrogate (Section~\ref{sec:surrogate}), not of the live camera pipeline.
+\end{itemize}

@@ -1,0 +1,16 @@
+**Weather robustness, density 0.05 (n per cell as listed; 40-seed block 1010-1049)**
+
+| policy | weather | n | detector keep prob | success | 95% CI | crash+off-road | timeout | retention vs clear |
+|---|---|---|---|---|---|---|---|---|
+| Repo BC, sparse-traffic | clear | 40 | 1.00 | 0.775 | [0.62, 0.88] | 0.225 | 0.000 | 1.00 |
+| Repo BC, sparse-traffic | fog 1.0 | 40 | 0.27 | 0.800 | [0.65, 0.90] | 0.200 | 0.000 | 1.03 |
+| Repo BC, sparse-traffic | rain 0.6 | 40 | 0.16 | 0.800 | [0.65, 0.90] | 0.200 | 0.000 | 1.03 |
+| Repo BC, sparse-traffic | rain 1.0 | 40 | 0.04 | 0.800 | [0.65, 0.90] | 0.200 | 0.000 | 1.03 |
+| Repo BC, clear/no-traffic | clear | 40 | 1.00 | 0.875 | [0.74, 0.95] | 0.125 | 0.000 | 1.00 |
+| Repo BC, clear/no-traffic | fog 1.0 | 40 | 0.27 | 0.875 | [0.74, 0.95] | 0.125 | 0.000 | 1.00 |
+| Repo BC, clear/no-traffic | rain 0.6 | 40 | 0.16 | 0.875 | [0.74, 0.95] | 0.125 | 0.000 | 1.00 |
+| Repo BC, clear/no-traffic | rain 1.0 | 40 | 0.04 | 0.875 | [0.74, 0.95] | 0.125 | 0.000 | 1.00 |
+| ov_split (ours) | clear | 40 | 1.00 | 0.925 | [0.80, 0.97] | 0.075 | 0.000 | 1.00 |
+| ov_split (ours) | fog 1.0 | 40 | 0.27 | 0.925 | [0.80, 0.97] | 0.075 | 0.000 | 1.00 |
+| ov_split (ours) | rain 0.6 | 40 | 0.16 | 0.925 | [0.80, 0.97] | 0.075 | 0.000 | 1.00 |
+| ov_split (ours) | rain 1.0 | 40 | 0.04 | 0.950 | [0.83, 0.99] | 0.050 | 0.000 | 1.03 |

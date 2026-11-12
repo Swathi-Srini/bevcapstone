@@ -1,0 +1,66 @@
+\section{Training strategies}\label{sec:training}
+
+\begin{plainwords}
+There are three ways to teach a driver in this project. (1) \emph{Copy a few recordings} of a good driver (behaviour cloning). (2) \emph{Let the driver drive, and ask a teacher what it should have done} in the situations it actually reached (dataset aggregation). (3) \emph{Trial and error with a score} (reinforcement learning). This section describes the first two in detail; the third has its own section.
+\end{plainwords}
+\begin{cautionbox}[Compared with GitHub]
+GitHub contains only the first way: the collection script and the training script for behaviour cloning (\pth{bev_policy/collect_demos.py}, \pth{train_bc.py}), and the two checkpoints trained from five demonstrations each. Dataset aggregation, both teachers' use as labellers, the caution, position-error and degraded-perception variants, and all reinforcement learning exist only locally (Section~\ref{sec:github}).
+\end{cautionbox}
+
+
+\subsection{Behaviour cloning (the teammates' baselines)}
+Procedure (\pth{bev_policy/collect_demos.py}, \pth{train_bc.py}): the rule-based driver (stock intelligent driver model) drives a small number of episodes; at every step the observation (grid and six vehicle-state inputs from the teammates' perception chain) and the driver's action are stored.
+Only episodes that reach the destination are kept (arrival filter). The network is trained by regression on the action (mean squared error), 60 epochs maximum, batch size 64, learning rate $3\cdot10^{-4}$, early stopping with patience 10.
+The two repository baselines use \textbf{five demonstrations each}: one set without other vehicles, one with sparse traffic.
+
+\textbf{Why this is weak.} The network is trained only on states that the expert visits. Once the learner makes a small error it reaches states the expert never visited and has no labelled example of how to recover (covariate shift; Ross et al., 2011).
+A concrete symptom was documented early: the cloned policy creeps to 0.8--0.96\,m from the lane centre by step 80--100 (1.58\,m for seed 1001), a systematic lateral bias. With only five demonstrations the policy also never sees most traffic situations.
+
+\subsection{Dataset aggregation (the main training strategy)}
+Dataset aggregation fixes the covariate shift by letting the \emph{learner} choose which states are visited and asking the \emph{teacher} what it would have done there. Implementation: \pth{bev_rl/adaptive/dagger_base.py} (and the variants listed below).
+
+\begin{lstlisting}[caption={Dataset aggregation as implemented (training seeds 2000--2999, validation seeds 3100--3109).},label={lst:dagger}]
+data = empty;  student = fresh network (random initialisation)
+for round t = 0 .. 5:
+    beta = 1.0 if t == 0 else 0.5 ** t          # probability that the TEACHER's action is executed
+    for each traffic density d in {0, 0.05, 0.1, 0.2, 0.3}:
+        run 8 episodes on randomly drawn training seeds:
+            at every step:  record (grid, vehicle-state inputs, teacher_action)      # teacher sees the true state
+                            execute teacher_action with probability beta, else student_action
+                            add Gaussian noise (std 0.1) to the executed action   # widen the visited states
+    data = data + new records
+    student = train(student, data):  Adam, learning rate 1e-3, batch 128, mean squared error,
+                                     8 epochs (24 epochs in round 0), on ALL data so far
+    validate: 10 episodes (seeds 3100-3109) at densities 0.05 and 0.2, no teacher
+    keep as 'best' the round with the highest mean success (ties: fewer collisions + off-road)
+\end{lstlisting}
+The aggregated data set holds about 67\,000 labelled steps after round 5 for the unmodified-grid student and 73\,032 for the proposed model. One training seed per model was run (seed 0); differences between rounds and between models of 0.1 in validation success correspond to a single episode of ten and must not be over-read (see Figure~\ref{fig:dagger}).
+
+Three properties matter for interpreting the results:
+\begin{itemize}
+\item The teacher is a \emph{rule-based} controller that sees the exact simulator state; the student only sees the grid and a few vehicle-state inputs. The student can therefore at best match the teacher, and wherever the information is not in the student's input (for example a vehicle 30\,m away) it cannot imitate the teacher's reaction (Section~\ref{sec:failure}).
+\item Model selection uses only validation seeds; the test seeds (1000--1049, 5000--5199) are never touched during training or selection.
+\item In round 0 the teacher drives ($\beta=1$) and the student learns from the teacher's own distribution; the later rounds are what supply recovery behaviour.
+\end{itemize}
+
+\input{figure_blocks/fig_dataset_aggregation_validation_curves}
+
+\subsection{Variants of the dataset-aggregation recipe}
+All variants keep the optimiser, loss, action noise and network; they change one thing at a time.
+\begin{table}[H]\centering\small
+\caption{Variants of the dataset-aggregation recipe. ``Teacher'' is the source of labels; ``perception'' is what the student sees.}\label{tab:variants}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.7cm}>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}p{2.8cm}X@{}}\toprule
+Variant & Perception & Teacher & Specific settings\\\midrule
+Input ablations & Ideal detector; unmodified or overlay grid; all, no or a subset of vehicle-state inputs (inputs hidden by constants) & Stock model & Densities 0--0.3; validation densities 0.05 and 0.2.\\
+Proposed model & Ideal detector; overlay grid; vehicle-state inputs speed, progress, goal & Stock model & As above.\\
+Safe-teacher student & As the proposed model & Collision-aware teacher & Densities 0, 0.05, 0.1; validation 0.05; 7 rounds (0--6).\\
+Caution study caution-study caution-aware model, caution-study control model & Detector dropout at measured retention per weather; overlay grid & Caution-aware stock model (caution 0: 30\,km/h, 10\,m gap; caution 1: 20\,km/h, 25\,m gap) & Caution value per episode: half uniform in $[0,1]$, half derived from weather as $1-\text{retention}$; control network has the input fixed to 0.\\
+Degraded-perception student weather-degradation-trained model & Calibrated degradation (missed detections and range errors, Section~\ref{sec:perception}); overlay grid & Collision-aware teacher on ground truth & Training weather mix: clear (twice), fog 0.8 and 1.0, rain 0.3, 0.6, 1.0 (twice); densities 0.05, 0.05, 0.1, 0; 5 rounds; 6 epochs.\\
+Pose-error students & Ideal detector; overlay drawn from a \emph{wrong} car pose & Stock model on the true state & Per episode an error level $L$ ($30\%$ exactly 0, 70\% uniform): lateral error $\pm1.5L$\,m, heading error $\pm0.15L$\,rad; conditioned variants receive $L$; two-cue variants additionally receive noisy lateral and heading vehicle-state inputs.\\
+Image-Only Driving Model & Front-camera image & Collision-aware teacher & Behaviour cloning on clean images with action noise (0, 0.1, 0.25), then three dataset-aggregation rounds.\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Reinforcement learning}
+Four reinforcement-learning attempts are described in Section~\ref{sec:rl}. Common to all of them is the algorithm (proximal policy optimisation from Stable-Baselines3: 256 steps per update per environment, batch 128, 5 epochs, discount 0.99, GAE parameter 0.95, clip range 0.1, no entropy bonus, target KL 0.02; the first attempt used a plain multilayer-perceptron policy with 512 steps per update, batch 512, 10 epochs, clip range 0.2 and target KL 0.03),
+and the idea of starting from an imitation-trained network instead of from random weights, because a random start settles in a stand-still optimum (zero speed is the safest behaviour).

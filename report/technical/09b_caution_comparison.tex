@@ -1,0 +1,29 @@
+\subsection{Caution-aware model against the proposed model and both baselines (200 episodes, four weather conditions)}\label{sec:cautioncompare}
+Same protocol as Section~\ref{sec:headline}: scenario seeds 5000 to 5199, sparse traffic, 800 steps, weather applied as removal of vehicles from the grid at the measured detection rate. The caution-aware model receives its caution number from the weather (clear weather: caution 0, which is identical to its clear-weather behaviour). The time limit was \emph{not} extended; a timeout counts as a failure.
+\begin{table}[H]\centering\scriptsize
+\caption{Every metric for every model and weather condition, 200 episodes each. Collision, left road and timeout are shares of episodes; the success rate is one minus their sum. Energy is an estimate for a declared virtual vehicle without regenerative braking.}\label{tab:cautioncompare}
+\resizebox{\textwidth}{!}{\input{tables/caution_comparison_200_episodes}}
+\end{table}
+\input{figure_blocks/fig_caution_comparison_200_episodes}
+\begin{table}[H]\centering\scriptsize
+\caption{Paired comparison of the caution-aware model with each other model on the same 200 episodes. Positive differences favour the caution-aware model.}\label{tab:cautionpaired}
+\resizebox{\textwidth}{!}{\input{tables/caution_comparison_paired_tests}}
+\end{table}
+\paragraph{Longer time limit (post-hoc check).} Because every extra failure of the caution-aware model was a timeout, it was re-evaluated in fog 1.0, rain 0.6 and rain 1.0 with a limit of 1600 steps (160 seconds) instead of 800 (same seeds, same dropout stream, \pth{bev_rl/adaptive/queue_caution_longer_time_limit.sh}). The proposed model had no timeouts in these conditions, so its result is unchanged by construction; clear weather had no caution-aware timeouts either. The limit was changed \emph{after} seeing the timeouts, so this is a post-hoc analysis, not a pre-registered one.
+\begin{table}[H]\centering\scriptsize
+\caption{Caution-aware model with the 800-step and the 1600-step limit, next to the proposed model (800 steps). 200 episodes each.}\label{tab:cautionlonger}
+\resizebox{\textwidth}{!}{\input{tables/caution_longer_time_limit}}
+\end{table}
+\begin{table}[H]\centering\scriptsize
+\caption{Paired comparison at the longer limit.}\label{tab:cautionlongerpaired}
+\resizebox{\textwidth}{!}{\input{tables/caution_longer_time_limit_paired}}
+\end{table}
+With 160 seconds all timeouts disappear and the caution-aware model finishes 0.940, 0.955 and 0.935 of the episodes in fog 1.0, rain 0.6 and rain 1.0, against 0.895, 0.900 and 0.900 for the proposed model. None of the differences is significant ($p=0.136$, $0.061$, $0.296$), so the result is a tie or a small advantage, not a loss. The caution-aware model reaches the goal more slowly (the same speed and energy as before) but with fewer collisions (2.5 to 5\% against 8.5 to 9.5\%).
+
+\begin{implicationbox}[What the comparison shows]
+\textbf{Success.} The caution-aware model is statistically tied with the proposed model in clear weather ($-0.035$), fog ($0.000$) and rain 0.6 ($-0.010$), and significantly lower in rain 1.0 ($-0.080$, $p=0.033$). It beats the baseline trained with traffic in clear, fog and rain 0.6, and is not distinguishable from the baseline trained without traffic.
+\textbf{Energy and speed.} In weather the caution-aware model uses 59.7 to 62.7 watt-hours per kilometre against 93.0 to 96.5 for the proposed model, about 35\% less, at 5.6 to 6.2 against 7.9 metres per second.
+\textbf{Why success drops in rain 1.0.} All of the extra failures are timeouts (10.5\%): the slow driver does not finish within 80 seconds. Collisions fall from 9.5\% to 3.5\%. With a 160-second limit these timeouts vanish and rain 1.0 success becomes 0.935 (post-hoc, see the paragraph above), a tie with the proposed model.
+\textbf{Why the two differ in clear weather.} The caution-aware model is not the proposed model with an extra input switched off: it is a different network, trained in a separate run on labels from a teacher whose speed and gap depend on caution, so even with caution 0 its weights and its driving differ. The proposed model succeeds in 185 of 200 clear episodes and the caution-aware model in 178; they disagree in 13 episodes (10 in favour of the proposed model, 3 against; $p=0.092$). The control model, trained like the caution-aware model but with caution fixed at 0, scores 0.895, the same as the caution-aware model. Separate training runs of the same recipe therefore differ by a few percentage points at 200 episodes, and 0.925 is at the favourable end of that spread; with one training run per model this cannot be resolved further.
+\textbf{Caveat.} In clear weather the proposed model (0.925) is nominally ahead of the caution-aware model (0.890), a gap that is not significant ($p=0.092$). The energy saving is an estimate and the caution value is given to the model, not sensed by it.
+\end{implicationbox}

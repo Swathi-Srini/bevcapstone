@@ -1,0 +1,75 @@
+\section{Model architecture}\label{sec:arch}
+
+\begin{plainwords}
+All the learned drivers are built from the same small neural network, so that differences between drivers come from \emph{what they are shown} and \emph{how they were taught}, not from how big they are. This section draws the network, defines each of its inputs, and describes the two rule-based teachers.
+\end{plainwords}
+\begin{cautionbox}[Compared with GitHub]
+The network is the teammates' \code{BEVScalarPolicy} from \pth{bev_policy/model.py} on GitHub (convolution layers of 32, 64 and 96 maps, then a layer of 128 numbers; a small network for the six vehicle-state numbers; a head of 128 units). The only difference is an optional extra-input branch added in a local, uncommitted edit; without it the network is identical to GitHub's and the two committed baseline checkpoints load unchanged. The map overlay, the collision-aware teacher and the image-only network do not exist on GitHub.
+\end{cautionbox}
+
+
+All learned driving policies in this project share \emph{one} network family, the teammates' \code{BEVScalarPolicy} (\pth{bev_policy/model.py}). The models differ in \emph{what they are given as input}, \emph{who labels their training data} and \emph{how they are trained},
+not in the network. This is deliberate: it makes the comparison between models a comparison between input designs and training strategies. The one different network is the Image-Only Driving Model (Section~\ref{sec:catalogue}).
+
+\subsection{The shared network}
+\begin{figure}[H]\centering
+\begin{tikzpicture}[font=\footnotesize,>=Stealth,
+  box/.style={draw,rounded corners=2pt,minimum height=0.9cm,align=center,fill=white},
+  inbox/.style={box,fill=blue!8},
+  optbox/.style={box,dashed,fill=orange!8},
+  outbox/.style={box,fill=green!10},
+  node distance=0.45cm and 0.55cm]
+\node[inbox] (bev) {Bird's-eye view\\ $1\times64\times64$};
+\node[box,right=of bev] (c1) {Conv $5\times5$\\ stride 2\\ 32 maps};
+\node[box,right=of c1] (c2) {Conv $3\times3$\\ stride 2\\ 64 maps};
+\node[box,right=of c2] (c3) {Conv $3\times3$\\ stride 2\\ 96 maps};
+\node[box,right=of c3] (gp) {Global\\ average\\ pool};
+\node[box,right=of gp] (l1) {Linear\\ $96\to128$};
+\node[inbox,below=1.55cm of bev] (sc) {Vehicle-state inputs\\ (3 or 6 values,\\ standardised)};
+\node[box,right=of sc] (s1) {Linear\\ $n\to64$};
+\node[box,right=of s1] (s2) {Linear\\ $64\to32$};
+\node[optbox,below=1.45cm of s1] (ex) {Optional extra input\\ (caution, pose-error level,\\ or weather vector)};
+\node[optbox,right=of ex] (e1) {Linear\\ $k\to16$};
+\node[box,right=2.3cm of s2] (cat) {Concatenate\\ $128+32\,(+16)$};
+\node[box,right=of cat] (h1) {Linear\\ $160\,(176)\to128$};
+\node[outbox,right=of h1] (o) {Linear $128\to2$\\ tanh\\ steering,\\ throttle/brake};
+\foreach \a/\b in {bev/c1,c1/c2,c2/c3,c3/gp,gp/l1,sc/s1,s1/s2,ex/e1,cat/h1,h1/o} \draw[->] (\a) -- (\b);
+\draw[->] (l1.east) -- ++(0.35,0) |- (cat.north west);
+\draw[->] (s2) -- (cat);
+\draw[->,dashed] (e1.east) -| (cat.south);
+\end{tikzpicture}
+\caption{The shared policy network. Each box is one layer; every layer except the last is followed by a rectifier. The dashed boxes exist only in the models with an extra input.
+Parameter count: 110\,530 without the extra input and 112\,610 with a one-dimensional extra input.}
+\label{fig:network}
+\end{figure}
+
+\paragraph{Inputs.}
+\begin{description}[leftmargin=3.4cm,style=nextline]
+\item[Bird's-eye view] A $64\times64$ grid covering 10\,m to each side, 17.5\,m ahead and 2.5\,m behind the car (cell size 0.3125\,m). Two encodings occur (Figure~\ref{fig:inputs}):
+ \emph{unmodified} (teammates' encoding: $-1$ unknown, 0 free, 0.9 ego, 1.0 detected vehicle) and \emph{map overlay} (the reserved values 0.5 for the route centre line and 0.8 for the road boundaries are filled in from the simulator map, in the ego frame; ego and detected vehicles are never overwritten).
+ Vehicles are drawn as axis-aligned blocks without heading (a limitation analysed in Section~\ref{sec:failure}).
+\item[Six vehicle-state inputs] speed (m/s), route progress (fraction), lateral offset to the lane centre (m), heading error (rad), curvature ahead (rad/m), distance to the goal (m); standardised with the mean and standard deviation stored in the checkpoint.
+\item[Three vehicle-state inputs] The proposed design keeps only speed, route progress and distance to goal; lateral offset, heading error and curvature are \emph{not} given as numbers because the overlay already shows the road geometry relative to the car (idea borrowed from the reinforcement-learning coach of Zhang et al., 2021).
+\item[Extra input] One to four additional values through the optional 16-unit branch: the caution value $c\in[0,1]$, the pose-error level(s), or a weather vector (one-hot clear/fog/rain plus intensity).
+\end{description}
+
+\input{figure_blocks/fig_birds_eye_view_input_examples}
+
+\paragraph{Output.} Two numbers in $[-1,1]$ (tanh): steering, and throttle (positive) or brake (negative), the MetaDrive action contract.
+
+\subsection{The actor--critic variant for reinforcement learning}
+For reinforcement learning (\pth{bev_rl/policy.py}, class \code{BEVActorCritic}) the network above becomes the mean of a Gaussian actor: the actor's feature extractor and head are \emph{exactly} the behaviour-cloned modules, so that at initialisation the action mean equals the imitation policy's action for every input (verified in \pth{tests/test_bev_rl_policy.py}).
+A state-independent learnable log standard deviation is added (initial value $-2$, i.e.\ standard deviation 0.135), and a separate critic with its own encoder (also initialised from the cloned encoder weights, so that value-loss gradients cannot disturb the actor's features) and a randomly initialised value head.
+
+\subsection{The Image-Only Driving Model}
+For the control experiment (image-only model, \pth{bev_rl/adaptive/vanilla_camera_cnn.py}) the input is only the front-left camera image (rendered at 320$\times$240, resized to 128$\times$96, scaled to $[0,1]$), processed by five convolution layers with batch normalisation (24, 36, 48, 64, 64 maps; kernels 5, 5, 3, 3, 3, all stride 2; output $64\times3\times4$) and a multilayer perceptron head with tanh output.
+It receives \emph{no} bird's-eye view, speed or weather information.
+
+\subsection{Rule-based teachers (not learned)}\label{sec:teachers}
+\begin{description}[leftmargin=3.4cm,style=nextline]
+\item[Stock intelligent driver model] MetaDrive's \code{IDMPolicy}: lane keeping with same-lane car following, lane changes enabled, target speed about 30\,km/h. It sees exact simulator state. It reacts only to the vehicle ahead in its own lane.
+\item[Collision-aware teacher] \codename{safe_teacher} (\pth{bev_rl/adaptive/safe_teacher.py}). The stock model with lane changes \emph{disabled} plus a privileged predictive braking layer: every other vehicle within 45\,m is predicted with a constant-velocity model over a 3\,s horizon;
+ if the ego rectangle (moving with its current velocity) would overlap the other vehicle's rectangle (margins 0.35\,m laterally, 1.0\,m longitudinally) at time-to-collision $t$, the throttle command is set to full brake when $t<1.3$\,s, and to a graded brake when $1.3\le t<2.4$\,s.
+ It was introduced because the stock model crashes in 45\% of dense-traffic episodes, almost always into vehicles that merge, cut in or cross from the side, which a same-lane controller never reacts to (Section~\ref{sec:failure}).
+\end{description}
+Both teachers use information the students do not have (exact positions and velocities of all vehicles up to 45\,m, while the student's grid ends 17.5\,m ahead); this \emph{information gap} is one of the findings of the failure analysis.

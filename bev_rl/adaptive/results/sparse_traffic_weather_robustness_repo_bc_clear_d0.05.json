@@ -1,0 +1,1335 @@
+{
+ "arm": "repo_bc_clear",
+ "cells": {
+  "clear:0.0": {
+   "n": 40,
+   "keep_prob": 1.0,
+   "success": 0.875,
+   "success_ci": [
+    0.7388757932976187,
+    0.9454058022645873
+   ],
+   "crash_or_offroad": 0.125,
+   "timeout": 0.0,
+   "retention_vs_clear": 1.0
+  },
+  "fog:1.0": {
+   "n": 40,
+   "keep_prob": 0.2666666666666667,
+   "success": 0.875,
+   "success_ci": [
+    0.7388757932976187,
+    0.9454058022645873
+   ],
+   "crash_or_offroad": 0.125,
+   "timeout": 0.0,
+   "retention_vs_clear": 1.0
+  },
+  "rain:0.6": {
+   "n": 40,
+   "keep_prob": 0.15833333333333333,
+   "success": 0.875,
+   "success_ci": [
+    0.7388757932976187,
+    0.9454058022645873
+   ],
+   "crash_or_offroad": 0.125,
+   "timeout": 0.0,
+   "retention_vs_clear": 1.0
+  },
+  "rain:1.0": {
+   "n": 40,
+   "keep_prob": 0.03958333333333334,
+   "success": 0.875,
+   "success_ci": [
+    0.7388757932976187,
+    0.9454058022645873
+   ],
+   "crash_or_offroad": 0.125,
+   "timeout": 0.0,
+   "retention_vs_clear": 1.0
+  }
+ },
+ "episodes": [
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1010,
+   "outcome": "success",
+   "route": 0.9838267506728321,
+   "speed": 8.197177884929024
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1011,
+   "outcome": "success",
+   "route": 0.987436970929129,
+   "speed": 8.075926883372547
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1012,
+   "outcome": "success",
+   "route": 0.9872577605665444,
+   "speed": 8.136972753838469
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1013,
+   "outcome": "success",
+   "route": 0.9789156068479654,
+   "speed": 7.921908465036654
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1014,
+   "outcome": "success",
+   "route": 0.9796903594284184,
+   "speed": 8.01839340686983
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1015,
+   "outcome": "success",
+   "route": 0.9944607026544432,
+   "speed": 8.393785580028123
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1016,
+   "outcome": "success",
+   "route": 0.985491572739491,
+   "speed": 8.005974680834118
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1017,
+   "outcome": "success",
+   "route": 0.9863155824173796,
+   "speed": 8.13440058241993
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1018,
+   "outcome": "success",
+   "route": 0.9900823161109281,
+   "speed": 8.313778530840095
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1019,
+   "outcome": "crash",
+   "route": 0.7988109171257332,
+   "speed": 7.891537301947356
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1020,
+   "outcome": "success",
+   "route": 0.9804090714742634,
+   "speed": 7.851901849965816
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1021,
+   "outcome": "success",
+   "route": 0.988326312957282,
+   "speed": 8.155796810418973
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1022,
+   "outcome": "success",
+   "route": 0.9893474135560314,
+   "speed": 8.264010919224132
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1023,
+   "outcome": "success",
+   "route": 0.9842461644445898,
+   "speed": 7.995177284395802
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1024,
+   "outcome": "success",
+   "route": 0.9906708261556686,
+   "speed": 8.362737940159834
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1025,
+   "outcome": "success",
+   "route": 0.9844694039494072,
+   "speed": 7.89879311811373
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1026,
+   "outcome": "success",
+   "route": 0.9909401536084367,
+   "speed": 8.164758580940918
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1027,
+   "outcome": "success",
+   "route": 0.9875324105357342,
+   "speed": 8.10497902625655
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1028,
+   "outcome": "success",
+   "route": 0.9804966305262904,
+   "speed": 7.930410530239803
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1029,
+   "outcome": "success",
+   "route": 0.9842898968127999,
+   "speed": 7.991783555397518
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1030,
+   "outcome": "success",
+   "route": 0.9854316562769982,
+   "speed": 8.016228041920542
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1031,
+   "outcome": "success",
+   "route": 0.9897363051480644,
+   "speed": 8.360837958272404
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1032,
+   "outcome": "success",
+   "route": 0.9824454492593726,
+   "speed": 7.9513719252186945
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1033,
+   "outcome": "success",
+   "route": 0.9881605037167144,
+   "speed": 8.233001183185207
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1034,
+   "outcome": "success",
+   "route": 0.9937087813673595,
+   "speed": 8.257963156699455
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1035,
+   "outcome": "success",
+   "route": 0.9867678703206946,
+   "speed": 8.351329465404051
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1036,
+   "outcome": "success",
+   "route": 0.981534965026736,
+   "speed": 7.987484816668668
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1037,
+   "outcome": "success",
+   "route": 0.986654198490777,
+   "speed": 8.180333088974526
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1038,
+   "outcome": "off_road",
+   "route": 0.8992748921730827,
+   "speed": 8.048929890803366
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1039,
+   "outcome": "crash",
+   "route": 0.8266289592001785,
+   "speed": 8.018219873844933
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1040,
+   "outcome": "crash",
+   "route": 0.18914728073093592,
+   "speed": 6.964593265563115
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1041,
+   "outcome": "success",
+   "route": 0.9877543631644223,
+   "speed": 7.913952048245389
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1042,
+   "outcome": "success",
+   "route": 0.9834660694854169,
+   "speed": 8.057625114804495
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1043,
+   "outcome": "success",
+   "route": 0.9885513927185349,
+   "speed": 8.08703120706222
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1044,
+   "outcome": "success",
+   "route": 0.9846828964336338,
+   "speed": 8.034544324811305
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1045,
+   "outcome": "crash",
+   "route": 0.9193743330861008,
+   "speed": 8.33014745871778
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1046,
+   "outcome": "success",
+   "route": 0.991853237619334,
+   "speed": 8.457928317046978
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1047,
+   "outcome": "success",
+   "route": 0.9798834815067166,
+   "speed": 7.933226822123155
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1048,
+   "outcome": "success",
+   "route": 0.9894368563953807,
+   "speed": 8.082626474360467
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "clear:0.0",
+   "seed": 1049,
+   "outcome": "success",
+   "route": 0.9885120545590405,
+   "speed": 8.074519267974958
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1010,
+   "outcome": "success",
+   "route": 0.9838206342436838,
+   "speed": 8.197153302313325
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1011,
+   "outcome": "success",
+   "route": 0.987425504837124,
+   "speed": 8.075819559602152
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1012,
+   "outcome": "success",
+   "route": 0.9891879869113716,
+   "speed": 8.135294980209672
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1013,
+   "outcome": "success",
+   "route": 0.9789155978324285,
+   "speed": 7.9219081412794345
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1014,
+   "outcome": "success",
+   "route": 0.9796907611293049,
+   "speed": 8.01839476956779
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1015,
+   "outcome": "success",
+   "route": 0.9944607959646922,
+   "speed": 8.393785374365502
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1016,
+   "outcome": "success",
+   "route": 0.9854468128941362,
+   "speed": 8.005685075750465
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1017,
+   "outcome": "success",
+   "route": 0.9863156355147482,
+   "speed": 8.134401396756513
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1018,
+   "outcome": "success",
+   "route": 0.990082145225045,
+   "speed": 8.313776689522594
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1019,
+   "outcome": "crash",
+   "route": 0.7987784341986217,
+   "speed": 7.891188250556798
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1020,
+   "outcome": "success",
+   "route": 0.9804090978456922,
+   "speed": 7.851902412907172
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1021,
+   "outcome": "success",
+   "route": 0.9883254927408089,
+   "speed": 8.155785135331977
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1022,
+   "outcome": "success",
+   "route": 0.9893475265339866,
+   "speed": 8.26401296812888
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1023,
+   "outcome": "success",
+   "route": 0.9842461750821786,
+   "speed": 7.995177549443003
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1024,
+   "outcome": "success",
+   "route": 0.9906709186958084,
+   "speed": 8.36273769434932
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1025,
+   "outcome": "success",
+   "route": 0.9844694614803697,
+   "speed": 7.898792960382915
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1026,
+   "outcome": "success",
+   "route": 0.9898932543064052,
+   "speed": 8.155420502735629
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1027,
+   "outcome": "success",
+   "route": 0.986633773800558,
+   "speed": 8.097558558259397
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1028,
+   "outcome": "success",
+   "route": 0.9804966293793432,
+   "speed": 7.930410760523737
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1029,
+   "outcome": "success",
+   "route": 0.9842900096524301,
+   "speed": 7.991783510201834
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1030,
+   "outcome": "success",
+   "route": 0.9857782023822045,
+   "speed": 8.002988054599532
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1031,
+   "outcome": "success",
+   "route": 0.9897364326461283,
+   "speed": 8.360838866103048
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1032,
+   "outcome": "success",
+   "route": 0.9824455067576837,
+   "speed": 7.95137205568664
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1033,
+   "outcome": "success",
+   "route": 0.9881609018876171,
+   "speed": 8.233004905355124
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1034,
+   "outcome": "success",
+   "route": 0.993708397749598,
+   "speed": 8.257963873638053
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1035,
+   "outcome": "success",
+   "route": 0.9867678804826682,
+   "speed": 8.351329720592927
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1036,
+   "outcome": "success",
+   "route": 0.9815352471099186,
+   "speed": 7.987485633827999
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1037,
+   "outcome": "success",
+   "route": 0.986654500839767,
+   "speed": 8.180335972667363
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1038,
+   "outcome": "off_road",
+   "route": 0.9023882428487356,
+   "speed": 8.042879368945915
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1039,
+   "outcome": "crash",
+   "route": 0.8265995626728714,
+   "speed": 8.017548216854506
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1040,
+   "outcome": "crash",
+   "route": 0.1891355981369356,
+   "speed": 6.964024449165454
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1041,
+   "outcome": "success",
+   "route": 0.9877541015547,
+   "speed": 7.913949572492506
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1042,
+   "outcome": "success",
+   "route": 0.9834654635205927,
+   "speed": 8.057621303055068
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1043,
+   "outcome": "success",
+   "route": 0.9887766047152442,
+   "speed": 8.084391946645674
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1044,
+   "outcome": "success",
+   "route": 0.9846830384422801,
+   "speed": 8.034546399920421
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1045,
+   "outcome": "crash",
+   "route": 0.9191909635652725,
+   "speed": 8.328130287234467
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1046,
+   "outcome": "success",
+   "route": 0.9918533204898485,
+   "speed": 8.457929073946094
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1047,
+   "outcome": "success",
+   "route": 0.9798832010452073,
+   "speed": 7.933225624824744
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1048,
+   "outcome": "success",
+   "route": 0.9896172232710589,
+   "speed": 8.077366867263134
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "fog:1.0",
+   "seed": 1049,
+   "outcome": "success",
+   "route": 0.98851270263966,
+   "speed": 8.074519248201355
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1010,
+   "outcome": "success",
+   "route": 0.9838203782125405,
+   "speed": 8.19715264263893
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1011,
+   "outcome": "success",
+   "route": 0.9874253176888599,
+   "speed": 8.07581689273741
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1012,
+   "outcome": "success",
+   "route": 0.9891606550080695,
+   "speed": 8.135059972862125
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1013,
+   "outcome": "success",
+   "route": 0.9789156043606213,
+   "speed": 7.921905129383788
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1014,
+   "outcome": "success",
+   "route": 0.9796908103654012,
+   "speed": 8.0183953989811
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1015,
+   "outcome": "success",
+   "route": 0.994460789016083,
+   "speed": 8.39378569674711
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1016,
+   "outcome": "success",
+   "route": 0.9854349130237203,
+   "speed": 8.005599563840066
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1017,
+   "outcome": "success",
+   "route": 0.9863155350314673,
+   "speed": 8.13439720448568
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1018,
+   "outcome": "success",
+   "route": 0.9900819590985348,
+   "speed": 8.313776202006235
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1019,
+   "outcome": "crash",
+   "route": 0.7987779185525073,
+   "speed": 7.891180012623578
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1020,
+   "outcome": "success",
+   "route": 0.9804091485037268,
+   "speed": 7.851903775385956
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1021,
+   "outcome": "success",
+   "route": 0.9883256797244484,
+   "speed": 8.155787313339172
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1022,
+   "outcome": "success",
+   "route": 0.9893473930884051,
+   "speed": 8.264010616450237
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1023,
+   "outcome": "success",
+   "route": 0.9842461680817448,
+   "speed": 7.995178034263573
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1024,
+   "outcome": "success",
+   "route": 0.9906708766259263,
+   "speed": 8.362738080285864
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1025,
+   "outcome": "success",
+   "route": 0.984469495261084,
+   "speed": 7.898792110501905
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1026,
+   "outcome": "success",
+   "route": 0.9898479608663258,
+   "speed": 8.15496710288072
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1027,
+   "outcome": "success",
+   "route": 0.9865856593817292,
+   "speed": 8.097164586238494
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1028,
+   "outcome": "success",
+   "route": 0.9804966296161072,
+   "speed": 7.930410646147772
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1029,
+   "outcome": "success",
+   "route": 0.9842897283195543,
+   "speed": 7.9917824245157405
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1030,
+   "outcome": "success",
+   "route": 0.9856335410445863,
+   "speed": 8.001614006733304
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1031,
+   "outcome": "success",
+   "route": 0.9897363774521312,
+   "speed": 8.360839294535765
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1032,
+   "outcome": "success",
+   "route": 0.9824454564392014,
+   "speed": 7.951371141258399
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1033,
+   "outcome": "success",
+   "route": 0.9881606175310693,
+   "speed": 8.23300320108853
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1034,
+   "outcome": "success",
+   "route": 0.9937096511923479,
+   "speed": 8.257962726704829
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1035,
+   "outcome": "success",
+   "route": 0.9867678511881501,
+   "speed": 8.351330211046148
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1036,
+   "outcome": "success",
+   "route": 0.9815348780428943,
+   "speed": 7.987483753650303
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1037,
+   "outcome": "success",
+   "route": 0.9866542051332466,
+   "speed": 8.180334784161273
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1038,
+   "outcome": "off_road",
+   "route": 0.9023624889408194,
+   "speed": 8.042514846160682
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1039,
+   "outcome": "crash",
+   "route": 0.8265982728418511,
+   "speed": 8.017525425042049
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1040,
+   "outcome": "crash",
+   "route": 0.18913559937997002,
+   "speed": 6.964024495801361
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1041,
+   "outcome": "success",
+   "route": 0.9877542891767909,
+   "speed": 7.913951287233846
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1042,
+   "outcome": "success",
+   "route": 0.9834662684793805,
+   "speed": 8.057627731306827
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1043,
+   "outcome": "success",
+   "route": 0.9904462999970165,
+   "speed": 8.083028982285404
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1044,
+   "outcome": "success",
+   "route": 0.9846829134360087,
+   "speed": 8.03454387352723
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1045,
+   "outcome": "crash",
+   "route": 0.9172694770968404,
+   "speed": 8.32816922059252
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1046,
+   "outcome": "success",
+   "route": 0.9918532641577466,
+   "speed": 8.457928228755291
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1047,
+   "outcome": "success",
+   "route": 0.9798834175561193,
+   "speed": 7.933225712458451
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1048,
+   "outcome": "success",
+   "route": 0.9896381623343099,
+   "speed": 8.077171013804309
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:0.6",
+   "seed": 1049,
+   "outcome": "success",
+   "route": 0.9885129367856547,
+   "speed": 8.07451905697085
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1010,
+   "outcome": "success",
+   "route": 0.9838194596172744,
+   "speed": 8.197151586493586
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1011,
+   "outcome": "success",
+   "route": 0.9874256003258495,
+   "speed": 8.075821933055817
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1012,
+   "outcome": "success",
+   "route": 0.9891503120010103,
+   "speed": 8.134965995256614
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1013,
+   "outcome": "success",
+   "route": 0.9789156221839735,
+   "speed": 7.921906893117852
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1014,
+   "outcome": "success",
+   "route": 0.9796903446780804,
+   "speed": 8.018393024839652
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1015,
+   "outcome": "success",
+   "route": 0.9944609573641945,
+   "speed": 8.393789107100892
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1016,
+   "outcome": "success",
+   "route": 0.9854351013779568,
+   "speed": 8.0055999603833
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1017,
+   "outcome": "success",
+   "route": 0.9863156511633894,
+   "speed": 8.134397532249098
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1018,
+   "outcome": "success",
+   "route": 0.9900819973375682,
+   "speed": 8.313777492604096
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1019,
+   "outcome": "crash",
+   "route": 0.7987759394460631,
+   "speed": 7.891156313661357
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1020,
+   "outcome": "success",
+   "route": 0.9804091283380609,
+   "speed": 7.851901950997325
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1021,
+   "outcome": "success",
+   "route": 0.9883255213091908,
+   "speed": 8.155784380204988
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1022,
+   "outcome": "success",
+   "route": 0.989347528990933,
+   "speed": 8.264012948496674
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1023,
+   "outcome": "success",
+   "route": 0.9842465373986448,
+   "speed": 7.9951797741661865
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1024,
+   "outcome": "success",
+   "route": 0.9906708047146721,
+   "speed": 8.362737598571526
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1025,
+   "outcome": "success",
+   "route": 0.9844696467795293,
+   "speed": 7.898794642501346
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1026,
+   "outcome": "success",
+   "route": 0.99138034803259,
+   "speed": 8.153360828371275
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1027,
+   "outcome": "success",
+   "route": 0.9865098352595063,
+   "speed": 8.096542381182452
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1028,
+   "outcome": "success",
+   "route": 0.9804966792419688,
+   "speed": 7.93041067155652
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1029,
+   "outcome": "success",
+   "route": 0.9842897838384157,
+   "speed": 7.991783773633305
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1030,
+   "outcome": "success",
+   "route": 0.9854842657176756,
+   "speed": 8.000215605556246
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1031,
+   "outcome": "success",
+   "route": 0.9897364088284256,
+   "speed": 8.360838466293721
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1032,
+   "outcome": "success",
+   "route": 0.9824454854245147,
+   "speed": 7.951371206418226
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1033,
+   "outcome": "success",
+   "route": 0.9881601258174809,
+   "speed": 8.233000086535588
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1034,
+   "outcome": "success",
+   "route": 0.9937092887435772,
+   "speed": 8.257962233775045
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1035,
+   "outcome": "success",
+   "route": 0.9867679114151124,
+   "speed": 8.351330912509287
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1036,
+   "outcome": "success",
+   "route": 0.9815350491307105,
+   "speed": 7.9874840367755935
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1037,
+   "outcome": "success",
+   "route": 0.9866542849786301,
+   "speed": 8.18033455214306
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1038,
+   "outcome": "off_road",
+   "route": 0.9023538929497319,
+   "speed": 8.042384009201513
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1039,
+   "outcome": "crash",
+   "route": 0.8265980859348901,
+   "speed": 8.017533413112584
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1040,
+   "outcome": "crash",
+   "route": 0.18913126657563517,
+   "speed": 6.963817635601349
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1041,
+   "outcome": "success",
+   "route": 0.9877545376250667,
+   "speed": 7.9139553410643
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1042,
+   "outcome": "success",
+   "route": 0.9834656207253745,
+   "speed": 8.057622881981535
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1043,
+   "outcome": "success",
+   "route": 0.9904318919272397,
+   "speed": 8.082312568385529
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1044,
+   "outcome": "success",
+   "route": 0.9846826651575898,
+   "speed": 8.034543545123208
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1045,
+   "outcome": "crash",
+   "route": 0.9191393848995852,
+   "speed": 8.327568059835734
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1046,
+   "outcome": "success",
+   "route": 0.9918534011818166,
+   "speed": 8.457928848292545
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1047,
+   "outcome": "success",
+   "route": 0.9798831330402753,
+   "speed": 7.93322604121441
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1048,
+   "outcome": "success",
+   "route": 0.9896353494068446,
+   "speed": 8.076912602655467
+  },
+  {
+   "arm": "repo_bc_clear",
+   "weather": "rain:1.0",
+   "seed": 1049,
+   "outcome": "success",
+   "route": 0.9885125226571236,
+   "speed": 8.074519897571388
+  }
+ ]
+}
