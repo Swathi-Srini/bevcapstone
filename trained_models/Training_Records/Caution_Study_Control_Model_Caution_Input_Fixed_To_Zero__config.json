@@ -1,0 +1,10 @@
+{
+ "name": "ctrl_nocaut",
+ "iters": 5,
+ "eps_per_iter": 40,
+ "epochs": 6,
+ "noise": 0.1,
+ "seed": 0,
+ "val_n": 10,
+ "no_caution": true
+}

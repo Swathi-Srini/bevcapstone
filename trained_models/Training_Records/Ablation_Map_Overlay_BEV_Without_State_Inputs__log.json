@@ -1,0 +1,150 @@
+[
+ {
+  "iter": 0,
+  "beta": 1.0,
+  "samples": 13463,
+  "train_loss": 0.045514967292547226,
+  "rollout_outcomes": {
+   "success": 12,
+   "off_road": 1,
+   "crash": 6,
+   "timeout": 11
+  },
+  "val": {
+   "d0.05": {
+    "success": 0.5,
+    "crash": 0.3,
+    "off_road": 0.2
+   },
+   "d0.2": {
+    "success": 0.0,
+    "crash": 0.9,
+    "off_road": 0.1
+   }
+  },
+  "t_min": 19.778247900803883
+ },
+ {
+  "iter": 1,
+  "beta": 0.5,
+  "samples": 23980,
+  "train_loss": 0.05701928958296776,
+  "rollout_outcomes": {
+   "success": 17,
+   "off_road": 1,
+   "crash": 10,
+   "timeout": 2
+  },
+  "val": {
+   "d0.05": {
+    "success": 0.3,
+    "crash": 0.3,
+    "off_road": 0.4
+   },
+   "d0.2": {
+    "success": 0.0,
+    "crash": 0.7,
+    "off_road": 0.3
+   }
+  },
+  "t_min": 34.396811711788175
+ },
+ {
+  "iter": 2,
+  "beta": 0.25,
+  "samples": 35948,
+  "train_loss": 0.06283821165561676,
+  "rollout_outcomes": {
+   "success": 13,
+   "off_road": 2,
+   "crash": 8,
+   "timeout": 7
+  },
+  "val": {
+   "d0.05": {
+    "success": 0.4,
+    "crash": 0.2,
+    "off_road": 0.4
+   },
+   "d0.2": {
+    "success": 0.1,
+    "crash": 0.7,
+    "off_road": 0.2
+   }
+  },
+  "t_min": 51.812613598505656
+ },
+ {
+  "iter": 3,
+  "beta": 0.125,
+  "samples": 47326,
+  "train_loss": 0.11023958027362823,
+  "rollout_outcomes": {
+   "success": 15,
+   "crash": 12,
+   "timeout": 3
+  },
+  "val": {
+   "d0.05": {
+    "success": 0.4,
+    "crash": 0.3,
+    "off_road": 0.3
+   },
+   "d0.2": {
+    "success": 0.2,
+    "crash": 0.5,
+    "off_road": 0.1
+   }
+  },
+  "t_min": 70.5438709894816
+ },
+ {
+  "iter": 4,
+  "beta": 0.0625,
+  "samples": 60590,
+  "train_loss": 0.14952228963375092,
+  "rollout_outcomes": {
+   "success": 18,
+   "off_road": 2,
+   "crash": 6,
+   "timeout": 4
+  },
+  "val": {
+   "d0.05": {
+    "success": 0.5,
+    "crash": 0.2,
+    "off_road": 0.3
+   },
+   "d0.2": {
+    "success": 0.2,
+    "crash": 0.6,
+    "off_road": 0.1
+   }
+  },
+  "t_min": 92.67626358270645
+ },
+ {
+  "iter": 5,
+  "beta": 0.03125,
+  "samples": 73720,
+  "train_loss": 0.12196008116006851,
+  "rollout_outcomes": {
+   "success": 10,
+   "crash": 7,
+   "timeout": 13
+  },
+  "val": {
+   "d0.05": {
+    "success": 0.5,
+    "crash": 0.2,
+    "off_road": 0.3
+   },
+   "d0.2": {
+    "success": 0.1,
+    "crash": 0.6,
+    "off_road": 0.0
+   }
+  },
+  "t_min": 117.13983105023702
+ }
+]

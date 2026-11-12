@@ -51,3 +51,18 @@ bev_policy/eval-10-eps
 
 # NumPy arrays
 *.npy
+trained_models/06_Third_Party_Perception_Weights/
+archive/paper_earlier_drafts/literature/downloaded_pdfs/
+
+report/local_only/
+archive/
+.claude/
+docs/project_history/
+bev_policy/checkpoints/bcv2_*.pt
+report/*.aux
+report/*.log
+report/*.out
+report/*.toc
+report/__pycache__/
+bev_rl/adaptive/results/regime_pilot/
+report/finish_five_model_document.sh

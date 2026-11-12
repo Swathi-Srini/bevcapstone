@@ -1,0 +1,13 @@
+{
+ "name": "C2",
+ "seed": 0,
+ "mode": "conditioned",
+ "train_weather": "mixed",
+ "lambda_e": 0.0,
+ "v_cap": 12.0,
+ "init_bc": "bev_rl/adaptive/bc_init.pt",
+ "warmup_rollouts": 20,
+ "crash_pen": 50.0,
+ "steps": 1500000,
+ "n_envs": 4
+}

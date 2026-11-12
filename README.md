@@ -8,16 +8,31 @@ This repository contains a MetaDrive-based autonomous-driving research project. 
 
 **The final simulator is MetaDrive, not CARLA.** Earlier CARLA work is retained as exploratory/design context; it is not the implementation target.
 
+## Start here (added 11 November 2026)
+
+Two documents in [`report/`](report/) describe the project (LaTeX sources and PDFs; rebuild with `powershell -File report/build_documents.ps1`):
+- `Directors_Research_Guide.pdf` (about 20 pages): what was built, tried, found and what to do next, in accessible language.
+- `Complete_Technical_Research_Report.pdf` (about 85 pages): every model, architecture, training strategy, result, reinforcement-learning attempt, failure analysis, comparison with this GitHub repository, paper directions, related 2025--2026 work and an inventory of every file.
+
+All final trained models are in one folder, [`trained_models/`](trained_models/), with descriptive file names, a manifest of hashes and descriptions, and a mapping from the previous file names (`MODEL_NAME_MAPPING.md`). Only the two baseline models in `bev_policy/checkpoints/` are committed to GitHub; everything else described in the reports is local to the working copy.
+
 ## Repository layout
 
 ```text
 bevcapstone/
+|- report/                   # Consolidated report (main.tex, sections/, figures/, tables/, data/, videos/) and the scripts that generate its figures and tables
+|- trained_models/           # ALL final trained models in one folder + MODEL_MANIFEST.json + training_records/
 |- baseline/
 |  |- bc_metadrive/          # Preserved 259-D vector-observation BC baseline
 |- camera/                   # Five-camera MetaDrive capture + front SGM depth
 |- YOLO+weather module/      # Live YOLO, synthetic-weather and depth prototype
 |- bev_state/                # 64x64 BEV + six-dimensional state assembly
-|- bev_policy/               # Clear-condition CNN+MLP BC milestone
+|- bev_policy/               # Clear-condition CNN+MLP BC milestone (teammates' baselines; three files carry local, backwards-compatible edits)
+|- bev_rl/                   # Policy-side work: camera-free environments, teachers, dataset-aggregation and reinforcement-learning training, evaluation, diagnostics
+|- repository_tools/         # Scripts that organise the repository
+|- docs/                     # Specification PDF; project_history/ = dated notes from 1-5 November 2026
+|- archive/                  # Superseded material kept for the record (earlier paper drafts, removed scripts and early runs)
+|- tests/  logs/  weights/   # Unit tests, run logs, third-party YOLO weights
 |- venv/                     # Local Python environment (ignored by Git)
 |- requirements.txt          # Shared Python dependencies, including MetaDrive 0.4.3
 `- .gitignore

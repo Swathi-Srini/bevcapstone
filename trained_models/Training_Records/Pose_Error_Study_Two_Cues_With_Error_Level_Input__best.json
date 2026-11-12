@@ -1,0 +1,1 @@
+{"iter": 3, "beta": 0.125, "samples": 77513, "train_loss": 0.0059456597082316875, "rollout_outcomes": {"off_road": 5, "crash": 4, "timeout": 5, "success": 31}, "val_success": 1.0, "val_fail": 0.0, "t_min": 81.73977365891139}

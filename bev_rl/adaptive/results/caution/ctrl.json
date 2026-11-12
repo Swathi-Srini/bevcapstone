@@ -1,0 +1,1687 @@
+{
+ "arm": "ctrl",
+ "args": {
+  "arm": "ctrl",
+  "n": 40,
+  "seed0": 1010,
+  "density": 0.05,
+  "horizon": 800,
+  "sweep": null
+ },
+ "cells": {
+  "clear:0.0": {
+   "c": 0.0,
+   "n": 40,
+   "success": 0.975,
+   "success_ci": [
+    0.8711834051199223,
+    0.9955732825922052
+   ],
+   "fail": 0.025,
+   "fail_ci": [
+    0.0044267174077949195,
+    0.1288165948800778
+   ],
+   "timeout": 0.0,
+   "mean_speed": 8.023959184583386,
+   "wh_per_km": 74.69782483206937,
+   "route_completion": 0.9814665620430194
+  },
+  "fog:1.0": {
+   "c": 0.0,
+   "n": 40,
+   "success": 0.975,
+   "success_ci": [
+    0.8711834051199223,
+    0.9955732825922052
+   ],
+   "fail": 0.025,
+   "fail_ci": [
+    0.0044267174077949195,
+    0.1288165948800778
+   ],
+   "timeout": 0.0,
+   "mean_speed": 8.023851770856306,
+   "wh_per_km": 74.58735125234003,
+   "route_completion": 0.9815691781843796
+  },
+  "rain:0.6": {
+   "c": 0.0,
+   "n": 40,
+   "success": 0.975,
+   "success_ci": [
+    0.8711834051199223,
+    0.9955732825922052
+   ],
+   "fail": 0.025,
+   "fail_ci": [
+    0.0044267174077949195,
+    0.1288165948800778
+   ],
+   "timeout": 0.0,
+   "mean_speed": 8.024241611998363,
+   "wh_per_km": 74.29723022006874,
+   "route_completion": 0.9815938988072826
+  },
+  "rain:1.0": {
+   "c": 0.0,
+   "n": 40,
+   "success": 0.975,
+   "success_ci": [
+    0.8711834051199223,
+    0.9955732825922052
+   ],
+   "fail": 0.025,
+   "fail_ci": [
+    0.0044267174077949195,
+    0.1288165948800778
+   ],
+   "timeout": 0.0,
+   "mean_speed": 8.024129673314741,
+   "wh_per_km": 74.49695296820883,
+   "route_completion": 0.9815502893616088
+  }
+ },
+ "episodes": [
+  {
+   "weather": "clear:0.0",
+   "seed": 1010,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.032472345634043,
+   "wh_per_km": 74.19596434888958,
+   "steps": 398,
+   "route_completion": 0.9850609882315505
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1011,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.049673871500918,
+   "wh_per_km": 72.1619417831666,
+   "steps": 433,
+   "route_completion": 0.9863419511784588
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1012,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.055415055515065,
+   "wh_per_km": 67.99834624864802,
+   "steps": 466,
+   "route_completion": 0.9882579794895994
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1013,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.027251109532234,
+   "wh_per_km": 76.92502535268254,
+   "steps": 430,
+   "route_completion": 0.9865197902924734
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1014,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.984712916161623,
+   "wh_per_km": 81.24496197713833,
+   "steps": 342,
+   "route_completion": 0.9791768988651632
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1015,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.16980453969662,
+   "wh_per_km": 57.600387503994924,
+   "steps": 701,
+   "route_completion": 0.9926442040512078
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1016,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.978103098638044,
+   "wh_per_km": 80.81714265551756,
+   "steps": 365,
+   "route_completion": 0.9831931923898088
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1017,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.040502882795908,
+   "wh_per_km": 69.63248867638613,
+   "steps": 424,
+   "route_completion": 0.9866877126470553
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1018,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.102465962876781,
+   "wh_per_km": 62.07880570717626,
+   "steps": 526,
+   "route_completion": 0.9903381991330018
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1019,
+   "c": 0.0,
+   "outcome": "crash",
+   "mean_speed": 7.874096665370342,
+   "wh_per_km": 91.03327018734002,
+   "steps": 286,
+   "route_completion": 0.7983299014514986
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1020,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.904537498431784,
+   "wh_per_km": 89.73118044741632,
+   "steps": 300,
+   "route_completion": 0.980818794835547
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1021,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.043271024234311,
+   "wh_per_km": 69.29051132677986,
+   "steps": 453,
+   "route_completion": 0.988564024435778
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1022,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.06525196960213,
+   "wh_per_km": 65.09562622902189,
+   "steps": 482,
+   "route_completion": 0.9880492213780562
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1023,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.01725359732421,
+   "wh_per_km": 77.05879158950717,
+   "steps": 382,
+   "route_completion": 0.9831018453477347
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1024,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.134079361277566,
+   "wh_per_km": 59.731549821347954,
+   "steps": 586,
+   "route_completion": 0.9908669693531312
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1025,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.8578194293186545,
+   "wh_per_km": 93.72168543114108,
+   "steps": 297,
+   "route_completion": 0.984085560612925
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1026,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.119163395215688,
+   "wh_per_km": 64.55912512662798,
+   "steps": 577,
+   "route_completion": 0.9903557305136049
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1027,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.020433224955305,
+   "wh_per_km": 75.87328423071206,
+   "steps": 408,
+   "route_completion": 0.9869250424626212
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1028,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.896386253197668,
+   "wh_per_km": 90.94183916355716,
+   "steps": 284,
+   "route_completion": 0.9787053395761512
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1029,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.968082440565104,
+   "wh_per_km": 81.52855419301378,
+   "steps": 328,
+   "route_completion": 0.9818104858062864
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1030,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.013443201955424,
+   "wh_per_km": 80.56724591710007,
+   "steps": 387,
+   "route_completion": 0.9831076515205547
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1031,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.112497352973776,
+   "wh_per_km": 61.126381565075796,
+   "steps": 558,
+   "route_completion": 0.9902194555553709
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1032,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.931149957129814,
+   "wh_per_km": 84.58398783628896,
+   "steps": 334,
+   "route_completion": 0.9814663818093652
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1033,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.048912403367016,
+   "wh_per_km": 68.32289606648003,
+   "steps": 457,
+   "route_completion": 0.9873776750817885
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1034,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.13917365604602,
+   "wh_per_km": 62.84972626534782,
+   "steps": 674,
+   "route_completion": 0.9932003538286616
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1035,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.079926450925441,
+   "wh_per_km": 71.36497400903241,
+   "steps": 471,
+   "route_completion": 0.9881997316276638
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1036,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.953768514909039,
+   "wh_per_km": 86.47040643301874,
+   "steps": 329,
+   "route_completion": 0.9808983556064645
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1037,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.02510344368724,
+   "wh_per_km": 69.91349859041132,
+   "steps": 419,
+   "route_completion": 0.9860448065709311
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1038,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.029517684044206,
+   "wh_per_km": 83.8310546254183,
+   "steps": 473,
+   "route_completion": 0.9880106403373589
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1039,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.996228729751021,
+   "wh_per_km": 76.39907570027158,
+   "steps": 378,
+   "route_completion": 0.9861594153988749
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1040,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.012090937962451,
+   "wh_per_km": 74.92298898128809,
+   "steps": 386,
+   "route_completion": 0.9843087062035323
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1041,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.927534924891153,
+   "wh_per_km": 87.75715580013349,
+   "steps": 347,
+   "route_completion": 0.9849998137116409
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1042,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.991285914323097,
+   "wh_per_km": 77.95954357123549,
+   "steps": 353,
+   "route_completion": 0.9850347900632692
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1043,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.092361012767638,
+   "wh_per_km": 67.86204313710806,
+   "steps": 538,
+   "route_completion": 0.9880179796009015
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1044,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.988254353686483,
+   "wh_per_km": 79.85879545520376,
+   "steps": 349,
+   "route_completion": 0.9840139122298069
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1045,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.08422055256449,
+   "wh_per_km": 64.40977286758287,
+   "steps": 525,
+   "route_completion": 0.9890038891175604
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1046,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.160174975472758,
+   "wh_per_km": 57.1861139368685,
+   "steps": 645,
+   "route_completion": 0.991779066356751
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1047,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.927407036006934,
+   "wh_per_km": 88.38231596141955,
+   "steps": 287,
+   "route_completion": 0.9788581118771538
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1048,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.081800690102698,
+   "wh_per_km": 70.53594471546525,
+   "steps": 490,
+   "route_completion": 0.9900305107256718
+  },
+  {
+   "weather": "clear:0.0",
+   "seed": 1049,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.02273894892479,
+   "wh_per_km": 72.38858984795955,
+   "steps": 399,
+   "route_completion": 0.9880974024457934
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1010,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.03196547986255,
+   "wh_per_km": 74.51828773040847,
+   "steps": 397,
+   "route_completion": 0.9824531542214185
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1011,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.050028952352847,
+   "wh_per_km": 72.52936935993654,
+   "steps": 433,
+   "route_completion": 0.9866060567646127
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1012,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.05329283296773,
+   "wh_per_km": 69.62989942794195,
+   "steps": 465,
+   "route_completion": 0.9869544200233588
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1013,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.026997598867382,
+   "wh_per_km": 77.39152632532553,
+   "steps": 430,
+   "route_completion": 0.9861180021494227
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1014,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.984099173760572,
+   "wh_per_km": 81.5146249402002,
+   "steps": 342,
+   "route_completion": 0.9791010906416905
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1015,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.168467351894302,
+   "wh_per_km": 58.23621867924904,
+   "steps": 701,
+   "route_completion": 0.9935312568408399
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1016,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.977597007128948,
+   "wh_per_km": 79.91042119227353,
+   "steps": 365,
+   "route_completion": 0.9839014048415884
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1017,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.040349959429742,
+   "wh_per_km": 69.73118603764118,
+   "steps": 424,
+   "route_completion": 0.9870112945831225
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1018,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.102419974633193,
+   "wh_per_km": 61.992340500198665,
+   "steps": 526,
+   "route_completion": 0.9903241408363928
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1019,
+   "c": 0.0,
+   "outcome": "crash",
+   "mean_speed": 7.876324223428492,
+   "wh_per_km": 90.39740505709614,
+   "steps": 286,
+   "route_completion": 0.7984979234595909
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1020,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.903894406536028,
+   "wh_per_km": 89.41489441511344,
+   "steps": 300,
+   "route_completion": 0.9799621013929257
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1021,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.039750318325648,
+   "wh_per_km": 69.81538073135185,
+   "steps": 453,
+   "route_completion": 0.9875025844698689
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1022,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.065294310841647,
+   "wh_per_km": 65.09571282304641,
+   "steps": 482,
+   "route_completion": 0.988057910288124
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1023,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.01592401497344,
+   "wh_per_km": 77.6195898487783,
+   "steps": 382,
+   "route_completion": 0.9833135638358366
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1024,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.134123343003324,
+   "wh_per_km": 59.56251775345861,
+   "steps": 586,
+   "route_completion": 0.9906391104230291
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1025,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.857038900192141,
+   "wh_per_km": 94.3959933777013,
+   "steps": 297,
+   "route_completion": 0.9839926437159295
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1026,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.120466628772128,
+   "wh_per_km": 63.34190854602931,
+   "steps": 577,
+   "route_completion": 0.9906848373388714
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1027,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.021418379078684,
+   "wh_per_km": 75.44869827392554,
+   "steps": 408,
+   "route_completion": 0.986921090218606
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1028,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.896383724571845,
+   "wh_per_km": 90.93903217161012,
+   "steps": 284,
+   "route_completion": 0.9787053679664665
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1029,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.968209408559717,
+   "wh_per_km": 81.53178535325749,
+   "steps": 328,
+   "route_completion": 0.9818258882119273
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1030,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.013651155451301,
+   "wh_per_km": 78.88398496221481,
+   "steps": 387,
+   "route_completion": 0.9846006962219885
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1031,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.112329431366236,
+   "wh_per_km": 61.204093066317554,
+   "steps": 558,
+   "route_completion": 0.9902253888828977
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1032,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.933454901132336,
+   "wh_per_km": 83.85994408159407,
+   "steps": 334,
+   "route_completion": 0.9819746487854549
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1033,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.048588880432158,
+   "wh_per_km": 68.56098094080842,
+   "steps": 457,
+   "route_completion": 0.987343939172013
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1034,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.138817838162868,
+   "wh_per_km": 62.25734429662748,
+   "steps": 662,
+   "route_completion": 0.9960959215106191
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1035,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.079309649753622,
+   "wh_per_km": 71.7876423724849,
+   "steps": 471,
+   "route_completion": 0.988066426234496
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1036,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.953780104405793,
+   "wh_per_km": 86.46887633207767,
+   "steps": 329,
+   "route_completion": 0.9808998821735585
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1037,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.02575475874489,
+   "wh_per_km": 69.65514050327599,
+   "steps": 419,
+   "route_completion": 0.9864690144092851
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1038,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.04426516937999,
+   "wh_per_km": 77.86347474519474,
+   "steps": 472,
+   "route_completion": 0.988340969264734
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1039,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.996823183019374,
+   "wh_per_km": 75.77211593959635,
+   "steps": 377,
+   "route_completion": 0.9837553946305659
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1040,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.009618837930294,
+   "wh_per_km": 76.92343217466859,
+   "steps": 387,
+   "route_completion": 0.9861520550704285
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1041,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.912603009372731,
+   "wh_per_km": 89.84619482925191,
+   "steps": 349,
+   "route_completion": 0.9872473916724473
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1042,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.991108081008626,
+   "wh_per_km": 78.1078969166096,
+   "steps": 353,
+   "route_completion": 0.9850149143053182
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1043,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.09307848364907,
+   "wh_per_km": 67.37439245077992,
+   "steps": 539,
+   "route_completion": 0.9889655652203296
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1044,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.9882382465969055,
+   "wh_per_km": 79.90686081630423,
+   "steps": 349,
+   "route_completion": 0.9839947376003756
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1045,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.084407453295217,
+   "wh_per_km": 64.23387361493847,
+   "steps": 525,
+   "route_completion": 0.9889008871801893
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1046,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.159812047457121,
+   "wh_per_km": 57.18307719082744,
+   "steps": 645,
+   "route_completion": 0.9917286200616047
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1047,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.927100056301145,
+   "wh_per_km": 88.77931108494239,
+   "steps": 287,
+   "route_completion": 0.9788392534051658
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1048,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.084164683304108,
+   "wh_per_km": 69.78930899968779,
+   "steps": 490,
+   "route_completion": 0.9909959712379601
+  },
+  {
+   "weather": "fog:1.0",
+   "seed": 1049,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.023118874308107,
+   "wh_per_km": 72.01931223085522,
+   "steps": 399,
+   "route_completion": 0.9870516081121264
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1010,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.032101239243886,
+   "wh_per_km": 73.60635584386037,
+   "steps": 397,
+   "route_completion": 0.9824607310160118
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1011,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.050350078006451,
+   "wh_per_km": 71.47020549873596,
+   "steps": 433,
+   "route_completion": 0.9868738754222163
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1012,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.055792378985299,
+   "wh_per_km": 68.49228713960245,
+   "steps": 466,
+   "route_completion": 0.9885584449366794
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1013,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.028064121743542,
+   "wh_per_km": 77.47611338329725,
+   "steps": 430,
+   "route_completion": 0.986663243460306
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1014,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.983966279338812,
+   "wh_per_km": 81.658024469143,
+   "steps": 342,
+   "route_completion": 0.9790884264390256
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1015,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.170443518669481,
+   "wh_per_km": 57.010585993855656,
+   "steps": 701,
+   "route_completion": 0.9927193310328736
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1016,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.978735079892699,
+   "wh_per_km": 79.24175059175951,
+   "steps": 365,
+   "route_completion": 0.9837866682311935
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1017,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.038242618711264,
+   "wh_per_km": 71.01981671354959,
+   "steps": 424,
+   "route_completion": 0.9861473114236715
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1018,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.102556263412229,
+   "wh_per_km": 61.95209040293169,
+   "steps": 526,
+   "route_completion": 0.9903197776571023
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1019,
+   "c": 0.0,
+   "outcome": "crash",
+   "mean_speed": 7.875022344307571,
+   "wh_per_km": 90.04876061513023,
+   "steps": 286,
+   "route_completion": 0.7984353617204126
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1020,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.905600018551358,
+   "wh_per_km": 88.969392150985,
+   "steps": 300,
+   "route_completion": 0.980474332002732
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1021,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.043952962735226,
+   "wh_per_km": 68.56300349879932,
+   "steps": 453,
+   "route_completion": 0.9885753863931032
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1022,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.065324781902087,
+   "wh_per_km": 64.9725213614822,
+   "steps": 482,
+   "route_completion": 0.9880418986419622
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1023,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.016887126790076,
+   "wh_per_km": 76.69193323953424,
+   "steps": 382,
+   "route_completion": 0.9835349825973573
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1024,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.134183592535459,
+   "wh_per_km": 59.565522832323,
+   "steps": 586,
+   "route_completion": 0.9908779021861824
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1025,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.857982165159061,
+   "wh_per_km": 93.68140022531877,
+   "steps": 297,
+   "route_completion": 0.9841022651483696
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1026,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.118789473601087,
+   "wh_per_km": 64.07200728720107,
+   "steps": 577,
+   "route_completion": 0.9905320460305097
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1027,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.02108175502953,
+   "wh_per_km": 75.56482199463606,
+   "steps": 408,
+   "route_completion": 0.9869217867409378
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1028,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.896354072742247,
+   "wh_per_km": 90.92594865218437,
+   "steps": 284,
+   "route_completion": 0.9787017747646963
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1029,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.96808254605859,
+   "wh_per_km": 81.52852930803074,
+   "steps": 328,
+   "route_completion": 0.981810485773423
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1030,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.01455728650806,
+   "wh_per_km": 78.51488557510753,
+   "steps": 387,
+   "route_completion": 0.9848369112336378
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1031,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.112390622268219,
+   "wh_per_km": 61.23915291114681,
+   "steps": 558,
+   "route_completion": 0.9902171783561521
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1032,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.929013588043475,
+   "wh_per_km": 84.81924718916399,
+   "steps": 334,
+   "route_completion": 0.9814816653882873
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1033,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.048522182276816,
+   "wh_per_km": 68.59487331955879,
+   "steps": 457,
+   "route_completion": 0.9871129277562518
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1034,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.139275339757287,
+   "wh_per_km": 61.9941412803944,
+   "steps": 662,
+   "route_completion": 0.9957112293518235
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1035,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.07954583307664,
+   "wh_per_km": 71.58665623330484,
+   "steps": 471,
+   "route_completion": 0.9880968385986796
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1036,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.955626903759126,
+   "wh_per_km": 84.75362160587554,
+   "steps": 329,
+   "route_completion": 0.9814955769779463
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1037,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.025814144201078,
+   "wh_per_km": 69.65364141019235,
+   "steps": 419,
+   "route_completion": 0.986478659757961
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1038,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.04907916213402,
+   "wh_per_km": 75.76944693924148,
+   "steps": 471,
+   "route_completion": 0.9871565859625501
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1039,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.995854498509723,
+   "wh_per_km": 76.17106455616889,
+   "steps": 377,
+   "route_completion": 0.9837088908427412
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1040,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.010874726026747,
+   "wh_per_km": 75.60793606653142,
+   "steps": 386,
+   "route_completion": 0.9853783947621847
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1041,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.91541391584691,
+   "wh_per_km": 89.61130053904392,
+   "steps": 349,
+   "route_completion": 0.9864985264652214
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1042,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.99110805020038,
+   "wh_per_km": 78.10788383135427,
+   "steps": 353,
+   "route_completion": 0.985014914343668
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1043,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.094646587188917,
+   "wh_per_km": 66.4986397595602,
+   "steps": 539,
+   "route_completion": 0.9891946513481469
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1044,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.988279964088517,
+   "wh_per_km": 79.91126275368647,
+   "steps": 349,
+   "route_completion": 0.9840154778525043
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1045,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.083594268318414,
+   "wh_per_km": 64.74369960378635,
+   "steps": 525,
+   "route_completion": 0.988932916356883
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1046,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.158626290594238,
+   "wh_per_km": 57.18860212466929,
+   "steps": 645,
+   "route_completion": 0.9919193690274819
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1047,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.927201671893757,
+   "wh_per_km": 88.79249116568641,
+   "steps": 287,
+   "route_completion": 0.978851810921
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1048,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.08462521197956,
+   "wh_per_km": 69.49755696498521,
+   "steps": 490,
+   "route_completion": 0.9912501298313798
+  },
+  {
+   "weather": "rain:0.6",
+   "seed": 1049,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.022101815846638,
+   "wh_per_km": 72.3220337709312,
+   "steps": 399,
+   "route_completion": 0.9877772655380321
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1010,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.03215269294491,
+   "wh_per_km": 74.38226823422657,
+   "steps": 397,
+   "route_completion": 0.9824784070468888
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1011,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.049193205944674,
+   "wh_per_km": 72.25710082839252,
+   "steps": 433,
+   "route_completion": 0.9866334035800697
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1012,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.05466452901987,
+   "wh_per_km": 68.99816991888369,
+   "steps": 465,
+   "route_completion": 0.9868978940455092
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1013,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.030395394360603,
+   "wh_per_km": 76.56295385802387,
+   "steps": 430,
+   "route_completion": 0.9867047928446183
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1014,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.984247880125621,
+   "wh_per_km": 81.58455588354362,
+   "steps": 342,
+   "route_completion": 0.9791503443918981
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1015,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.170494843919528,
+   "wh_per_km": 56.985980967284505,
+   "steps": 701,
+   "route_completion": 0.992599497155489
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1016,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.979370016972422,
+   "wh_per_km": 77.93583986199701,
+   "steps": 365,
+   "route_completion": 0.9848646731538563
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1017,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.037198638100282,
+   "wh_per_km": 71.47420398654084,
+   "steps": 424,
+   "route_completion": 0.9862169144758689
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1018,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.102588798986304,
+   "wh_per_km": 61.82872540889025,
+   "steps": 526,
+   "route_completion": 0.9903695844400517
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1019,
+   "c": 0.0,
+   "outcome": "crash",
+   "mean_speed": 7.874792641404571,
+   "wh_per_km": 92.30380422585067,
+   "steps": 286,
+   "route_completion": 0.7983568315406168
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1020,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.908219783570026,
+   "wh_per_km": 88.90987063622792,
+   "steps": 300,
+   "route_completion": 0.9803782557097027
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1021,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.043486122890725,
+   "wh_per_km": 68.78638587342417,
+   "steps": 453,
+   "route_completion": 0.9884993416072594
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1022,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.065263365755841,
+   "wh_per_km": 65.09562948699951,
+   "steps": 482,
+   "route_completion": 0.9880514136446544
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1023,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.017117859008835,
+   "wh_per_km": 77.1262398339756,
+   "steps": 382,
+   "route_completion": 0.98349329043576
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1024,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.133119593120284,
+   "wh_per_km": 60.15252087191124,
+   "steps": 586,
+   "route_completion": 0.9905029050606361
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1025,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.857892994605646,
+   "wh_per_km": 93.73484135883386,
+   "steps": 297,
+   "route_completion": 0.9840925662621759
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1026,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.121404423560001,
+   "wh_per_km": 62.99592891831859,
+   "steps": 577,
+   "route_completion": 0.9908456433314663
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1027,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.022004035592282,
+   "wh_per_km": 75.13100601061994,
+   "steps": 408,
+   "route_completion": 0.9868697312344341
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1028,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.89637324338424,
+   "wh_per_km": 90.92336348984828,
+   "steps": 284,
+   "route_completion": 0.9787041399161277
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1029,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.9681289138015705,
+   "wh_per_km": 81.62483437547154,
+   "steps": 328,
+   "route_completion": 0.9818378906555295
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1030,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.014132831048341,
+   "wh_per_km": 78.8922541709469,
+   "steps": 387,
+   "route_completion": 0.984669641791815
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1031,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.112378556805924,
+   "wh_per_km": 61.16273455969629,
+   "steps": 558,
+   "route_completion": 0.9901882047137998
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1032,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.929393164558868,
+   "wh_per_km": 84.94929976363305,
+   "steps": 334,
+   "route_completion": 0.9814189656978741
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1033,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.04874659709915,
+   "wh_per_km": 68.52072972663974,
+   "steps": 457,
+   "route_completion": 0.9871167768752288
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1034,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.135347698769566,
+   "wh_per_km": 63.34863343842229,
+   "steps": 663,
+   "route_completion": 0.9959717958965492
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1035,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.07947726478431,
+   "wh_per_km": 71.77051105513316,
+   "steps": 471,
+   "route_completion": 0.9880905491187089
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1036,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.953804668237458,
+   "wh_per_km": 86.4667262536798,
+   "steps": 329,
+   "route_completion": 0.9809027864797284
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1037,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.02541489051187,
+   "wh_per_km": 69.89888352109443,
+   "steps": 419,
+   "route_completion": 0.9863828121449821
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1038,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.047707845947087,
+   "wh_per_km": 76.76616774013395,
+   "steps": 471,
+   "route_completion": 0.9870472845598818
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1039,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.996769213110777,
+   "wh_per_km": 76.57811711208716,
+   "steps": 378,
+   "route_completion": 0.9860338775501619
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1040,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.012682630670279,
+   "wh_per_km": 74.85071788720134,
+   "steps": 386,
+   "route_completion": 0.9848515127209184
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1041,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.9098114058622215,
+   "wh_per_km": 89.74153979784842,
+   "steps": 349,
+   "route_completion": 0.9867649644855984
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1042,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.991689559098678,
+   "wh_per_km": 77.82094461276183,
+   "steps": 353,
+   "route_completion": 0.9850877408117209
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1043,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.094307794673334,
+   "wh_per_km": 66.62265481174519,
+   "steps": 539,
+   "route_completion": 0.9892062565661832
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1044,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.987118970485387,
+   "wh_per_km": 81.54621341192802,
+   "steps": 349,
+   "route_completion": 0.9831839812406303
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1045,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.084873660630993,
+   "wh_per_km": 64.05095509113852,
+   "steps": 525,
+   "route_completion": 0.9889663818260417
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1046,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.15606462409315,
+   "wh_per_km": 59.40523937428954,
+   "steps": 645,
+   "route_completion": 0.9915072310932702
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1047,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 7.926973036904171,
+   "wh_per_km": 88.68835172619063,
+   "steps": 287,
+   "route_completion": 0.9788203338874935
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1048,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.08826567021794,
+   "wh_per_km": 67.67801526708621,
+   "steps": 490,
+   "route_completion": 0.9904401121552886
+  },
+  {
+   "weather": "rain:1.0",
+   "seed": 1049,
+   "c": 0.0,
+   "outcome": "success",
+   "mean_speed": 8.022117872011892,
+   "wh_per_km": 72.32520537743213,
+   "steps": 399,
+   "route_completion": 0.9878128443158616
+  }
+ ]
+}
