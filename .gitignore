@@ -65,3 +65,4 @@ report/*.out
 report/*.toc
 report/__pycache__/
 bev_rl/adaptive/results/regime_pilot/
+report/finish_five_model_document.sh

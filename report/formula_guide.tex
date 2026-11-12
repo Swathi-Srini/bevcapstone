@@ -1,0 +1,136 @@
+% Formula guide: every formula of the document, with each symbol explained, why it is used, a derivation, and where it comes from.
+\section{Formula guide: what every symbol means, why we use it, where it comes from}\label{sec:formulas}
+\begin{plainwords}
+This section explains every formula of the document in the same order: \textbf{(1) what it computes, (2) the meaning of each symbol, (3) why this formula and not another, (4) how it is derived, (5) where it comes from.} Links point to the arXiv page of the paper. Some classical sources (1927 to 1947) have no arXiv version; for those the journal reference is given. Anything that is our own choice, not taken from the literature, is marked \textbf{our choice}.
+\end{plainwords}
+
+% -------------------------------------------------------------------------------------------------------------------------------------
+\subsection{Success rate and the other outcome rates}
+\[\hat p=\frac{k}{n}\]
+\begin{description}[leftmargin=2.6cm,style=nextline]
+\item[Symbols] $n$: number of episodes (200). $k$: how many of them ended in the outcome being counted (success, collision, left the road or timeout). $\hat p$: the observed share (the ``hat'' means ``estimated from data''). Every episode ends in exactly one of the four outcomes, so the four shares add up to 1.
+\item[Why] It is the simplest honest summary of closed-loop driving: ``out of the scenarios we gave it, how many did it finish''. We do not use a reward score because a reward is a design choice, while ``reached the destination'' is not.
+\item[Source] Plain definition of a proportion. Our choice of the four outcome labels follows what MetaDrive reports at the end of an episode (\url{https://arxiv.org/abs/2109.12674}).
+\end{description}
+
+% -------------------------------------------------------------------------------------------------------------------------------------
+\subsection{The 95\% interval (Wilson)}
+\[\text{interval}=\frac{\hat p+\dfrac{z^2}{2n}\;\pm\;z\sqrt{\dfrac{\hat p(1-\hat p)}{n}+\dfrac{z^2}{4n^2}}}{1+\dfrac{z^2}{n}},\qquad z=1.96\]
+\begin{description}[leftmargin=2.6cm,style=nextline]
+\item[Symbols] $\hat p$ and $n$ as above. $z=1.96$ is the point of the standard normal curve that leaves 2.5\% on each side, so that 95\% of the probability is in between. The $\pm$ gives the lower and the upper end.
+\item[Why] With 200 episodes the observed 0.925 is only an estimate of the model's true success rate. The interval says how far the truth can plausibly be from 0.925. We use the Wilson form because the textbook form $\hat p\pm z\sqrt{\hat p(1-\hat p)/n}$ breaks down when $\hat p$ is near 0 or 1 (it can give an upper end above 1, or a zero-width interval when $k=0$, which matters for the image-only model with 0 successes).
+\item[Derivation] Ask: for which true values $p$ would the observed $\hat p$ be an ordinary result? That means $|\hat p-p|\le z\sqrt{p(1-p)/n}$. Square both sides: $(\hat p-p)^2\le z^2p(1-p)/n$. Collect terms: $(1+z^2/n)\,p^2-(2\hat p+z^2/n)\,p+\hat p^2\le 0$. The two roots of this quadratic in $p$ are exactly the formula above; the interval is everything between the roots.
+\item[Source] E.\,B.\,Wilson (1927), \emph{Journal of the American Statistical Association} 22(158): 209--212 (no arXiv version). Why it is preferred over the textbook form: L.\,D.\,Brown, T.\,T.\,Cai, A.\,DasGupta (2001), ``Interval estimation for a binomial proportion'', \emph{Statistical Science} 16(2): 101--133 (no arXiv version).
+\end{description}
+
+% -------------------------------------------------------------------------------------------------------------------------------------
+\subsection{Comparing two models on the same episodes (exact McNemar test)}
+\[p=\min\!\Big(1,\;2\sum_{i=0}^{\min(b,c)}\binom{b+c}{i}\,2^{-(b+c)}\Big)\]
+\begin{description}[leftmargin=2.6cm,style=nextline]
+\item[Symbols] $b$: number of episodes that model A solved and model B did not. $c$: the opposite. Episodes that both solved, or both failed, are ignored because they carry no information about which model is better. $\binom{b+c}{i}$: the number of ways to choose $i$ episodes out of $b+c$. $2^{-(b+c)}$: the probability of any one particular sequence of fair coin flips. $p$: the probability of seeing a split at least this lopsided if the two models were really equally good.
+\item[Why] Both models drive the \emph{same} 200 seeds, so the results are paired. Comparing two separate intervals throws away that pairing and is too cautious. The paired test uses only the episodes where the models disagree. ``Exact'' means we use the binomial counts themselves instead of a normal-curve approximation, which is needed when $b+c$ is small (for example 3 against 10).
+\item[Derivation] If A and B were equally good, each of the $b+c$ disagreeing episodes would favour A or B with probability $\tfrac12$, independently. So the number favouring A follows a binomial distribution with $b+c$ trials and probability $\tfrac12$. The probability of an outcome as extreme as $\min(b,c)$ on the small side is the sum of the binomial terms for $0,\dots,\min(b,c)$; doubling it makes the test two-sided (a difference in either direction counts); the $\min(1,\cdot)$ keeps $p\le1$.
+\item[Source] Q.\,McNemar (1947), \emph{Psychometrika} 12: 153--157 (no arXiv version). The exact version is the sign test on the disagreeing pairs.
+\item[Reading $p$] $p<0.05$ means the difference is unlikely to be chance. It does \emph{not} say the difference is large, and $p>0.05$ does not prove the models are equal; it says 200 episodes were not enough to tell.
+\end{description}
+
+% -------------------------------------------------------------------------------------------------------------------------------------
+\subsection{Energy}
+\begin{align*}
+W_{\text{inertia}} &= \tfrac12\, m\,(v_1^2-v_0^2)\\
+W_{\text{air}} &= k\,\Delta t\,\tfrac14\,(v_0^3+v_0^2v_1+v_0v_1^2+v_1^3),\quad k=\tfrac12\rho C_dA\\
+W_{\text{roll}} &= C_{rr}\,m\,g\,\tfrac{v_0+v_1}{2}\,\Delta t\\
+W_{\text{step}} &= \max\big(0,\;W_{\text{inertia}}+W_{\text{air}}+W_{\text{roll}}\big),\qquad E_{\text{Wh}}=\frac{\sum W_{\text{step}}}{3600},\qquad D_{\text{km}}=\frac1{1000}\sum\tfrac{v_0+v_1}{2}\Delta t
+\end{align*}
+\begin{description}[leftmargin=2.6cm,style=nextline]
+\item[Symbols] $\Delta t=0.1$\,s: one simulator step. $v_0,v_1$ (m/s): speed at the start and the end of the step. $m$ (kg): car mass, read from the simulator's vehicle. $\rho=1.225$\,kg/m$^3$: air density at sea level. $C_d=0.23$: drag coefficient (how streamlined the car is). $A=2.22$\,m$^2$: frontal area. $C_{rr}=0.01$: rolling-resistance coefficient (tyre losses per unit weight). $g=9.81$\,m/s$^2$: gravity. $W$ (joules): mechanical work the wheels must supply in the step. $3600$: joules per watt-hour. $E_{\text{Wh}}$: total energy of the episode; $D_{\text{km}}$: distance of the episode.
+\item[Why] MetaDrive has no battery or fuel model, but the energy question needs a number. Newtonian physics gives one from the only thing every model produces, a speed history. Using a single formula for all five models means that differences in energy come from the way the model drives, not from the formula. \textbf{Our choice:} the declared vehicle constants (declared assumptions in the range of a modern electric passenger car, not measured on a real car) and the decision to clip at zero (no regenerative braking).
+\item[Derivation] The wheels must supply three things. (i) \emph{Change of kinetic energy}: $\tfrac12mv^2$ at the end minus at the start, which gives $W_{\text{inertia}}$. (ii) \emph{Air drag}: the drag force is $\tfrac12\rho C_dAv^2$, so the power is force times speed, $\tfrac12\rho C_dAv^3=kv^3$, and the work in a step is $k\int v^3\,dt$. Inside a step the speed is assumed to change in a straight line, $v(s)=v_0+(v_1-v_0)s$ for $s\in[0,1]$, so $\int_0^1 v(s)^3ds=\frac{v_1^4-v_0^4}{4(v_1-v_0)}=\tfrac14(v_0^3+v_0^2v_1+v_0v_1^2+v_1^3)$; multiplying by $k\Delta t$ gives $W_{\text{air}}$. (iii) \emph{Rolling resistance}: the force $C_{rr}mg$ is constant, the power is $C_{rr}mg\,v$, and the average speed over a step with straight-line speed is $\tfrac{v_0+v_1}{2}$, which gives $W_{\text{roll}}$. Braking gives a negative sum; a car without regeneration cannot recover it, so $W_{\text{step}}$ is clipped at 0. Distance is the average speed times $\Delta t$, summed.
+\item[Why drag matters for the caution-aware model] Drag work grows with $v^3$, so slowing from 8 to 6\,m/s cuts the drag work by a factor $(6/8)^3\approx0.42$. This is why a modest speed reduction produces a large energy reduction.
+\item[Source] Standard longitudinal vehicle dynamics (work--energy theorem, quadratic drag, constant rolling resistance), e.g.\ L.\,Guzzella and A.\,Sciarretta, \emph{Vehicle Propulsion Systems}, Springer (textbook, no arXiv version). The trapezoid-style averaging over a step is our choice.
+\item[Limits] Flat road, no regeneration, no motor or battery losses, no auxiliaries. The result is mechanical work at the wheels of a declared car and is meaningful only as a comparison between models.
+\end{description}
+
+% -------------------------------------------------------------------------------------------------------------------------------------
+\subsection{Detector retention, keep probability and caution}\label{sec:retentionformula}
+\begin{align*}
+r(\kappa,\ell) &= \frac{\text{vehicles detected with weather }(\kappa,\ell)}{\text{vehicles detected in clear weather}}&&\text{measured once, offline}\\
+p_{\text{keep}}(\kappa,\ell) &= \text{straight-line interpolation through }(0,1),\,(\ell_1,\min(1,r_1)),\dots,(\ell_6,\min(1,r_6))\\
+c &= \operatorname{clip}\big(1-p_{\text{keep}}(\kappa,\ell),\,0,\,1\big)
+\end{align*}
+\begin{description}[leftmargin=2.6cm,style=nextline]
+\item[Symbols] $\kappa$: kind of weather (fog or rain). $\ell$: intensity of the teammates' weather filter, from 0 (none) to 1 (strongest). $r$: retention, the fraction of the vehicles that the detector still finds. $\ell_1,\dots,\ell_6$: the six intensities that were measured (fog 0.15, 0.3, 0.45, 0.6, 0.8, 1.0; rain 0.1, 0.2, 0.3, 0.45, 0.6, 1.0). $p_{\text{keep}}$: the probability that a vehicle is \emph{kept} in the grid at one simulator step; each vehicle is kept or dropped independently at every step. $\min(1,\cdot)$: retention above 1 is measurement noise (a fog frame gave more detections than its clear twin), so it is capped. $c$: caution, between 0 (fully reliable perception) and 1 (almost nothing is seen).
+\item[How retention was measured] \pth{bev_rl/adaptive/measure_paired.py}. On 20 scenes (seeds 1000 to 1019) up to three traffic vehicles were placed around a stationary car (at about 8, 10 and 14\,m). The \emph{same} camera frames were processed once clean and once with each weather condition (two random weather draws), and the detector counts were compared. Because the frames are paired, the ratio reflects the weather and not different scenes.
+\item[Why measure it offline, once] (a) Running the whole camera pipeline (five cameras, detector, stereo depth) costs about 2\,s per simulator step, against 0.2\,s for the grid; 200 episodes of 800 steps in four weather conditions with five models would take many days of computation. (b) Measuring once turns the pipeline into a single table that the fast tests reuse, and the same table defines how many vehicles disappear in every test. The price is that the grid models are tested with an \emph{ideal} detector plus a measured loss rate, not with the real detector (stated in the honest-limit box above).
+\item[Limits of the measurement] Only up to three vehicles at 8 to 14\,m with a stationary car, 20 scenes. Distant vehicles are probably missed more than close ones, so the table is likely \emph{optimistic} for far vehicles. Vehicles are dropped independently at each step, so a real detector that misses the same vehicle for many frames would be harsher.
+\item[Why $c=1-p_{\text{keep}}$] \textbf{Our choice.} It is the simplest number that is 0 when perception is complete, rises as vehicles are lost, and needs no extra measurement. Any monotone function of reliability would be a valid alternative.
+\end{description}
+\begin{implicationbox}[{What the caution-aware model is told and what it is not}]
+You are right that the model is \emph{not} told ``this is fog'' or ``this is rain''. It receives a single number, $c$, that says how cautious to be. Two honest qualifications. (1) In our tests $c$ is looked up from the known weather condition through the table above, so it is the weather label in disguise: it carries exactly the information ``fog 1.0 gives 0.73, rain 1.0 gives 0.96''. (2) The same table also decides how many vehicles are removed from the grid, so the number the model receives is perfectly consistent with what it sees. A deployed system would have to \emph{estimate} $c$ from the camera, for example from detector confidence or an image-quality score, and its estimate would be noisy. Whether the learned behaviour survives that noise is untested.
+\end{implicationbox}
+\paragraph{Is weather detection a solved problem?} Partly. Classifying a driving image as clear, fog, rain or snow with a neural network is well studied and reaches high accuracy on easy datasets. The authors of a driving-specific dataset report that the same classifier does much worse on their harder images, and that the task is not saturated (Dhananjaya, Ravi Kumar, Yogamani, \url{https://arxiv.org/abs/2104.14042}). Estimating \emph{how much} the weather reduces visibility, rather than naming the weather, is a separate and less settled task (for example pixel-wise visibility under fog, \url{https://arxiv.org/abs/2112.04278}; overview of perception under adverse weather, \url{https://arxiv.org/abs/2112.08936}). So a trained weather or visibility estimator is a reasonable replacement for the lookup table, and building on this literature is the natural next step. It has not been done here.
+
+% -------------------------------------------------------------------------------------------------------------------------------------
+\subsection{The teacher and its dependence on caution}
+\[v_{\text{target}}(c)=30\Big(1-\frac c3\Big)\ \text{km/h},\qquad s_{\text{gap}}(c)=10+15\,c\ \text{m}\]
+\begin{description}[leftmargin=2.6cm,style=nextline]
+\item[Symbols] $c$ caution (0 to 1). $v_{\text{target}}$: the speed the rule-based teacher tries to hold when the road is free. $s_{\text{gap}}$: the distance it tries to keep to the vehicle ahead.
+\item[Why] A cautious driver drives slower and keeps more room. The linear mapping gives the two end points that were chosen: 30\,km/h and 10\,m at $c=0$ (MetaDrive's stock driver), 20\,km/h and 25\,m at $c=1$. \textbf{Our choice:} the end points and the linear form; there is no data behind them. The student copies these labels and so learns the dependence.
+\item[Source of the teacher] The teacher is MetaDrive's rule-based driver in the family of the Intelligent Driver Model, which sets the acceleration from the current speed, the desired speed and the gap to the vehicle ahead: M.\,Treiber, A.\,Hennecke, D.\,Helbing, \url{https://arxiv.org/abs/cond-mat/0002177}. The mapping above changes its two parameters (desired speed, desired gap).
+\end{description}
+
+% -------------------------------------------------------------------------------------------------------------------------------------
+\subsection{Imitation training: behaviour cloning and dataset aggregation}
+\[\mathcal L(\theta)=\frac1N\sum_{i=1}^{N}\big\lVert \pi_\theta(o_i)-a_i^{\text{teacher}}\big\rVert^2,\qquad \pi_{\text{run},t}=\begin{cases}\text{teacher action}&\text{with probability }\beta_t=0.5^{\,t}\\ \pi_\theta\text{'s action}&\text{otherwise}\end{cases}\]
+\begin{description}[leftmargin=2.6cm,style=nextline]
+\item[Symbols] $\pi_\theta$: the driving network with adjustable numbers $\theta$; $o_i$: what it sees in sample $i$ (grid and vehicle-state numbers); $a_i^{\text{teacher}}$: the two numbers (steering, throttle or brake) that the teacher would have chosen in that state; $N$: number of samples collected so far; $\lVert\cdot\rVert^2$: sum of squared differences of the two numbers. $t$: round of dataset aggregation (0, 1, 2, \dots); $\beta_t$: how often the teacher, rather than the network, is executed while collecting data in round $t$ (round 0: 1, so the teacher drives).
+\item[Why] \emph{Behaviour cloning} (squared error on recorded actions) is supervised learning and trains in minutes. Its weakness is that the network only sees states the teacher visited; after one small mistake it is in a state that is not in the data, and errors grow. \emph{Dataset aggregation} fixes this: the network drives (partly), the teacher labels the states the network actually reached, and those labels are added and the network is retrained on everything. The share of teacher control $\beta_t$ shrinks each round so that the data increasingly come from the network's own mistakes.
+\item[Derivation of the idea] If the network errs with probability $\epsilon$ per step on the teacher's states, behaviour cloning can accumulate error of the order $\epsilon T^2$ over $T$ steps, because each mistake moves the car to states the teacher never showed. Training on the network's own state distribution, as dataset aggregation does, reduces this to the order $\epsilon T$ (Ross, Gordon and Bagnell prove this through a reduction to no-regret online learning).
+\item[Source] S.\,Ross, G.\,Gordon, J.\,A.\,Bagnell, ``A reduction of imitation learning and structured prediction to no-regret online learning'' (DAgger), \url{https://arxiv.org/abs/1011.0686}. The schedule $\beta_t=0.5^t$ and the noise level are our settings. The optimiser, Adam: D.\,Kingma and J.\,Ba, \url{https://arxiv.org/abs/1412.6980}.
+\item[Network output] Both outputs pass through $\tanh$, so steering and throttle are between $-1$ and $1$.
+\end{description}
+
+% -------------------------------------------------------------------------------------------------------------------------------------
+\subsection{Reinforcement learning: the objective and the reward terms}
+\[L^{\text{clip}}(\theta)=\mathbb E_t\Big[\min\big(\rho_t(\theta)\hat A_t,\;\operatorname{clip}(\rho_t(\theta),1-\varepsilon,1+\varepsilon)\hat A_t\big)\Big],\qquad \rho_t(\theta)=\frac{\pi_\theta(a_t\mid s_t)}{\pi_{\theta_{\text{old}}}(a_t\mid s_t)}\]
+\begin{description}[leftmargin=2.6cm,style=nextline]
+\item[Symbols] $s_t,a_t$: state and action at step $t$. $\pi_\theta(a\mid s)$: the probability that the current policy takes action $a$ in state $s$; $\theta_{\text{old}}$: the policy that collected the data. $\rho_t$: how much more (or less) likely the new policy makes the action that was taken. $\hat A_t$: advantage, an estimate of how much better than average that action was. $\varepsilon$: the clip range (0.1 in attempt 2; the other attempts' values are in the training records). $\mathbb E_t$: average over the collected steps.
+\item[Why] A policy gradient step that is too large can wreck a working policy. Clipping the ratio $\rho_t$ removes the incentive to move the policy further than $1\pm\varepsilon$ from the one that collected the data, which allows several update epochs on the same batch.
+\item[Source] J.\,Schulman et al., ``Proximal policy optimization algorithms'', \url{https://arxiv.org/abs/1707.06347}.
+\end{description}
+
+\begin{table}[H]\centering\small
+\caption{The terms of the two reward formulas in the reinforcement-learning section. Every term is our design choice; the form (progress minus penalties plus terminal reward) is the usual shaping style in driving simulators such as MetaDrive.}\label{tab:rewardterms}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{4.0cm}>{\raggedright\arraybackslash}p{4.9cm}X@{}}\toprule
+Term & Meaning of the symbols & Why it is there\\\midrule
+$\min(\Delta s, v_{cap}\Delta t)/(v_{ref}\Delta t)$ & $\Delta s$: metres driven in the step; $v_{cap}$: speed cap; $v_{ref}=10$\,m/s: reference speed; $\Delta t=0.1$\,s. & Reward progress, capped so that speeding is not paid.\\
+$-0.5\,d^2$ & $d$: sideways distance from the lane centre (m). & Stay in the lane; squared so large errors cost much more.\\
+$-5\,\psi^2$ & $\psi$: angle between car and lane direction (rad). & Keep the car pointing along the road.\\
+$-0.1\lVert a_t-a_{t-1}\rVert^2$ & $a_t$: action (steering, throttle or brake). & Smooth control, no twitching.\\
+$-0.002\,j^2$ & $j$: jerk, rate of change of acceleration. & Passenger comfort and smoother speed.\\
+$-0.2\max(0,-a^{thr}_t)$ (version 1) & $a^{thr}_t$: throttle or brake command, negative = braking. & Mild penalty on braking (removed in version 3).\\
+$-0.5\big((v-v_{cap})_+/2\big)^2$ (version 1) & $(x)_+=\max(0,x)$; $v$: speed. & Penalty for exceeding the speed cap.\\
+$-2(1-\tau/3)_+^2$ (version 3) & $\tau$: predicted time to collision (s). & Rises as a collision gets closer than 3\,s.\\
+$-(1-g/6)_+^2$ (version 3) & $g$: gap to the vehicle ahead (m). & Penalty for following closer than 6\,m.\\
+$-0.02\,E_t$ (version 3) & $E_t$: energy of the step in Wh (Section~\ref{sec:formulas}, energy). & Make energy cost part of the objective.\\
+$-0.2[v<0.5]$ & $[\cdot]$ is 1 if true, 0 otherwise. & Stops the policy from learning to stand still.\\
+$R_{end}$ & Terminal reward: $+20$/$-50$ (version 1), $+50$/$-100$ (version 3). & Large reward for reaching the goal, large penalty for crashing or leaving the road.\\\bottomrule
+\end{tabularx}
+\end{table}
+
+% -------------------------------------------------------------------------------------------------------------------------------------
+\subsection{Grid geometry}
+The bird's-eye-view grid has 64$\times$64 cells over 20\,m $\times$ 20\,m, so one cell is $20/64=0.3125$\,m. The window starts 2.5\,m behind the car and reaches 17.5\,m ahead, which is why vehicles further than 17.5\,m are invisible to every grid model. This is a design of the teammates' code (\pth{bev_state/}), not ours.
+
+\subsection{References for this section}
+\begin{itemize}[itemsep=1pt]
+\item Ross, Gordon, Bagnell (DAgger): \url{https://arxiv.org/abs/1011.0686}
+\item Treiber, Hennecke, Helbing (Intelligent Driver Model): \url{https://arxiv.org/abs/cond-mat/0002177}
+\item Schulman et al.\ (proximal policy optimisation): \url{https://arxiv.org/abs/1707.06347}
+\item Kingma, Ba (Adam): \url{https://arxiv.org/abs/1412.6980}
+\item Li et al.\ (MetaDrive): \url{https://arxiv.org/abs/2109.12674}
+\item Dhananjaya, Ravi Kumar, Yogamani (weather and light classification): \url{https://arxiv.org/abs/2104.14042}
+\item Visibility estimation under fog (DMRVisNet): \url{https://arxiv.org/abs/2112.04278}
+\item Survey of perception under adverse weather: \url{https://arxiv.org/abs/2112.08936}
+\item Without arXiv version: Wilson (1927); Brown, Cai, DasGupta (2001); McNemar (1947); Guzzella and Sciarretta, \emph{Vehicle Propulsion Systems}.
+\end{itemize}

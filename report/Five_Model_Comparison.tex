@@ -62,6 +62,7 @@ Models 1 to 4 are tested with \emph{measured} detector retention but with an ide
 \input{figure_blocks/fig_detector_retention_by_weather_intensity}
 
 \subsection{The numbers reported, and their formulas}
+Every symbol, the reason for each formula, its derivation and its source are explained in Section~ef{sec:formulas}; this subsection gives the short version.
 Let $n=200$ be the number of episodes and $k$ the number that ended in success.
 \begin{description}[leftmargin=3.2cm,style=nextline]
 \item[Success rate] $\hat p=k/n$. Collision, left-road and timeout rates are computed the same way; the four rates add up to 1.
@@ -95,6 +96,8 @@ Model & What determines its energy\\\midrule
 5 Image-only & Fast and erratic (about 9\,m/s), with many accelerations; it uses much more energy per kilometre, but most episodes end early by leaving the road.\\\bottomrule
 \end{tabularx}
 \end{table}
+
+\input{formula_guide}
 
 % =====================================================================================================================================
 \section{Results of all five models together}\label{sec:allresults}
