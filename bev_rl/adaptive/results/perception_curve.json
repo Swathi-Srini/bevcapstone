@@ -1,0 +1,4504 @@
+{
+ "rows": [
+  {
+   "seed": 1000,
+   "weather": "none",
+   "level": 0.0,
+   "ws": 0,
+   "n_yolo": 2,
+   "front": 2,
+   "n_objects": 2
+  },
+  {
+   "seed": 1000,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 0,
+   "n_yolo": 2,
+   "front": 2,
+   "n_objects": 2
+  },
+  {
+   "seed": 1000,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 1,
+   "n_yolo": 2,
+   "front": 2,
+   "n_objects": 2
+  },
+  {
+   "seed": 1000,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 3,
+   "front": 3,
+   "n_objects": 3
+  },
+  {
+   "seed": 1000,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 3,
+   "front": 3,
+   "n_objects": 3
+  },
+  {
+   "seed": 1000,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 3,
+   "front": 3,
+   "n_objects": 3
+  },
+  {
+   "seed": 1000,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 3,
+   "front": 3,
+   "n_objects": 3
+  },
+  {
+   "seed": 1000,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 1,
+   "front": 1,
+   "n_objects": 1
+  },
+  {
+   "seed": 1000,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 1,
+   "front": 1,
+   "n_objects": 1
+  },
+  {
+   "seed": 1000,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 0,
+   "n_yolo": 1,
+   "front": 1,
+   "n_objects": 1
+  },
+  {
+   "seed": 1000,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 1,
+   "n_yolo": 1,
+   "front": 1,
+   "n_objects": 1
+  },
+  {
+   "seed": 1000,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 1,
+   "front": 1,
+   "n_objects": 1
+  },
+  {
+   "seed": 1000,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 1,
+   "front": 1,
+   "n_objects": 1
+  },
+  {
+   "seed": 1000,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 0,
+   "n_yolo": 2,
+   "front": 2,
+   "n_objects": 2
+  },
+  {
+   "seed": 1000,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 1,
+   "n_yolo": 2,
+   "front": 2,
+   "n_objects": 2
+  },
+  {
+   "seed": 1000,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 0,
+   "n_yolo": 1,
+   "front": 1,
+   "n_objects": 1
+  },
+  {
+   "seed": 1000,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 1,
+   "n_yolo": 1,
+   "front": 1,
+   "n_objects": 1
+  },
+  {
+   "seed": 1000,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 1,
+   "front": 1,
+   "n_objects": 1
+  },
+  {
+   "seed": 1000,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 1,
+   "front": 1,
+   "n_objects": 1
+  },
+  {
+   "seed": 1000,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 1,
+   "front": 1,
+   "n_objects": 1
+  },
+  {
+   "seed": 1000,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1000,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1000,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1000,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1000,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1001,
+   "weather": "none",
+   "level": 0.0,
+   "ws": 0,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1001,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 0,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1001,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 1,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1001,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 8,
+   "front": 2,
+   "n_objects": 6
+  },
+  {
+   "seed": 1001,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 8,
+   "front": 2,
+   "n_objects": 6
+  },
+  {
+   "seed": 1001,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 8,
+   "front": 2,
+   "n_objects": 6
+  },
+  {
+   "seed": 1001,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 8,
+   "front": 2,
+   "n_objects": 6
+  },
+  {
+   "seed": 1001,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 8,
+   "front": 2,
+   "n_objects": 6
+  },
+  {
+   "seed": 1001,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 8,
+   "front": 2,
+   "n_objects": 6
+  },
+  {
+   "seed": 1001,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 0,
+   "n_yolo": 8,
+   "front": 2,
+   "n_objects": 6
+  },
+  {
+   "seed": 1001,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 1,
+   "n_yolo": 7,
+   "front": 2,
+   "n_objects": 5
+  },
+  {
+   "seed": 1001,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1001,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1001,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 0,
+   "n_yolo": 5,
+   "front": 2,
+   "n_objects": 3
+  },
+  {
+   "seed": 1001,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 1,
+   "n_yolo": 5,
+   "front": 1,
+   "n_objects": 4
+  },
+  {
+   "seed": 1001,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 0,
+   "n_yolo": 6,
+   "front": 1,
+   "n_objects": 5
+  },
+  {
+   "seed": 1001,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 1,
+   "n_yolo": 5,
+   "front": 2,
+   "n_objects": 3
+  },
+  {
+   "seed": 1001,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1001,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1001,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 3,
+   "front": 0,
+   "n_objects": 3
+  },
+  {
+   "seed": 1001,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1001,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1001,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1001,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1001,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1002,
+   "weather": "none",
+   "level": 0.0,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1002,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1002,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1002,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1002,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1002,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1002,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1002,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1002,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1002,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 0,
+   "n_yolo": 5,
+   "front": 1,
+   "n_objects": 4
+  },
+  {
+   "seed": 1002,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 1,
+   "n_yolo": 6,
+   "front": 1,
+   "n_objects": 5
+  },
+  {
+   "seed": 1002,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1002,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1002,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 0,
+   "n_yolo": 11,
+   "front": 3,
+   "n_objects": 8
+  },
+  {
+   "seed": 1002,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 1,
+   "n_yolo": 13,
+   "front": 3,
+   "n_objects": 10
+  },
+  {
+   "seed": 1002,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1002,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 1,
+   "n_yolo": 11,
+   "front": 3,
+   "n_objects": 8
+  },
+  {
+   "seed": 1002,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 10,
+   "front": 3,
+   "n_objects": 7
+  },
+  {
+   "seed": 1002,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 11,
+   "front": 3,
+   "n_objects": 8
+  },
+  {
+   "seed": 1002,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 6,
+   "front": 1,
+   "n_objects": 5
+  },
+  {
+   "seed": 1002,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 10,
+   "front": 3,
+   "n_objects": 7
+  },
+  {
+   "seed": 1002,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1002,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 2,
+   "front": 1,
+   "n_objects": 1
+  },
+  {
+   "seed": 1002,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 1,
+   "front": 0,
+   "n_objects": 1
+  },
+  {
+   "seed": 1002,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1003,
+   "weather": "none",
+   "level": 0.0,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1003,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1003,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1003,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1003,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1003,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1003,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1003,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1003,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1003,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 0,
+   "n_yolo": 7,
+   "front": 2,
+   "n_objects": 5
+  },
+  {
+   "seed": 1003,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 1,
+   "n_yolo": 7,
+   "front": 2,
+   "n_objects": 5
+  },
+  {
+   "seed": 1003,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1003,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1003,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 0,
+   "n_yolo": 11,
+   "front": 3,
+   "n_objects": 8
+  },
+  {
+   "seed": 1003,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 1,
+   "n_yolo": 10,
+   "front": 2,
+   "n_objects": 8
+  },
+  {
+   "seed": 1003,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 0,
+   "n_yolo": 6,
+   "front": 2,
+   "n_objects": 4
+  },
+  {
+   "seed": 1003,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 1,
+   "n_yolo": 6,
+   "front": 2,
+   "n_objects": 4
+  },
+  {
+   "seed": 1003,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 5,
+   "front": 1,
+   "n_objects": 4
+  },
+  {
+   "seed": 1003,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1003,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1003,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 5,
+   "front": 1,
+   "n_objects": 4
+  },
+  {
+   "seed": 1003,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 2,
+   "front": 1,
+   "n_objects": 1
+  },
+  {
+   "seed": 1003,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 2,
+   "front": 1,
+   "n_objects": 1
+  },
+  {
+   "seed": 1003,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1003,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1004,
+   "weather": "none",
+   "level": 0.0,
+   "ws": 0,
+   "n_yolo": 8,
+   "front": 2,
+   "n_objects": 6
+  },
+  {
+   "seed": 1004,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 0,
+   "n_yolo": 11,
+   "front": 3,
+   "n_objects": 8
+  },
+  {
+   "seed": 1004,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1004,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1004,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1004,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1004,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 11,
+   "front": 3,
+   "n_objects": 8
+  },
+  {
+   "seed": 1004,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 11,
+   "front": 3,
+   "n_objects": 8
+  },
+  {
+   "seed": 1004,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 10,
+   "front": 2,
+   "n_objects": 8
+  },
+  {
+   "seed": 1004,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 0,
+   "n_yolo": 8,
+   "front": 2,
+   "n_objects": 6
+  },
+  {
+   "seed": 1004,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 1,
+   "n_yolo": 8,
+   "front": 2,
+   "n_objects": 6
+  },
+  {
+   "seed": 1004,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 1,
+   "front": 0,
+   "n_objects": 1
+  },
+  {
+   "seed": 1004,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 3,
+   "front": 0,
+   "n_objects": 3
+  },
+  {
+   "seed": 1004,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 0,
+   "n_yolo": 7,
+   "front": 1,
+   "n_objects": 6
+  },
+  {
+   "seed": 1004,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 1,
+   "n_yolo": 8,
+   "front": 2,
+   "n_objects": 6
+  },
+  {
+   "seed": 1004,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 0,
+   "n_yolo": 5,
+   "front": 3,
+   "n_objects": 2
+  },
+  {
+   "seed": 1004,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 1,
+   "n_yolo": 6,
+   "front": 2,
+   "n_objects": 4
+  },
+  {
+   "seed": 1004,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 5,
+   "front": 2,
+   "n_objects": 3
+  },
+  {
+   "seed": 1004,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 3,
+   "front": 0,
+   "n_objects": 3
+  },
+  {
+   "seed": 1004,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 3,
+   "front": 1,
+   "n_objects": 2
+  },
+  {
+   "seed": 1004,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1004,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1004,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 1,
+   "front": 1,
+   "n_objects": 0
+  },
+  {
+   "seed": 1004,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1004,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1005,
+   "weather": "none",
+   "level": 0.0,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1005,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1005,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1005,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1005,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1005,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1005,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1005,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1005,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1005,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 0,
+   "n_yolo": 5,
+   "front": 2,
+   "n_objects": 3
+  },
+  {
+   "seed": 1005,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 1,
+   "n_yolo": 5,
+   "front": 1,
+   "n_objects": 4
+  },
+  {
+   "seed": 1005,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1005,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1005,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 0,
+   "n_yolo": 14,
+   "front": 3,
+   "n_objects": 11
+  },
+  {
+   "seed": 1005,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 1,
+   "n_yolo": 14,
+   "front": 3,
+   "n_objects": 11
+  },
+  {
+   "seed": 1005,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 0,
+   "n_yolo": 10,
+   "front": 3,
+   "n_objects": 7
+  },
+  {
+   "seed": 1005,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 1,
+   "n_yolo": 15,
+   "front": 3,
+   "n_objects": 12
+  },
+  {
+   "seed": 1005,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 9,
+   "front": 3,
+   "n_objects": 6
+  },
+  {
+   "seed": 1005,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 7,
+   "front": 2,
+   "n_objects": 5
+  },
+  {
+   "seed": 1005,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 5,
+   "front": 2,
+   "n_objects": 3
+  },
+  {
+   "seed": 1005,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 5,
+   "front": 1,
+   "n_objects": 4
+  },
+  {
+   "seed": 1005,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 2,
+   "front": 1,
+   "n_objects": 1
+  },
+  {
+   "seed": 1005,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 1,
+   "front": 0,
+   "n_objects": 1
+  },
+  {
+   "seed": 1005,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1005,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1006,
+   "weather": "none",
+   "level": 0.0,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1006,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1006,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1006,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1006,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1006,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1006,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1006,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1006,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1006,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 0,
+   "n_yolo": 14,
+   "front": 4,
+   "n_objects": 10
+  },
+  {
+   "seed": 1006,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 1,
+   "n_yolo": 13,
+   "front": 3,
+   "n_objects": 10
+  },
+  {
+   "seed": 1006,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 7,
+   "front": 2,
+   "n_objects": 5
+  },
+  {
+   "seed": 1006,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 8,
+   "front": 2,
+   "n_objects": 6
+  },
+  {
+   "seed": 1006,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1006,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 1,
+   "n_yolo": 11,
+   "front": 3,
+   "n_objects": 8
+  },
+  {
+   "seed": 1006,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1006,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1006,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 11,
+   "front": 3,
+   "n_objects": 8
+  },
+  {
+   "seed": 1006,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 5,
+   "front": 2,
+   "n_objects": 3
+  },
+  {
+   "seed": 1006,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 3,
+   "front": 0,
+   "n_objects": 3
+  },
+  {
+   "seed": 1006,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 3,
+   "front": 1,
+   "n_objects": 2
+  },
+  {
+   "seed": 1006,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 3,
+   "front": 1,
+   "n_objects": 2
+  },
+  {
+   "seed": 1006,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 2,
+   "front": 0,
+   "n_objects": 2
+  },
+  {
+   "seed": 1006,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1006,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 1,
+   "front": 0,
+   "n_objects": 1
+  },
+  {
+   "seed": 1007,
+   "weather": "none",
+   "level": 0.0,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1007,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1007,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1007,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1007,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1007,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1007,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1007,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1007,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1007,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1007,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1007,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1007,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1007,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1007,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 1,
+   "n_yolo": 11,
+   "front": 3,
+   "n_objects": 8
+  },
+  {
+   "seed": 1007,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 0,
+   "n_yolo": 11,
+   "front": 3,
+   "n_objects": 8
+  },
+  {
+   "seed": 1007,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 1,
+   "n_yolo": 9,
+   "front": 2,
+   "n_objects": 7
+  },
+  {
+   "seed": 1007,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1007,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 11,
+   "front": 3,
+   "n_objects": 8
+  },
+  {
+   "seed": 1007,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 8,
+   "front": 3,
+   "n_objects": 5
+  },
+  {
+   "seed": 1007,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 9,
+   "front": 3,
+   "n_objects": 6
+  },
+  {
+   "seed": 1007,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1007,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 3,
+   "front": 1,
+   "n_objects": 2
+  },
+  {
+   "seed": 1007,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 2,
+   "front": 0,
+   "n_objects": 2
+  },
+  {
+   "seed": 1007,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 1,
+   "front": 0,
+   "n_objects": 1
+  },
+  {
+   "seed": 1008,
+   "weather": "none",
+   "level": 0.0,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1008,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1008,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1008,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 15,
+   "front": 3,
+   "n_objects": 12
+  },
+  {
+   "seed": 1008,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 16,
+   "front": 4,
+   "n_objects": 12
+  },
+  {
+   "seed": 1008,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 8,
+   "front": 2,
+   "n_objects": 6
+  },
+  {
+   "seed": 1008,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 10,
+   "front": 3,
+   "n_objects": 7
+  },
+  {
+   "seed": 1008,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 5,
+   "front": 1,
+   "n_objects": 4
+  },
+  {
+   "seed": 1008,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 5,
+   "front": 2,
+   "n_objects": 3
+  },
+  {
+   "seed": 1008,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1008,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 1,
+   "n_yolo": 1,
+   "front": 0,
+   "n_objects": 1
+  },
+  {
+   "seed": 1008,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1008,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1008,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 0,
+   "n_yolo": 11,
+   "front": 2,
+   "n_objects": 9
+  },
+  {
+   "seed": 1008,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 1,
+   "n_yolo": 11,
+   "front": 4,
+   "n_objects": 7
+  },
+  {
+   "seed": 1008,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 0,
+   "n_yolo": 9,
+   "front": 3,
+   "n_objects": 6
+  },
+  {
+   "seed": 1008,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 4,
+   "n_objects": 8
+  },
+  {
+   "seed": 1008,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 7,
+   "front": 1,
+   "n_objects": 6
+  },
+  {
+   "seed": 1008,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 8,
+   "front": 2,
+   "n_objects": 6
+  },
+  {
+   "seed": 1008,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 7,
+   "front": 3,
+   "n_objects": 4
+  },
+  {
+   "seed": 1008,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 3,
+   "front": 0,
+   "n_objects": 3
+  },
+  {
+   "seed": 1008,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 1,
+   "front": 0,
+   "n_objects": 1
+  },
+  {
+   "seed": 1008,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1008,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1008,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1009,
+   "weather": "none",
+   "level": 0.0,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1009,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1009,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1009,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1009,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1009,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1009,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1009,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 13,
+   "front": 3,
+   "n_objects": 10
+  },
+  {
+   "seed": 1009,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 14,
+   "front": 3,
+   "n_objects": 11
+  },
+  {
+   "seed": 1009,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1009,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1009,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 5,
+   "front": 1,
+   "n_objects": 4
+  },
+  {
+   "seed": 1009,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 5,
+   "front": 1,
+   "n_objects": 4
+  },
+  {
+   "seed": 1009,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 0,
+   "n_yolo": 14,
+   "front": 4,
+   "n_objects": 10
+  },
+  {
+   "seed": 1009,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 1,
+   "n_yolo": 13,
+   "front": 4,
+   "n_objects": 9
+  },
+  {
+   "seed": 1009,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 0,
+   "n_yolo": 11,
+   "front": 3,
+   "n_objects": 8
+  },
+  {
+   "seed": 1009,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 1,
+   "n_yolo": 11,
+   "front": 2,
+   "n_objects": 9
+  },
+  {
+   "seed": 1009,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 10,
+   "front": 3,
+   "n_objects": 7
+  },
+  {
+   "seed": 1009,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 8,
+   "front": 1,
+   "n_objects": 7
+  },
+  {
+   "seed": 1009,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 6,
+   "front": 2,
+   "n_objects": 4
+  },
+  {
+   "seed": 1009,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1009,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1009,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 1,
+   "front": 0,
+   "n_objects": 1
+  },
+  {
+   "seed": 1009,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1009,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1010,
+   "weather": "none",
+   "level": 0.0,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1010,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1010,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1010,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1010,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1010,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 14,
+   "front": 4,
+   "n_objects": 10
+  },
+  {
+   "seed": 1010,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 15,
+   "front": 4,
+   "n_objects": 11
+  },
+  {
+   "seed": 1010,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 15,
+   "front": 4,
+   "n_objects": 11
+  },
+  {
+   "seed": 1010,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 15,
+   "front": 4,
+   "n_objects": 11
+  },
+  {
+   "seed": 1010,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 0,
+   "n_yolo": 5,
+   "front": 2,
+   "n_objects": 3
+  },
+  {
+   "seed": 1010,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 1,
+   "n_yolo": 8,
+   "front": 1,
+   "n_objects": 7
+  },
+  {
+   "seed": 1010,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1010,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1010,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 0,
+   "n_yolo": 10,
+   "front": 2,
+   "n_objects": 8
+  },
+  {
+   "seed": 1010,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 1,
+   "n_yolo": 10,
+   "front": 2,
+   "n_objects": 8
+  },
+  {
+   "seed": 1010,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 0,
+   "n_yolo": 8,
+   "front": 2,
+   "n_objects": 6
+  },
+  {
+   "seed": 1010,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 1,
+   "n_yolo": 11,
+   "front": 3,
+   "n_objects": 8
+  },
+  {
+   "seed": 1010,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 9,
+   "front": 2,
+   "n_objects": 7
+  },
+  {
+   "seed": 1010,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 7,
+   "front": 2,
+   "n_objects": 5
+  },
+  {
+   "seed": 1010,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 5,
+   "front": 1,
+   "n_objects": 4
+  },
+  {
+   "seed": 1010,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 4,
+   "front": 2,
+   "n_objects": 2
+  },
+  {
+   "seed": 1010,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1010,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 1,
+   "front": 1,
+   "n_objects": 0
+  },
+  {
+   "seed": 1010,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1010,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1011,
+   "weather": "none",
+   "level": 0.0,
+   "ws": 0,
+   "n_yolo": 16,
+   "front": 4,
+   "n_objects": 12
+  },
+  {
+   "seed": 1011,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 0,
+   "n_yolo": 16,
+   "front": 4,
+   "n_objects": 12
+  },
+  {
+   "seed": 1011,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 1,
+   "n_yolo": 16,
+   "front": 4,
+   "n_objects": 12
+  },
+  {
+   "seed": 1011,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 14,
+   "front": 3,
+   "n_objects": 11
+  },
+  {
+   "seed": 1011,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 15,
+   "front": 4,
+   "n_objects": 11
+  },
+  {
+   "seed": 1011,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1011,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1011,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1011,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1011,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1011,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1011,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1011,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1011,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 0,
+   "n_yolo": 13,
+   "front": 4,
+   "n_objects": 9
+  },
+  {
+   "seed": 1011,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 1,
+   "n_yolo": 13,
+   "front": 3,
+   "n_objects": 10
+  },
+  {
+   "seed": 1011,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1011,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 1,
+   "n_yolo": 11,
+   "front": 2,
+   "n_objects": 9
+  },
+  {
+   "seed": 1011,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 8,
+   "front": 3,
+   "n_objects": 5
+  },
+  {
+   "seed": 1011,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 11,
+   "front": 3,
+   "n_objects": 8
+  },
+  {
+   "seed": 1011,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 5,
+   "front": 1,
+   "n_objects": 4
+  },
+  {
+   "seed": 1011,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 7,
+   "front": 1,
+   "n_objects": 6
+  },
+  {
+   "seed": 1011,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 1,
+   "front": 0,
+   "n_objects": 1
+  },
+  {
+   "seed": 1011,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 1,
+   "front": 1,
+   "n_objects": 0
+  },
+  {
+   "seed": 1011,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1011,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1012,
+   "weather": "none",
+   "level": 0.0,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1012,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1012,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1012,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1012,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1012,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1012,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1012,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1012,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1012,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 0,
+   "n_yolo": 5,
+   "front": 1,
+   "n_objects": 4
+  },
+  {
+   "seed": 1012,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 1,
+   "n_yolo": 7,
+   "front": 2,
+   "n_objects": 5
+  },
+  {
+   "seed": 1012,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 2,
+   "front": 1,
+   "n_objects": 1
+  },
+  {
+   "seed": 1012,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1012,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 0,
+   "n_yolo": 10,
+   "front": 3,
+   "n_objects": 7
+  },
+  {
+   "seed": 1012,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 1,
+   "n_yolo": 10,
+   "front": 2,
+   "n_objects": 8
+  },
+  {
+   "seed": 1012,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 0,
+   "n_yolo": 10,
+   "front": 2,
+   "n_objects": 8
+  },
+  {
+   "seed": 1012,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1012,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 10,
+   "front": 3,
+   "n_objects": 7
+  },
+  {
+   "seed": 1012,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 10,
+   "front": 2,
+   "n_objects": 8
+  },
+  {
+   "seed": 1012,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 8,
+   "front": 2,
+   "n_objects": 6
+  },
+  {
+   "seed": 1012,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 8,
+   "front": 2,
+   "n_objects": 6
+  },
+  {
+   "seed": 1012,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1012,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 1,
+   "front": 0,
+   "n_objects": 1
+  },
+  {
+   "seed": 1012,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1012,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 1,
+   "front": 0,
+   "n_objects": 1
+  },
+  {
+   "seed": 1013,
+   "weather": "none",
+   "level": 0.0,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1013,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1013,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1013,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1013,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1013,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 14,
+   "front": 4,
+   "n_objects": 10
+  },
+  {
+   "seed": 1013,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 15,
+   "front": 4,
+   "n_objects": 11
+  },
+  {
+   "seed": 1013,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 13,
+   "front": 3,
+   "n_objects": 10
+  },
+  {
+   "seed": 1013,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1013,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1013,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1013,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 3,
+   "front": 1,
+   "n_objects": 2
+  },
+  {
+   "seed": 1013,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 3,
+   "front": 0,
+   "n_objects": 3
+  },
+  {
+   "seed": 1013,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 0,
+   "n_yolo": 13,
+   "front": 3,
+   "n_objects": 10
+  },
+  {
+   "seed": 1013,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 1,
+   "n_yolo": 15,
+   "front": 4,
+   "n_objects": 11
+  },
+  {
+   "seed": 1013,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1013,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 1,
+   "n_yolo": 13,
+   "front": 4,
+   "n_objects": 9
+  },
+  {
+   "seed": 1013,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 11,
+   "front": 3,
+   "n_objects": 8
+  },
+  {
+   "seed": 1013,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 11,
+   "front": 2,
+   "n_objects": 9
+  },
+  {
+   "seed": 1013,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 8,
+   "front": 2,
+   "n_objects": 6
+  },
+  {
+   "seed": 1013,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 8,
+   "front": 1,
+   "n_objects": 7
+  },
+  {
+   "seed": 1013,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 1,
+   "front": 0,
+   "n_objects": 1
+  },
+  {
+   "seed": 1013,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 3,
+   "front": 1,
+   "n_objects": 2
+  },
+  {
+   "seed": 1013,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1013,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1014,
+   "weather": "none",
+   "level": 0.0,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1014,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1014,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1014,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1014,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1014,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1014,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1014,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1014,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1014,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1014,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1014,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1014,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1014,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1014,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1014,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1014,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1014,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1014,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1014,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 11,
+   "front": 2,
+   "n_objects": 9
+  },
+  {
+   "seed": 1014,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1014,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 5,
+   "front": 2,
+   "n_objects": 3
+  },
+  {
+   "seed": 1014,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 5,
+   "front": 1,
+   "n_objects": 4
+  },
+  {
+   "seed": 1014,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 1,
+   "front": 0,
+   "n_objects": 1
+  },
+  {
+   "seed": 1014,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1015,
+   "weather": "none",
+   "level": 0.0,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1015,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1015,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1015,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1015,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1015,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1015,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1015,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 11,
+   "front": 3,
+   "n_objects": 8
+  },
+  {
+   "seed": 1015,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 11,
+   "front": 2,
+   "n_objects": 9
+  },
+  {
+   "seed": 1015,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 0,
+   "n_yolo": 7,
+   "front": 2,
+   "n_objects": 5
+  },
+  {
+   "seed": 1015,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 1,
+   "n_yolo": 7,
+   "front": 2,
+   "n_objects": 5
+  },
+  {
+   "seed": 1015,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 3,
+   "front": 1,
+   "n_objects": 2
+  },
+  {
+   "seed": 1015,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 2,
+   "front": 1,
+   "n_objects": 1
+  },
+  {
+   "seed": 1015,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 0,
+   "n_yolo": 7,
+   "front": 2,
+   "n_objects": 5
+  },
+  {
+   "seed": 1015,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 1,
+   "n_yolo": 9,
+   "front": 2,
+   "n_objects": 7
+  },
+  {
+   "seed": 1015,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 0,
+   "n_yolo": 7,
+   "front": 2,
+   "n_objects": 5
+  },
+  {
+   "seed": 1015,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 1,
+   "n_yolo": 6,
+   "front": 1,
+   "n_objects": 5
+  },
+  {
+   "seed": 1015,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 7,
+   "front": 1,
+   "n_objects": 6
+  },
+  {
+   "seed": 1015,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 5,
+   "front": 2,
+   "n_objects": 3
+  },
+  {
+   "seed": 1015,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 5,
+   "front": 1,
+   "n_objects": 4
+  },
+  {
+   "seed": 1015,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 5,
+   "front": 1,
+   "n_objects": 4
+  },
+  {
+   "seed": 1015,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1015,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 3,
+   "front": 0,
+   "n_objects": 3
+  },
+  {
+   "seed": 1015,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1015,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 3,
+   "front": 1,
+   "n_objects": 2
+  },
+  {
+   "seed": 1016,
+   "weather": "none",
+   "level": 0.0,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1016,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1016,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1016,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1016,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1016,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1016,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1016,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 14,
+   "front": 4,
+   "n_objects": 10
+  },
+  {
+   "seed": 1016,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1016,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 0,
+   "n_yolo": 7,
+   "front": 3,
+   "n_objects": 4
+  },
+  {
+   "seed": 1016,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 1,
+   "n_yolo": 5,
+   "front": 2,
+   "n_objects": 3
+  },
+  {
+   "seed": 1016,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1016,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 6,
+   "front": 2,
+   "n_objects": 4
+  },
+  {
+   "seed": 1016,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1016,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 1,
+   "n_yolo": 9,
+   "front": 2,
+   "n_objects": 7
+  },
+  {
+   "seed": 1016,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 0,
+   "n_yolo": 10,
+   "front": 3,
+   "n_objects": 7
+  },
+  {
+   "seed": 1016,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 1,
+   "n_yolo": 9,
+   "front": 3,
+   "n_objects": 6
+  },
+  {
+   "seed": 1016,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 8,
+   "front": 2,
+   "n_objects": 6
+  },
+  {
+   "seed": 1016,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 7,
+   "front": 1,
+   "n_objects": 6
+  },
+  {
+   "seed": 1016,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 6,
+   "front": 2,
+   "n_objects": 4
+  },
+  {
+   "seed": 1016,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 5,
+   "front": 2,
+   "n_objects": 3
+  },
+  {
+   "seed": 1016,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1016,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 1,
+   "front": 0,
+   "n_objects": 1
+  },
+  {
+   "seed": 1016,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1016,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1017,
+   "weather": "none",
+   "level": 0.0,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1017,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1017,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1017,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1017,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1017,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1017,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1017,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1017,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1017,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 0,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1017,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 1,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1017,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1017,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1017,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 0,
+   "n_yolo": 11,
+   "front": 3,
+   "n_objects": 8
+  },
+  {
+   "seed": 1017,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1017,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 0,
+   "n_yolo": 7,
+   "front": 2,
+   "n_objects": 5
+  },
+  {
+   "seed": 1017,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 1,
+   "n_yolo": 7,
+   "front": 3,
+   "n_objects": 4
+  },
+  {
+   "seed": 1017,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 9,
+   "front": 2,
+   "n_objects": 7
+  },
+  {
+   "seed": 1017,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 5,
+   "front": 1,
+   "n_objects": 4
+  },
+  {
+   "seed": 1017,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 5,
+   "front": 1,
+   "n_objects": 4
+  },
+  {
+   "seed": 1017,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1017,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 1,
+   "front": 0,
+   "n_objects": 1
+  },
+  {
+   "seed": 1017,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 2,
+   "front": 1,
+   "n_objects": 1
+  },
+  {
+   "seed": 1017,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1017,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1018,
+   "weather": "none",
+   "level": 0.0,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1018,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 0,
+   "n_yolo": 16,
+   "front": 4,
+   "n_objects": 12
+  },
+  {
+   "seed": 1018,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 1,
+   "n_yolo": 16,
+   "front": 4,
+   "n_objects": 12
+  },
+  {
+   "seed": 1018,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 16,
+   "front": 4,
+   "n_objects": 12
+  },
+  {
+   "seed": 1018,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 16,
+   "front": 4,
+   "n_objects": 12
+  },
+  {
+   "seed": 1018,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 13,
+   "front": 3,
+   "n_objects": 10
+  },
+  {
+   "seed": 1018,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 13,
+   "front": 3,
+   "n_objects": 10
+  },
+  {
+   "seed": 1018,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1018,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1018,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 0,
+   "n_yolo": 2,
+   "front": 0,
+   "n_objects": 2
+  },
+  {
+   "seed": 1018,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 1,
+   "n_yolo": 2,
+   "front": 1,
+   "n_objects": 1
+  },
+  {
+   "seed": 1018,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1018,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1018,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 0,
+   "n_yolo": 8,
+   "front": 2,
+   "n_objects": 6
+  },
+  {
+   "seed": 1018,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 1,
+   "n_yolo": 9,
+   "front": 2,
+   "n_objects": 7
+  },
+  {
+   "seed": 1018,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 0,
+   "n_yolo": 10,
+   "front": 4,
+   "n_objects": 6
+  },
+  {
+   "seed": 1018,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 1,
+   "n_yolo": 6,
+   "front": 1,
+   "n_objects": 5
+  },
+  {
+   "seed": 1018,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 7,
+   "front": 2,
+   "n_objects": 5
+  },
+  {
+   "seed": 1018,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 6,
+   "front": 2,
+   "n_objects": 4
+  },
+  {
+   "seed": 1018,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 4,
+   "front": 1,
+   "n_objects": 3
+  },
+  {
+   "seed": 1018,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 5,
+   "front": 2,
+   "n_objects": 3
+  },
+  {
+   "seed": 1018,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1018,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1018,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1018,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 0,
+   "front": 0,
+   "n_objects": 0
+  },
+  {
+   "seed": 1019,
+   "weather": "none",
+   "level": 0.0,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1019,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1019,
+   "weather": "fog",
+   "level": 0.15,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1019,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1019,
+   "weather": "fog",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1019,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1019,
+   "weather": "fog",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1019,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1019,
+   "weather": "fog",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1019,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 0,
+   "n_yolo": 11,
+   "front": 2,
+   "n_objects": 9
+  },
+  {
+   "seed": 1019,
+   "weather": "fog",
+   "level": 0.8,
+   "ws": 1,
+   "n_yolo": 9,
+   "front": 2,
+   "n_objects": 7
+  },
+  {
+   "seed": 1019,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 8,
+   "front": 2,
+   "n_objects": 6
+  },
+  {
+   "seed": 1019,
+   "weather": "fog",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 8,
+   "front": 2,
+   "n_objects": 6
+  },
+  {
+   "seed": 1019,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1019,
+   "weather": "rain",
+   "level": 0.1,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1019,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 0,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1019,
+   "weather": "rain",
+   "level": 0.2,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1019,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 0,
+   "n_yolo": 11,
+   "front": 2,
+   "n_objects": 9
+  },
+  {
+   "seed": 1019,
+   "weather": "rain",
+   "level": 0.3,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1019,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 0,
+   "n_yolo": 11,
+   "front": 3,
+   "n_objects": 8
+  },
+  {
+   "seed": 1019,
+   "weather": "rain",
+   "level": 0.45,
+   "ws": 1,
+   "n_yolo": 12,
+   "front": 3,
+   "n_objects": 9
+  },
+  {
+   "seed": 1019,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 0,
+   "n_yolo": 6,
+   "front": 1,
+   "n_objects": 5
+  },
+  {
+   "seed": 1019,
+   "weather": "rain",
+   "level": 0.6,
+   "ws": 1,
+   "n_yolo": 9,
+   "front": 3,
+   "n_objects": 6
+  },
+  {
+   "seed": 1019,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 0,
+   "n_yolo": 6,
+   "front": 1,
+   "n_objects": 5
+  },
+  {
+   "seed": 1019,
+   "weather": "rain",
+   "level": 1.0,
+   "ws": 1,
+   "n_yolo": 3,
+   "front": 1,
+   "n_objects": 2
+  }
+ ]
+}

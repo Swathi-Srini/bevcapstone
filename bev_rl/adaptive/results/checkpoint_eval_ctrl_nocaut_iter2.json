@@ -1,0 +1,258 @@
+{
+ "run": "ctrl_nocaut",
+ "iter": 2,
+ "weather": "clear:0.0",
+ "c": 0.0,
+ "n": 40,
+ "success": 0.8,
+ "success_ci": [
+  0.6524239261814333,
+  0.8950013502683314
+ ],
+ "crash": 0.075,
+ "off_road": 0.1,
+ "timeout": 0.025,
+ "wh_per_km": 105.18415756450868,
+ "episodes": [
+  {
+   "seed": 1010,
+   "outcome": "success",
+   "wh_per_km": 85.4429465633081,
+   "speed": 8.017207819851329
+  },
+  {
+   "seed": 1011,
+   "outcome": "success",
+   "wh_per_km": 84.47013371060763,
+   "speed": 7.993660344502684
+  },
+  {
+   "seed": 1012,
+   "outcome": "success",
+   "wh_per_km": 78.77771440676321,
+   "speed": 7.990740275722492
+  },
+  {
+   "seed": 1013,
+   "outcome": "success",
+   "wh_per_km": 94.49499492598983,
+   "speed": 7.9504021560289955
+  },
+  {
+   "seed": 1014,
+   "outcome": "success",
+   "wh_per_km": 90.62300501909888,
+   "speed": 7.960204601568043
+  },
+  {
+   "seed": 1015,
+   "outcome": "success",
+   "wh_per_km": 62.45741958957937,
+   "speed": 8.136798308446071
+  },
+  {
+   "seed": 1016,
+   "outcome": "success",
+   "wh_per_km": 90.83679137789147,
+   "speed": 7.955795341246179
+  },
+  {
+   "seed": 1017,
+   "outcome": "success",
+   "wh_per_km": 75.7202071533353,
+   "speed": 8.037978392215434
+  },
+  {
+   "seed": 1018,
+   "outcome": "success",
+   "wh_per_km": 69.62799087173391,
+   "speed": 8.084680338944416
+  },
+  {
+   "seed": 1019,
+   "outcome": "crash",
+   "wh_per_km": 95.0612923448631,
+   "speed": 7.832880161099899
+  },
+  {
+   "seed": 1020,
+   "outcome": "timeout",
+   "wh_per_km": 301.94018885023405,
+   "speed": 0.42902489915743547
+  },
+  {
+   "seed": 1021,
+   "outcome": "success",
+   "wh_per_km": 74.98794481797424,
+   "speed": 8.032366654527552
+  },
+  {
+   "seed": 1022,
+   "outcome": "success",
+   "wh_per_km": 69.05080125295203,
+   "speed": 8.059692328067598
+  },
+  {
+   "seed": 1023,
+   "outcome": "success",
+   "wh_per_km": 84.599260324381,
+   "speed": 8.002951347311898
+  },
+  {
+   "seed": 1024,
+   "outcome": "success",
+   "wh_per_km": 63.52487892676374,
+   "speed": 8.124671193504867
+  },
+  {
+   "seed": 1025,
+   "outcome": "off_road",
+   "wh_per_km": 249.34179033588345,
+   "speed": 6.053628522227231
+  },
+  {
+   "seed": 1026,
+   "outcome": "success",
+   "wh_per_km": 70.75824093652062,
+   "speed": 8.103406120778304
+  },
+  {
+   "seed": 1027,
+   "outcome": "success",
+   "wh_per_km": 82.63529484395306,
+   "speed": 8.005387044375256
+  },
+  {
+   "seed": 1028,
+   "outcome": "success",
+   "wh_per_km": 99.99808688614863,
+   "speed": 7.8952210139228605
+  },
+  {
+   "seed": 1029,
+   "outcome": "success",
+   "wh_per_km": 99.2177635958414,
+   "speed": 7.947825044724322
+  },
+  {
+   "seed": 1030,
+   "outcome": "success",
+   "wh_per_km": 85.83280910386672,
+   "speed": 7.9615058744447955
+  },
+  {
+   "seed": 1031,
+   "outcome": "success",
+   "wh_per_km": 63.853777958214586,
+   "speed": 8.114677937082451
+  },
+  {
+   "seed": 1032,
+   "outcome": "off_road",
+   "wh_per_km": 218.1176887791035,
+   "speed": 4.095620512727607
+  },
+  {
+   "seed": 1033,
+   "outcome": "success",
+   "wh_per_km": 75.57389980034075,
+   "speed": 8.040422920958077
+  },
+  {
+   "seed": 1034,
+   "outcome": "success",
+   "wh_per_km": 75.710238891499,
+   "speed": 8.062236881942425
+  },
+  {
+   "seed": 1035,
+   "outcome": "success",
+   "wh_per_km": 80.14172341835713,
+   "speed": 8.07498104776399
+  },
+  {
+   "seed": 1036,
+   "outcome": "success",
+   "wh_per_km": 89.62478748483201,
+   "speed": 7.956777959696427
+  },
+  {
+   "seed": 1037,
+   "outcome": "success",
+   "wh_per_km": 73.41806019263127,
+   "speed": 8.031372504727416
+  },
+  {
+   "seed": 1038,
+   "outcome": "off_road",
+   "wh_per_km": 97.93497491262168,
+   "speed": 7.844197149568473
+  },
+  {
+   "seed": 1039,
+   "outcome": "crash",
+   "wh_per_km": 92.9029003532083,
+   "speed": 7.922785291143651
+  },
+  {
+   "seed": 1040,
+   "outcome": "crash",
+   "wh_per_km": 243.8231569380859,
+   "speed": 6.765078702702069
+  },
+  {
+   "seed": 1041,
+   "outcome": "off_road",
+   "wh_per_km": 310.245369674872,
+   "speed": 4.0193180607761425
+  },
+  {
+   "seed": 1042,
+   "outcome": "success",
+   "wh_per_km": 92.62520964161327,
+   "speed": 7.955943495612529
+  },
+  {
+   "seed": 1043,
+   "outcome": "success",
+   "wh_per_km": 84.54791321314053,
+   "speed": 8.056231932078013
+  },
+  {
+   "seed": 1044,
+   "outcome": "success",
+   "wh_per_km": 82.01039978514434,
+   "speed": 7.992880752507179
+  },
+  {
+   "seed": 1045,
+   "outcome": "success",
+   "wh_per_km": 67.63135760507471,
+   "speed": 8.087247870984983
+  },
+  {
+   "seed": 1046,
+   "outcome": "success",
+   "wh_per_km": 63.745886581661985,
+   "speed": 8.152099047924251
+  },
+  {
+   "seed": 1047,
+   "outcome": "success",
+   "wh_per_km": 93.39813334155589,
+   "speed": 7.889037931673566
+  },
+  {
+   "seed": 1048,
+   "outcome": "success",
+   "wh_per_km": 107.48648977070427,
+   "speed": 7.852622437706902
+  },
+  {
+   "seed": 1049,
+   "outcome": "success",
+   "wh_per_km": 85.17477839999647,
+   "speed": 7.990127668857531
+  }
+ ]
+}

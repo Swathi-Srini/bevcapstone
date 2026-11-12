@@ -1,0 +1,55 @@
+{
+  "bc": {
+    "episode_reward": 144.01740899314126,
+    "route_completion": 0.4370421506365743,
+    "success": 0.0,
+    "mean_speed_mps": 7.757421920509416,
+    "steps": 200.0,
+    "rms_lateral_m": 0.28677246774443854,
+    "wall_s": 43.39924240112305,
+    "outcomes": [
+      "timeout"
+    ]
+  },
+  "stationary": {
+    "episode_reward": -40.04648426619759,
+    "route_completion": 0.01372135047663042,
+    "success": 0.0,
+    "mean_speed_mps": 0.004134156130651367,
+    "steps": 200.0,
+    "rms_lateral_m": 1.4314218255151445e-08,
+    "wall_s": 38.966824769973755,
+    "outcomes": [
+      "timeout"
+    ]
+  },
+  "crawl": {
+    "episode_reward": 35.988510368434945,
+    "route_completion": 0.11969048405665408,
+    "success": 0.0,
+    "mean_speed_mps": 1.9417914168460435,
+    "steps": 200.0,
+    "rms_lateral_m": 0.07166528743861329,
+    "wall_s": 40.18794322013855,
+    "outcomes": [
+      "timeout"
+    ]
+  },
+  "fast": {
+    "episode_reward": -306.6397944308076,
+    "route_completion": 0.6136599325276706,
+    "success": 0.0,
+    "mean_speed_mps": 14.405239394466127,
+    "steps": 155.0,
+    "rms_lateral_m": 0.29987619606787,
+    "wall_s": 31.59228014945984,
+    "outcomes": [
+      "off_road"
+    ]
+  },
+  "perception_audit": {
+    "audits": 34,
+    "mismatches": 0
+  },
+  "ordering_ok": true
+}

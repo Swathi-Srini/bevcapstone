@@ -1,0 +1,11 @@
+{
+ "name": "ppo_plain",
+ "base": "bev_rl/adaptive/runs/deg_base/best.pt",
+ "variant": "plain",
+ "seed": 0,
+ "lr": 0.0001,
+ "steps": 300000,
+ "chunk": 100000,
+ "n_envs": 3,
+ "val_n": 12
+}

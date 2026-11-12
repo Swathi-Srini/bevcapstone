@@ -1,0 +1,103 @@
+{
+  "checkpoint": "bev_policy\\checkpoints\\bcv2_mixed_explicit.pt",
+  "seeds": [
+    5000,
+    5001,
+    5002,
+    5003
+  ],
+  "weather_input": "explicit",
+  "n": 12,
+  "per_condition": {
+    "clear:0.0": {
+      "n": 4,
+      "mean": {
+        "success": 0.5,
+        "route_completion": 0.8860375539819775,
+        "episode_reward": 280.50577638853656,
+        "travel_time_s": 36.375,
+        "mean_speed_mps": 8.000404304834692,
+        "distance_m": 290.7627738565605,
+        "mean_abs_lateral_m": 0.11371995448723607,
+        "rms_lateral_m": 0.1441322913464597,
+        "max_abs_lateral_m": 0.38584939956330067,
+        "mean_abs_heading_rad": 0.013344410394904785,
+        "mean_abs_accel_mps2": 0.2998101996317799,
+        "rms_accel_mps2": 0.8352424065473745,
+        "max_decel_mps2": 2.56843539095021,
+        "rms_jerk_mps3": 4.120336981325129,
+        "p95_abs_jerk_mps3": 3.003862928171081,
+        "mean_brake_cmd": 0.00019850136886401446,
+        "brake_fraction": 0.0,
+        "mean_abs_steer_cmd": 0.05242017991422781,
+        "steer_rate_rms": 0.10206119714605016,
+        "energy_wh": 23.475888128240896,
+        "wh_per_km": 81.0823616164611
+      },
+      "outcomes": {
+        "timeout": 2,
+        "success": 2
+      }
+    },
+    "fog:0.6": {
+      "n": 4,
+      "mean": {
+        "success": 0.5,
+        "route_completion": 0.8855825665467956,
+        "episode_reward": 279.5675057391828,
+        "travel_time_s": 36.425,
+        "mean_speed_mps": 7.9879589493422625,
+        "distance_m": 290.69493932210014,
+        "mean_abs_lateral_m": 0.09865187918822478,
+        "rms_lateral_m": 0.1270082461367366,
+        "max_abs_lateral_m": 0.3790124283011898,
+        "mean_abs_heading_rad": 0.013905860197748223,
+        "mean_abs_accel_mps2": 0.30454443189010094,
+        "rms_accel_mps2": 0.8407334697105817,
+        "max_decel_mps2": 3.0202651713630857,
+        "rms_jerk_mps3": 4.39362992728968,
+        "p95_abs_jerk_mps3": 4.177379591902094,
+        "mean_brake_cmd": 0.00016588354155346637,
+        "brake_fraction": 0.0,
+        "mean_abs_steer_cmd": 0.05548447930395914,
+        "steer_rate_rms": 0.11130122117300778,
+        "energy_wh": 23.67197768847434,
+        "wh_per_km": 81.95133654247797
+      },
+      "outcomes": {
+        "timeout": 2,
+        "success": 2
+      }
+    },
+    "rain:0.6": {
+      "n": 4,
+      "mean": {
+        "success": 0.5,
+        "route_completion": 0.8860106375637526,
+        "episode_reward": 276.7858151770307,
+        "travel_time_s": 36.425,
+        "mean_speed_mps": 7.994301283111599,
+        "distance_m": 290.94258777570997,
+        "mean_abs_lateral_m": 0.1411669971528494,
+        "rms_lateral_m": 0.17286140866630562,
+        "max_abs_lateral_m": 0.5235125238136555,
+        "mean_abs_heading_rad": 0.015053561287983398,
+        "mean_abs_accel_mps2": 0.31481772655082735,
+        "rms_accel_mps2": 0.8479879972552912,
+        "max_decel_mps2": 2.8330911577394557,
+        "rms_jerk_mps3": 4.4030531716118375,
+        "p95_abs_jerk_mps3": 4.300407861487061,
+        "mean_brake_cmd": 0.00021564134728568836,
+        "brake_fraction": 0.0,
+        "mean_abs_steer_cmd": 0.05769219298424763,
+        "steer_rate_rms": 0.11277648000224662,
+        "energy_wh": 24.09946579549903,
+        "wh_per_km": 83.263204625724
+      },
+      "outcomes": {
+        "timeout": 2,
+        "success": 2
+      }
+    }
+  }
+}

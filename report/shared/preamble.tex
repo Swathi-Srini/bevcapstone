@@ -1,0 +1,77 @@
+% Shared preamble of the two documents (Director's Research Guide, Complete Technical Research Report).
+\usepackage[margin=2.3cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs,longtable,array,tabularx,multirow}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage[labelfont=bf,font=small]{caption}
+\usepackage{enumitem}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,fit,shapes.geometric,calc,backgrounds}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black,citecolor=blue!50!black]{hyperref}
+
+\definecolor{proposedblue}{HTML}{2A78D6}
+\definecolor{baselineorange}{HTML}{EB6834}
+\definecolor{ruleblack}{HTML}{8A8984}
+\definecolor{softgreen}{HTML}{1BAF7A}
+\definecolor{softred}{HTML}{E34948}
+\definecolor{softviolet}{HTML}{6250D6}
+
+\DeclareRobustCommand{\code}[1]{\texttt{\detokenize{#1}}}   % identifiers and file names (underscores allowed; robust for section titles)
+\newcommand{\pth}[1]{\path{#1}}                              % file system paths (line-breakable)
+\newcommand{\codename}[1]{}                                  % internal nicknames are no longer printed in running text
+
+% Boxes used throughout
+\newtcolorbox{plainwords}[1][In plain words]{enhanced,breakable,colback=blue!4,colframe=blue!45!black,fonttitle=\bfseries\small,title=#1,
+  left=6pt,right=6pt,top=4pt,bottom=4pt,boxrule=0.6pt,arc=2pt}
+\newtcolorbox{implicationbox}[1][Research implication]{enhanced,breakable,colback=green!5!white,colframe=green!35!black,fonttitle=\bfseries\small,title=#1,
+  left=6pt,right=6pt,top=4pt,bottom=4pt,boxrule=0.6pt,arc=2pt}
+\newtcolorbox{cautionbox}[1][Important to know]{enhanced,breakable,colback=red!4,colframe=red!50!black,fonttitle=\bfseries\small,title=#1,
+  left=6pt,right=6pt,top=4pt,bottom=4pt,boxrule=0.6pt,arc=2pt}
+
+% A figure with a descriptive caption followed by a plain-English reading and the research implication.
+% arguments: 1 file name (without extension), 2 width as a fraction of the text width, 3 title, 4 what is shown, 5 plain-English reading, 6 research implication, 7 label
+\newcommand{\explainedfigure}[7]{%
+\begin{figure}[H]\centering
+\includegraphics[width=#2\textwidth,height=0.56\textheight,keepaspectratio]{figures/#1.pdf}
+\caption{\textbf{#3.} #4}\label{#7}
+\end{figure}
+\begin{tcolorbox}[enhanced,breakable,colback=gray!6,colframe=gray!55,boxrule=0.5pt,arc=2pt,left=6pt,right=6pt,top=3pt,bottom=3pt]
+{\small\textbf{Plain-English reading.} #5\par\smallskip
+\textbf{Research implication.} #6}
+\end{tcolorbox}\medskip}
+
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,frame=single,columns=fullflexible,keepspaces=true,
+        showstringspaces=false,backgroundcolor=\color{black!3}}
+\setlist{itemsep=2pt,topsep=3pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\sloppy
+\emergencystretch=2em
+\setcounter{tocdepth}{2}
+\renewcommand{\arraystretch}{1.12}
+
+% Flow diagram of one reinforcement-learning attempt: starting model -> initialisation -> training set-up -> training loop -> result.
+% arguments: 1 starting model, 2 initialisation, 3 training set-up (environment and reward), 4 training loop (algorithm, steps), 5 result (what happened), 6 colour of the result box
+\newcommand{\rlflow}[6]{%
+\begin{center}
+\begin{tikzpicture}[font=\scriptsize,>=Stealth,node distance=0.35cm,
+  stage/.style={draw,rounded corners=2pt,fill=white,text width=2.75cm,minimum height=3.7cm,align=left,inner sep=3pt},
+  result/.style={draw,rounded corners=2pt,text width=2.75cm,minimum height=3.7cm,align=left,inner sep=3pt,line width=0.8pt}]
+\node[stage,fill=blue!6] (a) {\textbf{1. Starting model}\\[2pt] #1};
+\node[stage,right=of a] (b) {\textbf{2. Initialisation}\\[2pt] #2};
+\node[stage,right=of b] (c) {\textbf{3. Training set-up}\\[2pt] #3};
+\node[stage,right=of c] (d) {\textbf{4. Training loop}\\[2pt] #4};
+\node[result,right=of d,fill=#6!12,draw=#6!70!black] (e) {\textbf{5. What happened}\\[2pt] #5};
+\foreach \x/\y in {a/b,b/c,c/d,d/e} \draw[->] (\x) -- (\y);
+\end{tikzpicture}
+\end{center}}

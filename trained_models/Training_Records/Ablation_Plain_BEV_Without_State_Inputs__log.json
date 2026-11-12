@@ -1,0 +1,144 @@
+[
+ {
+  "iter": 0,
+  "beta": 1.0,
+  "samples": 11388,
+  "train_loss": 0.06408999115228653,
+  "rollout_outcomes": {
+   "crash": 10,
+   "success": 17,
+   "off_road": 1,
+   "timeout": 2
+  },
+  "val": {
+   "d0.05": {
+    "success": 0.0,
+    "crash": 0.0,
+    "off_road": 1.0
+   },
+   "d0.2": {
+    "success": 0.0,
+    "crash": 0.1,
+    "off_road": 0.9
+   }
+  },
+  "t_min": 11.625731416543324
+ },
+ {
+  "iter": 1,
+  "beta": 0.5,
+  "samples": 19606,
+  "train_loss": 0.11884555220603943,
+  "rollout_outcomes": {
+   "crash": 4,
+   "success": 1,
+   "off_road": 20,
+   "timeout": 5
+  },
+  "val": {
+   "d0.05": {
+    "success": 0.0,
+    "crash": 0.0,
+    "off_road": 1.0
+   },
+   "d0.2": {
+    "success": 0.0,
+    "crash": 0.0,
+    "off_road": 1.0
+   }
+  },
+  "t_min": 20.780762763818107
+ },
+ {
+  "iter": 2,
+  "beta": 0.25,
+  "samples": 24137,
+  "train_loss": 0.10893372446298599,
+  "rollout_outcomes": {
+   "crash": 4,
+   "success": 1,
+   "off_road": 25
+  },
+  "val": {
+   "d0.05": {
+    "success": 0.0,
+    "crash": 0.0,
+    "off_road": 1.0
+   },
+   "d0.2": {
+    "success": 0.0,
+    "crash": 0.0,
+    "off_road": 1.0
+   }
+  },
+  "t_min": 27.92180121342341
+ },
+ {
+  "iter": 3,
+  "beta": 0.125,
+  "samples": 27233,
+  "train_loss": 0.12444298714399338,
+  "rollout_outcomes": {
+   "crash": 1,
+   "off_road": 29
+  },
+  "val": {
+   "d0.05": {
+    "success": 0.0,
+    "crash": 0.0,
+    "off_road": 1.0
+   },
+   "d0.2": {
+    "success": 0.0,
+    "crash": 0.0,
+    "off_road": 1.0
+   }
+  },
+  "t_min": 33.1222802400589
+ },
+ {
+  "iter": 4,
+  "beta": 0.0625,
+  "samples": 29567,
+  "train_loss": 0.15439553558826447,
+  "rollout_outcomes": {
+   "off_road": 30
+  },
+  "val": {
+   "d0.05": {
+    "success": 0.0,
+    "crash": 0.0,
+    "off_road": 1.0
+   },
+   "d0.2": {
+    "success": 0.0,
+    "crash": 0.1,
+    "off_road": 0.9
+   }
+  },
+  "t_min": 38.578573421637216
+ },
+ {
+  "iter": 5,
+  "beta": 0.03125,
+  "samples": 32810,
+  "train_loss": 0.17691878974437714,
+  "rollout_outcomes": {
+   "crash": 4,
+   "off_road": 26
+  },
+  "val": {
+   "d0.05": {
+    "success": 0.0,
+    "crash": 0.0,
+    "off_road": 1.0
+   },
+   "d0.2": {
+    "success": 0.0,
+    "crash": 0.2,
+    "off_road": 0.8
+   }
+  },
+  "t_min": 46.371264680226645
+ }
+]

@@ -1,0 +1,17 @@
+{
+ "name": "rl_head",
+ "base": "bev_rl/adaptive/runs/ov_split/best.pt",
+ "seed": 0,
+ "lambda_e": 0.0,
+ "crash_pen": 50.0,
+ "crash_c": 0.0,
+ "safe_speed": false,
+ "w_vsafe": 0.5,
+ "w_head": 0.5,
+ "v_cap": 10.0,
+ "lr": 5e-05,
+ "steps": 150000,
+ "chunk": 30000,
+ "n_envs": 2,
+ "val_n": 10
+}

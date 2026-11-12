@@ -1,0 +1,135 @@
+[
+ {
+  "iter": 0,
+  "beta": 1.0,
+  "samples": 18824,
+  "train_loss": 0.0015548532828688622,
+  "rollout_outcomes": {
+   "timeout": 8,
+   "success": 31
+  },
+  "val": {
+   "d0.05": {
+    "success": 1.0,
+    "crash": 0.0,
+    "off_road": 0.0
+   }
+  },
+  "t_min": 26.858767127990724
+ },
+ {
+  "iter": 1,
+  "beta": 0.5,
+  "samples": 35959,
+  "train_loss": 0.013908113352954388,
+  "rollout_outcomes": {
+   "timeout": 1,
+   "success": 37,
+   "crash": 1
+  },
+  "val": {
+   "d0.05": {
+    "success": 1.0,
+    "crash": 0.0,
+    "off_road": 0.0
+   }
+  },
+  "t_min": 49.99795686006546
+ },
+ {
+  "iter": 2,
+  "beta": 0.25,
+  "samples": 53042,
+  "train_loss": 0.023221783339977264,
+  "rollout_outcomes": {
+   "timeout": 6,
+   "success": 29,
+   "crash": 4
+  },
+  "val": {
+   "d0.05": {
+    "success": 1.0,
+    "crash": 0.0,
+    "off_road": 0.0
+   }
+  },
+  "t_min": 75.49513299862544
+ },
+ {
+  "iter": 3,
+  "beta": 0.125,
+  "samples": 69547,
+  "train_loss": 0.004643881693482399,
+  "rollout_outcomes": {
+   "timeout": 4,
+   "success": 30,
+   "crash": 5
+  },
+  "val": {
+   "d0.05": {
+    "success": 1.0,
+    "crash": 0.0,
+    "off_road": 0.0
+   }
+  },
+  "t_min": 103.47566355864207
+ },
+ {
+  "iter": 4,
+  "beta": 0.0625,
+  "samples": 88157,
+  "train_loss": 0.010109941475093365,
+  "rollout_outcomes": {
+   "timeout": 6,
+   "success": 31,
+   "crash": 2
+  },
+  "val": {
+   "d0.05": {
+    "success": 1.0,
+    "crash": 0.0,
+    "off_road": 0.0
+   }
+  },
+  "t_min": 136.3463894089063
+ },
+ {
+  "iter": 5,
+  "beta": 0.03125,
+  "samples": 104866,
+  "train_loss": 0.004072190728038549,
+  "rollout_outcomes": {
+   "timeout": 2,
+   "success": 35,
+   "crash": 1,
+   "off_road": 1
+  },
+  "val": {
+   "d0.05": {
+    "success": 1.0,
+    "crash": 0.0,
+    "off_road": 0.0
+   }
+  },
+  "t_min": 169.12358921368917
+ },
+ {
+  "iter": 6,
+  "beta": 0.015625,
+  "samples": 122427,
+  "train_loss": 0.019093796610832214,
+  "rollout_outcomes": {
+   "timeout": 2,
+   "success": 32,
+   "crash": 5
+  },
+  "val": {
+   "d0.05": {
+    "success": 1.0,
+    "crash": 0.0,
+    "off_road": 0.0
+   }
+  },
+  "t_min": 205.4591778477033
+ }
+]

@@ -1,0 +1,83 @@
+% GitHub compared with this work. Build from the folder report/:  pdflatex GitHub_vs_This_Work.tex  (run twice)  or  powershell -File build_documents.ps1
+\documentclass[11pt,a4paper]{article}
+\input{shared/preamble}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small GitHub compared with this work}
+\fancyhead[R]{\small Team working document}
+\fancyfoot[C]{\thepage}
+
+\title{\textbf{GitHub Compared With This Work}\\[4pt]
+\large What the shared repository contained, and what was added on the branch \code{swathi-research-results}}
+\author{Working document for the project team\\ Repository state of 12 November 2026}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{In one paragraph}
+\begin{plainwords}
+The shared repository (\url{https://github.com/Swathi-Srini/bevcapstone}, branch \code{main}, last commit \code{7c4e9ae} of 8 September 2026) holds the teammates' modules and \textbf{two trained driving models}: the baselines. This work adds a better-trained driving model, a model that slows down when perception is unreliable, a camera-only model, the energy estimate, four reinforcement-learning attempts, and 200-episode tests of all of them. Everything new is on a separate branch, \code{swathi-research-results}, so \code{main} is unchanged until the team decides to merge.
+\end{plainwords}
+
+\section{Side by side}
+\begin{table}[H]\centering\small
+\caption{What \code{main} contains and what the new branch adds.}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}p{4.6cm}>{\raggedright\arraybackslash}X@{}}\toprule
+Part & On \code{main} (GitHub today) & Added on the new branch\\\midrule
+Simulator, cameras, detector, stereo depth, weather filter & MetaDrive 0.4.3 and the teammates' modules (\pth{camera/}, \pth{YOLO+weather module/}). & Used without change. We measured how the weather filter reduces detections (Model 5 section of the five-model document).\\
+Bird's-eye-view grid & \pth{bev_state/}: the grid; the route, lane and boundary overlay is marked ``unimplemented''. & The overlay is added as a wrapper on the policy side (\pth{bev_rl/adaptive/}); \pth{bev_state/} is unchanged.\\
+Driving models & Two baselines trained by behaviour cloning on five recordings: one without traffic, one with sparse traffic. & 32 trained model files in \pth{trained_models/}, with descriptive names. The five that matter: the two baselines, the Proposed Bird's-Eye-View Driving Model, the Caution-Aware Driving Model, the Image-Only Driving Model.\\
+Training method & Behaviour cloning only. & Repeated drive-and-correct training (dataset aggregation) with a rule-based teacher; a caution-aware variant; a camera-only variant.\\
+Testing & Unit tests for the grid and the metrics; a 10-episode baseline check. & 200-episode tests (seeds 5000 to 5199) in clear weather, fog and rain, with confidence intervals and paired tests; two new test files (\pth{tests/test_bev_rl_*.py}).\\
+Energy & Not present. & An energy estimate from the speed history (\pth{bev_rl/energy.py}).\\
+Reinforcement learning & Listed as missing. & Four attempts, recorded as negative results (\pth{trained_models/04_Reinforcement_Learning_Attempts/}).\\
+Report & Not present. & \pth{report/Five_Model_Comparison.pdf} and this document.\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Results, 200 episodes in clear weather}
+\begin{table}[H]\centering\small
+\caption{Success rate on seeds 5000 to 5199, sparse traffic, 80-second limit.}
+\begin{tabular}{@{}llrl@{}}\toprule
+Model & On GitHub? & Success & Note\\\midrule
+Baseline, no traffic in training & yes & 0.850 & teammates' model\\
+Baseline, traffic in training & yes & 0.745 & README states 0.90 on 10 episodes\\
+Proposed Bird's-Eye-View model & no (new branch) & 0.925 & ties its rule-based teacher\\
+Caution-aware model & no (new branch) & 0.890 & about 35\% less estimated energy in weather\\
+Image-only model & no (new branch) & 0.130 & weak comparison model\\\bottomrule
+\end{tabular}
+\end{table}
+The README figure of 0.90 comes from 9 successes in 10 episodes; its 95\% interval (0.596 to 0.982) includes the 0.745 measured here, so the two numbers do not contradict each other. The 200-episode value is the one to quote. The full comparison, with fog, rain, energy and the paired tests, is in \pth{report/Five_Model_Comparison.pdf}.
+
+\section{Where this work differs from rules written on GitHub}
+\begin{cautionbox}[Tell the team and the guide about these]
+\begin{itemize}[leftmargin=1.2em,itemsep=2pt]
+\item \textbf{Exact vehicle positions.} The README says not to give the learned model exact simulator vehicle positions. The test environment here builds the grid from the simulator's vehicle list (an ideal detector) and removes vehicles at the measured detection rate to imitate weather. Results are therefore ``given a perception model'', not results of the full camera pipeline.
+\item \textbf{Baselines were tested through that environment,} not through the repository's own evaluator.
+\item \textbf{Local edits to teammates' files:} \pth{README.md}, \pth{bev_policy/model.py}, \pth{bev_policy/dataset.py}, \pth{bev_policy/train_bc.py}. The edit adds an optional extra input; the defaults are unchanged. Teammates should look at this before merging.
+\item \textbf{Weather and the car.} The README says weather does not change vehicle dynamics. This holds for all reported results; the first two reinforcement-learning attempts lowered tyre grip in rain, which is stated in the document and was later removed.
+\item \textbf{Reinforcement learning} did not start from the baseline checkpoint recommended in the README.
+\end{itemize}
+\end{cautionbox}
+
+\section{What is, and is not, on the branch}
+\begin{table}[H]\centering\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{4.2cm}X@{}}\toprule
+Pushed to \code{swathi-research-results} & Not pushed (kept on the local machine only)\\\midrule
+All trained model files, name mapping, manifest with hashes, training records; code in \pth{bev_rl/}; tests; the two PDFs and their LaTeX sources, figures and tables. &
+Videos (about 300\,MB, excluded by the repository's \code{*.mp4} rule); the third-party YOLO weights and downloaded research papers (licences); older drafts, the long technical report and its logs (kept locally as evidence).\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Safe wording for the team}
+\begin{table}[H]\centering\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{6.2cm}X@{}}\toprule
+We can say & We cannot say\\\midrule
+The proposed model succeeds in 92.5\% of 200 sparse-traffic episodes, more than both baselines. & That it works in dense traffic, or with the live camera pipeline.\\
+Simulated fog and rain remove most detections but did not lower sparse-traffic success. & That the model is robust to physical weather.\\
+The caution-aware model uses about 35\% less estimated energy in weather and ties the proposed model when given 160 seconds. & That energy is measured on a real vehicle, or that the caution value is sensed by the model (it is supplied).\\
+Four reinforcement-learning attempts did not beat their starting point. & That reinforcement learning cannot work here.\\\bottomrule
+\end{tabularx}
+\end{table}
+
+\end{document}

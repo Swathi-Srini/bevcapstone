@@ -1,0 +1,1672 @@
+{
+ "arm": "repo_bc_sparse",
+ "cells": {
+  "lat0.0_head0.0": {
+   "n": 40,
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "success": 0.775,
+   "success_ci": [
+    0.6249660359590695,
+    0.8768404674532148
+   ],
+   "crash": 0.075,
+   "off_road": 0.15,
+   "timeout": 0.0
+  },
+  "lat0.25_head0.02": {
+   "n": 40,
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "success": 0.6,
+   "success_ci": [
+    0.445956198273935,
+    0.7365188938759863
+   ],
+   "crash": 0.025,
+   "off_road": 0.375,
+   "timeout": 0.0
+  },
+  "lat0.5_head0.05": {
+   "n": 40,
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "success": 0.55,
+   "success_ci": [
+    0.39828829888440775,
+    0.6929492471905531
+   ],
+   "crash": 0.075,
+   "off_road": 0.375,
+   "timeout": 0.0
+  },
+  "lat1.0_head0.1": {
+   "n": 40,
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "success": 0.225,
+   "success_ci": [
+    0.1231595325467853,
+    0.3750339640409305
+   ],
+   "crash": 0.05,
+   "off_road": 0.725,
+   "timeout": 0.0
+  },
+  "lat2.0_head0.2": {
+   "n": 40,
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "success": 0.15,
+   "success_ci": [
+    0.07061091708507435,
+    0.2907262603902003
+   ],
+   "crash": 0.05,
+   "off_road": 0.8,
+   "timeout": 0.0
+  }
+ },
+ "episodes": [
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1010,
+   "outcome": "success",
+   "route": 0.9845531421392337
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1011,
+   "outcome": "success",
+   "route": 0.9892250697456341
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1012,
+   "outcome": "success",
+   "route": 0.9882401497298996
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1013,
+   "outcome": "success",
+   "route": 0.984771857374341
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1014,
+   "outcome": "success",
+   "route": 0.9777849821264919
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1015,
+   "outcome": "success",
+   "route": 0.9941232151011172
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1016,
+   "outcome": "success",
+   "route": 0.9857695662496058
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1017,
+   "outcome": "success",
+   "route": 0.9863863451604611
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1018,
+   "outcome": "success",
+   "route": 0.99009742940656
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1019,
+   "outcome": "crash",
+   "route": 0.7991296908152519
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1020,
+   "outcome": "off_road",
+   "route": 0.4943583203280348
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1021,
+   "outcome": "success",
+   "route": 0.9876807293242592
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1022,
+   "outcome": "success",
+   "route": 0.9895953944938264
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1023,
+   "outcome": "success",
+   "route": 0.9846537112353129
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1024,
+   "outcome": "success",
+   "route": 0.9908627741895848
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1025,
+   "outcome": "success",
+   "route": 0.9826471982697269
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1026,
+   "outcome": "off_road",
+   "route": 0.3616824283142113
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1027,
+   "outcome": "off_road",
+   "route": 0.7808368728375904
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1028,
+   "outcome": "success",
+   "route": 0.978731008285645
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1029,
+   "outcome": "success",
+   "route": 0.9822999261854682
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1030,
+   "outcome": "success",
+   "route": 0.9869402554399818
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1031,
+   "outcome": "success",
+   "route": 0.9908334721955225
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1032,
+   "outcome": "success",
+   "route": 0.9810665298290137
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1033,
+   "outcome": "success",
+   "route": 0.9869403810218733
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1034,
+   "outcome": "success",
+   "route": 0.9926947800230979
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1035,
+   "outcome": "success",
+   "route": 0.987605130924322
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1036,
+   "outcome": "success",
+   "route": 0.9820660665671754
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1037,
+   "outcome": "success",
+   "route": 0.9876931671621396
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1038,
+   "outcome": "off_road",
+   "route": 0.6666092641524212
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1039,
+   "outcome": "off_road",
+   "route": 0.6440791754646464
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1040,
+   "outcome": "crash",
+   "route": 0.19101835442013987
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1041,
+   "outcome": "success",
+   "route": 0.9899457407566586
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1042,
+   "outcome": "success",
+   "route": 0.9860200804644301
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1043,
+   "outcome": "crash",
+   "route": 0.5808197648657534
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1044,
+   "outcome": "off_road",
+   "route": 0.7842059346650464
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1045,
+   "outcome": "success",
+   "route": 0.9896591453704033
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1046,
+   "outcome": "success",
+   "route": 0.9917838650856179
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1047,
+   "outcome": "success",
+   "route": 0.9794671929051858
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1048,
+   "outcome": "success",
+   "route": 0.9906488422946885
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.0,
+   "heading_rad": 0.0,
+   "seed": 1049,
+   "outcome": "success",
+   "route": 0.989065341689295
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1010,
+   "outcome": "off_road",
+   "route": 0.7096454208767594
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1011,
+   "outcome": "success",
+   "route": 0.987786207603042
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1012,
+   "outcome": "success",
+   "route": 0.988478455378465
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1013,
+   "outcome": "success",
+   "route": 0.9854115805715764
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1014,
+   "outcome": "success",
+   "route": 0.9773719264686019
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1015,
+   "outcome": "success",
+   "route": 0.9946076532381161
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1016,
+   "outcome": "off_road",
+   "route": 0.5823390967351455
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1017,
+   "outcome": "success",
+   "route": 0.9870697289322502
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1018,
+   "outcome": "success",
+   "route": 0.9901680910922843
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1019,
+   "outcome": "success",
+   "route": 0.9854112673308941
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1020,
+   "outcome": "success",
+   "route": 0.9835847397774757
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1021,
+   "outcome": "success",
+   "route": 0.989023332005706
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1022,
+   "outcome": "off_road",
+   "route": 0.3924171825077166
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1023,
+   "outcome": "off_road",
+   "route": 0.45727361155679186
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1024,
+   "outcome": "off_road",
+   "route": 0.3863356411652129
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1025,
+   "outcome": "success",
+   "route": 0.9836682250982653
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1026,
+   "outcome": "success",
+   "route": 0.9908568656195342
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1027,
+   "outcome": "success",
+   "route": 0.9855531138021969
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1028,
+   "outcome": "success",
+   "route": 0.9804450976210382
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1029,
+   "outcome": "off_road",
+   "route": 0.2208742095650778
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1030,
+   "outcome": "success",
+   "route": 0.9846437021479078
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1031,
+   "outcome": "off_road",
+   "route": 0.1415226590167419
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1032,
+   "outcome": "success",
+   "route": 0.9827892752754783
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1033,
+   "outcome": "success",
+   "route": 0.9887963742049298
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1034,
+   "outcome": "off_road",
+   "route": 0.4601135533249996
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1035,
+   "outcome": "success",
+   "route": 0.986352069091197
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1036,
+   "outcome": "success",
+   "route": 0.9818362744649398
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1037,
+   "outcome": "off_road",
+   "route": 0.45371400148037594
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1038,
+   "outcome": "success",
+   "route": 0.9882953001081625
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1039,
+   "outcome": "off_road",
+   "route": 0.2653666479066083
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1040,
+   "outcome": "crash",
+   "route": 0.18784345878269837
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1041,
+   "outcome": "off_road",
+   "route": 0.7093818682759143
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1042,
+   "outcome": "off_road",
+   "route": 0.35174962768258033
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1043,
+   "outcome": "success",
+   "route": 0.9895878297933361
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1044,
+   "outcome": "off_road",
+   "route": 0.2819623914979284
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1045,
+   "outcome": "success",
+   "route": 0.9891003736151147
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1046,
+   "outcome": "success",
+   "route": 0.9918638193363898
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1047,
+   "outcome": "off_road",
+   "route": 0.5257691366388578
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1048,
+   "outcome": "off_road",
+   "route": 0.8931568091300714
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.25,
+   "heading_rad": 0.02,
+   "seed": 1049,
+   "outcome": "success",
+   "route": 0.9893089833569872
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1010,
+   "outcome": "off_road",
+   "route": 0.39495507988695716
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1011,
+   "outcome": "success",
+   "route": 0.9882074752293079
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1012,
+   "outcome": "success",
+   "route": 0.9894490693695926
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1013,
+   "outcome": "success",
+   "route": 0.9806090694923808
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1014,
+   "outcome": "success",
+   "route": 0.9776119001524914
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1015,
+   "outcome": "success",
+   "route": 0.9941519983324303
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1016,
+   "outcome": "off_road",
+   "route": 0.580526977304502
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1017,
+   "outcome": "success",
+   "route": 0.9874304743833107
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1018,
+   "outcome": "success",
+   "route": 0.9888593899224463
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1019,
+   "outcome": "crash",
+   "route": 0.797108347047202
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1020,
+   "outcome": "success",
+   "route": 0.9807126011646444
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1021,
+   "outcome": "success",
+   "route": 0.9870939839707297
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1022,
+   "outcome": "off_road",
+   "route": 0.21369581431766196
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1023,
+   "outcome": "off_road",
+   "route": 0.2685696910640277
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1024,
+   "outcome": "off_road",
+   "route": 0.1429424807801318
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1025,
+   "outcome": "success",
+   "route": 0.9849585293166031
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1026,
+   "outcome": "crash",
+   "route": 0.8699461790041746
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1027,
+   "outcome": "success",
+   "route": 0.9852400398339258
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1028,
+   "outcome": "success",
+   "route": 0.9788524376120301
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1029,
+   "outcome": "off_road",
+   "route": 0.1316155658484537
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1030,
+   "outcome": "success",
+   "route": 0.987709697259095
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1031,
+   "outcome": "off_road",
+   "route": 0.071505195284641
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1032,
+   "outcome": "success",
+   "route": 0.9831675314943498
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1033,
+   "outcome": "success",
+   "route": 0.9872498474681624
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1034,
+   "outcome": "off_road",
+   "route": 0.22591904060367904
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1035,
+   "outcome": "success",
+   "route": 0.9868003327418944
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1036,
+   "outcome": "success",
+   "route": 0.9806963590136943
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1037,
+   "outcome": "off_road",
+   "route": 0.2380553750534944
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1038,
+   "outcome": "success",
+   "route": 0.9879947537626833
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1039,
+   "outcome": "off_road",
+   "route": 0.10614344309470107
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1040,
+   "outcome": "success",
+   "route": 0.9874859832072697
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1041,
+   "outcome": "off_road",
+   "route": 0.8904730896086753
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1042,
+   "outcome": "off_road",
+   "route": 0.12422698684099291
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1043,
+   "outcome": "off_road",
+   "route": 0.6041655642208961
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1044,
+   "outcome": "off_road",
+   "route": 0.12192958835420664
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1045,
+   "outcome": "success",
+   "route": 0.989032398362006
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1046,
+   "outcome": "success",
+   "route": 0.9909706419528367
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1047,
+   "outcome": "off_road",
+   "route": 0.34836918521571336
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1048,
+   "outcome": "crash",
+   "route": 0.14814284655088472
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 0.5,
+   "heading_rad": 0.05,
+   "seed": 1049,
+   "outcome": "success",
+   "route": 0.9866188527363658
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1010,
+   "outcome": "off_road",
+   "route": 0.24283931786984775
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1011,
+   "outcome": "success",
+   "route": 0.989245192382913
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1012,
+   "outcome": "off_road",
+   "route": 0.2934657190297028
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1013,
+   "outcome": "success",
+   "route": 0.9727247609247923
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1014,
+   "outcome": "success",
+   "route": 0.979698303061113
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1015,
+   "outcome": "off_road",
+   "route": 0.1367527473673219
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1016,
+   "outcome": "off_road",
+   "route": 0.5801806252605852
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1017,
+   "outcome": "off_road",
+   "route": 0.3624282713307757
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1018,
+   "outcome": "off_road",
+   "route": 0.13673404903793077
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1019,
+   "outcome": "success",
+   "route": 0.9837486206058474
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1020,
+   "outcome": "success",
+   "route": 0.983037416075531
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1021,
+   "outcome": "crash",
+   "route": 0.9359943580962795
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1022,
+   "outcome": "off_road",
+   "route": 0.13615513792050576
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1023,
+   "outcome": "off_road",
+   "route": 0.1790145676111293
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1024,
+   "outcome": "off_road",
+   "route": 0.09234659850846816
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1025,
+   "outcome": "success",
+   "route": 0.9849703044677949
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1026,
+   "outcome": "crash",
+   "route": 0.7254944318215689
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1027,
+   "outcome": "off_road",
+   "route": 0.20358209197914792
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1028,
+   "outcome": "off_road",
+   "route": 0.33819297973903223
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1029,
+   "outcome": "off_road",
+   "route": 0.08920494615781226
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1030,
+   "outcome": "off_road",
+   "route": 0.25067562095211465
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1031,
+   "outcome": "off_road",
+   "route": 0.049295229748093354
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1032,
+   "outcome": "off_road",
+   "route": 0.07835393051712072
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1033,
+   "outcome": "off_road",
+   "route": 0.16565287309135576
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1034,
+   "outcome": "off_road",
+   "route": 0.11507862748499607
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1035,
+   "outcome": "success",
+   "route": 0.9874004092870234
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1036,
+   "outcome": "off_road",
+   "route": 0.09365352555754827
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1037,
+   "outcome": "off_road",
+   "route": 0.15126350424195228
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1038,
+   "outcome": "off_road",
+   "route": 0.6766507348637094
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1039,
+   "outcome": "off_road",
+   "route": 0.06142073952296412
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1040,
+   "outcome": "success",
+   "route": 0.9852988319268833
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1041,
+   "outcome": "off_road",
+   "route": 0.06879455881395433
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1042,
+   "outcome": "off_road",
+   "route": 0.0814219579417672
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1043,
+   "outcome": "off_road",
+   "route": 0.053415508109988075
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1044,
+   "outcome": "off_road",
+   "route": 0.0731997489191778
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1045,
+   "outcome": "off_road",
+   "route": 0.246085918428546
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1046,
+   "outcome": "success",
+   "route": 0.9914679379441395
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1047,
+   "outcome": "off_road",
+   "route": 0.20778457312137663
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1048,
+   "outcome": "off_road",
+   "route": 0.1188016908912963
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 1.0,
+   "heading_rad": 0.1,
+   "seed": 1049,
+   "outcome": "off_road",
+   "route": 0.06528557720966295
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1010,
+   "outcome": "off_road",
+   "route": 0.133088974289713
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1011,
+   "outcome": "off_road",
+   "route": 0.2650190666193439
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1012,
+   "outcome": "off_road",
+   "route": 0.13174159854785428
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1013,
+   "outcome": "off_road",
+   "route": 0.04304098648323899
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1014,
+   "outcome": "success",
+   "route": 0.979930892038851
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1015,
+   "outcome": "off_road",
+   "route": 0.027342043879863696
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1016,
+   "outcome": "off_road",
+   "route": 0.12572847449351032
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1017,
+   "outcome": "off_road",
+   "route": 0.16039248563503716
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1018,
+   "outcome": "off_road",
+   "route": 0.0671808389377315
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1019,
+   "outcome": "crash",
+   "route": 0.7937288983187523
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1020,
+   "outcome": "off_road",
+   "route": 0.5766104323067162
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1021,
+   "outcome": "crash",
+   "route": 0.4438801447747034
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1022,
+   "outcome": "off_road",
+   "route": 0.08190387127494264
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1023,
+   "outcome": "off_road",
+   "route": 0.11586910718113164
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1024,
+   "outcome": "off_road",
+   "route": 0.0567638458184779
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1025,
+   "outcome": "success",
+   "route": 0.9812420101778422
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1026,
+   "outcome": "success",
+   "route": 0.9909073099425724
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1027,
+   "outcome": "off_road",
+   "route": 0.09408986255538837
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1028,
+   "outcome": "off_road",
+   "route": 0.14893352596292914
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1029,
+   "outcome": "off_road",
+   "route": 0.062487011355078906
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1030,
+   "outcome": "off_road",
+   "route": 0.05036771076282696
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1031,
+   "outcome": "off_road",
+   "route": 0.03426783601234394
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1032,
+   "outcome": "off_road",
+   "route": 0.046425458568104275
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1033,
+   "outcome": "off_road",
+   "route": 0.07750909178573262
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1034,
+   "outcome": "off_road",
+   "route": 0.06669664281009913
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1035,
+   "outcome": "success",
+   "route": 0.9878504020653927
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1036,
+   "outcome": "off_road",
+   "route": 0.05152954578277995
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1037,
+   "outcome": "off_road",
+   "route": 0.09101446906339737
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1038,
+   "outcome": "off_road",
+   "route": 0.6670229513202321
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1039,
+   "outcome": "off_road",
+   "route": 0.03490990122822352
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1040,
+   "outcome": "success",
+   "route": 0.9852112981028629
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1041,
+   "outcome": "off_road",
+   "route": 0.04165612696366992
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1042,
+   "outcome": "off_road",
+   "route": 0.059410426628584215
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1043,
+   "outcome": "off_road",
+   "route": 0.02966865132320927
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1044,
+   "outcome": "off_road",
+   "route": 0.04044880268764679
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1045,
+   "outcome": "off_road",
+   "route": 0.11809902304910201
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1046,
+   "outcome": "success",
+   "route": 0.992020112661781
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1047,
+   "outcome": "off_road",
+   "route": 0.12678488424354956
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1048,
+   "outcome": "off_road",
+   "route": 0.06259524770425527
+  },
+  {
+   "arm": "repo_bc_sparse",
+   "lat_m": 2.0,
+   "heading_rad": 0.2,
+   "seed": 1049,
+   "outcome": "off_road",
+   "route": 0.03619574074387254
+  }
+ ]
+}

@@ -1,0 +1,39 @@
+{
+  "checkpoint": "bev_policy\\checkpoints\\bc_clear_5eps_without_traffic.pt",
+  "seeds": [
+    1000,
+    1001,
+    1002,
+    1003,
+    1004,
+    1005,
+    1006,
+    1007,
+    1008,
+    1009
+  ],
+  "n": 10,
+  "mean": {
+    "success": 1.0,
+    "route_completion": 0.9879168807908094,
+    "episode_reward": 326.36723918359587,
+    "travel_time_s": 45.89,
+    "mean_speed_mps": 8.146398683452023,
+    "distance_m": 374.1019363539616,
+    "mean_abs_lateral_m": 0.37535593633444697,
+    "rms_lateral_m": 0.4819550851606825,
+    "max_abs_lateral_m": 1.20230564165082,
+    "mean_abs_heading_rad": 0.02638358685244911,
+    "mean_abs_accel_mps2": 0.3162477789921899,
+    "rms_accel_mps2": 0.7777777440986726,
+    "max_decel_mps2": 2.038490895674803,
+    "rms_jerk_mps3": 2.5681565788255956,
+    "p95_abs_jerk_mps3": 3.0682839377730575,
+    "mean_brake_cmd": 0.0006469827763147335,
+    "brake_fraction": 0.0012765239530001717,
+    "mean_abs_steer_cmd": 0.0714816227290617,
+    "steer_rate_rms": 0.055946643490104975,
+    "energy_wh": 29.344066520006088,
+    "wh_per_km": 79.88685537851826
+  }
+}

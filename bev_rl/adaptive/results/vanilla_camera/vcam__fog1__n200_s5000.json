@@ -1,0 +1,1813 @@
+{
+ "model": "vcam",
+ "cond": "fog1",
+ "n": 200,
+ "success": 0.0,
+ "crash": 0.0,
+ "off_road": 1.0,
+ "timeout": 0.0,
+ "mean_speed": 5.390879707980685,
+ "route": 0.11040883957336661,
+ "episodes": [
+  {
+   "seed": 5000,
+   "outcome": "off_road",
+   "speed": 4.83721784122628,
+   "route": 0.07015312850727823,
+   "min_gap_m": 30.0,
+   "wh_per_km": 354.6333664228655,
+   "steps": 57
+  },
+  {
+   "seed": 5001,
+   "outcome": "off_road",
+   "speed": 4.456970309138486,
+   "route": 0.09587847647329721,
+   "min_gap_m": 30.0,
+   "wh_per_km": 532.6137812573991,
+   "steps": 45
+  },
+  {
+   "seed": 5002,
+   "outcome": "off_road",
+   "speed": 5.025565231605303,
+   "route": 0.06257512779284027,
+   "min_gap_m": 30.0,
+   "wh_per_km": 490.73147523540877,
+   "steps": 42
+  },
+  {
+   "seed": 5003,
+   "outcome": "off_road",
+   "speed": 5.043846040980683,
+   "route": 0.12369151160820638,
+   "min_gap_m": 30.0,
+   "wh_per_km": 424.6710061007747,
+   "steps": 62
+  },
+  {
+   "seed": 5004,
+   "outcome": "off_road",
+   "speed": 4.6141652410414125,
+   "route": 0.08389962205396338,
+   "min_gap_m": 30.0,
+   "wh_per_km": 598.5343572209661,
+   "steps": 45
+  },
+  {
+   "seed": 5005,
+   "outcome": "off_road",
+   "speed": 7.915045068355302,
+   "route": 0.3258199870979267,
+   "min_gap_m": 30.0,
+   "wh_per_km": 504.2647373590482,
+   "steps": 94
+  },
+  {
+   "seed": 5006,
+   "outcome": "off_road",
+   "speed": 6.65169448306389,
+   "route": 0.11836762926630204,
+   "min_gap_m": 30.0,
+   "wh_per_km": 336.61984633831844,
+   "steps": 79
+  },
+  {
+   "seed": 5007,
+   "outcome": "off_road",
+   "speed": 4.3593846741572815,
+   "route": 0.07441838049498166,
+   "min_gap_m": 30.0,
+   "wh_per_km": 290.58891038786226,
+   "steps": 54
+  },
+  {
+   "seed": 5008,
+   "outcome": "off_road",
+   "speed": 5.36107028542173,
+   "route": 0.10893213116516166,
+   "min_gap_m": 30.0,
+   "wh_per_km": 437.8200383815404,
+   "steps": 58
+  },
+  {
+   "seed": 5009,
+   "outcome": "off_road",
+   "speed": 6.536468011092557,
+   "route": 0.13392972851498022,
+   "min_gap_m": 30.0,
+   "wh_per_km": 382.60413900597024,
+   "steps": 68
+  },
+  {
+   "seed": 5010,
+   "outcome": "off_road",
+   "speed": 6.5329709417842325,
+   "route": 0.14050050296595848,
+   "min_gap_m": 30.0,
+   "wh_per_km": 516.8271354297926,
+   "steps": 60
+  },
+  {
+   "seed": 5011,
+   "outcome": "off_road",
+   "speed": 6.259871867335808,
+   "route": 0.1564909576401416,
+   "min_gap_m": 30.0,
+   "wh_per_km": 371.6588302029624,
+   "steps": 72
+  },
+  {
+   "seed": 5012,
+   "outcome": "off_road",
+   "speed": 4.966564873315802,
+   "route": 0.09012850544954376,
+   "min_gap_m": 30.0,
+   "wh_per_km": 431.1947204350431,
+   "steps": 54
+  },
+  {
+   "seed": 5013,
+   "outcome": "off_road",
+   "speed": 5.571294794435709,
+   "route": 0.10406753671599002,
+   "min_gap_m": 30.0,
+   "wh_per_km": 412.4375605773504,
+   "steps": 69
+  },
+  {
+   "seed": 5014,
+   "outcome": "off_road",
+   "speed": 5.103648791162083,
+   "route": 0.09412133329164188,
+   "min_gap_m": 30.0,
+   "wh_per_km": 445.6072966907367,
+   "steps": 57
+  },
+  {
+   "seed": 5015,
+   "outcome": "off_road",
+   "speed": 4.321232943258847,
+   "route": 0.14300695948406994,
+   "min_gap_m": 30.0,
+   "wh_per_km": 358.9145591009373,
+   "steps": 70
+  },
+  {
+   "seed": 5016,
+   "outcome": "off_road",
+   "speed": 5.0225683554638305,
+   "route": 0.1259651100890478,
+   "min_gap_m": 30.0,
+   "wh_per_km": 429.0278367913753,
+   "steps": 64
+  },
+  {
+   "seed": 5017,
+   "outcome": "off_road",
+   "speed": 5.766167819589448,
+   "route": 0.10317515489299345,
+   "min_gap_m": 30.0,
+   "wh_per_km": 343.2230640008982,
+   "steps": 68
+  },
+  {
+   "seed": 5018,
+   "outcome": "off_road",
+   "speed": 5.362477225358973,
+   "route": 0.10935803320737267,
+   "min_gap_m": 30.0,
+   "wh_per_km": 302.74755809264394,
+   "steps": 60
+  },
+  {
+   "seed": 5019,
+   "outcome": "off_road",
+   "speed": 4.021325360801422,
+   "route": 0.12058793724977049,
+   "min_gap_m": 30.0,
+   "wh_per_km": 315.5029407398696,
+   "steps": 62
+  },
+  {
+   "seed": 5020,
+   "outcome": "off_road",
+   "speed": 4.711362760198022,
+   "route": 0.07856592495250798,
+   "min_gap_m": 30.0,
+   "wh_per_km": 428.6412225913035,
+   "steps": 53
+  },
+  {
+   "seed": 5021,
+   "outcome": "off_road",
+   "speed": 4.25421332918141,
+   "route": 0.07417261432868152,
+   "min_gap_m": 30.0,
+   "wh_per_km": 284.98031853238666,
+   "steps": 75
+  },
+  {
+   "seed": 5022,
+   "outcome": "off_road",
+   "speed": 6.067229872460448,
+   "route": 0.10813193874586306,
+   "min_gap_m": 30.0,
+   "wh_per_km": 500.43289242214985,
+   "steps": 54
+  },
+  {
+   "seed": 5023,
+   "outcome": "off_road",
+   "speed": 6.117367580219384,
+   "route": 0.13580042064240172,
+   "min_gap_m": 30.0,
+   "wh_per_km": 411.21318819185706,
+   "steps": 73
+  },
+  {
+   "seed": 5024,
+   "outcome": "off_road",
+   "speed": 6.360842491697974,
+   "route": 0.14036401865060955,
+   "min_gap_m": 30.0,
+   "wh_per_km": 301.5314552399828,
+   "steps": 79
+  },
+  {
+   "seed": 5025,
+   "outcome": "off_road",
+   "speed": 7.064739438125281,
+   "route": 0.14777754389105638,
+   "min_gap_m": 30.0,
+   "wh_per_km": 470.7562033202922,
+   "steps": 70
+  },
+  {
+   "seed": 5026,
+   "outcome": "off_road",
+   "speed": 6.106890219087054,
+   "route": 0.11611565618031329,
+   "min_gap_m": 30.0,
+   "wh_per_km": 430.5252620290364,
+   "steps": 65
+  },
+  {
+   "seed": 5027,
+   "outcome": "off_road",
+   "speed": 6.208722415748298,
+   "route": 0.11836939745179659,
+   "min_gap_m": 30.0,
+   "wh_per_km": 393.3922676252302,
+   "steps": 72
+  },
+  {
+   "seed": 5028,
+   "outcome": "off_road",
+   "speed": 5.733093320520575,
+   "route": 0.07948154732688668,
+   "min_gap_m": 30.0,
+   "wh_per_km": 370.53735151060147,
+   "steps": 61
+  },
+  {
+   "seed": 5029,
+   "outcome": "off_road",
+   "speed": 5.263265716401457,
+   "route": 0.14944002696355638,
+   "min_gap_m": 30.0,
+   "wh_per_km": 469.65014358054964,
+   "steps": 61
+  },
+  {
+   "seed": 5030,
+   "outcome": "off_road",
+   "speed": 7.471537693073908,
+   "route": 0.3087441221237495,
+   "min_gap_m": 30.0,
+   "wh_per_km": 426.86553336202286,
+   "steps": 102
+  },
+  {
+   "seed": 5031,
+   "outcome": "off_road",
+   "speed": 5.978598361522219,
+   "route": 0.09525940413123545,
+   "min_gap_m": 30.0,
+   "wh_per_km": 491.25071085586137,
+   "steps": 57
+  },
+  {
+   "seed": 5032,
+   "outcome": "off_road",
+   "speed": 8.770529760536258,
+   "route": 0.32949206138592363,
+   "min_gap_m": 30.0,
+   "wh_per_km": 506.78617847086105,
+   "steps": 85
+  },
+  {
+   "seed": 5033,
+   "outcome": "off_road",
+   "speed": 3.8707695051563644,
+   "route": 0.04711279118336242,
+   "min_gap_m": 30.0,
+   "wh_per_km": 343.1692776706233,
+   "steps": 55
+  },
+  {
+   "seed": 5034,
+   "outcome": "off_road",
+   "speed": 4.887191088822074,
+   "route": 0.05574300732859012,
+   "min_gap_m": 30.0,
+   "wh_per_km": 419.00531669064094,
+   "steps": 54
+  },
+  {
+   "seed": 5035,
+   "outcome": "off_road",
+   "speed": 6.073858964903132,
+   "route": 0.1276218248363439,
+   "min_gap_m": 30.0,
+   "wh_per_km": 281.88540378369277,
+   "steps": 75
+  },
+  {
+   "seed": 5036,
+   "outcome": "off_road",
+   "speed": 5.6040055360287555,
+   "route": 0.10424908124830376,
+   "min_gap_m": 30.0,
+   "wh_per_km": 357.1982058066485,
+   "steps": 78
+  },
+  {
+   "seed": 5037,
+   "outcome": "off_road",
+   "speed": 7.153115551440106,
+   "route": 0.230182532205401,
+   "min_gap_m": 30.0,
+   "wh_per_km": 322.0517635914575,
+   "steps": 90
+  },
+  {
+   "seed": 5038,
+   "outcome": "off_road",
+   "speed": 6.685214261259253,
+   "route": 0.26396055039020033,
+   "min_gap_m": 30.0,
+   "wh_per_km": 396.60868611295166,
+   "steps": 106
+  },
+  {
+   "seed": 5039,
+   "outcome": "off_road",
+   "speed": 3.879914996624965,
+   "route": 0.069577548382505,
+   "min_gap_m": 30.0,
+   "wh_per_km": 381.8979288081525,
+   "steps": 42
+  },
+  {
+   "seed": 5040,
+   "outcome": "off_road",
+   "speed": 7.603570189461685,
+   "route": 0.2654987444967454,
+   "min_gap_m": 30.0,
+   "wh_per_km": 322.57453735169895,
+   "steps": 98
+  },
+  {
+   "seed": 5041,
+   "outcome": "off_road",
+   "speed": 5.369269019117113,
+   "route": 0.12246474100049522,
+   "min_gap_m": 30.0,
+   "wh_per_km": 344.73279496095563,
+   "steps": 63
+  },
+  {
+   "seed": 5042,
+   "outcome": "off_road",
+   "speed": 6.728726472637335,
+   "route": 0.15699462981676127,
+   "min_gap_m": 30.0,
+   "wh_per_km": 449.94603569728196,
+   "steps": 67
+  },
+  {
+   "seed": 5043,
+   "outcome": "off_road",
+   "speed": 3.1708540071624456,
+   "route": 0.049768249761143066,
+   "min_gap_m": 30.0,
+   "wh_per_km": 411.2187618966924,
+   "steps": 38
+  },
+  {
+   "seed": 5044,
+   "outcome": "off_road",
+   "speed": 5.256592412468987,
+   "route": 0.09728950214779937,
+   "min_gap_m": 30.0,
+   "wh_per_km": 400.630966676463,
+   "steps": 57
+  },
+  {
+   "seed": 5045,
+   "outcome": "off_road",
+   "speed": 6.690774459040601,
+   "route": 0.17444681429693948,
+   "min_gap_m": 30.0,
+   "wh_per_km": 409.88941257294886,
+   "steps": 69
+  },
+  {
+   "seed": 5046,
+   "outcome": "off_road",
+   "speed": 9.1629250698262,
+   "route": 0.24686861570127605,
+   "min_gap_m": 30.0,
+   "wh_per_km": 458.3461839127043,
+   "steps": 100
+  },
+  {
+   "seed": 5047,
+   "outcome": "off_road",
+   "speed": 4.9257952325340515,
+   "route": 0.052073289881418024,
+   "min_gap_m": 30.0,
+   "wh_per_km": 457.97021799122314,
+   "steps": 47
+  },
+  {
+   "seed": 5048,
+   "outcome": "off_road",
+   "speed": 4.587189459240372,
+   "route": 0.07932264614431923,
+   "min_gap_m": 30.0,
+   "wh_per_km": 490.5227521303148,
+   "steps": 52
+  },
+  {
+   "seed": 5049,
+   "outcome": "off_road",
+   "speed": 4.154207209871243,
+   "route": 0.12889573736984117,
+   "min_gap_m": 30.0,
+   "wh_per_km": 362.6730362985345,
+   "steps": 74
+  },
+  {
+   "seed": 5050,
+   "outcome": "off_road",
+   "speed": 3.984120333851451,
+   "route": 0.05867874709465916,
+   "min_gap_m": 30.0,
+   "wh_per_km": 341.9100597033202,
+   "steps": 45
+  },
+  {
+   "seed": 5051,
+   "outcome": "off_road",
+   "speed": 3.670123511490213,
+   "route": 0.04771577736527012,
+   "min_gap_m": 30.0,
+   "wh_per_km": 500.5687507300906,
+   "steps": 41
+  },
+  {
+   "seed": 5052,
+   "outcome": "off_road",
+   "speed": 5.2337455484121005,
+   "route": 0.07901745178544957,
+   "min_gap_m": 30.0,
+   "wh_per_km": 335.6225512894661,
+   "steps": 67
+  },
+  {
+   "seed": 5053,
+   "outcome": "off_road",
+   "speed": 5.750193804457958,
+   "route": 0.09305518589839365,
+   "min_gap_m": 30.0,
+   "wh_per_km": 400.2606752189391,
+   "steps": 68
+  },
+  {
+   "seed": 5054,
+   "outcome": "off_road",
+   "speed": 7.201735509137365,
+   "route": 0.1366913620570783,
+   "min_gap_m": 30.0,
+   "wh_per_km": 474.00195494381666,
+   "steps": 78
+  },
+  {
+   "seed": 5055,
+   "outcome": "off_road",
+   "speed": 6.404845686568478,
+   "route": 0.13403549110335394,
+   "min_gap_m": 30.0,
+   "wh_per_km": 398.40348923617046,
+   "steps": 86
+  },
+  {
+   "seed": 5056,
+   "outcome": "off_road",
+   "speed": 4.239175144536735,
+   "route": 0.10754059853452494,
+   "min_gap_m": 30.0,
+   "wh_per_km": 470.98758136836597,
+   "steps": 52
+  },
+  {
+   "seed": 5057,
+   "outcome": "off_road",
+   "speed": 4.880993937436477,
+   "route": 0.1053347189780946,
+   "min_gap_m": 30.0,
+   "wh_per_km": 360.49118561907574,
+   "steps": 64
+  },
+  {
+   "seed": 5058,
+   "outcome": "off_road",
+   "speed": 2.536882075918027,
+   "route": 0.03386261441145417,
+   "min_gap_m": 30.0,
+   "wh_per_km": 337.0251743964662,
+   "steps": 41
+  },
+  {
+   "seed": 5059,
+   "outcome": "off_road",
+   "speed": 6.404151002140123,
+   "route": 0.12137422957780813,
+   "min_gap_m": 30.0,
+   "wh_per_km": 522.4887653446075,
+   "steps": 64
+  },
+  {
+   "seed": 5060,
+   "outcome": "off_road",
+   "speed": 6.591296042626705,
+   "route": 0.12160925750126221,
+   "min_gap_m": 30.0,
+   "wh_per_km": 435.9062827409725,
+   "steps": 69
+  },
+  {
+   "seed": 5061,
+   "outcome": "off_road",
+   "speed": 3.8758987097637445,
+   "route": 0.08476326051345609,
+   "min_gap_m": 30.0,
+   "wh_per_km": 345.4394796902638,
+   "steps": 49
+  },
+  {
+   "seed": 5062,
+   "outcome": "off_road",
+   "speed": 4.042479780198137,
+   "route": 0.0634292640334334,
+   "min_gap_m": 30.0,
+   "wh_per_km": 525.0572430286604,
+   "steps": 44
+  },
+  {
+   "seed": 5063,
+   "outcome": "off_road",
+   "speed": 6.166143211115242,
+   "route": 0.1568718954116404,
+   "min_gap_m": 30.0,
+   "wh_per_km": 406.06623175104056,
+   "steps": 77
+  },
+  {
+   "seed": 5064,
+   "outcome": "off_road",
+   "speed": 5.327880288852975,
+   "route": 0.07739754314190331,
+   "min_gap_m": 30.0,
+   "wh_per_km": 415.17881672216004,
+   "steps": 52
+  },
+  {
+   "seed": 5065,
+   "outcome": "off_road",
+   "speed": 6.788972813566865,
+   "route": 0.10870614151185072,
+   "min_gap_m": 30.0,
+   "wh_per_km": 405.71983000381954,
+   "steps": 66
+  },
+  {
+   "seed": 5066,
+   "outcome": "off_road",
+   "speed": 6.130560919625864,
+   "route": 0.1291601822268946,
+   "min_gap_m": 30.0,
+   "wh_per_km": 425.02102531425,
+   "steps": 64
+  },
+  {
+   "seed": 5067,
+   "outcome": "off_road",
+   "speed": 7.180781151186066,
+   "route": 0.14168329747618674,
+   "min_gap_m": 30.0,
+   "wh_per_km": 629.1391458532014,
+   "steps": 54
+  },
+  {
+   "seed": 5068,
+   "outcome": "off_road",
+   "speed": 6.3324726604256005,
+   "route": 0.1426905618494239,
+   "min_gap_m": 30.0,
+   "wh_per_km": 363.6967562687928,
+   "steps": 77
+  },
+  {
+   "seed": 5069,
+   "outcome": "off_road",
+   "speed": 4.601570143701536,
+   "route": 0.050753895462159575,
+   "min_gap_m": 30.0,
+   "wh_per_km": 471.40428892115773,
+   "steps": 39
+  },
+  {
+   "seed": 5070,
+   "outcome": "off_road",
+   "speed": 6.056880898102161,
+   "route": 0.1095115519576391,
+   "min_gap_m": 30.0,
+   "wh_per_km": 494.68227302363505,
+   "steps": 64
+  },
+  {
+   "seed": 5071,
+   "outcome": "off_road",
+   "speed": 6.3844680830488265,
+   "route": 0.10116313810283817,
+   "min_gap_m": 30.0,
+   "wh_per_km": 386.31029663922635,
+   "steps": 58
+  },
+  {
+   "seed": 5072,
+   "outcome": "off_road",
+   "speed": 6.925140703812544,
+   "route": 0.1667130387554213,
+   "min_gap_m": 30.0,
+   "wh_per_km": 295.5055913174572,
+   "steps": 83
+  },
+  {
+   "seed": 5073,
+   "outcome": "off_road",
+   "speed": 6.218716784111932,
+   "route": 0.12089627808940427,
+   "min_gap_m": 30.0,
+   "wh_per_km": 396.00741471695665,
+   "steps": 70
+  },
+  {
+   "seed": 5074,
+   "outcome": "off_road",
+   "speed": 3.629234690056323,
+   "route": 0.050666165125147065,
+   "min_gap_m": 30.0,
+   "wh_per_km": 365.2375745036898,
+   "steps": 57
+  },
+  {
+   "seed": 5075,
+   "outcome": "off_road",
+   "speed": 6.458724946910517,
+   "route": 0.1422058714974358,
+   "min_gap_m": 30.0,
+   "wh_per_km": 418.6622240324023,
+   "steps": 74
+  },
+  {
+   "seed": 5076,
+   "outcome": "off_road",
+   "speed": 5.4502851523485125,
+   "route": 0.17465091181676626,
+   "min_gap_m": 30.0,
+   "wh_per_km": 451.407945497949,
+   "steps": 71
+  },
+  {
+   "seed": 5077,
+   "outcome": "off_road",
+   "speed": 6.0036914221850175,
+   "route": 0.1072610549031885,
+   "min_gap_m": 30.0,
+   "wh_per_km": 306.20934021905435,
+   "steps": 75
+  },
+  {
+   "seed": 5078,
+   "outcome": "off_road",
+   "speed": 4.300363743319138,
+   "route": 0.057989987917395375,
+   "min_gap_m": 30.0,
+   "wh_per_km": 489.7483592300556,
+   "steps": 44
+  },
+  {
+   "seed": 5079,
+   "outcome": "off_road",
+   "speed": 5.092022313898648,
+   "route": 0.13375317999339925,
+   "min_gap_m": 30.0,
+   "wh_per_km": 435.4380542689932,
+   "steps": 61
+  },
+  {
+   "seed": 5080,
+   "outcome": "off_road",
+   "speed": 7.914487659237544,
+   "route": 0.19637966244606145,
+   "min_gap_m": 30.0,
+   "wh_per_km": 366.11305265403155,
+   "steps": 86
+  },
+  {
+   "seed": 5081,
+   "outcome": "off_road",
+   "speed": 3.8063695565338906,
+   "route": 0.03986675080142913,
+   "min_gap_m": 30.0,
+   "wh_per_km": 470.5061510853248,
+   "steps": 37
+  },
+  {
+   "seed": 5082,
+   "outcome": "off_road",
+   "speed": 6.260460304561129,
+   "route": 0.11675611784232205,
+   "min_gap_m": 30.0,
+   "wh_per_km": 383.30296838417155,
+   "steps": 66
+  },
+  {
+   "seed": 5083,
+   "outcome": "off_road",
+   "speed": 3.08163207401201,
+   "route": 0.05573869486687678,
+   "min_gap_m": 30.0,
+   "wh_per_km": 356.9088477903994,
+   "steps": 38
+  },
+  {
+   "seed": 5084,
+   "outcome": "off_road",
+   "speed": 5.0369286279985515,
+   "route": 0.10069340373536656,
+   "min_gap_m": 30.0,
+   "wh_per_km": 408.1615562778853,
+   "steps": 57
+  },
+  {
+   "seed": 5085,
+   "outcome": "off_road",
+   "speed": 3.6806859664047336,
+   "route": 0.07834320092090535,
+   "min_gap_m": 30.0,
+   "wh_per_km": 343.3829996030962,
+   "steps": 52
+  },
+  {
+   "seed": 5086,
+   "outcome": "off_road",
+   "speed": 7.116569437831956,
+   "route": 0.14458949297214463,
+   "min_gap_m": 30.0,
+   "wh_per_km": 461.4159028530598,
+   "steps": 71
+  },
+  {
+   "seed": 5087,
+   "outcome": "off_road",
+   "speed": 5.025194329770663,
+   "route": 0.07055006528656062,
+   "min_gap_m": 30.0,
+   "wh_per_km": 386.43928969018697,
+   "steps": 55
+  },
+  {
+   "seed": 5088,
+   "outcome": "off_road",
+   "speed": 6.7327789066451045,
+   "route": 0.12419581708907051,
+   "min_gap_m": 30.0,
+   "wh_per_km": 364.2206939272372,
+   "steps": 71
+  },
+  {
+   "seed": 5089,
+   "outcome": "off_road",
+   "speed": 4.0450479649996725,
+   "route": 0.057974981607498956,
+   "min_gap_m": 30.0,
+   "wh_per_km": 479.4539770445247,
+   "steps": 42
+  },
+  {
+   "seed": 5090,
+   "outcome": "off_road",
+   "speed": 5.579498940598194,
+   "route": 0.10428001861777343,
+   "min_gap_m": 30.0,
+   "wh_per_km": 295.82579776183854,
+   "steps": 63
+  },
+  {
+   "seed": 5091,
+   "outcome": "off_road",
+   "speed": 6.0636742027306765,
+   "route": 0.10112493673281692,
+   "min_gap_m": 30.0,
+   "wh_per_km": 336.0318587130091,
+   "steps": 68
+  },
+  {
+   "seed": 5092,
+   "outcome": "off_road",
+   "speed": 6.453758174222776,
+   "route": 0.14396557948759198,
+   "min_gap_m": 30.0,
+   "wh_per_km": 301.38128455114617,
+   "steps": 83
+  },
+  {
+   "seed": 5093,
+   "outcome": "off_road",
+   "speed": 6.377283020291577,
+   "route": 0.11877781346004841,
+   "min_gap_m": 30.0,
+   "wh_per_km": 322.26342165710264,
+   "steps": 75
+  },
+  {
+   "seed": 5094,
+   "outcome": "off_road",
+   "speed": 2.252369990330614,
+   "route": 0.029102882610477755,
+   "min_gap_m": 30.0,
+   "wh_per_km": 280.0010975984146,
+   "steps": 40
+  },
+  {
+   "seed": 5095,
+   "outcome": "off_road",
+   "speed": 6.7186167898677525,
+   "route": 0.205252966542015,
+   "min_gap_m": 30.0,
+   "wh_per_km": 322.1191062502351,
+   "steps": 85
+  },
+  {
+   "seed": 5096,
+   "outcome": "off_road",
+   "speed": 3.309895618008038,
+   "route": 0.09043883855577084,
+   "min_gap_m": 30.0,
+   "wh_per_km": 365.34388866597357,
+   "steps": 55
+  },
+  {
+   "seed": 5097,
+   "outcome": "off_road",
+   "speed": 4.233954644346954,
+   "route": 0.0926029722772945,
+   "min_gap_m": 30.0,
+   "wh_per_km": 534.70943496446,
+   "steps": 46
+  },
+  {
+   "seed": 5098,
+   "outcome": "off_road",
+   "speed": 5.0426005891094,
+   "route": 0.06409101294033188,
+   "min_gap_m": 30.0,
+   "wh_per_km": 373.8003888145171,
+   "steps": 52
+  },
+  {
+   "seed": 5099,
+   "outcome": "off_road",
+   "speed": 3.717907969367368,
+   "route": 0.08008903930692952,
+   "min_gap_m": 30.0,
+   "wh_per_km": 374.9883946072305,
+   "steps": 58
+  },
+  {
+   "seed": 5100,
+   "outcome": "off_road",
+   "speed": 7.165634573636272,
+   "route": 0.2523190898017645,
+   "min_gap_m": 30.0,
+   "wh_per_km": 323.92686671249044,
+   "steps": 88
+  },
+  {
+   "seed": 5101,
+   "outcome": "off_road",
+   "speed": 6.511753483980224,
+   "route": 0.1168879780767232,
+   "min_gap_m": 30.0,
+   "wh_per_km": 363.14840803423385,
+   "steps": 66
+  },
+  {
+   "seed": 5102,
+   "outcome": "off_road",
+   "speed": 6.973181588862465,
+   "route": 0.15586478805175172,
+   "min_gap_m": 30.0,
+   "wh_per_km": 438.08550794628206,
+   "steps": 73
+  },
+  {
+   "seed": 5103,
+   "outcome": "off_road",
+   "speed": 6.528077690988249,
+   "route": 0.10532347850465851,
+   "min_gap_m": 30.0,
+   "wh_per_km": 346.03646814441277,
+   "steps": 71
+  },
+  {
+   "seed": 5104,
+   "outcome": "off_road",
+   "speed": 5.302139443967478,
+   "route": 0.08027960539121076,
+   "min_gap_m": 30.0,
+   "wh_per_km": 366.08729589775993,
+   "steps": 57
+  },
+  {
+   "seed": 5105,
+   "outcome": "off_road",
+   "speed": 5.869754505324314,
+   "route": 0.09824810805042576,
+   "min_gap_m": 30.0,
+   "wh_per_km": 312.73536172471916,
+   "steps": 69
+  },
+  {
+   "seed": 5106,
+   "outcome": "off_road",
+   "speed": 3.107331805784247,
+   "route": 0.07623565348932376,
+   "min_gap_m": 30.0,
+   "wh_per_km": 366.2763667725808,
+   "steps": 46
+  },
+  {
+   "seed": 5107,
+   "outcome": "off_road",
+   "speed": 6.169912111760958,
+   "route": 0.0918151000182787,
+   "min_gap_m": 30.0,
+   "wh_per_km": 269.81013733810283,
+   "steps": 75
+  },
+  {
+   "seed": 5108,
+   "outcome": "off_road",
+   "speed": 6.609525077167422,
+   "route": 0.12011463430901399,
+   "min_gap_m": 30.0,
+   "wh_per_km": 371.4406754309328,
+   "steps": 64
+  },
+  {
+   "seed": 5109,
+   "outcome": "off_road",
+   "speed": 7.227380026325346,
+   "route": 0.14942879739883902,
+   "min_gap_m": 30.0,
+   "wh_per_km": 498.9254360849217,
+   "steps": 64
+  },
+  {
+   "seed": 5110,
+   "outcome": "off_road",
+   "speed": 3.304904617813865,
+   "route": 0.051794331626648794,
+   "min_gap_m": 30.0,
+   "wh_per_km": 427.4520777909788,
+   "steps": 55
+  },
+  {
+   "seed": 5111,
+   "outcome": "off_road",
+   "speed": 6.180161892170712,
+   "route": 0.10851713747479012,
+   "min_gap_m": 30.0,
+   "wh_per_km": 311.68470847500026,
+   "steps": 71
+  },
+  {
+   "seed": 5112,
+   "outcome": "off_road",
+   "speed": 6.3980715334228675,
+   "route": 0.18250116479266845,
+   "min_gap_m": 30.0,
+   "wh_per_km": 275.3518637312319,
+   "steps": 90
+  },
+  {
+   "seed": 5113,
+   "outcome": "off_road",
+   "speed": 6.310921021125517,
+   "route": 0.12169745962283664,
+   "min_gap_m": 30.0,
+   "wh_per_km": 291.79834894649065,
+   "steps": 78
+  },
+  {
+   "seed": 5114,
+   "outcome": "off_road",
+   "speed": 2.790619103040968,
+   "route": 0.05338875210578101,
+   "min_gap_m": 30.0,
+   "wh_per_km": 316.4985190828497,
+   "steps": 41
+  },
+  {
+   "seed": 5115,
+   "outcome": "off_road",
+   "speed": 6.215073964314312,
+   "route": 0.11205728573884077,
+   "min_gap_m": 30.0,
+   "wh_per_km": 394.57636257728814,
+   "steps": 69
+  },
+  {
+   "seed": 5116,
+   "outcome": "off_road",
+   "speed": 7.922282385102092,
+   "route": 0.3214808014471714,
+   "min_gap_m": 30.0,
+   "wh_per_km": 380.990631524731,
+   "steps": 99
+  },
+  {
+   "seed": 5117,
+   "outcome": "off_road",
+   "speed": 6.0127705387058406,
+   "route": 0.11221308223819548,
+   "min_gap_m": 30.0,
+   "wh_per_km": 305.08954144710515,
+   "steps": 66
+  },
+  {
+   "seed": 5118,
+   "outcome": "off_road",
+   "speed": 3.8061780966630505,
+   "route": 0.05190633996986267,
+   "min_gap_m": 30.0,
+   "wh_per_km": 469.68464068492165,
+   "steps": 37
+  },
+  {
+   "seed": 5119,
+   "outcome": "off_road",
+   "speed": 5.787596251433706,
+   "route": 0.1263936594949375,
+   "min_gap_m": 30.0,
+   "wh_per_km": 354.55250444749214,
+   "steps": 73
+  },
+  {
+   "seed": 5120,
+   "outcome": "off_road",
+   "speed": 6.41273250030148,
+   "route": 0.1571526483785282,
+   "min_gap_m": 30.0,
+   "wh_per_km": 368.5832317062931,
+   "steps": 78
+  },
+  {
+   "seed": 5121,
+   "outcome": "off_road",
+   "speed": 4.353511317298764,
+   "route": 0.07090305708587481,
+   "min_gap_m": 30.0,
+   "wh_per_km": 378.14994897698637,
+   "steps": 55
+  },
+  {
+   "seed": 5122,
+   "outcome": "off_road",
+   "speed": 7.221267728491148,
+   "route": 0.15291761810673735,
+   "min_gap_m": 30.0,
+   "wh_per_km": 449.3938884515375,
+   "steps": 78
+  },
+  {
+   "seed": 5123,
+   "outcome": "off_road",
+   "speed": 5.086362855131762,
+   "route": 0.08585208839124359,
+   "min_gap_m": 30.0,
+   "wh_per_km": 478.5869068782059,
+   "steps": 48
+  },
+  {
+   "seed": 5124,
+   "outcome": "off_road",
+   "speed": 3.0936158349741962,
+   "route": 0.06058808518529649,
+   "min_gap_m": 30.0,
+   "wh_per_km": 396.0870564649783,
+   "steps": 38
+  },
+  {
+   "seed": 5125,
+   "outcome": "off_road",
+   "speed": 4.651962521418219,
+   "route": 0.08374175903904367,
+   "min_gap_m": 30.0,
+   "wh_per_km": 410.5403322858362,
+   "steps": 51
+  },
+  {
+   "seed": 5126,
+   "outcome": "off_road",
+   "speed": 6.483262752542513,
+   "route": 0.10799387057390633,
+   "min_gap_m": 30.0,
+   "wh_per_km": 320.34671202151924,
+   "steps": 76
+  },
+  {
+   "seed": 5127,
+   "outcome": "off_road",
+   "speed": 4.063112025357884,
+   "route": 0.059085360089534626,
+   "min_gap_m": 30.0,
+   "wh_per_km": 332.7264078113245,
+   "steps": 47
+  },
+  {
+   "seed": 5128,
+   "outcome": "off_road",
+   "speed": 4.299979197870731,
+   "route": 0.05314092564307251,
+   "min_gap_m": 30.0,
+   "wh_per_km": 384.24241649361795,
+   "steps": 50
+  },
+  {
+   "seed": 5129,
+   "outcome": "off_road",
+   "speed": 5.492649966442474,
+   "route": 0.054156269973387614,
+   "min_gap_m": 30.0,
+   "wh_per_km": 412.9011605108253,
+   "steps": 56
+  },
+  {
+   "seed": 5130,
+   "outcome": "off_road",
+   "speed": 4.65673179408313,
+   "route": 0.06483569423599142,
+   "min_gap_m": 30.0,
+   "wh_per_km": 487.7762038144098,
+   "steps": 53
+  },
+  {
+   "seed": 5131,
+   "outcome": "off_road",
+   "speed": 6.445951532678648,
+   "route": 0.15327361866489245,
+   "min_gap_m": 30.0,
+   "wh_per_km": 296.5292919392282,
+   "steps": 83
+  },
+  {
+   "seed": 5132,
+   "outcome": "off_road",
+   "speed": 6.0051452292131025,
+   "route": 0.12835674313384335,
+   "min_gap_m": 30.0,
+   "wh_per_km": 388.21870385913576,
+   "steps": 82
+  },
+  {
+   "seed": 5133,
+   "outcome": "off_road",
+   "speed": 6.719556118860309,
+   "route": 0.16463433073022235,
+   "min_gap_m": 30.0,
+   "wh_per_km": 365.99354978681777,
+   "steps": 85
+  },
+  {
+   "seed": 5134,
+   "outcome": "off_road",
+   "speed": 4.450164889893083,
+   "route": 0.053073579877745906,
+   "min_gap_m": 30.0,
+   "wh_per_km": 437.9799375194128,
+   "steps": 43
+  },
+  {
+   "seed": 5135,
+   "outcome": "off_road",
+   "speed": 6.323383225290822,
+   "route": 0.13753567110440984,
+   "min_gap_m": 30.0,
+   "wh_per_km": 317.87347651696604,
+   "steps": 75
+  },
+  {
+   "seed": 5136,
+   "outcome": "off_road",
+   "speed": 3.4926158007992174,
+   "route": 0.06868035632612231,
+   "min_gap_m": 30.0,
+   "wh_per_km": 323.0860947130803,
+   "steps": 61
+  },
+  {
+   "seed": 5137,
+   "outcome": "off_road",
+   "speed": 6.1771766529579715,
+   "route": 0.12982459484657252,
+   "min_gap_m": 30.0,
+   "wh_per_km": 350.9611819704649,
+   "steps": 68
+  },
+  {
+   "seed": 5138,
+   "outcome": "off_road",
+   "speed": 3.2751999874059097,
+   "route": 0.05141254962268141,
+   "min_gap_m": 30.0,
+   "wh_per_km": 289.8282775431113,
+   "steps": 78
+  },
+  {
+   "seed": 5139,
+   "outcome": "off_road",
+   "speed": 6.182361872012748,
+   "route": 0.1185008164570017,
+   "min_gap_m": 30.0,
+   "wh_per_km": 464.53303366301105,
+   "steps": 64
+  },
+  {
+   "seed": 5140,
+   "outcome": "off_road",
+   "speed": 5.002991231283828,
+   "route": 0.08395908712277063,
+   "min_gap_m": 30.0,
+   "wh_per_km": 429.7125073897995,
+   "steps": 50
+  },
+  {
+   "seed": 5141,
+   "outcome": "off_road",
+   "speed": 3.6142558096616133,
+   "route": 0.04594052333003666,
+   "min_gap_m": 30.0,
+   "wh_per_km": 341.3272467038066,
+   "steps": 54
+  },
+  {
+   "seed": 5142,
+   "outcome": "off_road",
+   "speed": 3.9660771326290116,
+   "route": 0.049651507348075385,
+   "min_gap_m": 30.0,
+   "wh_per_km": 322.7895988603883,
+   "steps": 50
+  },
+  {
+   "seed": 5143,
+   "outcome": "off_road",
+   "speed": 4.364738667594476,
+   "route": 0.06065159257330585,
+   "min_gap_m": 30.0,
+   "wh_per_km": 427.88929666632663,
+   "steps": 42
+  },
+  {
+   "seed": 5144,
+   "outcome": "off_road",
+   "speed": 3.6811356072211443,
+   "route": 0.11336024199105695,
+   "min_gap_m": 30.0,
+   "wh_per_km": 313.01842118723204,
+   "steps": 61
+  },
+  {
+   "seed": 5145,
+   "outcome": "off_road",
+   "speed": 3.879715295960067,
+   "route": 0.0527965460041953,
+   "min_gap_m": 30.0,
+   "wh_per_km": 377.3180442095124,
+   "steps": 55
+  },
+  {
+   "seed": 5146,
+   "outcome": "off_road",
+   "speed": 6.80738268810375,
+   "route": 0.09440565417735708,
+   "min_gap_m": 30.0,
+   "wh_per_km": 356.1883032262652,
+   "steps": 70
+  },
+  {
+   "seed": 5147,
+   "outcome": "off_road",
+   "speed": 4.5922914049589725,
+   "route": 0.07958673512929124,
+   "min_gap_m": 30.0,
+   "wh_per_km": 388.66316016070186,
+   "steps": 51
+  },
+  {
+   "seed": 5148,
+   "outcome": "off_road",
+   "speed": 4.081980098100965,
+   "route": 0.0728617989107404,
+   "min_gap_m": 30.0,
+   "wh_per_km": 334.92130709452283,
+   "steps": 50
+  },
+  {
+   "seed": 5149,
+   "outcome": "off_road",
+   "speed": 5.198193083976542,
+   "route": 0.0895018215323617,
+   "min_gap_m": 30.0,
+   "wh_per_km": 357.5225416940932,
+   "steps": 58
+  },
+  {
+   "seed": 5150,
+   "outcome": "off_road",
+   "speed": 4.064083864455789,
+   "route": 0.08234442862460467,
+   "min_gap_m": 30.0,
+   "wh_per_km": 423.13833039528635,
+   "steps": 51
+  },
+  {
+   "seed": 5151,
+   "outcome": "off_road",
+   "speed": 4.3820360415864865,
+   "route": 0.05136082440226636,
+   "min_gap_m": 30.0,
+   "wh_per_km": 430.88361929870644,
+   "steps": 43
+  },
+  {
+   "seed": 5152,
+   "outcome": "off_road",
+   "speed": 4.6390908635876515,
+   "route": 0.08275629944115301,
+   "min_gap_m": 30.0,
+   "wh_per_km": 340.0409109189556,
+   "steps": 52
+  },
+  {
+   "seed": 5153,
+   "outcome": "off_road",
+   "speed": 5.8865297545500805,
+   "route": 0.141211080295642,
+   "min_gap_m": 30.0,
+   "wh_per_km": 425.69944026956296,
+   "steps": 69
+  },
+  {
+   "seed": 5154,
+   "outcome": "off_road",
+   "speed": 5.229304393771618,
+   "route": 0.07320203224878168,
+   "min_gap_m": 30.0,
+   "wh_per_km": 395.395539980338,
+   "steps": 55
+  },
+  {
+   "seed": 5155,
+   "outcome": "off_road",
+   "speed": 5.797921469018689,
+   "route": 0.09602346696289234,
+   "min_gap_m": 30.0,
+   "wh_per_km": 393.13268483503384,
+   "steps": 71
+  },
+  {
+   "seed": 5156,
+   "outcome": "off_road",
+   "speed": 3.564712762724674,
+   "route": 0.05561669357973557,
+   "min_gap_m": 30.0,
+   "wh_per_km": 348.48056422322924,
+   "steps": 42
+  },
+  {
+   "seed": 5157,
+   "outcome": "off_road",
+   "speed": 4.914651183767566,
+   "route": 0.05449583219353409,
+   "min_gap_m": 30.0,
+   "wh_per_km": 456.46051873314747,
+   "steps": 52
+  },
+  {
+   "seed": 5158,
+   "outcome": "off_road",
+   "speed": 5.339438752066064,
+   "route": 0.12726623906325943,
+   "min_gap_m": 30.0,
+   "wh_per_km": 453.51029340837516,
+   "steps": 59
+  },
+  {
+   "seed": 5159,
+   "outcome": "off_road",
+   "speed": 6.4433681515976495,
+   "route": 0.13622829836944683,
+   "min_gap_m": 30.0,
+   "wh_per_km": 284.0287270248165,
+   "steps": 85
+  },
+  {
+   "seed": 5160,
+   "outcome": "off_road",
+   "speed": 6.446102831937075,
+   "route": 0.1283424103290864,
+   "min_gap_m": 30.0,
+   "wh_per_km": 323.8587386036541,
+   "steps": 74
+  },
+  {
+   "seed": 5161,
+   "outcome": "off_road",
+   "speed": 5.260963380169432,
+   "route": 0.11559352672823305,
+   "min_gap_m": 30.0,
+   "wh_per_km": 373.0581774157507,
+   "steps": 66
+  },
+  {
+   "seed": 5162,
+   "outcome": "off_road",
+   "speed": 8.280198668546618,
+   "route": 0.2153036416357427,
+   "min_gap_m": 30.0,
+   "wh_per_km": 451.7352143953587,
+   "steps": 83
+  },
+  {
+   "seed": 5163,
+   "outcome": "off_road",
+   "speed": 4.249652631795094,
+   "route": 0.10141946647194343,
+   "min_gap_m": 30.0,
+   "wh_per_km": 318.18979434696814,
+   "steps": 60
+  },
+  {
+   "seed": 5164,
+   "outcome": "off_road",
+   "speed": 5.89855048367492,
+   "route": 0.1152253574518882,
+   "min_gap_m": 30.0,
+   "wh_per_km": 258.4209366363348,
+   "steps": 78
+  },
+  {
+   "seed": 5165,
+   "outcome": "off_road",
+   "speed": 4.611665629892769,
+   "route": 0.06672954476722871,
+   "min_gap_m": 30.0,
+   "wh_per_km": 385.1833018563191,
+   "steps": 54
+  },
+  {
+   "seed": 5166,
+   "outcome": "off_road",
+   "speed": 6.47193739940982,
+   "route": 0.11444530113511882,
+   "min_gap_m": 30.0,
+   "wh_per_km": 364.4153746967051,
+   "steps": 67
+  },
+  {
+   "seed": 5167,
+   "outcome": "off_road",
+   "speed": 3.894176600593919,
+   "route": 0.048186599835595624,
+   "min_gap_m": 30.0,
+   "wh_per_km": 461.6543002649429,
+   "steps": 47
+  },
+  {
+   "seed": 5168,
+   "outcome": "off_road",
+   "speed": 7.641023993573406,
+   "route": 0.16734133847615473,
+   "min_gap_m": 30.0,
+   "wh_per_km": 395.3938955898628,
+   "steps": 86
+  },
+  {
+   "seed": 5169,
+   "outcome": "off_road",
+   "speed": 6.598212949279334,
+   "route": 0.08874056394145084,
+   "min_gap_m": 30.0,
+   "wh_per_km": 326.68888590495186,
+   "steps": 71
+  },
+  {
+   "seed": 5170,
+   "outcome": "off_road",
+   "speed": 5.5452694684001305,
+   "route": 0.07100967885030056,
+   "min_gap_m": 30.0,
+   "wh_per_km": 371.90155996796113,
+   "steps": 56
+  },
+  {
+   "seed": 5171,
+   "outcome": "off_road",
+   "speed": 6.554153351628668,
+   "route": 0.14524113764466304,
+   "min_gap_m": 30.0,
+   "wh_per_km": 302.7976134482329,
+   "steps": 75
+  },
+  {
+   "seed": 5172,
+   "outcome": "off_road",
+   "speed": 8.41439342989658,
+   "route": 0.23748889171074355,
+   "min_gap_m": 30.0,
+   "wh_per_km": 398.71462890571576,
+   "steps": 81
+  },
+  {
+   "seed": 5173,
+   "outcome": "off_road",
+   "speed": 7.614609265877838,
+   "route": 0.22496926345409932,
+   "min_gap_m": 30.0,
+   "wh_per_km": 618.0707732539373,
+   "steps": 70
+  },
+  {
+   "seed": 5174,
+   "outcome": "off_road",
+   "speed": 5.027774753825357,
+   "route": 0.11020013051961493,
+   "min_gap_m": 30.0,
+   "wh_per_km": 458.5862145932892,
+   "steps": 58
+  },
+  {
+   "seed": 5175,
+   "outcome": "off_road",
+   "speed": 5.749329489196945,
+   "route": 0.09329503921239751,
+   "min_gap_m": 30.0,
+   "wh_per_km": 324.2455140559266,
+   "steps": 62
+  },
+  {
+   "seed": 5176,
+   "outcome": "off_road",
+   "speed": 4.5629629500009115,
+   "route": 0.09537499264919358,
+   "min_gap_m": 30.0,
+   "wh_per_km": 322.00152322942125,
+   "steps": 62
+  },
+  {
+   "seed": 5177,
+   "outcome": "off_road",
+   "speed": 4.126802981530587,
+   "route": 0.0920563196345596,
+   "min_gap_m": 30.0,
+   "wh_per_km": 408.54031382147923,
+   "steps": 47
+  },
+  {
+   "seed": 5178,
+   "outcome": "off_road",
+   "speed": 5.493108984684436,
+   "route": 0.12582603636340414,
+   "min_gap_m": 30.0,
+   "wh_per_km": 281.1444725625538,
+   "steps": 65
+  },
+  {
+   "seed": 5179,
+   "outcome": "off_road",
+   "speed": 4.0272488709252565,
+   "route": 0.053196591347255635,
+   "min_gap_m": 30.0,
+   "wh_per_km": 404.84516496569415,
+   "steps": 46
+  },
+  {
+   "seed": 5180,
+   "outcome": "off_road",
+   "speed": 3.9264507722645523,
+   "route": 0.08509735795091973,
+   "min_gap_m": 30.0,
+   "wh_per_km": 343.54987963257577,
+   "steps": 54
+  },
+  {
+   "seed": 5181,
+   "outcome": "off_road",
+   "speed": 4.617251216044432,
+   "route": 0.08728238196376271,
+   "min_gap_m": 30.0,
+   "wh_per_km": 414.5423209393379,
+   "steps": 49
+  },
+  {
+   "seed": 5182,
+   "outcome": "off_road",
+   "speed": 5.161765713685851,
+   "route": 0.12035206163066903,
+   "min_gap_m": 30.0,
+   "wh_per_km": 419.61910411284543,
+   "steps": 56
+  },
+  {
+   "seed": 5183,
+   "outcome": "off_road",
+   "speed": 3.680044377675261,
+   "route": 0.09473480084579003,
+   "min_gap_m": 30.0,
+   "wh_per_km": 312.2427027320133,
+   "steps": 63
+  },
+  {
+   "seed": 5184,
+   "outcome": "off_road",
+   "speed": 3.074282015533387,
+   "route": 0.09215163730950228,
+   "min_gap_m": 30.0,
+   "wh_per_km": 324.6781022358202,
+   "steps": 57
+  },
+  {
+   "seed": 5185,
+   "outcome": "off_road",
+   "speed": 3.4320493827498346,
+   "route": 0.059518684537841794,
+   "min_gap_m": 30.0,
+   "wh_per_km": 399.2717619584902,
+   "steps": 51
+  },
+  {
+   "seed": 5186,
+   "outcome": "off_road",
+   "speed": 5.093752385487772,
+   "route": 0.07028815579194714,
+   "min_gap_m": 30.0,
+   "wh_per_km": 504.3533806197205,
+   "steps": 50
+  },
+  {
+   "seed": 5187,
+   "outcome": "off_road",
+   "speed": 6.018155875658255,
+   "route": 0.1329220320903607,
+   "min_gap_m": 30.0,
+   "wh_per_km": 419.19685371840154,
+   "steps": 72
+  },
+  {
+   "seed": 5188,
+   "outcome": "off_road",
+   "speed": 5.881450764083499,
+   "route": 0.08379054471906054,
+   "min_gap_m": 30.0,
+   "wh_per_km": 350.83430579591425,
+   "steps": 63
+  },
+  {
+   "seed": 5189,
+   "outcome": "off_road",
+   "speed": 6.163695851643709,
+   "route": 0.11498882043826782,
+   "min_gap_m": 30.0,
+   "wh_per_km": 314.45151032597437,
+   "steps": 81
+  },
+  {
+   "seed": 5190,
+   "outcome": "off_road",
+   "speed": 3.6441519079683995,
+   "route": 0.09431860710941152,
+   "min_gap_m": 30.0,
+   "wh_per_km": 346.25216486875337,
+   "steps": 55
+  },
+  {
+   "seed": 5191,
+   "outcome": "off_road",
+   "speed": 7.594596053350957,
+   "route": 0.19670835246743767,
+   "min_gap_m": 30.0,
+   "wh_per_km": 519.1376387313268,
+   "steps": 66
+  },
+  {
+   "seed": 5192,
+   "outcome": "off_road",
+   "speed": 4.742272319552156,
+   "route": 0.08778267858224999,
+   "min_gap_m": 30.0,
+   "wh_per_km": 568.3303406560641,
+   "steps": 51
+  },
+  {
+   "seed": 5193,
+   "outcome": "off_road",
+   "speed": 3.532632708646537,
+   "route": 0.037662728922301554,
+   "min_gap_m": 30.0,
+   "wh_per_km": 458.6982648485841,
+   "steps": 35
+  },
+  {
+   "seed": 5194,
+   "outcome": "off_road",
+   "speed": 3.4223661903897367,
+   "route": 0.03134397301024717,
+   "min_gap_m": 30.0,
+   "wh_per_km": 481.2402027366594,
+   "steps": 39
+  },
+  {
+   "seed": 5195,
+   "outcome": "off_road",
+   "speed": 7.066575778233382,
+   "route": 0.10598657369852124,
+   "min_gap_m": 30.0,
+   "wh_per_km": 380.3836232741671,
+   "steps": 81
+  },
+  {
+   "seed": 5196,
+   "outcome": "off_road",
+   "speed": 3.976997456219349,
+   "route": 0.051187994850904056,
+   "min_gap_m": 30.0,
+   "wh_per_km": 435.32197573491715,
+   "steps": 47
+  },
+  {
+   "seed": 5197,
+   "outcome": "off_road",
+   "speed": 4.028184742056844,
+   "route": 0.0767230703724191,
+   "min_gap_m": 30.0,
+   "wh_per_km": 389.7502979603685,
+   "steps": 47
+  },
+  {
+   "seed": 5198,
+   "outcome": "off_road",
+   "speed": 4.16938633563423,
+   "route": 0.1040424685118226,
+   "min_gap_m": 30.0,
+   "wh_per_km": 317.6878440731137,
+   "steps": 61
+  },
+  {
+   "seed": 5199,
+   "outcome": "off_road",
+   "speed": 5.9966475305590805,
+   "route": 0.1447019302211621,
+   "min_gap_m": 30.0,
+   "wh_per_km": 264.2159075081548,
+   "steps": 87
+  }
+ ]
+}
