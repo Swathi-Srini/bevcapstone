@@ -13,7 +13,7 @@ from pathlib import Path
 import numpy as np
 
 WEATHER = [("clear", 0.0), ("fog", 1.0), ("rain", 0.6), ("rain", 1.0)]
-ALL = ["ov_split", "repo_bc_sparse", "repo_bc_clear", "ctrl_nocaut", "caut_c0", "caut_auto", "safe_student"]   # safe_student = runs/sparse_overlay_split_safe_teacher (SafeTeacher labels, same input design as ov_split)
+ALL = ["ov_split", "repo_bc_sparse", "repo_bc_clear", "ctrl_nocaut", "caut_c0", "caut_auto", "caut_c1", "safe_student"]   # caut_c1 = caution forced to 1 in every weather (control: is the gain about caution or about perception?)   # safe_student = runs/sparse_overlay_split_safe_teacher (SafeTeacher labels, same input design as ov_split)
 REPO = {"repo_bc_sparse": "bev_policy/checkpoints/bc_sparse_traffic_5eps.pt", "repo_bc_clear": "bev_policy/checkpoints/bc_clear_5eps_without_traffic.pt"}
 CLEAR_FILE = {"ov_split": "base_ovsplit", "repo_bc_sparse": "repo_bc_sparse", "repo_bc_clear": "repo_bc_clear", "ctrl_nocaut": "ctrl_nocaut"}
 FINAL = Path("bev_rl/adaptive/results/final_200seed")
@@ -54,7 +54,7 @@ def run_cell(arm, w, a, env, net, mu, sd, torch, part):
     from bev_rl.adaptive.caution import keep_prob, c_auto, episode
     from bev_rl.adaptive.env import SCALE
     rows = json.loads(part.read_text()) if part.exists() else []; done = {r["seed"] for r in rows}
-    p = keep_prob(*w, env.table); c = c_auto(*w, env.table) if arm == "caut_auto" else 0.0
+    p = keep_prob(*w, env.table); c = c_auto(*w, env.table) if arm == "caut_auto" else (1.0 if arm == "caut_c1" else 0.0)
     for s in range(a.seed0, a.seed0 + a.n):
         if s in done: continue
         if arm in REPO:                                                         # raw GitHub BEV, no overlay, all 6 scalars (as the repo trained it)
