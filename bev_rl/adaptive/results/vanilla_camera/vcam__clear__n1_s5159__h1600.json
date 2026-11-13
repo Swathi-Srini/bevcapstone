@@ -1,0 +1,22 @@
+{
+ "model": "vcam",
+ "cond": "clear",
+ "n": 1,
+ "success": 0.0,
+ "crash": 1.0,
+ "off_road": 0.0,
+ "timeout": 0.0,
+ "mean_speed": 9.01660979321328,
+ "route": 0.6046424703101512,
+ "episodes": [
+  {
+   "seed": 5159,
+   "outcome": "crash",
+   "speed": 9.01660979321328,
+   "route": 0.6046424703101512,
+   "min_gap_m": -0.04620629089042083,
+   "wh_per_km": 141.3167650056336,
+   "steps": 291
+  }
+ ]
+}

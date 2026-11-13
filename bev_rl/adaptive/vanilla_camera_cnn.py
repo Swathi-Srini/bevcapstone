@@ -173,9 +173,9 @@ def cmd_train(a):
 def cmd_eval(a):
     import torch
     torch.set_num_threads(2); ck = torch.load(RUNS / a.name / "best.pt", map_location="cpu", weights_only=True); net = build_net(); net.load_state_dict(ck["model_state"]); net.eval()
-    OUT.mkdir(parents=True, exist_ok=True); env = make_cam_env(seeds=range(a.seed0, a.seed0 + a.n))
+    OUT.mkdir(parents=True, exist_ok=True); env = make_cam_env(horizon=a.horizon, seeds=range(a.seed0, a.seed0 + a.n)); tag = "" if a.horizon == 800 else f"__h{a.horizon}"
     for cs in a.conds:
-        c = parse_cond(cs); f = OUT / f"{a.name}__{cname(c)}__n{a.n}_s{a.seed0}.json"; part = f.with_suffix(".partial.json")
+        c = parse_cond(cs); f = OUT / f"{a.name}__{cname(c)}__n{a.n}_s{a.seed0}{tag}.json"; part = f.with_suffix(".partial.json")
         if f.exists(): continue
         rows = json.loads(part.read_text()) if part.exists() else []; done = {r["seed"] for r in rows}
         for s in range(a.seed0, a.seed0 + a.n):
@@ -212,7 +212,7 @@ def main():
     t = sp.add_parser("train"); t.add_argument("--name", default="vcam"); t.add_argument("--episodes0", type=int, default=40); t.add_argument("--dagger-iters", type=int, default=3)
     t.add_argument("--dagger-episodes", type=int, default=20); t.add_argument("--epochs", type=int, default=8); t.set_defaults(f=cmd_train)
     e = sp.add_parser("eval"); e.add_argument("--name", default="vcam"); e.add_argument("--n", type=int, default=40); e.add_argument("--seed0", type=int, default=5000)
-    e.add_argument("--conds", nargs="+", default=DEFAULT_CONDS); e.set_defaults(f=cmd_eval)
+    e.add_argument("--conds", nargs="+", default=DEFAULT_CONDS); e.add_argument("--horizon", type=int, default=800); e.set_defaults(f=cmd_eval)
     f = sp.add_parser("frames"); f.add_argument("--out", default="paper/vanilla_camera/corruption_examples.png"); f.add_argument("--conds", nargs="+", default=DEFAULT_CONDS[:12]); f.set_defaults(f=cmd_frames)
     a = ap.parse_args(); a.f(a)
 
