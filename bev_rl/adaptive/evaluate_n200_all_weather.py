@@ -40,6 +40,9 @@ def load_model(arm, torch):
     if arm in REPO:
         ck = torch.load(REPO[arm], map_location="cpu", weights_only=True)
         net = BEVScalarPolicy(int(ck["in_channels"])); net.load_state_dict(ck["model_state"]); net.eval()
+    elif arm.startswith("e2e_"):                                                 # proposed model fine-tuned on camera-pipeline grids (e2e_dagger.py)
+        ck = torch.load(f"bev_rl/adaptive/runs/{arm}/best.pt", map_location="cpu", weights_only=True)
+        inner = BEVScalarPolicy(1, 6, 0); inner.load_state_dict(ck["model_state"]); inner.eval(); net = lambda b, s_, c: inner(b, s_)
     elif arm in ("ov_split", "safe_student"):
         ck = torch.load("bev_rl/adaptive/runs/ov_split/best.pt" if arm == "ov_split" else "bev_rl/adaptive/runs/sparse_overlay_split_safe_teacher/best.pt", map_location="cpu", weights_only=True)
         inner = BEVScalarPolicy(1, 6, 0); inner.load_state_dict(ck["model_state"]); inner.eval(); net = lambda b, s_, c: inner(b, s_)   # ignores caution
