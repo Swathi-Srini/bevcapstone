@@ -66,3 +66,11 @@ report/*.toc
 report/__pycache__/
 bev_rl/adaptive/results/regime_pilot/
 report/finish_five_model_document.sh
+
+# --- added 14 Nov 2026 (cleanup PR; ignore rules only, no tracked file is affected) ---
+# running/finished camera-DAgger run data and claim markers (checkpoints are NOT ignored on purpose: versioning decision pending)
+bev_rl/adaptive/results/camera_dagger_final/**/round*/
+bev_rl/adaptive/results/**/claims/
+*.partial.json
+# local duplicate of the methodology PDF
+report/Final_Methodology.pdf

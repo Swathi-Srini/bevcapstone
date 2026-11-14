@@ -40,7 +40,7 @@ After the episode: `np.savez_compressed(...)` stores grids (int8 x10), scalars, 
 | `bev_state/assembler.py` | the contract: `ObjectFootprint`, `objects_from_detections`, `build_bev_grid` (rasteriser), `extract_scalar_state`; imports the perception modules | teammates, unmodified |
 | `bev_state/camera_grid_builder.py` | **our** geometric corrections between detections and rasteriser | ours, frozen |
 | `YOLO+weather module/manual_drive_stereo_yolo_weather.py` | camera rig, frame capture, synchronised weather, stereo depth, detection-to-position | teammates |
-| `.../weather/weather_utils.py`, `.../yolo/yolo_utils.py` | the weather filter; YOLO loading and inference | teammates |
+| `YOLO+weather module/weather/weather_utils.py`, `YOLO+weather module/yolo/yolo_utils.py` | the weather filter; YOLO loading and inference | teammates |
 | `bev_rl/adaptive/camera_dagger.py` | DAgger trainer (collect, train, validate, select, freeze); `BuilderEnv` | ours |
 | `bev_rl/adaptive/e2e_pipeline.py` | `E2EEnv`: base class (builds the 5-camera MetaDrive, loads YOLO, mounts the rig per reset) | ours |
 | `bev_rl/adaptive/env.py` | `AdaptiveEnv`: the Gym-style environment (step, energy, outcomes, scalars, `truth_objects`) | ours |

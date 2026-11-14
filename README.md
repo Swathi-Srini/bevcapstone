@@ -175,7 +175,7 @@ Consequences: the spec's weights were never tried (the first reward file's docst
 
 Measured speed (3 workers): 1.96 s/step, ~460 steps and 15.0 min per episode per worker, 12 episodes/hour, 3.4 h per round. Each worker holds ~5.2 GB committed memory (13.7 GB machine, integrated GPU shares RAM); 3 workers is the proven maximum, a 4th is tested at the start of the queued evaluation pack. Expected OV-Split completion 15 Nov ~16:00 (earliest 13:30, latest 18:30).
 
-## 9. Queue (see `logs/QUEUE.md`)
+## 9. Queue (local-only file `logs/QUEUE.md`; `logs/` is git-ignored)
 
 1. OV-Split Camera DAgger rounds 0–5 — **running**.
 2. `queue_pack.sh` — after OV-Split: original OV-Split and caution models on the full camera pipeline, fog 1.0 × 10 episodes (seeds 5100–5109) + videos (seed 5100: clear, fog 1.0, rain 1.0), with a 4-worker health test.
@@ -196,14 +196,18 @@ Measured speed (3 workers): 1.96 s/step, ~460 steps and 15.0 min per episode per
 | Archived exploratory work | `visibility_sensor.py`, `visibility_teacher.py`, `brake_check.py`, `diagnose_visibility_failures.py` |
 | Results | `bev_rl/adaptive/results/` — `n200_all_weather/` and `n200_horizon1600/` (200-episode study), `regime_confirm/` (busy traffic), `sparse_always_cautious/`, `pilot_camera_builder_v2/`, `grid_comparison/`, `camera_geometry/`, `teacher_validation/`, `teacher_density/`, `visibility_sensor*/`, `visibility_teacher_proto/`, `camera_dagger_final/` (running), `camera_dagger/` (archived first attempt, unused) |
 | Original checkpoints | `bev_rl/adaptive/runs/ov_split/best.pt`, `runs/caut_a/best.pt` (never overwritten); all final models also in `trained_models/` |
-| Documents | `report/` (PDFs and LaTeX): `latest_14th_Nov_26.pdf`, `Final_Methodology_and_Approach.pdf`, `Five_Model_Comparison.pdf`, `Effective_Range_Measurement_Protocol.pdf`, `Live_Caution_Sensor_and_Episode_Walkthrough.pdf`, `GitHub_vs_This_Work.pdf` (partly stale), `Directors_Research_Guide.pdf`, `Complete_Technical_Research_Report.pdf` |
+| Documents | `report/` (PDFs and LaTeX): `latest_14th_Nov_26.pdf`, `Final_Methodology_and_Approach.pdf`, `Five_Model_Comparison.pdf`, `Effective_Range_Measurement_Protocol.pdf`, `Live_Caution_Sensor_and_Episode_Walkthrough.pdf`, `GitHub_vs_This_Work.pdf` (partly stale). `Directors_Research_Guide.pdf` and `Complete_Technical_Research_Report.pdf` are **local-only** (`report/local_only/`, git-ignored; not on GitHub): ask the maintainer or see `docs/BACKUP_STRATEGY.md`. What is tracked versus local: `report/README.md` |
 | **Code map** (which files are used / historical / RL / superseded; how training uses `assembler.py`) | [`docs/REPO_MAP.md`](docs/REPO_MAP.md) |
 | **Function-level map** (per-step call chain; what each file/function does, why, who calls it) | [`docs/FUNCTION_MAP.md`](docs/FUNCTION_MAP.md) |
 | **Geometric corrections** (side reflection, affine centre fit, true-size footprint, duplicate merge; where each is applied; calibration data; reproducibility audit) | [`docs/GEOMETRIC_CORRECTIONS.md`](docs/GEOMETRIC_CORRECTIONS.md) |
-| Project history | `docs/project_history/` (1–5 Nov notes), `archive/` |
+| **Status of every script** (`active / done / historical / superseded / untested / rl-handoff`) | [`docs/STATUS_INDEX.md`](docs/STATUS_INDEX.md) |
+| **Git workflow** (branch roles; do not run git in a working copy with running jobs; line endings) | [`docs/GIT_WORKFLOW.md`](docs/GIT_WORKFLOW.md) |
+| **Backups and checkpoint integrity** | [`docs/BACKUP_STRATEGY.md`](docs/BACKUP_STRATEGY.md), [`docs/CLEANUP_LOG.md`](docs/CLEANUP_LOG.md) |
+| **Audit of files that are not needed** (nothing deleted; archive candidates only) | [`docs/UNNEEDED_FILES_AUDIT.md`](docs/UNNEEDED_FILES_AUDIT.md) |
+| Project history | `docs/project_history/` (1–5 Nov notes; may cite files that later moved, see its README), `archive/` |
 | Logs and queue state | `logs/` (`QUEUE.md`, `camera_training_ov.log`, worker logs) |
 
-**Git state:** branch `cleaned-latest`; the camera-pipeline work from 14 Nov onward is local only unless pushed; earlier commits up to `4d45920` are on GitHub (`4d45920` includes `e2e_dagger.py`, which used the wrong teacher and is superseded and never run).
+**Branches:** `main` is the integration branch and contains the camera-pipeline work (PR #14, merge `7e31b6f`). `cleaned-latest` (`4d45920`) is a frozen snapshot of the 13 Nov work and is kept unchanged. `4d45920` includes `e2e_dagger.py`, which used the wrong teacher; it is superseded and never produced data. Cleanup changes go through pull requests from a separate clone (see `docs/GIT_WORKFLOW.md`).
 
 ## 11. Limitations (state these in any write-up)
 
@@ -219,11 +223,11 @@ This repository began as a vision-derived Bird's-Eye View (BEV) controller train
 
 ## Start here (added 11 November 2026)
 
-Two documents in [`report/`](report/) describe the project (LaTeX sources and PDFs; rebuild with `powershell -File report/build_documents.ps1`):
+Two documents describe the project (LaTeX sources and PDFs; rebuild with `powershell -File report/build_documents.ps1`). **They are local-only** (`report/local_only/`, git-ignored), so they are not on GitHub:
 - `Directors_Research_Guide.pdf` (about 20 pages): what was built, tried, found and what to do next, in accessible language.
-- `Complete_Technical_Research_Report.pdf` (about 85 pages): every model, architecture, training strategy, result, reinforcement-learning attempt, failure analysis, comparison with this GitHub repository, paper directions, related 2025--2026 work and an inventory of every file.
+- `Complete_Technical_Research_Report.pdf` (about 85 pages): every model, architecture, training strategy, result, reinforcement-learning attempt, failure analysis, comparison with this GitHub repository, paper directions, related 2025--2026 work and an inventory of every file (as of 11 Nov).
 
-All final trained models are in one folder, [`trained_models/`](trained_models/), with descriptive file names, a manifest of hashes and descriptions, and a mapping from the previous file names (`MODEL_NAME_MAPPING.md`). Only the two baseline models in `bev_policy/checkpoints/` are committed to GitHub; everything else described in the reports is local to the working copy.
+All final trained models are in one folder, [`trained_models/`](trained_models/), with descriptive file names, a manifest of hashes (`MODEL_MANIFEST.json`, verified: 33 of 33 hashes match) and a mapping from the previous file names (`MODEL_NAME_MAPPING.md`). The `trained_models/` copies are **tracked in git**, including the two original checkpoints (`Proposed_BEV_Driving_Model.pt`, `Caution_Study_Caution_Aware_Driving_Model.pt`), which are byte-identical to `bev_rl/adaptive/runs/ov_split/best.pt` and `runs/caut_a/best.pt`. The `runs/` folders, datasets (`*.npz`), videos and logs are git-ignored and local to the maintainer's machine (backup policy: `docs/BACKUP_STRATEGY.md`).
 
 ## Repository layout
 

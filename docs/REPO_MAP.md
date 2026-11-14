@@ -12,7 +12,7 @@ Yes, it is used, but not through `assemble()`. The camera DAgger trainer (`bev_r
 |---|---|---|
 | Weather filter on all 5 pictures; synchronised noise on the stereo pair | `apply_weather`, `apply_synchronized_stereo_weather`, `frame_from_sensor`, `mount_camera_rig` | `YOLO+weather module/` (teammates', unchanged; imported by `assembler.py`) |
 | Front stereo depth | `A.front_stereo_depth(...)` with `asm.matcher` (StereoSGBM) | `assembler.py` re-exports it from `manual_drive_stereo_yolo_weather.py` |
-| YOLOv8n on 4 views | `A.run_yolo(...)`, `A.YOLO_CAMERAS` | `assembler.py` / `yolo/yolo_utils.py` |
+| YOLOv8n on 4 views | `A.run_yolo(...)`, `A.YOLO_CAMERAS` | `assembler.py` / `YOLO+weather module/yolo/yolo_utils.py` |
 | Detection to ego position and objects | `asm.objects_from_detections(dets, depth)` (stereo for front, ground-plane for side and rear) | **`assembler.py`, unmodified** |
 | Corrections, true-size footprint, duplicate merge | `CameraGridBuilder.corrected_objects` | **`bev_state/camera_grid_builder.py` (ours)** |
 | Rasterisation into the 64x64 grid | `asm.build_bev_grid(corrected_objects)` | **`assembler.py`, unmodified.** The free-space mask is the assembler's own camera-cone routine, computed once and copied by `CautionEnv._cache_free_space` (bit-identical); it depends on the camera geometry, not on the picture |
@@ -56,7 +56,7 @@ These are imported by the running workers every round, or hashed in `results/cam
 | `bev_rl/adaptive/queue_camera_eval.sh` | Queue entry: full camera-pipeline evaluation of the ORIGINAL OV-Split and caution checkpoints (80 episodes: 10 seeds x 4 weathers x 2 models). |
 
 
-Also used at run time through `sys.path` injection by `bev_state/assembler.py`: `YOLO+weather module/` (`manual_drive_stereo_yolo_weather.py`, `weather/weather_utils.py`, `yolo/yolo_utils.py`, `stereo_depth/`), the teammates' modules, unchanged. `camera_dagger.py` still contains a `caut` entry that uses the **retired** image sensor; it is not used (Live Caution will get a new trainer after OV-Split finishes).
+Also used at run time through `sys.path` injection by `bev_state/assembler.py`: `YOLO+weather module/` (paths relative to that folder: `manual_drive_stereo_yolo_weather.py`, `weather/weather_utils.py`, `yolo/yolo_utils.py`, `stereo_depth/`), the teammates' modules, unchanged. `camera_dagger.py` still contains a `caut` entry that uses the **retired** image sensor; it is not used (Live Caution will get a new trainer after OV-Split finishes).
 
 ## 2. Built during the camera-pipeline effort, finished (kept as record and for reproduction)
 
@@ -180,12 +180,11 @@ PPO attempts 1 to 4 and their environments. **They used rescaled or redesigned r
 
 ## 6. Superseded (do not use)
 
-`e2e_dagger.py` used SafeTeacher for the OV-Split recipe, which is wrong (the original used the stock IDM), and shared rollouts between the two models; it was pushed in commit `4d45920` and never produced data. `e2e_dagger_both.py` is the local variant, never run. `queue_e2e*.sh` and `evaluate_e2e.py` belong to the superseded fine-tuning plan; they were replaced by `camera_dagger.py` and `evaluate_camera_pipeline.py`. `e2e_pipeline.py` itself is **still used** (base class `E2EEnv`).
+`e2e_dagger.py` used SafeTeacher for the OV-Split recipe, which is wrong (the original used the stock IDM), and shared rollouts between the two models; it was pushed in commit `4d45920` and never produced data. A further local variant, `e2e_dagger_both.py`, was never committed and never run, so it is not in this repository. `queue_e2e*.sh` and `evaluate_e2e.py` belong to the superseded fine-tuning plan; they were replaced by `camera_dagger.py` and `evaluate_camera_pipeline.py`. `e2e_pipeline.py` itself is **still used** (base class `E2EEnv`).
 
 | File | What it is (first line of its own docstring or header) |
 |---|---|
 | `bev_rl/adaptive/e2e_dagger.py` | Fine-tune the proposed model on grids built by the FULL camera pipeline (dataset aggregation through cameras -> weather filter -> stereo depth + YOLO  |
-| `bev_rl/adaptive/e2e_dagger_both.py` | Fine-tune BOTH existing policies (proposed ov_split and caution-aware caut_a) on grids from the full camera pipeline + CameraGridBuilder. |
 | `bev_rl/adaptive/evaluate_e2e.py` | END-TO-END evaluation: the policy's grid comes from the cameras (weather filter -> stereo depth + YOLO -> footprints -> grid), see e2e_pipeline.py. |
 | `bev_rl/adaptive/queue_e2e.sh` | FULL END-TO-END evaluation (cameras -> weather filter -> stereo depth + YOLO -> grid -> policy). 3 workers pull from one prioritised queue; results pe |
 | `bev_rl/adaptive/queue_e2e_finetune.sh` | FULL-PIPELINE (camera) plan, run unattended, in this order: |

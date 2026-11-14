@@ -1,5 +1,7 @@
 # Model file names: previous name -> new descriptive name
 
+> **Reading note (added 14 Nov 2026):** the "Previous file name" column lists names that **no longer exist on disk** (kept only so old reports and logs can be mapped to the current files); the "New file name" column is what is in this folder. Hash verification against `MODEL_MANIFEST.json`: 33 of 33 entries match.
+
 Every file below is a byte-identical copy of the original checkpoint (SHA-256 verified against the previous copy and against the original in the training folder).
 The original checkpoints were not touched; scripts that read `bev_rl/adaptive/runs/<run>/best.pt` or `bev_policy/checkpoints/*.pt` are unaffected.
 
