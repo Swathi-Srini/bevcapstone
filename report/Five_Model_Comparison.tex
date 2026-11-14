@@ -62,7 +62,8 @@ Models 1 to 4 are tested with \emph{measured} detector retention but with an ide
 \input{figure_blocks/fig_detector_retention_by_weather_intensity}
 
 \subsection{The numbers reported, and their formulas}
-Every symbol, the reason for each formula, its derivation and its source are explained in Section~ef{sec:formulas}; this subsection gives the short version.
+Every symbol, the reason for each formula, its derivation and its source are explained in Section~
+ef{sec:formulas}; this subsection gives the short version.
 Let $n=200$ be the number of episodes and $k$ the number that ended in success.
 \begin{description}[leftmargin=3.2cm,style=nextline]
 \item[Success rate] $\hat p=k/n$. Collision, left-road and timeout rates are computed the same way; the four rates add up to 1.
@@ -193,24 +194,32 @@ Success 0.890, 0.895, 0.890, 0.820 (clear, fog 1.0, rain 0.6, rain 1.0). In weat
 \subsection{Why it differs from the proposed model in clear weather}
 It is a different network, trained in a separate run on different labels, so it behaves differently even at caution 0. It solves 178 of 200 clear episodes, the proposed model 185; they disagree on 13 episodes (3 vs 10, $p=0.092$). The control trained the same way with caution fixed at 0 scores 0.895, the same as model 4, so run-to-run differences of a few points exist at 200 episodes.
 \subsection{Longer time limit (post-hoc check)}\label{sec:longer}
-Every extra failure of model 4 in weather was a timeout, so it was re-run in the three weather conditions with a 160-second limit (1600 steps; same seeds). The proposed model and the baselines had no timeouts in weather, so their results cannot change. The limit was changed \emph{after} seeing the timeouts.
+Every extra failure of model 4 in weather was a timeout, so it was re-run in the three weather conditions with a 160-second limit (1600 steps; same seeds), and then all five models were put on the same 160-second footing (Table~\ref{tab:five160}). A longer limit can only change an episode that ran out of time at 80 seconds, so for the other models only those episodes were re-run: one episode of the proposed model (clear, seed 5151, now a success) and 13 of the image-only model (clear). The two baselines, and the proposed and caution-aware models in fog and rain, had no timeouts to re-run. The limit was changed \emph{after} seeing the timeouts, so the 160-second table is post-hoc.
 \begin{table}[H]\centering\scriptsize
-\caption{Caution-aware model with the 80-second and the 160-second limit, next to the proposed model (80 seconds). 200 episodes each.}\label{tab:longer}
+\caption{All five models with the 160-second limit (1600 steps). 200 episodes each, seeds 5000 to 5199, sparse traffic. Eleven image-only episodes in clear weather still time out at 160 seconds; there are no other timeouts.}\label{tab:five160}
+\resizebox{\textwidth}{!}{\input{tables/five_model_160s}}
+\end{table}
+\begin{table}[H]\centering\scriptsize
+\caption{Caution-aware model at 80 and 160 seconds, next to the proposed model at 80 seconds. 200 episodes each.}\label{tab:longer}
 \resizebox{\textwidth}{!}{\input{tables/caution_longer_time_limit}}
 \end{table}
 \begin{table}[H]\centering\scriptsize
-\caption{Paired comparison of the caution-aware model at 160 seconds with the proposed model at 80 seconds.}\label{tab:longerpaired}
-\resizebox{\textwidth}{!}{\input{tables/caution_longer_time_limit_paired}}
+\caption{Paired tests at 160 seconds. First rows: caution-aware against proposed. Second rows: a control run in which the caution input is forced to 1 in every weather, including clear, against the caution-aware model (post-hoc control, results in the folder sparse\_always\_cautious).}\label{tab:longerpaired}
+\resizebox{\textwidth}{!}{\input{tables/caution_vs_proposed_160s_paired}}
 \end{table}
-At 160 seconds all timeouts disappear: 0.940, 0.955 and 0.935 in fog 1.0, rain 0.6 and rain 1.0, against 0.895, 0.900 and 0.900 for the proposed model; no difference is significant ($p=0.136$, $0.061$, $0.296$).
+At 160 seconds all timeouts of model 4 disappear: 0.940, 0.955 and 0.935 in fog 1.0, rain 0.6 and rain 1.0, against 0.895, 0.900 and 0.900 for the proposed model, a gain of 3.5 to 5.5 points in every bad-weather condition. The gain is in the expected direction in all three, but no single comparison is significant ($p=0.136$, $0.061$, $0.296$), and in clear weather the caution-aware model is 4 points lower ($p=0.057$). Its collision rate in weather (2.5 to 5.0\%) is below the proposed model's (8.5 to 9.5\%).
+
+\paragraph{Where does the gain come from? A control.} When caution is forced to 1 in every weather, \emph{including clear}, the same network scores 0.930, 0.935, 0.935 and 0.945 (clear, fog 1.0, rain 0.6, rain 1.0) at 160 seconds, with the same speed (5.5\,m/s) and energy (about 59 watt-hours per kilometre) in every condition; none of its differences from the caution-aware model is significant (second rows of Table~\ref{tab:longerpaired}). So in sparse traffic the improvement is explained by \emph{driving more cautiously}, which the weather-derived caution value switches on; it is not evidence that the model reads the weather better. The adaptive part is that caution is switched on only when perception is degraded, so clear-weather driving keeps its normal speed.
 \subsection{What we can and cannot say}
 \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{5.2cm}X@{}}\toprule
 We can say & Because\\\midrule
 The model shows \emph{learned adaptive behaviour}: it slows down by itself when the caution value is high. & The control with caution fixed at 0 does not slow down; speed fell from about 8.0 to 5.6--6.2\,m/s.\\
-In fog and rain it used about 35\% less estimated energy with success tied to the proposed model at a 160-second limit. & Table~\ref{tab:longer}; no significant difference.\\
+In fog and rain it used about 35\% less estimated energy, and with a 160-second limit its success was 3.5 to 5.5 points \emph{above} the proposed model's in all three conditions. & Tables~\ref{tab:five160} and~\ref{tab:longer}; each difference alone is not significant ($p=0.061$ to $0.296$).\\
+Its collision rate in weather is lower (2.5 to 5.0\% against 8.5 to 9.5\%). & Table~\ref{tab:five160}.\\
 At the original 80-second limit it was significantly lower in rain 1.0 (0.820 against 0.900, $p=0.033$) because of timeouts. & Table~\ref{tab:allmetrics}.\\\midrule
 We cannot say & Because\\\midrule
-That caution makes driving safer or more successful. & Success did not rise; weather did not hurt the proposed model in the first place.\\
+That the gain is specific to weather. & Forcing caution to 1 in every weather, clear included, gives 0.930 to 0.945 at 160 seconds, as high as the caution-aware model; the gain comes from slower driving.\\
+That weather hurt the proposed model in sparse traffic. & It scored 0.895 to 0.930 in all four conditions; the pre-registered test of harm failed.\\
 That it is more energy-\emph{efficient}. & It is slower; no speed-matched control exists.\\
 That the model senses the weather. & The caution value is supplied.\\
 That the 160-second result is pre-registered. & The limit was changed after the timeouts were seen.\\\bottomrule
@@ -288,7 +297,7 @@ The image-only model gets worse in weather & Success 0.130 in clear weather, the
 \item Code names (only here): model 1 \code{repo_bc_clear}, model 2 \code{repo_bc_sparse}, model 3 \code{ov_split}, model 4 \code{caut_a} (evaluated as \code{caut_auto}), model 5 \code{vcam}.
 \item Results: \pth{bev_rl/adaptive/results/n200_all_weather/}, \pth{bev_rl/adaptive/results/n200_horizon1600/}, \pth{bev_rl/adaptive/results/vanilla_camera/}.
 \item Evaluation code: \pth{bev_rl/adaptive/evaluate_n200_all_weather.py} (models 1 to 4), \pth{bev_rl/adaptive/vanilla_camera_cnn.py} (model 5). Energy: \pth{bev_rl/energy.py}.
-\item Figures and tables of this document: \pth{report/make_five_model_comparison.py}, \pth{report/make_detector_retention_figure.py}, \pth{report/make_caution_longer_time_limit.py}.
+\item Figures and tables of this document: \pth{report/make_five_model_comparison.py}, \pth{report/make_detector_retention_figure.py}, \pth{report/make_caution_longer_time_limit.py}, \pth{report/make_five_model_160s.py}.
 \end{itemize}
 
 \end{document}

@@ -1,0 +1,25 @@
+{
+ "arm": "ov_split",
+ "weather": "clear:0.0",
+ "seed0": 5151,
+ "n": 1,
+ "density": 0.05,
+ "note": null,
+ "success": 1.0,
+ "crash": 0.0,
+ "off_road": 0.0,
+ "timeout": 0.0,
+ "mean_speed": 6.284546122891662,
+ "wh_per_km": 113.04028462573062,
+ "route": 0.9874108286714323,
+ "episodes": [
+  {
+   "seed": 5151,
+   "outcome": "success",
+   "speed": 6.284546122891662,
+   "wh_per_km": 113.04028462573062,
+   "route": 0.9874108286714323,
+   "steps": 684
+  }
+ ]
+}

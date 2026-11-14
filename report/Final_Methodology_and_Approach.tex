@@ -1,0 +1,313 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,booktabs,array,longtable,hyperref,enumitem}
+\sloppy\setlength{\parskip}{0.45em}\setlength{\parindent}{0pt}
+\newcommand{\code}[1]{\texttt{\detokenize{#1}}}
+\newcommand{\tbd}{\textbf{[PENDING]}}
+\title{Final Methodology and Approach\\\large Camera-derived OV-Split and Retention-Conditioned Live Caution\\under Synthetic Fog and Rain in MetaDrive}
+\date{14 November 2026 --- working document; status snapshot at 19:30}
+\author{}
+\begin{document}\maketitle
+\tableofcontents
+
+\section{Status at a glance}
+\begin{center}\small\begin{tabular}{@{}p{4.6cm}p{11cm}@{}}\toprule
+Item & Status\\\midrule
+Camera pipeline (cameras, weather filter, stereo, YOLO, assembler) & Teammates' modules, unchanged.\\
+Camera grid builder v2 & Ours, implemented, calibrated, \textbf{frozen} (hash manifest).\\
+Pilot of the pipeline & Done: 40 episodes (10 per weather), seeds 5000--5009.\\
+Teacher design and validation & Done for Teachers A and B (simulator only).\\
+OV-Split Camera DAgger & \textbf{Running}. Round 0 done (40 episodes, 18\,419 samples, retrained), round 1 in progress.\\
+Retention measurement, caution table & \tbd{} Not run. Design in \S\ref{sec:retention}; needs approval of the exact configuration.\\
+Live Caution DAgger & \tbd{} Not started; trainer with table-derived caution not yet written.\\
+Final camera-pipeline evaluation & Code written, \textbf{never run}; queued behind OV-Split.\\
+Original (``200-episode'') models on the camera pipeline & Queued (fog 1.0 $\times$ 10 episodes and videos) behind OV-Split.\\\bottomrule\end{tabular}\end{center}
+\textbf{Naming used here.} ``\emph{200-episode models}'' are the original checkpoints trained on ground truth (\code{runs/ov_split/best.pt}, \code{runs/caut_a/best.pt}); their 200-episode study used the simulator's vehicle list, not the cameras. ``\emph{Camera students}'' are the two models trained now through the full camera pipeline.
+
+\section{Purpose, research question and claims}
+\subsection{Question}
+How should an autonomous driving policy that sees the world through a camera-derived bird's-eye-view (BEV) grid behave when fog and rain degrade perception, and does a caution input derived from \emph{measured} perception reliability let it slow down only when needed, keeping normal speed and trip time in clear weather?
+
+\subsection{Models compared}
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Image-only CNN} (front camera, no grid): the weak control from the earlier study.
+\item \textbf{OV-Split Camera}: BEV + three ego scalars, trained by DAgger through the full camera pipeline. No adaptation.
+\item \textbf{Live Caution Camera}: OV-Split Camera plus a caution scalar $c$ derived from measured perception retention (\S\ref{sec:retention}); the adaptive model.
+\item Context: the two original 200-episode checkpoints evaluated on the camera pipeline; the teammates' two baselines from the earlier study.
+\end{enumerate}
+
+\subsection{Claims we intend to make, and the wording they support}
+\begin{center}\small\begin{tabular}{@{}p{5.6cm}p{9.8cm}@{}}\toprule
+Claim & Allowed wording\\\midrule
+Retention measured on the real pipeline replaces an assumed table & ``Perception reliability was measured on the complete camera pipeline (cameras, weather filter, stereo, YOLO, BEV builder) against simulator ground truth.''\\
+Live Caution slows down when perception is degraded & ``learned caution-conditioned behaviour''; not ``senses weather'': the weather setting is supplied.\\
+Lower energy in weather & ``lower estimated energy at lower speed''; not ``more efficient'': energy follows speed.\\
+Advantage over always-cautious driving & the supportable claim is \emph{trip time in clear weather}, not energy or success (earlier control: same success and energy in weather, 48\% longer trips in clear).\\
+Transfer of the ideal-perception results & only after the camera-pipeline evaluation; the 200-episode study is a labelled surrogate (\S\ref{sec:surrogate}).\\\bottomrule\end{tabular}\end{center}
+
+\section{System architecture (end to end)}
+Every simulation step (10 Hz) executes, in order: (1)~five RGB cameras; (2)~weather filter on every picture; (3)~front stereo SGBM depth and YOLOv8n on four views; (4)~detection-to-position conversion; (5)~camera grid builder; (6)~64$\times$64 BEV; (7)~the policy, which outputs [steering, throttle/brake]. The ego scalars and the HD-map layers (route centreline, lane boundary) come from the simulator's map and ego state, as in the Review~1/2 architecture. \textbf{No simulator vehicle position reaches the policy.} Ground truth is used only (i) by the privileged teacher to label states, and (ii) to score perception and driving offline.
+
+\subsection{Simulator and episode settings}
+MetaDrive 0.4.3; traffic density 0.05 for all training, validation and evaluation; weather never changes grip or dynamics (visual degradation only); an episode ends in success, collision, off-road or timeout. 10 Hz decision rate; horizon 600 steps for DAgger collection, 800 steps (80 s) for validation and evaluation.
+
+\subsection{Camera rig}
+Five RGB cameras, 1200$\times$900, horizontal field of view $60^\circ$, height 1.4 m, downward pitch $5^\circ$: \code{front_left_camera} at $(-0.25, 2.0, 1.4)$ and \code{front_right_camera} at $(0.25, 2.0, 1.4)$ form the stereo pair (baseline $B=0.5$ m); plus \code{left_camera}, \code{right_camera}, \code{rear_camera}. Focal length $f=\frac{600}{\tan 30^\circ}=1039.23$ px. YOLO runs on four views (front-left, left, right, rear); stereo depth uses the front pair.
+
+\subsection{Weather module (exactly what the code does)}
+It acts on each camera picture only (file \code{weather/weather_utils.py}). Let $\ell\in[0,1]$ be the intensity.
+\begin{itemize}[leftmargin=*]
+\item \textbf{Fog.} Row-wise white blend: $\alpha(r)=\text{linspace}(0,\,0.9\ell,\,H)$ from the top row to the bottom row; $I'=I(1-\alpha)+255\alpha$. Then a Gaussian blur with kernel $\max(3,\,15\ell)$ (made odd) and $\sigma=8\ell+1$, then additive noise $\mathcal N(0,(4\ell)^2)$.
+\item \textbf{Rain.} $\lfloor 800\ell\rfloor$ random bright streaks (length $H/20$ to $H/8$, grey 180--245, thickness 1 to $1+\lfloor 2\ell\rfloor$, slant 0.2), $3\times3$ blur of the streak layer, blend $I(1-0.1\ell)+0.2{+}0.4\ell$ of the streak layer, then a vertical 3-tap filter whose weights sum to 0.75 --- so \emph{every} rain picture is darkened by 25\% at all levels.
+\item The two front pictures receive the \emph{identical} random draw (\code{apply_synchronized_stereo_weather}), because independent noise corrupts stereo matching. The pipeline seeds the draw as $20261114+100003\cdot\text{seed}+\text{step}$ (same noise sequence for every model on a given seed).
+\end{itemize}
+\textbf{Consequence (important for the paper).} The filter is an image-space operation with no depth dependence (fog thickens towards the bottom of the picture, not towards the horizon) and no extinction coefficient. Physics-based visibility estimators (Koschmieder-type) therefore do not apply, and an image-to-visibility estimator would largely recover the filter's own setting. This is why the final method conditions on a measured retention table, and the weather condition is supplied (\S\ref{sec:retention}).
+
+\subsection{Stereo depth and detection-to-position (teammates' code, unchanged)}
+StereoSGBM (192 disparities, $5\times5$ block), $Z=\dfrac{fB}{d_{px}}$; only $1\,\text{m}\le Z\le 30\,\text{m}$ is kept.
+\begin{itemize}[leftmargin=*]
+\item \textbf{Front detections:} depth is the median of valid depth pixels in the central part of the YOLO box (15\% margins left/right, 12\% top/bottom). Lateral position $x=(u-600)Z/f$. A box with no valid depth is \textbf{dropped} (\code{stereo_sgm_invalid}).
+\item \textbf{Side and rear detections:} no stereo. Ground-plane projection from the box's bottom edge: $Z=H/\tan\phi$, with camera height $H=1.4$ m and $\phi$ the downward viewing angle; accepted for $1\le Z\le 80$ m.
+\item The position conversion rotates by each camera's yaw into ego coordinates ($x$ right, $y$ forward). The assembler discards objects beyond \code{camera_range_m}=30 m.
+\end{itemize}
+
+\subsection{Camera grid builder v2 (our module; the only system module we modify)}
+File \code{bev_state/camera_grid_builder.py}. It never reads simulator vehicle positions. Rasterisation is the original \code{build_bev_grid}; the HD-map layers come from the same overlay function as the ground-truth grid.
+\paragraph{Why it exists.} The unmodified chain does not reproduce the ground-truth grid (vehicle frames never matched exactly). A controlled-placement experiment (one vehicle placed at known positions, all others moved away; clear weather; 85 usable point pairs: front 52, side 33; fit scenes seeds 2000--2002) found:
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Side cameras are point-reflected.} A vehicle on the ego's right is rendered by \code{left_camera}, but the position conversion assumes the opposite orientation, so the reported $(x,y)$ is the true position reflected through the ego origin. In all 53 side detections the report was closer to the reflected truth. Correction: $(x,y)\mapsto(-x,-y)$.
+\item \textbf{Surface point $\neq$ centre.} Per camera group, a least-squares affine map $[x,y,1]\to$ centre:
+\[
+\text{front: }\begin{bmatrix}1.15&0.02&-0.07\\0.11&1.03&0.87\end{bmatrix},\qquad
+\text{side (after reflection): }\begin{bmatrix}1.20&-0.04&-1.50\\0.02&1.67&0.27\end{bmatrix}.
+\]
+Leave-one-scene-out median error: front 1.58 $\to$ 0.91 m; side 11.4 $\to$ 2.7 (reflection) $\to$ 1.3 m (calibrated). The rear camera had one sample: a geometric half-footprint shift along the line of sight (\emph{unvalidated}).
+\item \textbf{True-size footprint:} YOLO class labels are unreliable for size, so every detection receives the mean traffic-vehicle footprint $2.0\times4.9$ m.
+\item \textbf{One object per vehicle:} objects closer than 3.5 m forward and 1.6 m laterally after correction are merged (stereo-measured and higher-confidence objects win).
+\end{enumerate}
+\paragraph{Ground truth used, and when.} True centre and true length/width of the placed vehicle, read from the simulator, \emph{offline} to fit constants. The footprint constant is the mean simulator traffic-vehicle size. The merge thresholds were chosen by hand. A fit script was not saved in the repository (only the fitted constants and the six placement files: seeds 2000--2002 used to fit; 3100--3102 collected as a check, believed unused in the fit but not provable from code; seed 3100 contaminated by a parked truck).
+\paragraph{Grid geometry.} $64\times64$ cells over $x\in[-10,10]$ m, $y\in[-2.5,17.5]$ m (cell 0.3125 m); ego at row 56, column 32; values: free 0, route centreline 0.5, boundary 0.8, vehicle 1.0. Column $=\lfloor (x+10)/20\cdot64\rfloor$, row $=\lfloor(1-(y+2.5)/20)\cdot64\rfloor$.
+
+\subsection{Pilot evidence for the pipeline (original OV-Split checkpoint, builder v2, 10 episodes per weather, seeds 5000--5009, density 0.05, 800 steps)}
+\begin{center}\footnotesize\setlength{\tabcolsep}{3pt}\begin{tabular}{@{}p{4.9cm}cccc@{}}\toprule
+ & Clear & Fog 1.0 & Rain 0.6 & Rain 1.0\\\midrule
+Success / collisions / off-road / timeout & 9/1/0/0 & 8/2/0/0 & 8/2/0/0 & 8/2/0/0\\
+Completion s, speed m/s, Wh/km & 44.0, 7.77, 97.6 & 40.4, 7.94, 94.3 & 40.4, 7.90, 101.6 & 40.4, 7.94, 93.1\\
+Vehicle instances in window (frames with a vehicle) & 97 (82) & 421 (180) & 500 (216) & 420 (177)\\
+YOLO detections on those frames & 88 & 10 & 50 & 3\\
+Recall within 3 m, original builder & 0.351 & 0.002 & 0.080 & 0.000\\
+\textbf{Recall within 3 m, builder v2} & \textbf{0.474} (46/97) & \textbf{0.019} (8/421) & \textbf{0.082} (41/500) & \textbf{0.000} (0/420)\\
+Median position error, original $\to$ v2 (m) & 1.41 $\to$ 0.93 & 0.84 $\to$ 0.49 (n=1, 8) & 2.08 $\to$ 1.09 & --\\
+Duplicates, original $\to$ v2 & 6 $\to$ 0 & 0 $\to$ 0 & 0 $\to$ 0 & 0 $\to$ 0\\
+Exact BEV match: empty frames / vehicle frames & 3966/3974, 0/82 & 3583/3584, 0/180 & 3582/3584, 0/216 & 3585/3585, 0/177\\\bottomrule\end{tabular}\end{center}
+Same seeds on the simulator-list grid gave 9, 9, 8, 8 successes; 33 of 40 episodes were identical in outcome and step count. Exact grid equality on frames \emph{with} a vehicle was never achieved: detector limits (YOLO misses large side-on vehicles at 4--7 m and edge-truncated ones; recall collapses in rain; blind wedges between the 60$^\circ$ cones; stereo returns a mid-side surface for oblique views). These are limits of the unmodified modules, not of the builder.
+
+\subsection{Scalar state and policy network}
+\textbf{Scalar vector (6D):} $[v,\ \text{route progress},\ d_{\text{lat}},\ \theta_{\text{err}},\ \kappa_{\text{ahead}},\ d_{\text{goal}}]$ with normaliser \code{SCALE}$=[10,1,2,0.5,0.05,300]$ and the checkpoint's mean/std. A fixed mask $[1,1,0,0,0,1]$ zeroes lateral deviation, heading error and curvature (the BEV overlay carries them). Effectively 3 inputs; the three masked weights get zero gradient and never affect the output. (A 3-input export is mathematically identical and is optional, after training.)\\
+\textbf{Network (\code{BEVScalarPolicy}):} BEV CNN: Conv($1\to32$,5,s2) $\to$ Conv($32\to64$,3,s2) $\to$ Conv($64\to96$,3,s2) $\to$ global pooling $\to$ FC(96$\to$128); scalar MLP 6$\to$64$\to$32; fusion 160D; head 160$\to$128$\to$2, tanh. \textbf{110\,530 parameters.} Live Caution adds a caution branch FC(1$\to$16)+ReLU, fusion 176D, head 176$\to$128$\to$2: \textbf{112\,610 parameters}. Outputs: steering and throttle/brake in $[-1,1]$.
+
+\section{Retention-conditioned caution (the Live Caution signal)}\label{sec:retention}
+\subsection{Decision and what it is, honestly}
+Caution is derived from the \emph{measured} reliability of the complete camera pipeline under each weather setting:
+\[
+\boxed{\ \text{weather setting}\ \to\ \text{measured retention }r\ \to\ c=\operatorname{clip}(1-r,\,0,\,1)\ \to\ \text{teacher and student}\ }
+\]
+The weather condition and intensity are \emph{supplied} (by the simulator), so $c$ is externally conditioned. We do not claim image-only adaptation. Because the weather is fixed within an episode, $c$ is recomputed every step by the same function but is constant over an episode in the approved collection.
+
+\subsection{Why the old table is retired}
+The earlier table (\code{retention_table.json}, produced by \code{measure_paired.py}, 20 scenes, seeds 1000--1019, density 0.3, a stationary ego with up to three vehicles at about 8, 10 and 14 m) is a ratio of \textbf{YOLO box counts}, weathered over clean. It can exceed 1 (spurious boxes), ignores stereo depth, the assembler, localisation correctness and the BEV, and assumes independent per-step dropout. On the full chain, fog 1.0 retains about 4\% of clear-weather recall against the table's 27\%. The retention is therefore re-measured on the full pipeline. The old table, the old image-statistics sensor (\code{visibility_sensor.py}) and the 200-episode results are \textbf{archived as clearly labelled baselines}, never mixed with the new method.
+
+\subsection{Definition (fixed before the new data are seen)}
+For each weather setting $w$, over all steps of all episodes of that setting:
+\[
+\text{recall}(w)=\frac{N_{\text{match}}(w)}{N_{\text{gt}}(w)},\qquad
+r(w)=\min\!\Big(1,\ \frac{\text{recall}(w)}{\text{recall}(\text{clear})}\Big),
+\]
+where $N_{\text{gt}}(w)$ counts ground-truth vehicle instances inside the BEV window (summed over steps and episodes of setting $w$) and $N_{\text{match}}(w)$ counts those with a corrected object within 3.0 m of the true centre.
+Window: $x\in[-10,10]$ m, $y\in[-2.5,17.5]$ m. A vehicle counts as ``correctly represented'' only if a corrected object lies within 3.0 m of its true centre (position-correct, after depth, assembler and builder); a YOLO box alone does not count. Reported alongside: in-view recall (denominator restricted to vehicles inside some camera's field of view), median position error of matched objects, false objects per frame, stereo depth error where available, and detections dropped by invalid depth. Confidence intervals are cluster-bootstrapped over \emph{episodes} (frames and vehicles within an episode are correlated), and episode counts are reported separately from frame and vehicle counts.
+
+\subsection{Hybrid measurement (approved in principle; configuration \tbd{})}
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Pilot data (already measured):} clear, fog 1.0, rain 0.6, rain 1.0 from the pilot's 40 episodes (seeds 5000--5009; builder v2 frozen; per-step truth/pipeline records stored). The matching criterion stored there is the 3.0 m position match, which fixes the definition above.
+\item \textbf{New pass (to be run after OV-Split finishes):} fog 0.6, rain 0.2, rain 0.45 (training-mix levels the pilot lacks), 5 episodes each, plus \textbf{5 clear episodes as a denominator cross-check} (20 episodes, about 5 worker-hours); same logging, same frozen builder, same window and match radius, driver Teacher A, density 0.05, seeds drawn from the Live Caution round-0 plan.
+\item \textbf{Provenance is kept separate:} every table cell is labelled ``pilot'' or ``new pass'', with its own episode, frame and vehicle counts.
+\item \textbf{Denominator checks before use:} (i) same window and radius for both sources; (ii) clear recall from the pilot (46/97 = 0.474) and from the new pass must agree within their intervals, otherwise the two sources are not pooled; (iii) report the number of vehicle instances per weather; (iv) rule out cells with too few vehicles (cells below a pre-stated minimum are reported as ``insufficient'' and not interpolated blindly).
+\item \textbf{Review gate:} the final retention values and $c$ are reviewed by the team before any use.
+\end{enumerate}
+\textbf{Preliminary, NOT for use} (pilot only): clear 0.474; fog 1.0: $8/421=0.019\Rightarrow r\approx0.04,\ c\approx0.96$; rain 0.6: $41/500=0.082\Rightarrow r\approx0.17,\ c\approx0.83$; rain 1.0: $0/420\Rightarrow r=0,\ c=1$. (The old table gave $c=0.733,\,0.842,\,0.96$.) Known limitation: ten episodes per weather in the pilot; round-0 plans contain only 3 fog-1.0 episodes.
+
+\subsection{From $c$ to behaviour; identical value for teacher and student}
+One function computes $c$ per step from the weather setting and the frozen table (linear interpolation in intensity within each weather kind; clear $=0$). The same float32 scalar goes to (i) the teacher, which converts it to a target speed and gap (\S\ref{sec:teachers}), and (ii) the student's caution branch; it is stored with every DAgger sample and supplied to the student at evaluation. The code asserts equality. Note that with $c\to1$ the teacher's target saturates at 20 km/h and 25 m, so fog 1.0 and rain 1.0 are nearly indistinguishable behaviourally.
+
+\subsection{Alternatives considered and set aside (kept for the paper's discussion)}
+\begin{itemize}[leftmargin=*]
+\item \textbf{Image-statistics sensor} (ridge on 7 image features; fit seeds 2000--2041; 5-fold by-scene correlation 0.968; frozen test on seeds 3100--3139, correlation 0.971): target was the old table, so it recovered the filter's setting, not perception reliability. Archived.
+\item \textbf{Image-to-visibility-range estimator} with probe-measured labels (protocol written): off the critical path; adds complexity without a stronger claim given the synthetic filter. Future work.
+\item \textbf{Stopping-distance visibility cap} $v_{\text{vis}}=-bt_r+\sqrt{b^2t_r^2+2b(R-m)}$: prototype built and swept; documented in Appendix~B as future work (floor-logic flaw below $R=4.6$ m; slow driving did not make junctions safe).
+\end{itemize}
+
+\section{Teachers (privileged experts)}\label{sec:teachers}
+DAgger copies its teacher, so the student cannot be safer or faster than the teacher. The teacher reads the exact simulator state and labels each visited state; it is never a student input.
+\subsection{Components}
+\begin{itemize}[leftmargin=*]
+\item \textbf{IDM base.} MetaDrive's Intelligent Driver Model: $a=a_{\max}\big[1-(v/v_0)^4-(s^{*}/s)^2\big]$, $s^{*}=d_0+vT+\frac{v\Delta v}{2\sqrt{ab}}$; lane change disabled.
+\item \textbf{Caution mapping (Teacher B).} $v_0(c)=30\,(1-c/3)$ km/h, $d_0(c)=10+15c$ m. End points are a design choice (30 km/h, 10 m at $c=0$; 20 km/h, 25 m at $c=1$); there is no data behind the linear form.
+\item \textbf{SafeTeacher layer.} Every other vehicle predicted at constant velocity over 3 s; time-to-collision $t$ (lateral margin 0.35 m, longitudinal margin 1.0 m). If $t<t_{\text{hard}}=1.3$ s: full brake. If $1.3\le t<t_{\text{soft}}=2.4$ s: $a=\min\!\big(a_{\text{IDM}},\,-0.2-0.8\frac{2.4-t}{2.4-1.3}\big)$. These constants are design values and should be justified in the thesis.
+\item \textbf{Curve guard 4.0.} $v_{\text{cap}}=\max\!\big(3.5,\ \sqrt{a_{\text{lat}}/\kappa_{\max}}\big)$ m/s with $a_{\text{lat}}=4.0$ m/s$^2$ and $\kappa_{\max}$ the largest heading change per metre over the next $\max(15\,\text{m},3v)$ of route; target speed $=\min(v_0,v_{\text{cap}})$. It removed the roundabout off-road failures (seeds 3114, 3126, 3144) at about $+7\%$ energy and $+1.6\%$ time. (The 3.5 m/s floor can exceed the safe cap on very tight curves; it is part of the approved Teacher A.)
+\end{itemize}
+\subsection{Selected teachers}
+\textbf{Teacher A} (for OV-Split Camera): SafeTeacher + curve guard 4.0, $c=0$. \textbf{Teacher B} (for Live Caution Camera): caution IDM (mapping above) + SafeTeacher + curve guard 4.0, with $c$ from the new table; ``cs0'' in the code (\code{cs0_g4.0}).
+
+\subsection{Teacher validation protocol and results}
+Simulator only, no cameras. Validation seeds 3100--3199 (100 episodes per cell), density 0.05, horizon 160 s. Anti-stopping gates: stopped steps $\le0.7\%$, hard-brake steps $\le0.24\%$, free-flow speed within 3\% of target, no timeouts at 160 s.
+\begin{center}\footnotesize\setlength{\tabcolsep}{4pt}\begin{tabular}{@{}llccccccc@{}}\toprule
+Teacher & Weather & S@160 & S@80 & Crash & Off & m/s & Compl. s & Wh/km\\\midrule
+Stock IDM & clear & 0.95 & 0.95 & 0.02 & 0.03 & 7.96 & 43.7 & 88.8\\
+SafeTeacher & clear & 0.97 & 0.97 & 0.00 & 0.03 & 7.90 & 44.3 & 92.6\\
+\textbf{A: Safe + guard 4.0} & clear & \textbf{0.99} & 0.99 & 0.00 & 0.01 & 7.80 & 45.0 & 99.0\\
+Caution IDM (old $c$) & fog 1.0 & 0.98 & 0.96 & 0.02 & 0.00 & 6.15 & 56.8 & 63.7\\
+ & rain 0.6 & 0.97 & 0.94 & 0.03 & 0.00 & 5.87 & 59.6 & 60.9\\
+ & rain 1.0 & 0.97 & 0.89 & 0.02 & 0.01 & 5.56 & 62.7 & 57.8\\
+\textbf{B: cs0 + guard 4.0} (old $c$) & fog 1.0 & 0.98 & 0.95 & 0.01 & 0.01 & 6.09 & 57.6 & 67.1\\
+ & rain 0.6 & 1.00 & 0.94 & 0.00 & 0.00 & 5.82 & 60.2 & 63.8\\
+ & rain 1.0 & 1.00 & 0.90 & 0.00 & 0.00 & 5.52 & 63.5 & 60.2\\\bottomrule\end{tabular}\end{center}
+(S@160, S@80: success rate at 160 s and 80 s; Off: left the road.)
+Teacher A: stopped 0.47\%, hard-brake 0.10\%; Teacher B: stopped 0.46--0.54\%, hard-brake 0.10--0.15\%; conflict episodes (TTC $<2.4$ s) 14\% for A and 13--20\% for B. Timeouts appear only at the 80 s limit (6--11\% for B): B is slow, not stuck.
+\textbf{Congestion check} (density 0.1, 50 seeds, 3100--3149): stock IDM 0.84 (12\% crashes); A 0.96 (no crashes); B 0.96 (fog 1.0), 0.96 (rain 0.6), 0.94 (rain 1.0). Predicted conflicts occurred in 38--42\% of episodes and success inside conflict episodes was 18/19, 20/20, 21/21 and 18/20, so the aggregate is not driven by easy episodes. Densities 0.2 and 0.3 and the stock-IDM/SafeTeacher comparison in weather were not run.
+\textbf{Re-validation required:} Teacher B's numbers above use the old $c$. A targeted simulator re-check at the new $c$ values is part of the schedule (\tbd{}); it is optional pre-validation during OV-Split's run that is \emph{skipped} if it adds memory pressure.
+
+\section{Training: DAgger through the full camera pipeline}
+\subsection{Common recipe (original recipe, with the deviations listed)}
+For each round: collect episodes in which, at every step, the camera pipeline builds the student's BEV, the privileged teacher computes the \emph{clean} action label, and the executed action is the teacher's with probability $\beta_t$ (else the student's) plus Gaussian noise $\mathcal N(0,0.1^2)$, clipped to $[-1,1]$; $\beta_0=1$, $\beta_t=0.5^t$ afterwards. \textbf{Every step goes through the full pipeline and every step is recorded} (no skipped perception, no discarded teacher-driven steps). Retraining uses \emph{all} data so far: Adam, learning rate $10^{-3}$, batch 128, loss $\frac1N\sum\|\pi_\theta(o_i)-a_i^{\text{teacher}}\|^2$; the network persists across rounds, initialised from the original checkpoint with its scalar normalisation. Training seeds are drawn deterministically from 2000--2999 per round and sample index; density 0.05; horizon 600 steps. Original checkpoints are never written.
+\begin{center}\small\begin{tabular}{@{}p{3.6cm}p{5.8cm}p{5.8cm}@{}}\toprule
+ & OV-Split Camera & Live Caution Camera\\\midrule
+Initialisation & \code{runs/ov_split/best.pt} & \code{runs/caut_a/best.pt}\\
+Network & \code{BEVScalarPolicy(1,6,0)}, 110\,530 params & \code{BEVScalarPolicy(1,6,1)}, 112\,610 params\\
+Teacher & A: SafeTeacher + guard 4.0 ($c=0$) & B: caution IDM + SafeTeacher + guard 4.0\\
+Training weather & clear only (as the original) & original 8-item mix: clear$\times2$, fog 0.6, fog 1.0, rain 0.2, 0.45, 0.6, 1.0\\
+Caution & none & table value for the episode's weather for teacher \emph{and} student (the original's random $U(0,1)$ half is dropped: $c$ takes $\le7$ distinct values)\\
+Episodes per round & 40 (density 0.05 only) & 40 (density 0.05 only)\\
+Rounds & 0--5 & aim 0--5; see fallback rules\\
+Epochs & 24 in round 0, 8 later & 18 in round 0, 6 later\\
+Validation & seeds 3100--3109, density 0.05, 800 steps; clear and rain 1.0; after rounds 3, 4, 5 & same seeds and horizon; clear, fog 1.0, rain 0.6, rain 1.0; final checkpoint (see below)\\
+Selection & highest (success, $-$(crash+off-road)) among validated rounds & final checkpoint, with earlier ones compared only if slack allows\\
+Output folder & \code{e2e_ov_split_final} & new folder \tbd{}\\\bottomrule\end{tabular}\end{center}
+Output folders are created under \code{bev_rl/adaptive/results/camera_dagger_final/}. \textbf{Differences from the original procedures (to be reported):} density 0.05 only (original 0--0.3); the student's observation is the camera pipeline (original: simulator list with dropout); Teacher A/B use SafeTeacher and the curve guard (original: stock IDM / caution IDM); validation seeds and horizon and the number of validated rounds differ; the Live Caution caution input is table-derived (original: label-derived with a random half).
+
+\subsection{Integrity safeguards}
+A hash manifest freezes: the camera builder, \code{assembler.py}, \code{bev_state/__init__.py}, the old sensor code and weights, both original checkpoints, \code{yolov8n.pt} and the old retention table; every training and evaluation worker refuses to run if any hash differs (verified 9/9 at last check). New datasets, checkpoints and results go to separate folders; claim files make each episode resumable; nothing is deleted or overwritten. A superseded 11-episode first attempt (density 0, every second teacher-driven step skipped) is archived in place and excluded.
+
+\subsection{Round-count rules (approved priorities)}
+Deadline protection comes first; do not sacrifice the final camera evaluation to finish extra rounds. Aim for six rounds only if runtime allows. If the schedule becomes unsafe: stop after four completed rounds, retrain on all collected data, save the checkpoint and validate it; no intermediate checkpoint is assumed best without evidence. \tbd{} A five-round middle option is proposed (\S\ref{sec:schedule}).
+
+\subsection{Measured speeds (3 workers)}
+1.96 s per step; 454--460 steps per episode; 15.0 min per episode per worker; 12 episodes/hour; 3.43 h per 40-episode round (OV-Split round 0, 13:09--16:35); round-0 retraining 5.2 min (18\,419 samples $\times$ 24 epochs). Each worker holds about 5.2 GB committed memory on a 13.7 GB machine with an integrated GPU (render buffers use system RAM); 3 workers is the proven maximum.
+
+\section{Evaluation}
+\subsection{Protocol}
+Matched seeds 5100--5109 (10 episodes) in \emph{each} of: clear, fog 1.0, rain 0.6, rain 1.0; density 0.05; 800 steps; no teacher, no action noise; the full camera pipeline with the frozen builder; the same weather-noise stream for every model on a seed. Live Caution and the original caution model receive $c$ at every step.
+\begin{center}\small\begin{tabular}{@{}p{4.3cm}p{11cm}@{}}\toprule
+Arm & Notes\\\midrule
+Original OV-Split (200-episode model) & camera-pipeline evaluation for the first time (distribution shift test)\\
+Original caution model & $c$ from the \emph{old} table, as it was trained\\
+OV-Split Camera & the new camera-trained student; clear-only training, evaluated in weather\\
+Live Caution Camera & new table-derived $c$\\
+Image-only CNN & existing results (it already uses the real front picture and the weather filter)\\\bottomrule\end{tabular}\end{center}
+\subsection{Metrics}
+Success, collision, off-road, timeout; completion time (steps/10 for successes); mean speed; estimated energy (Wh/km; formula in Appendix~A; no regeneration, flat road, declared car: $C_d=0.23$, $A=2.22$ m$^2$, $C_{rr}=0.01$); route completion; perception metrics against ground truth (recall, in-view recall, position error, false objects, exact BEV equality on vehicle frames); stereo drops. Videos: weathered front camera beside the camera-derived BEV, 10 fps.
+\subsection{Statistics}
+Wilson 95\% intervals; exact McNemar tests on paired seeds. With 10 episodes per cell the intervals are wide (9/10 $\to$ [0.60, 0.98]) and paired tests have little power; conclusions from the camera pipeline are therefore descriptive. Time-outs at 800 steps are re-run at 1600 steps and reported \emph{separately} as a pre-declared secondary result \tbd{} (the earlier 160 s result was post-hoc and is labelled so).
+\subsection{Surrogate and the 200-episode study}\label{sec:surrogate}
+The earlier 200-episode, five-model study (seeds 5000--5199) used the simulator vehicle list with per-step random dropout from the old table (models 1--4) and the real filtered front picture (model 5). It stays as a \textbf{separately labelled perception-abstracted evaluation} (Figure B), not as the system's results. To make it defensible: re-run it cheaply with dropout probabilities from the \emph{new} measured retention, and validate it against the full-pipeline episodes (the pilot already showed 33/40 identical outcomes). The old-table version is preserved and never mixed with the new.
+\subsection{Deliverable pack for the morning of 16 November}
+Original OV-Split and original caution models: fog 1.0, seeds 5100--5109 (20 episodes) plus videos (seed 5100: clear, fog 1.0, rain 1.0), queued after OV-Split with a 4-worker health test. Then the camera-trained OV-Split student: the same set (12 episodes), queued. The Live Caution student follows when it exists.
+
+\section{Data splits, seeds and leakage statement}
+\begin{center}\small\begin{tabular}{@{}p{3.1cm}p{12.2cm}@{}}\toprule
+Seeds & Use\\\midrule
+1000--1019 & old retention table (retired)\\
+2000--2002 & builder placement calibration (fit); 2000--2041: old sensor fit (archived)\\
+2000--2999 & DAgger training seeds, both models (the new retention pass draws its scenes here)\\
+3100--3199 & teacher validation and selection; 3100--3139 old sensor test; 3100--3109 DAgger validation; 3100--3102 placement check files\\
+5000--5009 & pilot (the builder redesign v1$\to$v2 was informed by it); 5000--5019 grid comparison; 5000--5199 original 200-episode study (simulator grid)\\
+\textbf{5100--5109} & \textbf{final camera-pipeline evaluation}; touched only by the original simulator-grid study, never by any camera-side calibration, sensor fit, teacher selection or training\\
+6000--6009 & reserved, unused\\
+8000--8029 & later real-episode retention check (retired table)\\\bottomrule\end{tabular}\end{center}
+Seeds 5000--5009 are \emph{not} clean for the builder and are outside the final evaluation; using the pilot episodes as measurement data for the retention table is therefore allowed and does not touch the evaluation set. The provenance of the original retention table's early scenes was not fully verifiable from the repository and is not relied upon.
+
+\section{Schedule and resource plan}\label{sec:schedule}
+Evidence-based (measured 1.96 s/step; 12 episodes/hour with 3 workers). A 4th worker is untested: CPU is 56--70\% with 3 workers, memory is the risk; the effective speed-up is assumed at 3.7 workers (not 4) and the test is built into the queued pack. Times on 15 November, $T_0$ = OV-Split completion: earliest 13:30, expected 16:00, latest 18:30.
+\begin{center}\small\begin{tabular}{@{}p{5.3cm}lcccc@{}}\toprule
+Task & Workers & Duration & Earliest & Expected & Latest\\\midrule
+OV-Split rounds 1--5, retrain, validate 3--5 & 3 (running) & 20.8 h & 13:30 & 16:00 & 18:30\\
+Pack: originals, fog $\times10$ + videos & 4/3 & 1.8--2.2 h & 15:20 & 17:50 & 20:20\\
+Camera OV student, fog $\times10$ + videos & 4/3 & 0.8--1 h & & $\approx$19:00--20:00 & \\
+Retention pass (hybrid, 20 episodes) & 4 & 1.3 h & 16:50 & 19:10 & 21:40\\
+Table calculation and \emph{review}; new $c$ & -- & 1.0 h & & & \\
+Targeted teacher re-validation + freeze & idle workers & 0.65 h & 18:35 & 21:00 & 23:30\\
+Live Caution DAgger, 3.4 h per round (4 workers) & 4 & per round & start $\approx$21:00 & & \\
+\quad 4 rounds done & & & & 16 Nov 10:40 & \\
+\quad 5 rounds done & & & & 16 Nov 14:05 & \\
+\quad 6 rounds done & & & & 16 Nov 17:30 & \\
+Validation of the final checkpoint & 4 & 3.3 h & & & \\
+Final evaluation (both students, remaining 17 worker-h) & 4 & 4.6 h & & & \\
+Aggregation and statistics & -- & 0.5 h & & & \\\bottomrule\end{tabular}\end{center}
+\textbf{Completion of aggregation:} stop after 4 rounds $\approx$ 16 Nov 19:10; after 5 rounds $\approx$ 22:40; after 6 rounds $\approx$ 17 Nov 02:00 (latest case $\approx$ 4--6 h later). \textbf{Decision points:} after round 2 (re-project from actual speed); after round 3 continue only if aggregation is projected before 16 Nov 23:59, else stop at 4 rounds and retrain/validate; six rounds only with $\ge3$ h of slack. A 3-worker fallback (4th worker unhealthy) costs about 4 h and would force the 4-round stop.
+\textbf{Ordering rule:} Live Caution's fog-1.0 episodes and videos are evaluated before the rest of its evaluation. Final evaluation and aggregation must be complete by 19 November at the very latest (writing and conference preparation are protected).
+
+\section{Risk register}
+\begin{center}\small\begin{tabular}{@{}p{4.3cm}p{5.6cm}p{5.4cm}@{}}\toprule
+Risk & Evidence / likelihood & Response\\\midrule
+4th worker unhealthy & memory 5.2 GB per worker, 82 hard faults/s with 3 workers & health gate in the pack; fall back to 3 workers and the 4-round stop\\
+First run of the evaluation code fails & never executed (to protect OV-Split) & logs checked at OV-Split's end; fix and rerun; originals' results are not on the critical path\\
+Retention cells too thin & fog 1.0: 3 round-0 episodes; pilot 10 episodes & hybrid with pilot; interval reporting; ``insufficient'' flag\\
+Real pipeline harsher than the surrogate & rain 1.0 recall $\approx$ 0; vehicles lost for whole stretches & this is what the camera evaluation measures; busy traffic (0.15) not planned\\
+Teacher B at new $c$ not re-validated & old-$c$ results only & targeted simulator re-check before freezing\\
+Time-outs at 80 s for slow students & 6--11\% at 80 s for Teacher B & pre-declared secondary 160 s re-run\\
+Memory exhaustion killing a worker & only the in-flight episode is lost & claims can be released safely (logged per worker)\\\bottomrule\end{tabular}\end{center}
+
+\section{Limitations (to state in the paper)}
+\begin{itemize}[leftmargin=*]
+\item Synthetic, non-physical weather filter (no depth dependence; rain darkens by 25\% at every level); simulation only; no real adverse-weather imagery.
+\item The weather setting is supplied to the caution mechanism; the model does not sense it.
+\item Ten episodes per condition in the camera-pipeline evaluation; sparse traffic (density 0.05), where few vehicles matter, so success is a weak discriminator; always-cautious control showed the success gain in the earlier study is not weather-specific.
+\item Privileged teacher; the teacher's constants (caution mapping end points, SafeTeacher thresholds) are design choices.
+\item The camera-side corrections (side reflection, affine centre fit) compensate for an integration issue in the unmodified modules and were fitted on three calibration scenes; the rear-camera correction is unvalidated.
+\item Retention is position-based recall with a 3.0 m criterion on at most 20 + 10 episodes per cell; dependent frames within episodes.
+\item The camera students are trained in the same simulator, on seeds drawn from the same range as other experiments; evaluation seeds were not used for tuning.
+\end{itemize}
+
+\section{Implementation status and file map}
+\begin{center}\small\begin{tabular}{@{}p{7.2cm}p{8.2cm}@{}}\toprule
+Item & State\\\midrule
+\code{bev_state/camera_grid_builder.py} & implemented, frozen\\
+\code{bev_rl/adaptive/pilot_camera_builder.py} & used (pilot); one line added to expose the front frame for videos\\
+\code{bev_rl/adaptive/camera_dagger.py}, \code{queue_camera_training.sh} & implemented, \textbf{running} for OV-Split; the \code{caut} entry still uses the retired image sensor and will \textbf{not} be used\\
+\code{bev_rl/adaptive/teacher_eval.py}, \code{summarise_teacher_density.py} & implemented, used\\
+\code{evaluate_camera_pipeline.py}, \code{summarise_camera_eval.py}, \code{queue_pack.sh}, \code{queue_students_eval.sh}, \code{queue_camera_eval.sh} (all in \code{bev_rl/adaptive}) & written, \textbf{untested}, queued\\
+Retention-measurement script, retention analysis, $c$ function & \tbd{} not written\\
+Live Caution trainer (table-derived $c$), its evaluation arm & \tbd{} not written\\
+Statistics and trade-off figure scripts (Wilson, McNemar, energy vs trip time) & \tbd{} partly in \code{summarise_camera_eval.py}\\
+\code{visibility_teacher.py}, \code{brake_check.py}, \code{diagnose_visibility_failures.py}, \code{visibility_sensor.py} & exploratory / archived\\\bottomrule\end{tabular}\end{center}
+
+\appendix
+\section{Formulas}
+\textbf{Success rate:} $\hat p=k/n$. \textbf{Wilson 95\%:} $\dfrac{\hat p+\frac{z^2}{2n}\pm z\sqrt{\frac{\hat p(1-\hat p)}{n}+\frac{z^2}{4n^2}}}{1+\frac{z^2}{n}}$, $z=1.96$. \textbf{Exact McNemar:} $p=\min\!\Big(1,\,2\sum_{i=0}^{\min(b,c)}\binom{b+c}{i}2^{-(b+c)}\Big)$ ($b,c$ = episodes won by only one model).\\
+\textbf{Energy per step} ($v_0\to v_1$ linearly over $\Delta t=0.1$ s): $W_{\text{in}}=\tfrac12 m(v_1^2-v_0^2)$, $W_{\text{air}}=\tfrac14 k\Delta t\,(v_0^3+v_0^2v_1+v_0v_1^2+v_1^3)$ with $k=\tfrac12\rho C_dA$, $W_{\text{roll}}=C_{rr}mg\tfrac{v_0+v_1}{2}\Delta t$; $W_{\text{step}}=\max(0,\,W_{\text{in}}+W_{\text{air}}+W_{\text{roll}})$; $E_{\text{Wh}}=\sum W_{\text{step}}/3600$; $D_{\text{km}}=\frac1{1000}\sum\frac{v_0+v_1}2\Delta t$; reported Wh/km $=E_{\text{Wh}}/D_{\text{km}}$ ($\rho=1.225$, $C_d=0.23$, $A=2.22$, $C_{rr}=0.01$, $g=9.81$, $m$ from the simulator).\\
+\textbf{Ego position from a camera:} $x=p_x+\sin(\psi)Z+\cos(\psi)\frac{(u-600)Z}{f}$, $y=p_y+\cos(\psi)Z-\sin(\psi)\frac{(u-600)Z}{f}$ ($\psi$ camera yaw, $p$ camera offset).\\
+\textbf{Stereo depth uncertainty:} $\sigma_Z=Z^2\sigma_d/(fB)$ with $\sigma_d=0.2$ px.\\
+\textbf{DAgger objective:} $\mathcal L(\theta)=\frac1N\sum_{i=1}^N\|\pi_\theta(o_i)-a_i^{\text{teacher}}\|^2$ on all data aggregated so far; executed action $=a^{\text{teacher}}$ with probability $0.5^t$ (round $t\ge1$), plus $\mathcal N(0,0.1^2)$ noise.
+
+\section{Exploratory findings kept for the thesis: the visibility-conditioned teacher prototype}
+A stopping-distance cap $v_{\text{vis}}=\max(v_{\min},-bt_r+\sqrt{b^2t_r^2+2b(R-m)})$ was prototyped with provisional $t_r=0.5$ s, $b=4.0$ m/s$^2$, $m=2.0$ m, $v_{\min}=3$ m/s, as $\min(v_{\text{IDM}},v_{\text{cap}},v_{\text{vis}})$ with SafeTeacher and the guard intact. The simulator can brake at 13--15 m/s$^2$ (about 1.5 g; friction independent of weather), so $b$ is a design value. Fixed-range sweep (50 seeds, density 0.05): $R=\infty$ and $17.5$ m reproduce Teacher A exactly (cap never binds); $R=12$ m: 0.96 success, 6.85 m/s, 78.4 Wh/km; $R=8$ m: 0.98 success but 0.78 at 80 s; $R=5$ m: 0.96, 3.25 m/s, 0.10 at 80 s. The cap only binds below about 15 m. Flaws found: the $v_{\min}$ floor overrides a lower safe cap below $R=4.625$ m; the three crashes at $R=12$ and 5 m occurred when the ego was nearly stopped and a vehicle at a relative heading of 86$^\circ$--142$^\circ$ (crossing/oncoming, likely a junction; road type not confirmed) hit it, with throttle/brake chatter in the labels. Not part of the final method.
+
+\section{Decision log (user-approved, with dates)}
+\begin{itemize}[leftmargin=*]
+\item 14 Nov: builder is the only module we may modify; YOLO, camera, weather, stereo, driving model architecture and checkpoints are fixed.
+\item 14 Nov: density 0.05 exclusively; 40 episodes per round, rounds 0--5; full perception every step; no skipped steps; original epoch schedules, $\beta$, noise, horizon, optimiser, batch, loss; OV-Split teacher SafeTeacher + guard; Live Caution teacher = caution teacher + SafeTeacher + guard; original 8-item weather mix; evaluation seeds fresh; originals preserved; new folders.
+\item 14 Nov: the old retention table, old sensor and image estimator are removed from the critical path; caution is retention-conditioned with retention re-measured on the full pipeline; hybrid measurement approved with provenance labels, checked denominators and a review before use.
+\item 14 Nov: deadline takes priority over completing six rounds; four-worker test after OV-Split with safeguards; originals' full camera evaluation deferred behind the two final student evaluations, except the fog-1.0 pack and videos requested for 16 Nov.
+\item 14 Nov: rain 1.0 for videos; videos wanted for the camera students by the night of 16 Nov.
+\end{itemize}
+\end{document}

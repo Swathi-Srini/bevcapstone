@@ -1,0 +1,56 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,booktabs,array,hyperref}
+\setlength{\parskip}{0.5em}\setlength{\parindent}{0pt}
+\title{Effective Perception Range: Measurement Protocol and Range-Estimator Design\\\large Proposal for approval --- nothing in this document has been run}
+\date{14 November 2026}\author{}
+\begin{document}\maketitle
+
+\section{What is measured}
+\textbf{Effective perception range} $R_{\mathrm{eff}}$: the largest forward distance at which the \emph{complete} chain (5 cameras $\to$ weather filter $\to$ YOLOv8n + front stereo depth $\to$ unmodified assembler $\to$ camera grid builder $\to$ 64$\times$64 BEV) reliably produces a correct obstacle in the BEV. It is not visual visibility. The BEV only represents $-2.5$ to $+17.5$ m ahead, so $R_{\mathrm{eff}}\in[0,17.5]$ and any value at the window edge is right-censored (``at least 17.5 m'').
+
+\section{Trial design (one trial = one stationary vehicle at a known place)}
+\begin{center}\small\begin{tabular}{@{}lp{10.2cm}@{}}\toprule
+Factor & Levels\\\midrule
+Forward distance $d$ & 3, 5, 7, 9, 11, 13, 15, 17 m (8 levels)\\
+Lateral position & $-3.5$, 0, $+3.5$ m (adjacent left lane, ego lane, adjacent right lane)\\
+Orientation & lane-aligned (primary). A yaw $\pm20^{\circ}$ subset on test scenes only, as a robustness check.\\
+Weather setting & clear; fog 0.3, 0.6, 1.0; rain 0.2, 0.45, 0.6, 1.0 (8 settings; the setting only drives the filter, it is never an estimator input)\\
+Weather realisations & 2 independent noise seeds per (scene, weather)\\
+Scenes & 46 distinct scenes: 30 train, 8 validation, 8 test (see \S5)\\\bottomrule\end{tabular}\end{center}
+Per scene: $8\times3\times8\times2=384$ pipeline runs; total 17\,664 trials. All other traffic is moved far away; the ego is stationary; one vehicle is placed per trial (the placement machinery of the earlier calibration experiment is reused).
+
+\section{Success criterion (fixed before any test data is seen)}
+A trial \textbf{succeeds} if the camera-derived BEV contains a vehicle-occupied (value 1.0) connected region whose centre lies within $\varepsilon=2.0$ m of the true vehicle centre. Chosen from the existing pilot (90th percentile of centre error 1.78 m); not tuned on test scenes. Also recorded per trial: detected by YOLO (yes/no), stereo depth valid (yes/no), centre error, number of extra objects (false positives and duplicates), true vehicle length/width. The ground-truth position is used \textbf{only} to score trials and to define targets offline; it is never given to the builder or to the estimator.
+
+\section{Reliability threshold and statistics}
+\begin{itemize}
+\item Per (weather setting, $d$): success rate with Wilson 95\% interval; intervals are \emph{cluster-bootstrapped over scenes} (trials in one scene are not independent).
+\item $R_{\mathrm{eff}}(\text{weather})$ = largest $d$ at which the monotone (isotonic, non-increasing in $d$) success curve is $\ge p^{*}=0.90$. 0.90 is a design choice, not a derived constant: it is reported together with $p^{*}\in\{0.50,0.80,0.95\}$ as a sensitivity analysis. With 48 trials per cell (8 scenes' worth of test data; 30 scenes $\times$ 2 realisations $\times$ 3 lateral = 180 on train data), a perfect cell has a Wilson lower bound of 0.93 at $n=48$ and 0.98 at $n=180$.
+\item \textbf{Sanity gate in clear weather:} the clear-weather $R_{\mathrm{eff}}$ must not be below the distance at which the visibility cap would bind (about 15 m with the provisional constants). If it is, the criterion, the threshold or the perception chain's clear-weather reliability must be reported honestly and the teacher design revisited before any training.
+\end{itemize}
+
+\section{Image-level targets (not one number per weather)}
+For every (scene, weather setting, noise seed) cell there are 24 binary outcomes (8 distances $\times$ 3 lateral). Fit a monotone logistic psychometric curve $P(d)=\sigma\big((R_{50}-d)/s\big)$ by maximum likelihood ($s$ bounded below), and define the cell's target
+\[ R^{\star}=\mathrm{clip}\big(R_{50}-s\ln 9,\;0,\;17.5\big)\qquad(\text{the 90\% point}),\]
+flagged \emph{censored} when all outcomes at $d\le17$ m succeed. The estimator's input is the \textbf{vehicle-free frame} of that same cell (same scene pose, same noise seed), so the image never contains the probe vehicle. Each target therefore comes from the measured pipeline behaviour in that very scene and weather realisation; no table, no weather average and no weather label is used.
+
+\section{Splits and leakage control}
+Splits are by \textbf{scene}: train seeds 2100--2129, validation 2130--2137, test: fresh seeds 6000--6007. No scene appears in two splits; the old calibration scenes (2000--2002), the old sensor's fitting scenes (2000--2041), the validation seeds 3100--3199 and the evaluation seeds 5100--5199 are all excluded. Hyper-parameters (feature set, ridge penalty, dead-zone, smoothing) are chosen on validation only; the test split is opened once.
+
+\section{Range estimator (simplest viable first)}
+Input: the front-left camera frame, 1/4 scale. Model: ridge regression on image statistics (sharpness, gradient, contrast, dark channel, brightness, saturation, edge share; new weights, new targets). If it fails the acceptance tests below, a small CNN is the fallback. Per-step output is smoothed by an exponential filter (constant chosen on validation).
+Acceptance tests on the \emph{test} scenes:
+\begin{enumerate}
+\item Mean absolute error and correlation of $\hat R$ against $R^{\star}$, overall and \textbf{within each weather setting}.
+\item \textbf{Does the image add information beyond the weather?} Compare with a predictor that outputs the per-weather mean of $R^{\star}$ (an oracle that knows the label). The estimator must beat it within weather settings; otherwise it is just a weather classifier and must be described as such.
+\item Clear weather: $\hat R\ge15$ m on at least 95\% of test frames (the cap must not bind in clear weather).
+\item Under-estimation matters more than over-estimation (over-estimating range permits unsafe speed); report the share of test cells with $\hat R>R^{\star}+2$ m.
+\end{enumerate}
+
+\section{Compute and memory}
+384 runs $\times$ 46 scenes at about 1.5 s per run (YOLO + stereo + builder; the weather filter is applied to the same rendered frames) $\approx$ 7.4 h on one worker, or about 2.5--3 h on three workers. One worker needs about 4 GB; it \textbf{cannot} run next to the three OV-Split workers on this 13.7 GB machine. It starts only when OV-Split finishes, or with your approval.
+
+\section{Known limitations (to be stated in the paper)}
+Synthetic weather filter only; stationary ego and stationary probe vehicle; forward obstacles only; one vehicle model family; the BEV window caps the measurable range at 17.5 m; success depends on the 2.0 m criterion and on the 0.90 threshold; the estimator sees only the synthetic filter's appearance.
+\end{document}

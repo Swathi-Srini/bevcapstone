@@ -1,0 +1,98 @@
+{"seed": 2001, "vehicle": 0, "true_x": -7.969197511672974, "true_y": -2.004277229309082, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": -5.5272276401519775, "true_y": -2.009913444519043, "length": 4.6, "width": 1.85, "objects": [{"camera": "right_camera", "method": "ground_plane_monocular", "label": "car", "conf": 0.736541211605072, "x": 3.4421170981309497, "y": 0.9009015695230583}]}
+{"seed": 2001, "vehicle": 0, "true_x": -3.5066347409433742, "true_y": -2.0062074760260047, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": -0.10376725103751061, "true_y": -2.471855198488858, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": 3.3941260267499143, "true_y": -2.2047120325507437, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": 5.355854228878889, "true_y": -2.3058542066007006, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": 7.889003771621707, "true_y": -2.3162019761662576, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": -7.959322964855795, "true_y": 1.43593973814001, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": -5.489075827809402, "true_y": 1.2321900492831643, "length": 4.6, "width": 1.85, "objects": [{"camera": "right_camera", "method": "ground_plane_monocular", "label": "car", "conf": 0.640076756477356, "x": 3.313277136687508, "y": -0.6197052869525614}]}
+{"seed": 2001, "vehicle": 0, "true_x": -3.517628248745699, "true_y": 1.150789486890417, "length": 4.6, "width": 1.85, "objects": [{"camera": "right_camera", "method": "ground_plane_monocular", "label": "bus", "conf": 0.6868597269058228, "x": 2.5935108470682224, "y": -0.27917101193797794}]}
+{"seed": 2001, "vehicle": 0, "true_x": -0.07840320491300365, "true_y": 1.6378620305163183, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": 3.3498782090646975, "true_y": 1.6039277047077696, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": 5.2783837782099745, "true_y": 1.6897996567606492, "length": 4.6, "width": 1.85, "objects": [{"camera": "left_camera", "method": "ground_plane_monocular", "label": "car", "conf": 0.7931996583938599, "x": -6.955461007023779, "y": -1.3615844933514913}]}
+{"seed": 2001, "vehicle": 0, "true_x": 7.7050199357416975, "true_y": 1.550246513045453, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": -7.300766873876509, "true_y": 8.150503904465308, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": -4.776877498920082, "true_y": 7.929761113628391, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": -2.262389485190038, "true_y": 7.6415079864335125, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": 1.3951513812423542, "true_y": 6.658744779097464, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": 5.0227402211199506, "true_y": 5.734816794020985, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": 6.963669344573926, "true_y": 5.3475600842637565, "length": 4.6, "width": 1.85, "objects": [{"camera": "left_camera", "method": "ground_plane_monocular", "label": "car", "conf": 0.6787996888160706, "x": -2.7433257923018983, "y": -1.3619754407154594}]}
+{"seed": 2001, "vehicle": 0, "true_x": 9.375829670089688, "true_y": 4.849743369405888, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": -5.435915884283743, "true_y": 11.683098506584406, "length": 4.6, "width": 1.85, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "car", "conf": 0.8651502728462219, "x": -5.274657141752884, "y": 13.055643081665039}]}
+{"seed": 2001, "vehicle": 0, "true_x": -3.0794609371208543, "true_y": 11.147798211103403, "length": 4.6, "width": 1.85, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "car", "conf": 0.9113038182258606, "x": -3.032230666521166, "y": 9.880420684814453}]}
+{"seed": 2001, "vehicle": 0, "true_x": -1.1626693986623131, "true_y": 10.700767479215193, "length": 4.6, "width": 1.85, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "car", "conf": 0.9108539819717407, "x": -1.2288250839959067, "y": 8.86527156829834}]}
+{"seed": 2001, "vehicle": 0, "true_x": 2.241417343110477, "true_y": 9.868288760762333, "length": 4.6, "width": 1.85, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "car", "conf": 0.8496164083480835, "x": 1.7319499365129982, "y": 7.921541213989258}]}
+{"seed": 2001, "vehicle": 0, "true_x": 5.631672800470339, "true_y": 9.027384645214084, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": 7.549100985119814, "true_y": 8.546073737318512, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": 10.007607446111159, "true_y": 7.930685541440018, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": -4.764897991094898, "true_y": 14.724939211904294, "length": 4.6, "width": 1.85, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "car", "conf": 0.917595624923706, "x": -4.697445045628281, "y": 13.775982856750488}]}
+{"seed": 2001, "vehicle": 0, "true_x": -2.384213355805667, "true_y": 14.129346631039775, "length": 4.6, "width": 1.85, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "car", "conf": 0.9409564733505249, "x": -2.307653877044026, "y": 12.392304420471191}]}
+{"seed": 2001, "vehicle": 0, "true_x": -0.4427904042187314, "true_y": 13.642067808751587, "length": 4.6, "width": 1.85, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "car", "conf": 0.8458845019340515, "x": -0.5844975888472608, "y": 11.75803279876709}]}
+{"seed": 2001, "vehicle": 0, "true_x": 2.970241703584816, "true_y": 12.78646194484256, "length": 4.6, "width": 1.85, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "car", "conf": 0.8768404126167297, "x": 2.4346773141366223, "y": 10.816377639770508}]}
+{"seed": 2001, "vehicle": 0, "true_x": 6.3611418354224405, "true_y": 11.936189265713438, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": 8.278503607849434, "true_y": 11.454875848804717, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": 10.737004466586354, "true_y": 10.839479908295935, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": -4.035492306227431, "true_y": 17.63374854774139, "length": 4.6, "width": 1.85, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "car", "conf": 0.9094445109367371, "x": -3.872230220450451, "y": 16.18744659423828}]}
+{"seed": 2001, "vehicle": 0, "true_x": -1.6548065902827234, "true_y": 17.038161258179226, "length": 4.6, "width": 1.85, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "car", "conf": 0.8956580758094788, "x": -1.678738625745485, "y": 15.302149772644043}]}
+{"seed": 2001, "vehicle": 0, "true_x": 0.2866133180833268, "true_y": 16.550873561029878, "length": 4.6, "width": 1.85, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "car", "conf": 0.8165099620819092, "x": 0.07056369334993862, "y": 14.635021209716797}]}
+{"seed": 2001, "vehicle": 0, "true_x": 3.6996475157635973, "true_y": 15.695280937757628, "length": 4.6, "width": 1.85, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "car", "conf": 0.8220522999763489, "x": 3.19434562863857, "y": 13.775982856750488}]}
+{"seed": 2001, "vehicle": 0, "true_x": 7.0905550963902675, "true_y": 14.845037853205788, "length": 4.6, "width": 1.85, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "car", "conf": 0.7038101553916931, "x": 6.008164830161478, "y": 14.031611442565918}]}
+{"seed": 2001, "vehicle": 0, "true_x": 9.00790617443731, "true_y": 14.363682873946907, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": 11.466411435086357, "true_y": 13.748298611371903, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": -3.3060881177546575, "true_y": 20.542560082232825, "length": 4.6, "width": 1.85, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "car", "conf": 0.869989275932312, "x": -3.1824372074513607, "y": 18.96702766418457}]}
+{"seed": 2001, "vehicle": 0, "true_x": -0.925404720522768, "true_y": 19.94696354210089, "length": 4.6, "width": 1.85, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "car", "conf": 0.8399370312690735, "x": -1.0028500442548647, "y": 18.23797607421875}]}
+{"seed": 2001, "vehicle": 0, "true_x": 1.016015654013994, "true_y": 19.459681627164684, "length": 4.6, "width": 1.85, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "car", "conf": 0.8605651259422302, "x": 0.781578104206244, "y": 17.539895057678223}]}
+{"seed": 2001, "vehicle": 0, "true_x": 4.429053790470867, "true_y": 18.604099814737058, "length": 4.6, "width": 1.85, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "car", "conf": 0.8656637668609619, "x": 3.94018689643774, "y": 16.688770294189453}]}
+{"seed": 2001, "vehicle": 0, "true_x": 7.819946125409004, "true_y": 17.753795661932788, "length": 4.6, "width": 1.85, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "car", "conf": 0.7803282141685486, "x": 6.864596840647888, "y": 16.115184783935547}]}
+{"seed": 2001, "vehicle": 0, "true_x": 9.73731685287782, "true_y": 17.2725163779345, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 0, "true_x": 12.195807281049285, "true_y": 16.657084708010547, "length": 4.6, "width": 1.85, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": -7.699679644605452, "true_y": 3.0832281972941127, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": -5.286419607050522, "true_y": 2.4825680430503745, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": -3.3726471308415813, "true_y": 2.0031094619628775, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": -0.05159576968589258, "true_y": 1.4632983756859037, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": 3.4115826902226467, "true_y": 0.44361749372998094, "length": 5.74, "width": 2.3, "objects": [{"camera": "left_camera", "method": "ground_plane_monocular", "label": "truck", "conf": 0.8494191765785217, "x": -7.309539179272991, "y": -0.010045128081790021}]}
+{"seed": 2001, "vehicle": 1, "true_x": 5.355537098475214, "true_y": -0.028326329475754086, "length": 5.74, "width": 2.3, "objects": [{"camera": "left_camera", "method": "ground_plane_monocular", "label": "truck", "conf": 0.8200471997261047, "x": -4.676012697167937, "y": -0.0019220659456498077}]}
+{"seed": 2001, "vehicle": 1, "true_x": 7.7807444436057835, "true_y": -0.6414018183372108, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": -7.056297781316825, "true_y": 5.981974255819405, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": -4.633275417795506, "true_y": 5.4706529679742015, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": -2.7056221176885833, "true_y": 5.002924775531938, "length": 5.74, "width": 2.3, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "truck", "conf": 0.7669129967689514, "x": -1.5596950351887413, "y": 5.617860555648804}]}
+{"seed": 2001, "vehicle": 1, "true_x": 0.7109186779740875, "true_y": 5.864486580801013, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": 4.065999050075487, "true_y": 5.530260533658538, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": 6.011392876601951, "true_y": 6.079690772088906, "length": 5.74, "width": 2.3, "objects": [{"camera": "left_camera", "method": "ground_plane_monocular", "label": "truck", "conf": 0.6161117553710938, "x": -7.530157606721601, "y": -3.892939822328101}]}
+{"seed": 2001, "vehicle": 1, "true_x": 8.466866797802957, "true_y": 6.551540363793036, "length": 5.74, "width": 2.3, "objects": [{"camera": "left_camera", "method": "ground_plane_monocular", "label": "truck", "conf": 0.5349226593971252, "x": -9.151119530992359, "y": -4.434665042908942}]}
+{"seed": 2001, "vehicle": 1, "true_x": -6.671527853193802, "true_y": 13.432739007443178, "length": 5.74, "width": 2.3, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "truck", "conf": 0.642474889755249, "x": -6.40968463390356, "y": 15.280900955200195}]}
+{"seed": 2001, "vehicle": 1, "true_x": -4.216704981848856, "true_y": 13.88069883019665, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": -2.272668653792947, "true_y": 14.41649053286404, "length": 5.74, "width": 2.3, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "truck", "conf": 0.8478803634643555, "x": -2.180467879924676, "y": 11.469070434570312}]}
+{"seed": 2001, "vehicle": 1, "true_x": 1.1624425921409727, "true_y": 14.647453565395635, "length": 5.74, "width": 2.3, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "truck", "conf": 0.7748077511787415, "x": 0.6700753858714977, "y": 11.792512893676758}]}
+{"seed": 2001, "vehicle": 1, "true_x": 4.611707094853174, "true_y": 14.858735465363498, "length": 5.74, "width": 2.3, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "truck", "conf": 0.8930462002754211, "x": 3.9416658209911644, "y": 12.040874481201172}]}
+{"seed": 2001, "vehicle": 1, "true_x": 6.560209826549854, "true_y": 15.339132873712142, "length": 5.74, "width": 2.3, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "truck", "conf": 0.7271268963813782, "x": 4.852659989974795, "y": 12.672456741333008}]}
+{"seed": 2001, "vehicle": 1, "true_x": 9.028326268665994, "true_y": 15.714534333071052, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": -6.09097038704717, "true_y": 22.49046403602331, "length": 5.74, "width": 2.3, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "truck", "conf": 0.8073514699935913, "x": -5.537900104187615, "y": 19.39297866821289}]}
+{"seed": 2001, "vehicle": 1, "true_x": -3.6643065892074693, "true_y": 22.84005960882624, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": -1.7264705295545921, "true_y": 23.274786269072017, "length": 5.74, "width": 2.3, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "truck", "conf": 0.6703355312347412, "x": -1.798313969339877, "y": 20.516355514526367}]}
+{"seed": 2001, "vehicle": 1, "true_x": 1.7324342712939296, "true_y": 23.39854252310911, "length": 5.74, "width": 2.3, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "truck", "conf": 0.5467743873596191, "x": 1.3030074431419756, "y": 20.557687759399414}, {"camera": "front_left_camera", "method": "stereo_sgm", "label": "truck", "conf": 0.48820409178733826, "x": 2.3669576037579447, "y": 20.557687759399414}]}
+{"seed": 2001, "vehicle": 1, "true_x": 5.180808615780926, "true_y": 23.509292919851834, "length": 5.74, "width": 2.3, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "truck", "conf": 0.6724133491516113, "x": 4.611003646073756, "y": 20.59920310974121}]}
+{"seed": 2001, "vehicle": 1, "true_x": 7.125012993540075, "true_y": 23.88840463253064, "length": 5.74, "width": 2.3, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "truck", "conf": 0.48025277256965637, "x": 6.4960257563646415, "y": 21.24500846862793}]}
+{"seed": 2001, "vehicle": 1, "true_x": 9.591952672827839, "true_y": 24.162080318611366, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": -5.527880546626179, "true_y": 30.836403507946745, "length": 5.74, "width": 2.3, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "truck", "conf": 0.8601199388504028, "x": -5.244509576999495, "y": 27.980762481689453}]}
+{"seed": 2001, "vehicle": 1, "true_x": -3.1007276009919993, "true_y": 31.084018588179408, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": -1.1628084017401825, "true_y": 31.416916247805784, "length": 5.74, "width": 2.3, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "truck", "conf": 0.6936753988265991, "x": -1.259586723826322, "y": 28.30963134765625}]}
+{"seed": 2001, "vehicle": 1, "true_x": 2.2975354549711495, "true_y": 31.4383927375346, "length": 5.74, "width": 2.3, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "truck", "conf": 0.5390905737876892, "x": 1.9168335160644752, "y": 28.477209091186523}]}
+{"seed": 2001, "vehicle": 1, "true_x": 5.74450719712393, "true_y": 31.44770915063195, "length": 5.74, "width": 2.3, "objects": [{"camera": "front_left_camera", "method": "stereo_sgm", "label": "truck", "conf": 0.749670684337616, "x": 5.1598832237404375, "y": 28.39315414428711}]}
+{"seed": 2001, "vehicle": 1, "true_x": 7.688777335720158, "true_y": 31.725069953919427, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": 10.155834606721799, "true_y": 31.896911017287263, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": -4.963974748506635, "true_y": 38.46945247574789, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": -2.5368732793726325, "true_y": 38.615209941849955, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": -0.5989607625469002, "true_y": 38.846290935125246, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": 2.861448762507921, "true_y": 38.76594273867491, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": 6.308392070419782, "true_y": 38.673437909227545, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": 8.25265029039969, "true_y": 38.848991787030435, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": 10.719708588161623, "true_y": 38.9190176216867, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": -4.4000994584675315, "true_y": 45.38974088456014, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": -1.9729978479562664, "true_y": 45.43368134942545, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": -0.03508343348396181, "true_y": 45.56294500536814, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": 3.4253241254249476, "true_y": 45.38078021099607, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": 6.872268401554791, "true_y": 45.186460164040334, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": 8.816526638578964, "true_y": 45.26019512243977, "length": 5.74, "width": 2.3, "objects": []}
+{"seed": 2001, "vehicle": 1, "true_x": 11.283585663141261, "true_y": 45.22840384382733, "length": 5.74, "width": 2.3, "objects": []}
