@@ -1,0 +1,11 @@
+SENSOR VALIDATION on unseen scenes: seeds 3100-3139 (40 scenes, 1600 frames); weights fitted on seeds 2000-2041; nothing tuned on these frames
+weather | target c | mean est | std | bias | MAE | MAE after dead-zone | share of frames reading 0 after dead-zone
+clear:0.0  | 0.000 | 0.044 | 0.037 | +0.044 | 0.044 | 0.000 | 1.00
+fog:0.3    | 0.000 | 0.000 | 0.000 | +0.000 | 0.000 | 0.000 | 1.00
+fog:0.6    | 0.000 | 0.186 | 0.044 | +0.186 | 0.186 | 0.085 | 0.65
+fog:1.0    | 0.733 | 0.627 | 0.032 | -0.106 | 0.106 | 0.106 | 0.00
+rain:0.2   | 0.163 | 0.075 | 0.037 | -0.088 | 0.088 | 0.163 | 1.00
+rain:0.45  | 0.491 | 0.514 | 0.044 | +0.023 | 0.041 | 0.041 | 0.00
+rain:0.6   | 0.842 | 0.786 | 0.048 | -0.055 | 0.060 | 0.060 | 0.00
+rain:1.0   | 0.960 | 0.957 | 0.038 | -0.003 | 0.032 | 0.032 | 0.00
+overall MAE 0.070  corr 0.971

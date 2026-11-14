@@ -1,0 +1,107 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Architecture with Live Caution branch" id="arch_live_caution">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1950" pageHeight="920" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="&lt;b&gt;Architecture with the Live Caution branch&lt;/b&gt;&lt;br&gt;Orange = new in Live Caution. Dashed = training only or offline. OV-Split Camera = the same diagram without the orange branch (fusion 160D)." style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="20" y="10" width="1100" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- Sensor layer -->
+        <mxCell id="cont_sensor" value="&lt;b&gt;Sensor Layer&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;verticalAlign=top;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="20" y="170" width="190" height="330" as="geometry"/>
+        </mxCell>
+        <mxCell id="c1" value="Front-right RGB camera&lt;br&gt;1200×900, 60° FOV" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="30" y="200" width="170" height="50" as="geometry"/></mxCell>
+        <mxCell id="c2" value="Front-left RGB camera&lt;br&gt;1200×900, 60° FOV" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="30" y="259" width="170" height="50" as="geometry"/></mxCell>
+        <mxCell id="c3" value="Left camera&lt;br&gt;1200×900, 60° FOV" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="30" y="318" width="170" height="50" as="geometry"/></mxCell>
+        <mxCell id="c4" value="Right camera&lt;br&gt;1200×900, 60° FOV" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="30" y="377" width="170" height="50" as="geometry"/></mxCell>
+        <mxCell id="c5" value="Rear camera&lt;br&gt;1200×900, 60° FOV" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="30" y="436" width="170" height="50" as="geometry"/></mxCell>
+
+        <!-- Weather -->
+        <mxCell id="weather" value="&lt;b&gt;Controlled weather intervention&lt;/b&gt;&lt;br&gt;Synthetic fog/rain image corruption applied to all camera perception inputs.&lt;br&gt;Visual degradation only: no friction/dynamics change" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="250" y="250" width="190" height="150" as="geometry"/>
+        </mxCell>
+
+        <!-- Perception modules -->
+        <mxCell id="cont_perc" value="&lt;b&gt;Perception Modules&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;verticalAlign=top;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="500" y="130" width="200" height="300" as="geometry"/>
+        </mxCell>
+        <mxCell id="stereo" value="Stereo SGM&lt;br&gt;Z = f·B / d_px&lt;br&gt;depth map H×W" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5f5e3;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="510" y="160" width="180" height="70" as="geometry"/></mxCell>
+        <mxCell id="y_front" value="YOLOv8 front&lt;br&gt;detections (bboxes)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5f5e3;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="510" y="240" width="180" height="55" as="geometry"/></mxCell>
+        <mxCell id="y_lr" value="YOLOv8 left and right&lt;br&gt;detections (bboxes)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5f5e3;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="510" y="305" width="180" height="55" as="geometry"/></mxCell>
+        <mxCell id="y_rear" value="YOLOv8 rear&lt;br&gt;detections (bboxes)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5f5e3;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="510" y="370" width="180" height="50" as="geometry"/></mxCell>
+
+        <!-- HD map, BEV builder, scalar state -->
+        <mxCell id="hdmap" value="&lt;b&gt;HD map&lt;/b&gt;&lt;br&gt;Route waypoints&lt;br&gt;Lane boundaries" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="790" y="60" width="150" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="bev" value="&lt;b&gt;BEV grid builder&lt;/b&gt;&lt;br&gt;64×64 float32&lt;br&gt;0.0 free, 0.5 centreline,&lt;br&gt;0.8 boundary, 1.0 obstacle&lt;br&gt;ego at row 56, column 32&lt;br&gt;(camera-side geometry corrections inside the builder)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="770" y="200" width="190" height="170" as="geometry"/>
+        </mxCell>
+        <mxCell id="scalar" value="&lt;b&gt;Scalar state (6D)&lt;/b&gt;&lt;br&gt;[x, y, d, θ_err, κ_ahead, d_goal]&lt;br&gt;Source: HD map + GPS + IMU" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="770" y="410" width="190" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- Policy network -->
+        <mxCell id="cont_pol" value="&lt;b&gt;Policy network&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;verticalAlign=top;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="110" width="510" height="400" as="geometry"/>
+        </mxCell>
+        <mxCell id="cnn" value="&lt;b&gt;CNN branch (BEV)&lt;/b&gt;&lt;br&gt;Conv(5×5) → Conv(3×3) → Conv(3×3)&lt;br&gt;→ pooling → FC → 128D" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5f5e3;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="1030" y="150" width="190" height="130" as="geometry"/></mxCell>
+        <mxCell id="mlp" value="&lt;b&gt;MLP branch (scalar)&lt;/b&gt;&lt;br&gt;FC(6→64→32)&lt;br&gt;Output: 32D" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5f5e3;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="1030" y="300" width="190" height="90" as="geometry"/></mxCell>
+        <mxCell id="caut" value="&lt;b&gt;Caution branch (NEW)&lt;/b&gt;&lt;br&gt;FC(1→16) + ReLU&lt;br&gt;Output: 16D" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;strokeWidth=2;fontSize=10;" vertex="1" parent="1"><mxGeometry x="1030" y="410" width="190" height="80" as="geometry"/></mxCell>
+        <mxCell id="fusion" value="&lt;b&gt;Fusion concatenation&lt;/b&gt;&lt;br&gt;[128, 32, 16]&lt;br&gt;= 176D&lt;br&gt;(OV-Split: [128, 32] = 160D)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5f5e3;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="1250" y="250" width="120" height="150" as="geometry"/></mxCell>
+        <mxCell id="head" value="&lt;b&gt;Action head&lt;/b&gt;&lt;br&gt;FC(176→128→2)&lt;br&gt;ReLU + Tanh" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5f5e3;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="1390" y="250" width="115" height="150" as="geometry"/></mxCell>
+
+        <mxCell id="action" value="&lt;b&gt;Action output (2D)&lt;/b&gt;&lt;br&gt;[steering, longitudinal command]&lt;br&gt;[-1, 1]&lt;br&gt;positive: throttle&lt;br&gt;negative: brake" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1"><mxGeometry x="1560" y="250" width="150" height="150" as="geometry"/></mxCell>
+        <mxCell id="env" value="&lt;b&gt;MetaDrive environment&lt;/b&gt;&lt;br&gt;Next state s_{t+1}" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="1750" y="250" width="130" height="150" as="geometry"/></mxCell>
+
+        <!-- NEW: visibility branch -->
+        <mxCell id="est" value="&lt;b&gt;Image-based effective visibility estimator (NEW)&lt;/b&gt;&lt;br&gt;front-left weather-degraded frame → R̂_eff&lt;br&gt;supervised regression" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="250" y="600" width="190" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="rng" value="&lt;b&gt;Effective range&lt;/b&gt;&lt;br&gt;R̂_eff (metres)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="500" y="610" width="150" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="cau" value="&lt;b&gt;Caution scalar c&lt;/b&gt;&lt;br&gt;c = 1 − min(R̂, R_ref) / R_ref&lt;br&gt;(0 in clear weather)&lt;br&gt;same value to teacher and student" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="700" y="600" width="210" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="teach" value="&lt;b&gt;Visibility-conditioned teacher (training only, DAgger)&lt;/b&gt;&lt;br&gt;IDM + SafeTeacher collision layer + curve guard 4.0&lt;br&gt;visibility cap: v_vis = −b·t_r + √(b²t_r² + 2b(R − m)), R = (1 − c)·R_ref&lt;br&gt;target speed = min(v_IDM, v_vis)&lt;br&gt;reads exact simulator state to label actions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;strokeWidth=2;dashed=1;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="600" width="400" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="gt" value="Simulator ground truth&lt;br&gt;(offline only: builds the estimator's range labels from probe measurements; never a runtime input)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;dashed=1;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="220" y="760" width="250" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- Edges: original architecture -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="cont_sensor" target="weather"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="weather" target="cont_perc"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="cont_perc" target="bev"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="hdmap" target="bev"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="bev" target="cnn"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="scalar" target="mlp"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="cnn" target="fusion"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="mlp" target="fusion"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#d79b00;strokeWidth=2;" edge="1" parent="1" source="caut" target="fusion"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="fusion" target="head"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="head" target="action"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;" edge="1" parent="1" source="action" target="env"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e13" value="Environment feedback loop" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;dashed=1;fontSize=10;" edge="1" parent="1" source="env" target="cont_sensor">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1815" y="880"/><mxPoint x="115" y="880"/></Array></mxGeometry>
+        </mxCell>
+
+        <!-- Edges: new branch -->
+        <mxCell id="n1" value="weather-degraded image" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#d79b00;strokeWidth=2;fontSize=10;" edge="1" parent="1" source="weather" target="est"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="n2" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#d79b00;strokeWidth=2;" edge="1" parent="1" source="est" target="rng"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="n3" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#d79b00;strokeWidth=2;" edge="1" parent="1" source="rng" target="cau"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="n4" value="c (student input)" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#d79b00;strokeWidth=2;fontSize=10;" edge="1" parent="1" source="cau" target="caut">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="805" y="560"/><mxPoint x="1000" y="560"/><mxPoint x="1000" y="450"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="n5" value="same c (teacher input)" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;dashed=1;strokeColor=#d79b00;strokeWidth=2;fontSize=10;" edge="1" parent="1" source="cau" target="teach"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="n6" value="DAgger action labels (training only)" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;dashed=1;strokeColor=#d79b00;strokeWidth=2;fontSize=10;" edge="1" parent="1" source="teach" target="cont_pol"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="n7" value="range labels (offline)" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;dashed=1;strokeColor=#666666;fontSize=10;" edge="1" parent="1" source="gt" target="est"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
