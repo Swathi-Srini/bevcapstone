@@ -126,8 +126,7 @@ def fig_capture():
     # 3) BEV grids: simulator truth and the camera-derived grid per weather
     from matplotlib.colors import ListedColormap, BoundaryNorm
     bc = ListedColormap(["#ffffff", "#9ecae1", "#8c8c8c", "#d62728"]); bn = BoundaryNorm([-0.01, 0.25, 0.65, 0.9, 1.01], bc.N)
-    items = [("truth_bev.npy", "Simulator truth
-(reference)")] + [(f"{tag}_bev.npy", t) for tag, t in cols]
+    items = [("truth_bev.npy", "Simulator truth (reference)")] + [(f"{tag}_bev.npy", t) for tag, t in cols]
     fig, axs = plt.subplots(1, 6, figsize=(7.2, 1.7))
     for ax, (f, t) in zip(axs, items):
         g = np.load(cap / f); g = g[0] if g.ndim == 3 else g; ax.imshow(g, cmap=bc, norm=bn, interpolation="nearest"); ax.plot([32], [56], marker="^", color="#2ca02c", ms=4); ax.set_title(t, fontsize=7); ax.axis("off")
