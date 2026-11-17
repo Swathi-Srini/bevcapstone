@@ -1,0 +1,204 @@
+{
+ "schema": "retention_camera/2",
+ "created": "2026-11-15 20:05:36",
+ "purpose": "full_pass",
+ "sha256": {
+  "bev_state/camera_grid_builder.py": "d28c9da2e72d2e10c8fedb54455a8f36c61b42a5c904ad0200174aca0aa54d4a",
+  "bev_state/assembler.py": "2b0d2d2ce71d1def98bc669e3951514875d0d5142589f45af06b4bc371d5b618",
+  "bev_state/__init__.py": "1faa5370411b649e3aa293ddf766610de5fbace521d56ebc603cc5a2dc84209f",
+  "weights/yolov8n.pt": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+  "YOLO+weather module/manual_drive_stereo_yolo_weather.py": "61b99f14f71959e0a66ed9e814cb147839088b6afae6348e1b8b03ddc348d16c",
+  "YOLO+weather module/weather/weather_utils.py": "8fb40db469b8130fd647a77a86dea14d78013cc5236ac49218e53b0f726488a9",
+  "YOLO+weather module/yolo/yolo_utils.py": "7e3f6194ca17e1d0778680ee4c692cc4a53641c62295b2602f583699f8793184",
+  "bev_policy/runtime.py": "6070f8929045607349c0387822ae77852a48dd9b53e0390af1b6743800ddc20f",
+  "bev_rl/adaptive/visibility_sensor.py": "d2959c1e30e19199ef1d757f8879c310169fc7d864269241341651bafdf468a7",
+  "bev_rl/adaptive/pilot_camera_builder.py": "07c8d65e5f4b57b02dcce58bd70e1b0e5c7de970a9ff02c6ace0f00b8a6d67b1",
+  "bev_rl/adaptive/camera_dagger.py": "6d73f7ee060c9e9853af405bd4aec7dac792c0bceafec3f6308c228ab275feb8",
+  "bev_rl/adaptive/teacher_eval.py": "50564991774116c548e802e0fae31bf55636bdf354f1387a195ae2ed246e7dcf",
+  "bev_rl/adaptive/safe_teacher.py": "67d6f60da5b3d70b5eb9d48a6720b099e3492239f958b278dac53cd98decc42b",
+  "bev_rl/adaptive/e2e_pipeline.py": "b0a9eec1a64eb22095d91e143ed3db9fb214d377970c63f3c3c9bc17703e28df",
+  "bev_rl/adaptive/env.py": "f05b33f308bd52d66d03c01017dfcde3bdcb1c41f9e66cf386f8dcae8a54b4bc",
+  "bev_rl/adaptive/caution.py": "97634be4a0e766b19210894d20b74ff31fb1d98011a2c03ed212cc1ecb9ad5d7",
+  "bev_rl/adaptive/spec_bev.py": "5d486a39901038d413b8dcb1e7c3f5921ef586318bcc5f6193e917e7d879ba6c",
+  "bev_rl/adaptive/results/camera_dagger_final/FROZEN_MANIFEST.json": "5c100375e517279d43fe5fa3029e625e7085cd910b1307e26c4da9a43260f8ee",
+  "bev_rl/adaptive/runs/ov_split/best.pt": "33971e72f944ef91f2bee3bc488be25ad6a6ecac60b228f4f5fa1986df0de161",
+  "bev_rl/adaptive/runs/caut_a/best.pt": "c9a0b3649c247b61d2d6a80b78e6d3307361f8dd3754a1fd7c48c375b03d2aa6",
+  "bev_rl/adaptive/measure_retention_camera.py": "589957c6f1a754d8576bd7f902fc919f8a45d864294407914e5351c2acf4fe5c",
+  "bev_rl/adaptive/retention_camera_summary.py": "e67cd183b7aa1a2b845f647299418d729b202d75707d4c5723a16b1d47e1072a",
+  "bev_rl/adaptive/verify_stream_equivalence.py": "c830329263b2fa817bf90504431f913bc338b32a6acb2e5f11eb2b812374fbd5",
+  "bev_rl/adaptive/queue_retention_camera.sh": "cee905dbe82a5cae35e6f069b9b04a40d39bd3e27fb3a2f56df701230c8b15d6",
+  "bev_rl/adaptive/PREREGISTRATION_model_c_live_caution.md": "3eee62111734d8617471736b07cc82c87609ebbb05ab9edba015864bae6b60cd"
+ },
+ "versions": {
+  "python": "3.11.5",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "numpy": "2.4.6",
+  "opencv-python": "5.0.0.93",
+  "torch": "2.13.0+cpu",
+  "ultralytics": "8.4.115",
+  "metadrive-simulator": "0.4.3",
+  "panda3d": "1.10.13",
+  "psutil": "7.2.2",
+  "scipy": "1.17.1"
+ },
+ "host": {
+  "name": "Swathi-Laptop",
+  "cpu_logical": 16,
+  "ram_gb": 13.7,
+  "processor": "Intel64 Family 6 Model 186 Stepping 2, GenuineIntel"
+ },
+ "camera": {
+  "width": 1200,
+  "height": 900,
+  "fov_deg": 60,
+  "focal_px": 1039.2304845413264,
+  "baseline_m": 0.5,
+  "rigs": {
+   "front_left_camera": [
+    [
+     -0.25,
+     2.0,
+     1.4
+    ],
+    [
+     0,
+     -5,
+     0
+    ]
+   ],
+   "front_right_camera": [
+    [
+     0.25,
+     2.0,
+     1.4
+    ],
+    [
+     0,
+     -5,
+     0
+    ]
+   ],
+   "left_camera": [
+    [
+     0.0,
+     0.0,
+     1.4
+    ],
+    [
+     -90,
+     -5,
+     0
+    ]
+   ],
+   "right_camera": [
+    [
+     0.0,
+     0.0,
+     1.4
+    ],
+    [
+     90,
+     -5,
+     0
+    ]
+   ],
+   "rear_camera": [
+    [
+     0.0,
+     -2.0,
+     1.4
+    ],
+    [
+     180,
+     -5,
+     0
+    ]
+   ]
+  }
+ },
+ "stereo_sgbm": {
+  "BlockSize": 5,
+  "NumDisparities": 192,
+  "MinDisparity": 0,
+  "P1": 600,
+  "P2": 2400,
+  "Disp12MaxDiff": 1,
+  "PreFilterCap": 0,
+  "UniquenessRatio": 10,
+  "SpeckleWindowSize": 0,
+  "SpeckleRange": 0,
+  "Mode": 2
+ },
+ "yolo": {
+  "conf": 0.4,
+  "weights": "weights/yolov8n.pt",
+  "cameras": [
+   "front_left_camera",
+   "left_camera",
+   "right_camera",
+   "rear_camera"
+  ]
+ },
+ "weather": {
+  "conditions": [
+   "clear:0.0",
+   "fog:0.3",
+   "fog:0.45",
+   "fog:0.6",
+   "fog:0.8",
+   "fog:1.0",
+   "rain:0.2",
+   "rain:0.3",
+   "rain:0.45",
+   "rain:0.6",
+   "rain:1.0"
+  ],
+  "probes": [
+   "fog:0.45",
+   "rain:0.3"
+  ],
+  "noise_seed_formula": "20261114 + global_seed*100003 + t",
+  "t0_skipped": true,
+  "smoothing_start_t": 1
+ },
+ "teacher": {
+  "name": "safe_g4.0",
+  "density": 0.05,
+  "horizon": 600,
+  "action_noise": 0.0
+ },
+ "sampling": {
+  "frame_stride": 5,
+  "max_retention_frames": 40,
+  "max_vehicle_free_frames": 5,
+  "window": [
+   -10.0,
+   10.0,
+   -2.5,
+   17.5
+  ],
+  "match_radius_m": 3.0,
+  "stream_scope": "S-B-stride2",
+  "weather_stream_stride": 2
+ },
+ "partitions": {
+  "train": [
+   9000,
+   9029
+  ],
+  "reserve": [
+   9030,
+   9039
+  ],
+  "heldout": [
+   9040,
+   9049
+  ]
+ },
+ "group_size": 6,
+ "bootstrap": {
+  "resamples": 2000,
+  "seed": 20261115,
+  "min_valid_resamples": 1900
+ }
+}

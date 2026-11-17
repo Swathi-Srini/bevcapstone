@@ -1,0 +1,248 @@
+% =============================================================================
+% STRUCTURE-ONLY SKELETON (no prose). Fill every \placeholder{...}.
+% Figures / tables each have a named slot and a note saying which file goes there.
+% Data sources:
+%   20-seed results ......... bev_rl/adaptive/results/severity_eval_20seed_analysis/{summary.json,tables.md,table_main.tex,fig_speed_energy.png}
+%   estimator (held-out) .... bev_rl/adaptive/results/severity_estimator/eval_heldout.json
+%   teacher validation ...... bev_rl/adaptive/results/teacher_identity_caution/*.json
+%   DAgger training ......... bev_rl/adaptive/results/camera_dagger_severity/e2e_sevB/train_round*.json
+%   architecture diagram .... report/Architecture_Severity_Adaptive_System_vertical.drawio  (export to PDF/PNG -> figures/fig_architecture.pdf)
+% =============================================================================
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+% ---- placeholder helpers ----------------------------------------------------
+\newcommand{\placeholder}[1]{\textcolor{blue}{[#1]}}
+% figure slot: draws a framed box; replace the \fbox with \includegraphics when the file exists
+\newcommand{\figslot}[2]{\fbox{\parbox[c][#2][c]{0.94\columnwidth}{\centering\textcolor{blue}{FIGURE SLOT\\[1mm]#1}}}}
+\newcommand{\figslotwide}[2]{\fbox{\parbox[c][#2][c]{0.97\textwidth}{\centering\textcolor{blue}{FIGURE SLOT\\[1mm]#1}}}}
+
+\begin{document}
+
+\title{\placeholder{Title}}
+
+\author{\IEEEauthorblockN{\placeholder{Author 1, Author 2, Author 3, Author 4}}
+\IEEEauthorblockA{\placeholder{Department, University, City, Country}\\
+\placeholder{Guide / supervisor}}}
+
+\maketitle
+
+\begin{abstract}
+\placeholder{Abstract: problem, method, main results, main limitation (about 200 words)}
+\end{abstract}
+
+\begin{IEEEkeywords}
+\placeholder{keyword 1, keyword 2, keyword 3, keyword 4, keyword 5}
+\end{IEEEkeywords}
+
+%==============================================================================
+\section{Introduction}\label{sec:intro}
+\placeholder{Motivation: weather and camera-based driving}
+
+\placeholder{Research question and gap}
+
+\placeholder{Overview of the approach (refer to Fig.~\ref{fig:arch})}
+
+\textbf{Contributions.}
+\begin{enumerate}
+\item \placeholder{Contribution 1: image-based severity estimator}
+\item \placeholder{Contribution 2: camera-in-the-loop adaptive policy (indirect conditioning, plug-in design)}
+\item \placeholder{Contribution 3: traction-energy formulation for MetaDrive}
+\item \placeholder{Contribution 4: paired evaluation and honest report of the clear-weather failure}
+\end{enumerate}
+
+\placeholder{Paper organisation}
+
+%==============================================================================
+\section{Related Work}\label{sec:related}
+\subsection{Simulators and Learned Driving}
+\placeholder{MetaDrive; imitation learning; DAgger; privileged teacher approaches}
+\subsection{Perception and Driving under Adverse Weather}
+\placeholder{Weather effects on perception; synthetic fog and rain; robustness benchmarks}
+\subsection{Weather-Adaptive Driving Behaviour and Safe Speed}
+\placeholder{Visibility-based safe speed; car-following models; where this work differs}
+\subsection{Energy Modelling for Driving}
+\placeholder{Longitudinal-dynamics energy models; eco-driving}
+
+%==============================================================================
+\section{Problem Formulation}\label{sec:problem}
+\subsection{Environment and Observations}
+\placeholder{Episode, camera images, weather intervention W(I; k, l, xi); equation}
+\subsection{Caution Definition}
+\placeholder{Identity mapping c(k,l); equation; statement that it is a design assumption}
+\subsection{Policies and Models}
+\placeholder{Model A, Model B (training reference), Model C; plug-in definition}
+\subsection{Objective and Estimands}
+\placeholder{Objective with constraints; paired energy estimand; equations}
+
+%==============================================================================
+\section{Methodology}\label{sec:method}
+\subsection{Weather Intervention}
+\placeholder{Fog and rain image filters; shared stereo noise; level normalisation}
+\subsection{Image-Based Severity Estimation}
+\placeholder{Seven features; kind classifier; fog and rain regressors; equations}
+\subsubsection{Temporal Filter}
+\placeholder{EMA filtering of kind and level; equation; parameters}
+\subsubsection{Estimator Data and Protocol}
+\placeholder{Fitting data; probe levels; held-out routes; fixed hyper-parameters}
+\subsection{Caution-Aware Teacher}
+\placeholder{Target speed and following distance as functions of c; equation; teacher validation (see Table~\ref{tab:teacher})}
+\subsection{Driving Policy Network}
+\placeholder{BEV branch, scalar branch, caution branch, fusion, head}
+\subsection{Training by Camera-Pipeline DAgger}
+\placeholder{Rounds, beta schedule, loss, optimiser, weather mix, schedule deviations}
+
+%==============================================================================
+\section{System Architecture}\label{sec:arch}
+\placeholder{Walk through the system: driving path, severity path, policy, energy meter, training-only teacher}
+
+\begin{figure}[t]
+\centering
+\figslot{figures/fig\_architecture.png\\Vertical overall system diagram (tall)\\(source: Architecture\_Severity\_System\_v3\_vertical.drawio, page 1; pages 2--5 = appendix figures fig\_arch\_*.png)}{110mm}
+\caption{\placeholder{Overall system architecture}}
+\label{fig:arch}
+\end{figure}
+
+%==============================================================================
+\section{Experimental Setup and Evaluation Metrics}\label{sec:setup}
+\subsection{Models and Conditions}
+\placeholder{Models A and C; conditions; seeds; horizon; density; pairing and shared weather noise}
+\subsection{Metrics}
+\placeholder{Primary and secondary metrics; hard-braking definition}
+\subsection{Energy Formulation}\label{sec:energy}
+\placeholder{Per-step work equation; parameters; assumptions and omissions}
+\subsection{Statistical Analysis}
+\placeholder{Wilson intervals; McNemar; bootstrap; pilot-scale statement; sample-size remark}
+
+%==============================================================================
+\section{Results}\label{sec:results}
+\subsection{Severity Estimation on Held-Out Routes}
+\placeholder{Summary of accuracy, recall, MAE, clear false caution}
+
+\begin{table}[t]
+\centering
+\caption{\placeholder{Held-out estimator results per condition}}
+\label{tab:est}
+\fbox{\parbox[c][40mm][c]{0.94\columnwidth}{\centering\textcolor{blue}{TABLE SLOT\\Per-condition kind recall, mean $\hat c$, true $c$, bias, MAE\\source: eval\_heldout.json (11 rows; mark probe levels)}}}
+\end{table}
+
+\placeholder{Where the estimator is weak (light and medium rain, fog 0.8)}
+
+\subsection{Driving Results on 20 Paired Seeds}
+\placeholder{Overview of the paired evaluation}
+
+\begin{table*}[t]
+\centering
+\caption{\placeholder{Paired evaluation of Model A and Model C, 20 seeds per condition}}
+\label{tab:main}
+\fbox{\parbox[c][45mm][c]{0.97\textwidth}{\centering\textcolor{blue}{TABLE SLOT (two-column width)\\Success (Wilson CI), crash/off-road/timeout, route completion, speed, duration, hard-brake share, Wh/km (both-success), Wh/km (all)\\McNemar and paired-energy difference rows per condition\\source: table\_main.tex / tables.md}}}
+\end{table*}
+
+\begin{figure}[t]
+\centering
+\figslot{figures/fig\_speed\_energy\_v2.pdf\\Bars: mean speed, paired Wh/km, success rate per condition (A vs C)}{55mm}
+\caption{\placeholder{Speed, energy and success per condition}}
+\label{fig:bars}
+\end{figure}
+
+\subsubsection{Fog and Rain}
+\placeholder{Success, collisions, speed, energy, duration, hard braking}
+
+\begin{figure}[t]
+\centering
+\figslot{figures/fig\_speed\_time.pdf\\Speed and estimated caution versus time, A vs C, clear / fog / rain\\(from trace.speed and trace.c\_hat; already generated)}{55mm}
+\caption{\placeholder{Speed profiles in fog and rain}}
+\label{fig:traces}
+\end{figure}
+
+\subsection{Clear Weather: Failures of the Adaptive Policy}\label{sec:clearfail}
+\placeholder{17/20 against 20/20; 15-point gap; speed; inconclusive energy; McNemar}
+
+\begin{table}[t]
+\centering
+\caption{\placeholder{Model C failures in clear weather}}
+\label{tab:fail}
+\fbox{\parbox[c][35mm][c]{0.94\columnwidth}{\centering\textcolor{blue}{TABLE SLOT\\Seed, outcome, step, behaviour, Model A on the same seed\\seeds 5204 (stall), 5211 (stall), 5214 (collision)}}}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\figslot{OPTIONAL: speed and throttle traces of the three failures versus Model A on the same seeds}{55mm}
+\caption{\placeholder{Clear-weather failure episodes}}
+\label{fig:failtraces}
+\end{figure}
+
+\placeholder{What the failures are; estimated caution was 0.00; lead-gap log empty; open question}
+
+\subsection{Horizon Sensitivity}
+\placeholder{Success at 800 steps versus 1600 steps}
+
+\begin{table}[t]
+\centering
+\caption{\placeholder{Success at horizon 800 and 1600}}
+\label{tab:horizon}
+\fbox{\parbox[c][25mm][c]{0.94\columnwidth}{\centering\textcolor{blue}{TABLE SLOT\\Success of A and C at 800 and 1600 steps, three conditions}}}
+\end{table}
+
+\subsection{Extension to 40 Paired Seeds}
+\placeholder{Seeds 5220--5239; pooled and extension-only results reported separately; update Table~\ref{tab:main}}
+
+%==============================================================================
+\section{Discussion}\label{sec:discussion}
+\subsection{Summary of Findings}
+\placeholder{Adaptation under fog and rain; clear-weather failure unresolved}
+\subsection{Possible Causes of the Clear-Weather Failures}
+\placeholder{Hypotheses: DAgger on stopped states, training mix, others; marked as untested}
+\subsection{Limitations}\label{sec:limits}
+\begin{itemize}
+\item \placeholder{Synthetic image-space weather}
+\item \placeholder{Identity caution is an assumption}
+\item \placeholder{Pilot scale}
+\item \placeholder{Reduced training schedule}
+\item \placeholder{Only two severity extremes driven}
+\item \placeholder{Energy model scope}
+\item \placeholder{Time limit effect}
+\item \placeholder{Simulation only}
+\end{itemize}
+\subsection{Future Work}
+\placeholder{Diagnosis of stalls; larger evaluation; intermediate severities; real-weather data}
+
+%==============================================================================
+\section{Conclusion}\label{sec:conclusion}
+\placeholder{Conclusion}
+
+\section*{Reproducibility}
+\placeholder{Code location, snapshot and manifest, analysis script, change log}
+
+\section*{Acknowledgment}
+\placeholder{Acknowledgment}
+
+%==============================================================================
+% Appendix slots (optional)
+\appendices
+\section{Teacher Validation}\label{app:teacher}
+\begin{table}[h]
+\centering
+\caption{\placeholder{Teacher validation with true caution, 50 episodes per condition}}
+\label{tab:teacher}
+\fbox{\parbox[c][30mm][c]{0.94\columnwidth}{\centering\textcolor{blue}{TABLE SLOT\\Condition, success, mean speed, Wh/km\\source: teacher\_identity\_caution/*.json}}}
+\end{table}
+\section{DAgger Training Statistics}\label{app:dagger}
+\begin{table}[h]
+\centering
+\caption{\placeholder{DAgger rounds: episodes, cumulative samples, final loss}}
+\label{tab:dagger}
+\fbox{\parbox[c][25mm][c]{0.94\columnwidth}{\centering\textcolor{blue}{TABLE SLOT\\Rounds 0--3; samples 6078, 11616, 17541, 23532; losses\\source: train\_round*.json}}}
+\end{table}
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+\end{document}

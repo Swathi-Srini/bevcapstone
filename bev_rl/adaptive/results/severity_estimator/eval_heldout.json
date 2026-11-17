@@ -1,0 +1,171 @@
+{
+ "model": "bev_rl\\adaptive\\results\\severity_estimator\\estimator.json",
+ "n_frames": 8427,
+ "per_condition": {
+  "clear:0.0": {
+   "n": 1407,
+   "probe": false,
+   "kind_recall": 1.0,
+   "c_hat_mean": 0.0,
+   "c_true": 0.0,
+   "bias": 0.0,
+   "mae": 0.0
+  },
+  "fog:0.3": {
+   "n": 702,
+   "probe": false,
+   "kind_recall": 1.0,
+   "c_hat_mean": 0.272409267278308,
+   "c_true": 0.3,
+   "bias": -0.02759073272169199,
+   "mae": 0.03542899168536551
+  },
+  "fog:0.45": {
+   "n": 702,
+   "probe": true,
+   "kind_recall": 1.0,
+   "c_hat_mean": 0.45777004490696616,
+   "c_true": 0.45,
+   "bias": 0.007770044906966145,
+   "mae": 0.029670091934688562
+  },
+  "fog:0.6": {
+   "n": 702,
+   "probe": true,
+   "kind_recall": 1.0,
+   "c_hat_mean": 0.6412056615821259,
+   "c_true": 0.6,
+   "bias": 0.04120566158212591,
+   "mae": 0.045684682203904294
+  },
+  "fog:0.8": {
+   "n": 702,
+   "probe": false,
+   "kind_recall": 1.0,
+   "c_hat_mean": 0.8793674119592662,
+   "c_true": 0.8,
+   "bias": 0.07936741195926611,
+   "mae": 0.07937156012694169
+  },
+  "fog:1.0": {
+   "n": 702,
+   "probe": false,
+   "kind_recall": 1.0,
+   "c_hat_mean": 0.9670925642002317,
+   "c_true": 1.0,
+   "bias": -0.03290743579976829,
+   "mae": 0.032907435799768237
+  },
+  "rain:0.2": {
+   "n": 702,
+   "probe": false,
+   "kind_recall": 0.8105413105413105,
+   "c_hat_mean": 0.15740031983881833,
+   "c_true": 0.2,
+   "bias": -0.04259968016118168,
+   "mae": 0.047239804670927234
+  },
+  "rain:0.3": {
+   "n": 702,
+   "probe": true,
+   "kind_recall": 0.8831908831908832,
+   "c_hat_mean": 0.22306061801345475,
+   "c_true": 0.3,
+   "bias": -0.07693938198654524,
+   "mae": 0.07693938198654525
+  },
+  "rain:0.45": {
+   "n": 702,
+   "probe": true,
+   "kind_recall": 1.0,
+   "c_hat_mean": 0.35960065010379855,
+   "c_true": 0.45,
+   "bias": -0.09039934989620146,
+   "mae": 0.09039934989620144
+  },
+  "rain:0.6": {
+   "n": 702,
+   "probe": false,
+   "kind_recall": 1.0,
+   "c_hat_mean": 0.5849186878549849,
+   "c_true": 0.6,
+   "bias": -0.015081312145015069,
+   "mae": 0.022771484227209808
+  },
+  "rain:1.0": {
+   "n": 702,
+   "probe": false,
+   "kind_recall": 1.0,
+   "c_hat_mean": 0.9845760864463269,
+   "c_true": 1.0,
+   "bias": -0.015423913553673119,
+   "mae": 0.015423913553673325
+  }
+ },
+ "fog_mae_all": 0.04461255235013365,
+ "fog_mae_kind_correct": 0.04461255235013365,
+ "rain_mae_all": 0.050554786866911415,
+ "rain_mae_kind_correct": 0.0383148108961636,
+ "clear_false_caution_frame_rate": 0.0,
+ "clear_c_hat_mean": 0.0,
+ "kind_accuracy_nonprobe": 0.9763303078839651,
+ "kind_accuracy_probe": 0.9707977207977208,
+ "macro_recall_nonprobe": 0.97894903450459,
+ "filtered": {
+  "clear:0.0": {
+   "mae": 0.0,
+   "bias_after_first_quarter": 0.0,
+   "within_episode_sd": 0.0
+  },
+  "fog:0.3": {
+   "mae": 0.035917047376015816,
+   "bias_after_first_quarter": -0.018476010919531344,
+   "within_episode_sd": 0.03108721827484348
+  },
+  "fog:0.45": {
+   "mae": 0.029953414287529526,
+   "bias_after_first_quarter": 0.018568026573578755,
+   "within_episode_sd": 0.03276641667968975
+  },
+  "fog:0.6": {
+   "mae": 0.045103064920368086,
+   "bias_after_first_quarter": 0.053492259785423636,
+   "within_episode_sd": 0.034097823873919963
+  },
+  "fog:0.8": {
+   "mae": 0.0789772139251126,
+   "bias_after_first_quarter": 0.09250155915815861,
+   "within_episode_sd": 0.03380951624563531
+  },
+  "fog:1.0": {
+   "mae": 0.033221432018229406,
+   "bias_after_first_quarter": -0.020759626608566933,
+   "within_episode_sd": 0.030719328385662603
+  },
+  "rain:0.2": {
+   "mae": 0.04078961628134608,
+   "bias_after_first_quarter": -0.04805640746602685,
+   "within_episode_sd": 0.05463038635551524
+  },
+  "rain:0.3": {
+   "mae": 0.07343091068318187,
+   "bias_after_first_quarter": -0.08358405802146586,
+   "within_episode_sd": 0.05744870160080375
+  },
+  "rain:0.45": {
+   "mae": 0.0898446299335175,
+   "bias_after_first_quarter": -0.0931176585034736,
+   "within_episode_sd": 0.01607097504925244
+  },
+  "rain:0.6": {
+   "mae": 0.017943223473619544,
+   "bias_after_first_quarter": -0.018408449288332924,
+   "within_episode_sd": 0.017794367884309468
+  },
+  "rain:1.0": {
+   "mae": 0.015265906580183173,
+   "bias_after_first_quarter": -0.0177222772252994,
+   "within_episode_sd": 0.010935319716383307
+  }
+ }
+}
