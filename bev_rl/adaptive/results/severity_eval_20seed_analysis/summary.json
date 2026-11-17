@@ -1,0 +1,197 @@
+{
+ "label": "(20 paired seeds 5200-5219, pilot scale)",
+ "conditions": {
+  "clear:0.0": {
+   "n_pairs": 20,
+   "seeds": [
+    5200,
+    5219
+   ],
+   "success_A": 20,
+   "success_C": 17,
+   "success_A_ci": [
+    0.8388698745050667,
+    1.0
+   ],
+   "success_C_ci": [
+    0.6395767041130426,
+    0.9476322080405041
+   ],
+   "mcnemar_A_only": 3,
+   "mcnemar_C_only": 0,
+   "mcnemar_p": 0.25,
+   "outcomes_A": {
+    "success": 20,
+    "crash": 0,
+    "off_road": 0,
+    "timeout": 0
+   },
+   "outcomes_C": {
+    "success": 17,
+    "crash": 1,
+    "off_road": 0,
+    "timeout": 2
+   },
+   "unsafe_A": 0,
+   "unsafe_C": 1,
+   "route_completion_A": 0.9890860275580289,
+   "route_completion_C": 0.9062415069995243,
+   "mean_speed_A": 7.5794720218157865,
+   "mean_speed_C": 7.131804134053977,
+   "duration_s_A": 53.35,
+   "duration_s_C": 59.92,
+   "min_gap_A": 7.887360426757978,
+   "min_gap_C": 5.910023889031528,
+   "brake_share_A": 0.035438142222419214,
+   "brake_share_C": 0.017060559687015107,
+   "n_both_success": 17,
+   "whkm_A_both": 106.02534641866643,
+   "whkm_C_both": 97.00342768441713,
+   "whkm_diff_both": -9.021918734249287,
+   "whkm_diff_both_ci": [
+    -24.833609824923844,
+    5.164561312278138
+   ],
+   "whkm_pct_change_both": -8.509209390954577,
+   "whkm_A_all": 110.73730451149109,
+   "whkm_C_all": 109.76156590067792,
+   "energy_wh_A_all": 43.225713276576315,
+   "energy_wh_C_all": 36.30638649519127,
+   "c_hat_mean_C": 0.0,
+   "c_true": 0.0,
+   "clear_false_caution_rate_C": 0.0,
+   "horizon800": {
+    "success_A": 19,
+    "success_C": 17
+   }
+  },
+  "fog:1.0": {
+   "n_pairs": 20,
+   "seeds": [
+    5200,
+    5219
+   ],
+   "success_A": 20,
+   "success_C": 20,
+   "success_A_ci": [
+    0.8388698745050667,
+    1.0
+   ],
+   "success_C_ci": [
+    0.8388698745050667,
+    1.0
+   ],
+   "mcnemar_A_only": 0,
+   "mcnemar_C_only": 0,
+   "mcnemar_p": 1.0,
+   "outcomes_A": {
+    "success": 20,
+    "crash": 0,
+    "off_road": 0,
+    "timeout": 0
+   },
+   "outcomes_C": {
+    "success": 20,
+    "crash": 0,
+    "off_road": 0,
+    "timeout": 0
+   },
+   "unsafe_A": 0,
+   "unsafe_C": 0,
+   "route_completion_A": 0.9891087456861134,
+   "route_completion_C": 0.9886881290108219,
+   "mean_speed_A": 7.8199379701619,
+   "mean_speed_C": 5.567730950557022,
+   "duration_s_A": 50.769999999999996,
+   "duration_s_C": 71.19500000000002,
+   "min_gap_A": 4.244743247131652,
+   "min_gap_C": 9.503967508770943,
+   "brake_share_A": 0.027490560604276293,
+   "brake_share_C": 0.003116249966827611,
+   "n_both_success": 20,
+   "whkm_A_both": 106.78935571566274,
+   "whkm_C_both": 54.53059098422627,
+   "whkm_diff_both": -52.258764731436465,
+   "whkm_diff_both_ci": [
+    -65.53002325908001,
+    -41.11800400372718
+   ],
+   "whkm_pct_change_both": -48.936304916550505,
+   "whkm_A_all": 106.78935571566274,
+   "whkm_C_all": 54.53059098422627,
+   "energy_wh_A_all": 41.68493501040289,
+   "energy_wh_C_all": 21.293882508939078,
+   "c_hat_mean_C": 0.9570095822709597,
+   "c_true": 1.0,
+   "clear_false_caution_rate_C": null,
+   "horizon800": {
+    "success_A": 20,
+    "success_C": 15
+   }
+  },
+  "rain:1.0": {
+   "n_pairs": 20,
+   "seeds": [
+    5200,
+    5219
+   ],
+   "success_A": 20,
+   "success_C": 20,
+   "success_A_ci": [
+    0.8388698745050667,
+    1.0
+   ],
+   "success_C_ci": [
+    0.8388698745050667,
+    1.0
+   ],
+   "mcnemar_A_only": 0,
+   "mcnemar_C_only": 0,
+   "mcnemar_p": 1.0,
+   "outcomes_A": {
+    "success": 20,
+    "crash": 0,
+    "off_road": 0,
+    "timeout": 0
+   },
+   "outcomes_C": {
+    "success": 20,
+    "crash": 0,
+    "off_road": 0,
+    "timeout": 0
+   },
+   "unsafe_A": 0,
+   "unsafe_C": 0,
+   "route_completion_A": 0.9892057821068161,
+   "route_completion_C": 0.9884158070402519,
+   "mean_speed_A": 7.815231240068177,
+   "mean_speed_C": 5.497057289214424,
+   "duration_s_A": 50.790000000000006,
+   "duration_s_C": 72.12,
+   "min_gap_A": 6.51566223797016,
+   "min_gap_C": 10.402430140440288,
+   "brake_share_A": 0.027449241251869518,
+   "brake_share_C": 0.0022744523786871517,
+   "n_both_success": 20,
+   "whkm_A_both": 103.41003952485671,
+   "whkm_C_both": 53.0624234106618,
+   "whkm_diff_both": -50.34761611419491,
+   "whkm_diff_both_ci": [
+    -61.060242259801015,
+    -40.37545862878931
+   ],
+   "whkm_pct_change_both": -48.68735796401358,
+   "whkm_A_all": 103.41003952485671,
+   "whkm_C_all": 53.0624234106618,
+   "energy_wh_A_all": 40.42367494600269,
+   "energy_wh_C_all": 20.80707263700559,
+   "c_hat_mean_C": 0.9896978913142105,
+   "c_true": 1.0,
+   "clear_false_caution_rate_C": null,
+   "horizon800": {
+    "success_A": 20,
+    "success_C": 14
+   }
+  }
+ }
+}

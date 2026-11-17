@@ -1,0 +1,20 @@
+[
+ {
+  "round": 3,
+  "val_n": 20,
+  "val_success": 1.0,
+  "val_fail": 0.0
+ },
+ {
+  "round": 4,
+  "val_n": 20,
+  "val_success": 1.0,
+  "val_fail": 0.0
+ },
+ {
+  "round": 5,
+  "val_n": 20,
+  "val_success": 1.0,
+  "val_fail": 0.0
+ }
+]
