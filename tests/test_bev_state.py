@@ -19,6 +19,20 @@ class FakeLane:
         return np.array([longitudinal, lateral], dtype=np.float32)
 
 
+class StraightRouteLane:
+    width = 4.0
+    length = 50.0
+
+    def local_coordinates(self, position):
+        return float(position[1]), 0.0
+
+    def heading_theta_at(self, longitudinal):
+        return 0.0
+
+    def position(self, longitudinal, lateral):
+        return np.array([lateral, longitudinal], dtype=np.float32)
+
+
 class TestBEVStateAssembler(unittest.TestCase):
     def test_output_contract_with_direct_detections(self):
         assembler = BEVStateAssembler()
@@ -92,6 +106,19 @@ class TestBEVStateAssembler(unittest.TestCase):
         assembler = BEVStateAssembler(BEVStateConfig(camera_range_m=30.0))
         outside = assembler.ego_to_grid(100.0, 100.0)
         self.assertIsNone(outside)
+
+    def test_route_centerline_and_lane_boundaries_are_projected(self):
+        assembler = BEVStateAssembler()
+        env = SimpleNamespace(agent=SimpleNamespace(
+            lane=StraightRouteLane(),
+            position=np.array([0.0, 10.0], dtype=np.float32),
+            heading_theta=0.0,
+        ))
+        observation = assembler.assemble(
+            env=env, frames={}, detections_by_camera={}, info={}
+        )
+        self.assertTrue(np.any(observation.bev_grid == assembler.config.values.route))
+        self.assertTrue(np.any(observation.bev_grid == assembler.config.values.boundary))
 
 
 

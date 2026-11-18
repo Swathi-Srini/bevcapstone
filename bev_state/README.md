@@ -1,6 +1,6 @@
 # BEV state assembly
 
-This package owns the final state contract for the next RL/training layer. It
+This package owns the BEV/scalar observation contract used by BC and PPO. It
 does not train a model.
 
 ## Output contract
@@ -27,8 +27,8 @@ The BEV grid encoding is:
 ```text
 -1.0 unknown
  0.0 free visible space
- 0.5 route/lane feature, reserved for future route overlay
- 0.8 road-boundary feature, reserved for future boundary overlay
+ 0.5 current-lane route centerline
+ 0.8 current-lane left/right edges
  0.9 ego vehicle footprint
  1.0 detected occupied object footprint
 ```
@@ -91,4 +91,20 @@ input or reported as an autonomous-driving experiment.
 
 ## Controlled-visibility intervention
 
-`--visibility-range-m` is an opt-in, privileged controlled-visibility intervention. It makes BEV cells forward of the supplied ego-frame distance unknown (`-1.0`) and omits detected-object footprints whose centres are beyond that horizon. It is **not camera-inferred physical fog range**; omitting it preserves the original BEV.
+When an environment is supplied, the current lane center and its edges are
+projected from MetaDrive lane geometry into the ego-frame grid. This does not
+use traffic-agent ground truth. Only the current lane is drawn; route
+continuation through future junctions and a separate HD-map service are not
+implemented.
+
+`--visibility-range-m` is an opt-in, privileged controlled-visibility
+intervention. It makes BEV cells forward of the supplied ego-frame distance
+unknown (`-1.0`) and omits detected-object footprints whose centres are beyond
+that horizon. It is **not camera-inferred physical fog range**; omitting it
+preserves the default visibility mask.
+
+The BEV-policy collector/evaluator also pass a conservative horizon derived
+from their configured fog/rain intensity. This masks far cells as unknown so
+the policy can react to degraded visibility without adding a seventh scalar.
+It is a controlled model-derived intervention, not an online visibility
+estimate; evaluation reports the horizon used for each episode.

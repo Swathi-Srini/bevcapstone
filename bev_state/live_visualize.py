@@ -52,8 +52,8 @@ def colourise_bev(grid: np.ndarray, *, exact_ego_footprint: bool = False) -> np.
     image = np.zeros((*grid.shape, 3), dtype=np.uint8)
     image[np.isclose(grid, -1.0)] = (58, 58, 58)       # unknown: charcoal
     image[np.isclose(grid, 0.0)] = (20, 20, 35)        # visible free: navy-black
-    image[np.isclose(grid, 0.5)] = (0, 220, 255)       # route/lane: yellow (BGR)
-    image[np.isclose(grid, 0.8)] = (0, 145, 255)       # boundary: orange (when supplied)
+    image[np.isclose(grid, 0.5)] = (0, 220, 255)       # lane centerline: yellow (BGR)
+    image[np.isclose(grid, 0.8)] = (0, 145, 255)       # lane edges: orange
     image[np.isclose(grid, 0.9)] = (70, 235, 70) if exact_ego_footprint else (20, 20, 35)
     image[np.isclose(grid, 1.0)] = (45, 45, 235)       # occupied object: red
     cell_pixels = 8
@@ -97,7 +97,7 @@ def add_text_panel(bev_image: np.ndarray, state, weather: str, perception_weathe
         "BEV state integration test",
         f"weather={weather}; perception={'weathered' if perception_weather else 'clean'}",
         "grid: unknown charcoal | free navy | occupied red",
-        "route/lane yellow | boundary orange (when those BEV layers exist)",
+        "lane centerline yellow | lane edges orange",
         "display: 64x64 cells, enlarged 8x with nearest-neighbour only",
         "extent: x=-10..+10m; y=-2.5..+17.5m; 0.3125m/cell",
         f"visibility: {'default geometry' if visibility_range_m is None else f'{visibility_range_m:.1f}m privileged mask'}",
@@ -146,6 +146,7 @@ def main() -> int:
         mount_camera_rig,
     )
     from weather.weather_utils import apply_weather
+    from weather.weather_utils import weather_visibility_horizon
     from yolo.yolo_utils import ensure_yolo_model, run_yolo
     from metadrive import MetaDriveEnv
     from metadrive.component.sensors.rgb_camera import RGBCamera
@@ -193,6 +194,7 @@ def main() -> int:
     print("appears in a plausible position. Grey is unknown; black is camera-visible free space.")
 
     step = 0
+    weather_rng = np.random.default_rng(20261112)
     try:
         while args.max_steps == 0 or step < args.max_steps:
             key = cv2.waitKey(1) & 0xFF
@@ -204,21 +206,28 @@ def main() -> int:
             ], dtype=np.float32)
             _, _, terminated, truncated, info = env.step(action)
             raw_frames = {name: frame_from_sensor(env, name) for name in CAMERA_RIGS}
-            shown_frames = {name: apply_weather(frame, args.weather, args.level) for name, frame in raw_frames.items()}
+            shown_frames = {
+                name: apply_weather(frame, args.weather, args.level, rng=weather_rng)
+                for name, frame in raw_frames.items()
+                if name not in ("front_left_camera", "front_right_camera")
+            }
             shown_frames["front_left_camera"], shown_frames["front_right_camera"] = apply_synchronized_stereo_weather(
-                raw_frames["front_left_camera"], raw_frames["front_right_camera"], args.weather, args.level
+                raw_frames["front_left_camera"], raw_frames["front_right_camera"],
+                args.weather, args.level, rng=weather_rng,
             )
             perception_frames = shown_frames if args.perception_weather else raw_frames
             detections = {name: run_yolo(model, perception_frames[name]) for name in YOLO_CAMERAS}
+            weather_horizon = weather_visibility_horizon(args.weather, args.level) if args.perception_weather else None
+            active_horizon = args.visibility_range_m if args.visibility_range_m is not None else weather_horizon
             state = assembler.assemble(
                 env=env, info=info, detections_by_camera=detections, frames=perception_frames,
-                visibility_range_m=args.visibility_range_m,
+                visibility_range_m=active_horizon,
             )
             front = annotate_with_depth(shown_frames["front_left_camera"], detections["front_left_camera"], state.front_depth)
             front = cv2.resize(front, (683, 512), interpolation=cv2.INTER_AREA)
             dashboard = add_text_panel(
                 colourise_bev(state.bev_grid, exact_ego_footprint=args.exact_ego_footprint),
-                state, args.weather, args.perception_weather, args.visibility_range_m,
+                state, args.weather, args.perception_weather, active_horizon,
                 args.exact_ego_footprint,
             )
             top_row = np.hstack((front, dashboard))

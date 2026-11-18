@@ -29,16 +29,25 @@ the exact compatible focal length, `f = 600 / tan(30°) = 1039.23 px`, for
 metric depth. The nominal 1000 px figure is retained in code for traceability,
 but using it with a true 60° lens produces a systematic depth-scale bias.
 
-To apply synthetic image corruption to both display and perception:
+To apply the configurable fog model to both display and perception:
 
 ```powershell
 python .\manual_drive_stereo_yolo_weather.py --device cpu --weather fog --level 0.5 --perception-weather
 ```
 
-Without `--perception-weather`, weather affects only the display. When the
-flag is enabled, the front-left and front-right frames receive the same
-synthetic weather realization so SGBM retains stereo correspondence. Neither
-mode is a physical fog/rain or sensor-noise simulation.
+`--level` accepts intensities from 0 to 1. Fog uses a depth-dependent
+Beer-Lambert attenuation approximation. Rain adds atmospheric veiling,
+exposure streaks, wet-road darkening, and camera-lens droplets. Without
+`--perception-weather`, these effects change only the display. With it, the
+front-left/right pair receives matched stochastic effects so SGBM retains
+stereo correspondence.
+
+These are controlled camera-image effects, not MetaDrive native
+ray-traced/volumetric weather, measured precipitation, or sensor calibration.
+They do not change road friction or vehicle dynamics. For BEV policies, the
+policy evaluator/trainer also masks a conservative weather-derived forward
+horizon as unknown; that horizon is an experimental intervention, not
+camera-inferred visibility.
 
 ## Scope and limitations
 

@@ -7,6 +7,7 @@ the remaining streams are left, right, and rear monocular cameras.
 from __future__ import annotations
 
 import argparse
+import copy
 import csv
 import math
 import time
@@ -87,7 +88,8 @@ def mount_camera_rig(env) -> None:
 
 
 def apply_synchronized_stereo_weather(
-    left_bgr: np.ndarray, right_bgr: np.ndarray, weather: str, level: float
+    left_bgr: np.ndarray, right_bgr: np.ndarray, weather: str, level: float,
+    rng=None, depth_map_m: np.ndarray | None = None,
 ) -> tuple[np.ndarray, np.ndarray]:
     """Apply identical random weather to the rectified stereo pair.
 
@@ -95,29 +97,68 @@ def apply_synchronized_stereo_weather(
     independent random streaks/noise makes artificial features that do not
     correspond between cameras and corrupts SGBM disparity.
     """
-    random_state = np.random.get_state()
-    weathered_left = apply_weather(left_bgr, weather, level)
-    np.random.set_state(random_state)
-    weathered_right = apply_weather(right_bgr, weather, level)
+    if rng is None:
+        random_state = np.random.get_state()
+        weathered_left = apply_weather(left_bgr, weather, level, depth_map_m=depth_map_m)
+        np.random.set_state(random_state)
+        weathered_right = apply_weather(right_bgr, weather, level, depth_map_m=depth_map_m)
+    else:
+        random_state = copy.deepcopy(rng.bit_generator.state)
+        weathered_left = apply_weather(
+            left_bgr, weather, level, depth_map_m=depth_map_m, rng=rng
+        )
+        rng.bit_generator.state = random_state
+        weathered_right = apply_weather(
+            right_bgr, weather, level, depth_map_m=depth_map_m, rng=rng
+        )
     return weathered_left, weathered_right
 
 
-def front_stereo_depth(left_bgr: np.ndarray, right_bgr: np.ndarray, matcher: cv2.StereoSGBM) -> np.ndarray:
-    """Z = f * B / d_px, with calibrated f and B=0.5 m."""
+def front_stereo_depth(
+    left_bgr: np.ndarray,
+    right_bgr: np.ndarray,
+    matcher: cv2.StereoSGBM,
+    scale: float = 1.0,
+) -> np.ndarray:
+    """Z = f * B / d_px, optionally matching at reduced image resolution."""
+    if not 0.25 <= scale <= 1.0:
+        raise ValueError("Stereo scale must be between 0.25 and 1.0.")
     # The cameras are mounted parallel with identical intrinsics, so their
     # simulator images are already rectified. Do not inject random weather
     # separately into the pair before matching: unmatched rain streaks produce
     # false disparity everywhere.
-    disparity_raw = matcher.compute(cv2.cvtColor(left_bgr, cv2.COLOR_BGR2GRAY),
-                                    cv2.cvtColor(right_bgr, cv2.COLOR_BGR2GRAY))
+    original_height, original_width = left_bgr.shape[:2]
+    effective_scale = min(scale, left_bgr.shape[1] / right_bgr.shape[1])
+    if scale < 1.0:
+        width = max(16, int(round(original_width * scale)))
+        height = max(16, int(round(original_height * scale)))
+        left_match = cv2.resize(left_bgr, (width, height), interpolation=cv2.INTER_AREA)
+        right_match = cv2.resize(right_bgr, (width, height), interpolation=cv2.INTER_AREA)
+        num_disparities = max(16, int(round(matcher.getNumDisparities() * scale / 16.0)) * 16)
+        scaled_matcher = cv2.StereoSGBM_create(
+            minDisparity=matcher.getMinDisparity(), numDisparities=num_disparities,
+            blockSize=matcher.getBlockSize(), P1=matcher.getP1(), P2=matcher.getP2(),
+            disp12MaxDiff=matcher.getDisp12MaxDiff(), uniquenessRatio=matcher.getUniquenessRatio(),
+            speckleWindowSize=max(2, int(round(matcher.getSpeckleWindowSize() * scale * scale))),
+            speckleRange=matcher.getSpeckleRange(), preFilterCap=matcher.getPreFilterCap(),
+            mode=matcher.getMode(),
+        )
+    else:
+        left_match, right_match, scaled_matcher = left_bgr, right_bgr, matcher
+    disparity_raw = scaled_matcher.compute(cv2.cvtColor(left_match, cv2.COLOR_BGR2GRAY),
+                                           cv2.cvtColor(right_match, cv2.COLOR_BGR2GRAY))
     # Speckle removal is post-processing, not a change to the Table-5 SGBM
     # parameters. It removes isolated invalid matches from uniform road/sky.
-    cv2.filterSpeckles(disparity_raw, 0, 50, 2)
+    speckle_window = max(2, int(round(50 * scale * scale)))
+    speckle_range = matcher.getSpeckleRange() if hasattr(matcher, "getSpeckleRange") else 2
+    cv2.filterSpeckles(disparity_raw, 0, speckle_window, speckle_range)
     disparity = disparity_raw.astype(np.float32) / 16.0
     depth = np.zeros_like(disparity, dtype=np.float32)
     valid = disparity > 0.0
-    depth[valid] = (FOCAL_LENGTH_PX * STEREO_BASELINE_M) / disparity[valid]
+    depth[valid] = (FOCAL_LENGTH_PX * effective_scale * STEREO_BASELINE_M) / disparity[valid]
     depth[(depth < 1.0) | (depth > 30.0)] = 0.0
+    if scale < 1.0:
+        depth = cv2.resize(depth, (original_width, original_height), interpolation=cv2.INTER_NEAREST)
     return depth
 
 
@@ -185,7 +226,7 @@ def estimate_detection_position(camera: str, detection: dict, stereo_depth: np.n
 
 
 def annotate_with_depth(image: np.ndarray, detections: List[dict], depth: np.ndarray | None) -> np.ndarray:
-    """Draw compact YOLO labels. Stereo depth remains in the terminal/CSV log."""
+    """Draw YOLO labels and optional front-camera stereo depth estimates."""
     out = image.copy()
     for det in detections:
         x1 = int(np.clip(det["xmin"], 0, out.shape[1] - 1))
@@ -195,6 +236,9 @@ def annotate_with_depth(image: np.ndarray, detections: List[dict], depth: np.nda
         if x2 <= x1 or y2 <= y1:
             continue
         text = f"{det['label']} | conf {float(det['confidence']):.2f}"
+        if depth is not None:
+            depth_m = object_stereo_depth(det, depth)
+            text += f" | Z {depth_m:.1f}m" if depth_m is not None else " | Z --"
         cv2.rectangle(out, (x1, y1), (x2, y2), (0, 255, 0), 2)
         (text_w, text_h), baseline = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, .48, 1)
         label_y = max(text_h + baseline + 4, y1 - 4)
