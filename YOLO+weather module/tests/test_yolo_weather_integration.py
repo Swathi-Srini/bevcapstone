@@ -33,8 +33,14 @@ drive = load_module("manual_drive_stereo_yolo_weather_test", "manual_drive_stere
 benchmark = load_module("benchmark_weather_perception_test", "benchmark_weather_perception.py")
 ground_truth = load_module("ground_truth_stereo_benchmark_test", "ground_truth_stereo_benchmark.py")
 
-from weather.weather_utils import apply_weather, prepare_image
+from weather.weather_utils import (
+    apply_weather,
+    ground_plane_depth_prior,
+    prepare_image,
+    weather_visibility_horizon,
+)
 from yolo.yolo_utils import TRAFFIC_CLASS_NAMES, detections_from_results
+from bev_policy.perception import run_perception
 
 
 class FakeStereoMatcher:
@@ -198,6 +204,52 @@ class TestWeatherAndYoloUnit(unittest.TestCase):
         self.assertFalse(np.array_equal(fog, self.image))
         self.assertFalse(np.array_equal(rain, self.image))
 
+    def test_fog_uses_depth_and_user_controlled_intensity(self):
+        image = np.full((80, 120, 3), 100, dtype=np.uint8)
+        near = apply_weather(image, "fog", 0.6,
+                             depth_map_m=np.full((80, 120), 5.0, dtype=np.float32))
+        far = apply_weather(image, "fog", 0.6,
+                            depth_map_m=np.full((80, 120), 80.0, dtype=np.float32))
+        light = apply_weather(image, "fog", 0.2,
+                              depth_map_m=np.full((80, 120), 30.0, dtype=np.float32))
+        dense = apply_weather(image, "fog", 0.8,
+                              depth_map_m=np.full((80, 120), 30.0, dtype=np.float32))
+        self.assertGreater(float(far.mean()), float(near.mean()))
+        self.assertGreater(float(dense.mean()), float(light.mean()))
+
+    def test_ground_plane_prior_and_controlled_visibility_horizon(self):
+        depth = ground_plane_depth_prior((80, 120))
+        self.assertEqual(depth.shape, (80, 120))
+        self.assertGreater(float(depth[0, 0]), float(depth[-1, 0]))
+        self.assertGreater(weather_visibility_horizon("fog", 0.2),
+                           weather_visibility_horizon("fog", 0.8))
+        self.assertIsNone(weather_visibility_horizon("clear", 0.8))
+
+    def test_rain_effect_is_reproducible_without_global_rng(self):
+        image = np.full((80, 120, 3), 100, dtype=np.uint8)
+        first = apply_weather(image, "rain", 0.6, rng=np.random.default_rng(42))
+        second = apply_weather(image, "rain", 0.6, rng=np.random.default_rng(42))
+        self.assertTrue(np.array_equal(first, second))
+        self.assertFalse(np.array_equal(first, image))
+
+    def test_shared_perception_path_returns_weathered_frames_and_horizon(self):
+        frames = {
+            name: np.full((80, 120, 3), 100, dtype=np.uint8)
+            for name in drive.CAMERA_RIGS
+        }
+        model = SimpleNamespace(model_name="dummy_detector")
+        clear, _, clear_horizon = run_perception(
+            frames, model, "clear", 0.0, np.random.default_rng(42)
+        )
+        self.assertIsNone(clear_horizon)
+        self.assertTrue(np.array_equal(clear["front_left_camera"], frames["front_left_camera"]))
+        fog, detections, horizon = run_perception(
+            frames, model, "fog", 0.7, np.random.default_rng(42)
+        )
+        self.assertLess(horizon, 10.0)
+        self.assertTrue(np.array_equal(fog["front_left_camera"], fog["front_right_camera"]))
+        self.assertEqual(set(detections), set(drive.YOLO_CAMERAS))
+
     def test_stereo_pair_receives_synchronized_weather(self):
         left = np.full((80, 120, 3), 100, dtype=np.uint8)
         right = np.full((80, 120, 3), 150, dtype=np.uint8)
@@ -208,6 +260,10 @@ class TestWeatherAndYoloUnit(unittest.TestCase):
         same_left, same_right = drive.apply_synchronized_stereo_weather(left, left, "rain", 0.5)
         self.assertTrue(np.array_equal(same_left, same_right))
         self.assertEqual(weathered_left.shape, weathered_right.shape)
+        same_left, same_right = drive.apply_synchronized_stereo_weather(
+            left, left, "rain", 0.5, rng=np.random.default_rng(123)
+        )
+        self.assertTrue(np.array_equal(same_left, same_right))
 
     def test_prepare_image_normalizes_supported_sensor_formats(self):
         rgba_float = np.ones((4, 5, 4), dtype=np.float32)
@@ -237,6 +293,10 @@ class TestNonGuiIntegration(unittest.TestCase):
         self.assertEqual(annotated.shape, image.shape)
         self.assertFalse(np.array_equal(annotated, image))
         self.assertEqual(drive.depth_visualization(np.full((20, 30), 10.0, dtype=np.float32)).shape, (20, 30, 3))
+        annotated_with_depth = drive.annotate_with_depth(
+            image, detections, np.full((100, 120), 10.0, dtype=np.float32)
+        )
+        self.assertFalse(np.array_equal(annotated_with_depth, annotated))
 
     def test_saved_image_benchmark_writes_auditable_outputs(self):
         with tempfile.TemporaryDirectory() as directory:

@@ -7,9 +7,12 @@ import json
 from pathlib import Path
 
 import numpy as np
+import torch  # noqa: F401
 
 from bev_state import BEVStateAssembler
 from bev_policy.runtime import make_env
+from bev_policy.perception import run_perception
+from manual_drive_stereo_yolo_weather import CAMERA_RIGS, frame_from_sensor
 
 
 def main() -> int:
@@ -24,29 +27,57 @@ def main() -> int:
                         help="Discard an episode unless this many frames contain projected BEV objects.")
     parser.add_argument("--min-brake-frames", type=int, default=0,
                         help="Discard an episode unless this many expert longitudinal labels are braking.")
-    parser.add_argument("--output-dir", type=Path, default=Path("bev_policy/data/clear"))
+    parser.add_argument("--output-dir", type=Path, default=None)
     parser.add_argument("--render", action="store_true")
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu")
     parser.add_argument("--yolo-model", default="yolov8n.pt")
+    parser.add_argument("--inference-size", type=int, default=640)
+    parser.add_argument("--weather", choices=("clear", "fog", "rain"), default="clear")
+    parser.add_argument("--weather-level", type=float, default=0.5,
+                        help="Fixed level, or maximum level when --random-weather is enabled.")
+    parser.add_argument("--random-weather", action="store_true",
+                        help="Sample clear/fog/rain and a level in [0, --weather-level] per episode.")
     args = parser.parse_args()
-    if args.episodes < 1 or args.max_steps < 1 or not (10 <= args.seed and args.seed + args.episodes <= 10010):
-        raise ValueError("Use positive episode/step counts and MetaDrive seeds in [10, 10010).")
+    if args.episodes < 1 or args.max_steps < 1 or args.inference_size < 32 or not (10 <= args.seed and args.seed + args.episodes <= 10010):
+        raise ValueError("Use positive episode/step/inference sizes and MetaDrive seeds in [10, 10010).")
     if args.traffic_density < 0.0 or args.min_projected_object_frames < 0 or args.min_brake_frames < 0:
         raise ValueError("--traffic-density, --min-projected-object-frames, and --min-brake-frames must be non-negative.")
+    if not 0.0 <= args.weather_level <= 1.0:
+        raise ValueError("--weather-level must be between 0 and 1.")
+    output_dir = args.output_dir or Path(
+        "bev_policy/data/weather_randomized" if args.random_weather else "bev_policy/data/clear"
+    )
 
     from yolo.yolo_utils import ensure_yolo_model
     model = ensure_yolo_model(args.device, args.yolo_model, None, 0.4)
-    args.output_dir.mkdir(parents=True, exist_ok=True)
+    model.inference_size = args.inference_size
+    output_dir.mkdir(parents=True, exist_ok=True)
     env, assembler = make_env(use_idm=True, render=args.render, traffic_density=args.traffic_density, horizon=args.max_steps), BEVStateAssembler()
     print("IDM is collecting clear-condition demonstration labels. The ego vehicle drives automatically.")
     try:
         for index in range(args.episodes):
             seed = args.seed + index
             _, info = env.reset(seed=seed)
+            rng = np.random.default_rng(seed)
+            if args.random_weather:
+                weather = str(rng.choice(("clear", "fog", "rain")))
+                weather_level = float(rng.uniform(0.0, args.weather_level))
+            else:
+                weather, weather_level = args.weather, args.weather_level
             bevs, states, actions, final_info = [], [], [], dict(info)
             projected_object_frames, max_projected_objects, brake_frames = 0, 0, 0
             for _ in range(args.max_steps):
-                observation = assembler.assemble(env=env, yolo_model=model, info=info)
+                frames = {name: frame_from_sensor(env, name) for name in CAMERA_RIGS}
+                conditioned, detections, visibility, front_depth = run_perception(
+                    frames, model, weather, weather_level, rng,
+                    stereo_matcher=assembler.matcher,
+                    return_depth=True,
+                )
+                observation = assembler.assemble(
+                    env=env, info=info, detections_by_camera=detections,
+                    frames=conditioned, visibility_range_m=visibility,
+                    front_depth_map=front_depth,
+                )
                 object_count = len(observation.objects)
                 projected_object_frames += int(object_count > 0)
                 max_projected_objects = max(max_projected_objects, object_count)
@@ -71,15 +102,16 @@ def main() -> int:
                     f"required_brake_frames={args.min_brake_frames}"
                 )
                 continue
-            output = args.output_dir / f"seed_{seed:05d}.npz"
+            output = output_dir / f"seed_{seed:05d}.npz"
             np.savez_compressed(output, bev=np.stack(bevs), scalar=np.stack(states), action=np.stack(actions),
                                 metadata_json=np.asarray(json.dumps({"seed": seed, "expert": "MetaDrive_IDMPolicy",
                                     "traffic_density": args.traffic_density,
+                                    "weather": weather, "weather_level": weather_level,
                                     "projected_object_frames": projected_object_frames,
                                     "max_projected_objects": max_projected_objects,
                                     "brake_frames": brake_frames,
                                     "termination": {key: bool(final_info.get(key, False)) for key in ("arrive_dest", "crash_vehicle", "out_of_road", "max_step")} })))
-            print(f"saved {output} ({len(actions)} aligned samples; "
+            print(f"saved {output} ({len(actions)} aligned samples; weather={weather}({weather_level:.2f}); "
                   f"projected-object frames={projected_object_frames}; brake frames={brake_frames})")
     finally:
         env.close()

@@ -1,0 +1,41 @@
+{
+  "algorithm": "PPO",
+  "initial_bc_checkpoint": "bev_policy\\checkpoints\\bc_sparse_traffic_5eps.pt",
+  "scalar_mean": [
+    8.022604942321777,
+    0.4872875213623047,
+    -0.0028039829339832067,
+    0.0027596927247941494,
+    -0.002522876253351569,
+    182.9406280517578
+  ],
+  "scalar_std": [
+    1.1713136434555054,
+    0.2906472980976105,
+    0.18016792833805084,
+    0.03052784688770771,
+    0.015796232968568802,
+    112.83805847167969
+  ],
+  "seed": 2026,
+  "timesteps": 512,
+  "max_steps": 300,
+  "learning_rate": 1e-05,
+  "n_epochs": 2,
+  "target_kl": 0.005,
+  "bc_loss_coef": 5.0,
+  "bc_anchor": "Frozen BC policy action-matching MSE added to PPO actor loss.",
+  "traffic_density": 0.05,
+  "network": {
+    "bev_cnn": "Conv(1,32,5x5) -> Conv(32,64,3x3) -> Conv(64,96,3x3) -> pool -> FC(96,128)",
+    "scalar_mlp": "FC(6,64) -> FC(64,32)",
+    "fusion": "128 BEV + 32 scalar = 160",
+    "actor": "FC(160,128) -> FC(128,2) -> tanh; PPO gSDE exploration",
+    "critic": "FC(160,128) -> FC(128,1)"
+  },
+  "action": "[steering, longitudinal throttle/brake], each in [-1,1]",
+  "weather": "clear",
+  "weather_level_max": 0.0,
+  "random_weather": false,
+  "weather_model": "Depth-dependent camera-weather approximation; vehicle dynamics and road friction unchanged."
+}

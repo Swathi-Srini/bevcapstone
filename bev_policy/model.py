@@ -9,21 +9,34 @@ from torch import nn
 class BEVScalarPolicy(nn.Module):
     """Return MetaDrive ``[steering, throttle/brake]`` actions in [-1, 1]."""
 
-    def __init__(self, in_channels: int = 1, scalar_dim: int = 6, weather_dim: int = 0) -> None:
+    def __init__(
+        self,
+        in_channels: int = 1,
+        scalar_dim: int = 6,
+        weather_dim: int = 0,
+        bev_pool_size: int = 1,
+    ) -> None:
         super().__init__()
+        if bev_pool_size < 1:
+            raise ValueError("bev_pool_size must be positive.")
         self.in_channels = in_channels
         self.scalar_dim = scalar_dim
         self.weather_dim = weather_dim
+        self.bev_pool_size = bev_pool_size
         self.bev_encoder = nn.Sequential(
             nn.Conv2d(in_channels, 32, 5, 2, 2), nn.ReLU(),
             nn.Conv2d(32, 64, 3, 2, 1), nn.ReLU(),
             nn.Conv2d(64, 96, 3, 2, 1), nn.ReLU(),
-            nn.AdaptiveAvgPool2d((1, 1)), nn.Flatten(), nn.Linear(96, 128), nn.ReLU(),
+            nn.AdaptiveAvgPool2d((bev_pool_size, bev_pool_size)), nn.Flatten(),
+            nn.Linear(96 * bev_pool_size * bev_pool_size, 128), nn.ReLU(),
         )
         self.scalar_encoder = nn.Sequential(nn.Linear(scalar_dim, 64), nn.ReLU(), nn.Linear(64, 32), nn.ReLU())
         # Optional weather branch: explicit [one-hot(clear, fog, rain), intensity] -> 16 (supplied, not detected).
         self.weather_encoder = (nn.Sequential(nn.Linear(weather_dim, 16), nn.ReLU()) if weather_dim else None)
-        self.action_head = nn.Sequential(nn.Linear(160 + (16 if weather_dim else 0), 128), nn.ReLU(), nn.Linear(128, 2), nn.Tanh())
+        self.action_head = nn.Sequential(
+            nn.Linear(160 + (16 if weather_dim else 0), 128),
+            nn.ReLU(), nn.Linear(128, 2), nn.Tanh(),
+        )
 
     def forward(self, bev: torch.Tensor, scalar: torch.Tensor, weather: torch.Tensor | None = None) -> torch.Tensor:
         if bev.ndim != 4 or bev.shape[1] != self.in_channels or bev.shape[-2:] != (64, 64):

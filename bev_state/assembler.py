@@ -12,6 +12,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
+import cv2
 import numpy as np
 
 
@@ -42,6 +43,7 @@ class BEVValues:
     unknown: float = -1.0
     free: float = 0.0
     route: float = 0.5
+    boundary: float = 0.8
     occupied: float = 1.0
     ego: float = 0.9
 
@@ -123,6 +125,7 @@ class BEVStateAssembler:
         detections_by_camera: Mapping[str, Sequence[Mapping[str, Any]]] | None = None,
         frames: Mapping[str, np.ndarray] | None = None,
         visibility_range_m: float | None = None,
+        front_depth_map: np.ndarray | None = None,
     ) -> StateObservation:
         """Return a policy-ready observation.
 
@@ -131,13 +134,14 @@ class BEVStateAssembler:
         """
 
         live_frames = dict(frames) if frames is not None else None
-        front_depth = None
+        front_depth = front_depth_map
 
         if env is not None and live_frames is None:
             self.mount_if_needed(env)
             live_frames = {name: frame_from_sensor(env, name) for name in CAMERA_RIGS}
 
-        if live_frames is not None and {"front_left_camera", "front_right_camera"} <= set(live_frames):
+        if (front_depth is None and live_frames is not None
+                and {"front_left_camera", "front_right_camera"} <= set(live_frames)):
             front_depth = front_stereo_depth(
                 live_frames["front_left_camera"],
                 live_frames["front_right_camera"],
@@ -153,7 +157,7 @@ class BEVStateAssembler:
                 }
 
         objects = self.objects_from_detections(detections_by_camera, front_depth)
-        bev_grid = self.build_bev_grid(objects, visibility_range_m=visibility_range_m)
+        bev_grid = self.build_bev_grid(objects, visibility_range_m=visibility_range_m, env=env)
         scalar_state = self.extract_scalar_state(env, info)
 
         return StateObservation(
@@ -226,6 +230,7 @@ class BEVStateAssembler:
         self,
         objects: Sequence[ObjectFootprint],
         visibility_range_m: float | None = None,
+        env: Any | None = None,
     ) -> np.ndarray:
         """Build a grid, optionally masking the forward observable horizon.
 
@@ -239,6 +244,8 @@ class BEVStateAssembler:
         visibility_range_m = self._validate_visibility_range(visibility_range_m)
         grid = np.full((cfg.grid_size, cfg.grid_size), cfg.values.unknown, dtype=np.float32)
         self._mark_visible_free_space(grid)
+        if env is not None:
+            self._draw_lane_geometry(grid, env, visibility_range_m)
 
         for obj in objects:
             if visibility_range_m is not None and obj.y_forward_m > visibility_range_m:
@@ -256,6 +263,84 @@ class BEVStateAssembler:
         if visibility_range_m is not None:
             self._mask_beyond_visibility_range(grid, visibility_range_m)
         return grid
+
+    def _draw_lane_geometry(
+        self,
+        grid: np.ndarray,
+        env: Any,
+        visibility_range_m: float | None,
+    ) -> None:
+        """Project the current route lane center and edges into ego-frame BEV."""
+
+        agent = getattr(env, "agent", None)
+        lane = getattr(agent, "lane", None)
+        position = getattr(agent, "position", None)
+        if agent is None or lane is None or position is None:
+            return
+        try:
+            longitudinal, _ = lane.local_coordinates(position)
+            longitudinal = float(longitudinal)
+            lane_length = float(getattr(lane, "length", longitudinal + self.config.forward_range_m))
+            heading = float(getattr(agent, "heading_theta", 0.0))
+            ego_xy = np.asarray(position, dtype=np.float64).reshape(-1)[:2]
+        except (AttributeError, TypeError, ValueError):
+            return
+        if ego_xy.size != 2 or not np.isfinite(ego_xy).all():
+            return
+
+        start = max(0.0, longitudinal - self.config.rear_range_m)
+        horizon = self.config.forward_range_m
+        if visibility_range_m is not None:
+            horizon = min(horizon, visibility_range_m)
+        end = min(lane_length, longitudinal + horizon)
+        if end <= start:
+            return
+
+        width_at = getattr(lane, "width_at", None)
+        lane_width = getattr(lane, "width", 3.5)
+        samples = np.arange(start, end + self.config.metres_per_cell / 2.0,
+                            self.config.metres_per_cell / 2.0)
+        previous: dict[str, tuple[int, int]] = {}
+        for sample in samples:
+            try:
+                width = width_at(float(sample)) if callable(width_at) else lane_width
+                width = float(width() if callable(width) else width)
+                center_world = np.asarray(lane.position(float(sample), 0.0), dtype=np.float64).reshape(-1)[:2]
+                left_world = np.asarray(lane.position(float(sample), width / 2.0), dtype=np.float64).reshape(-1)[:2]
+                right_world = np.asarray(lane.position(float(sample), -width / 2.0), dtype=np.float64).reshape(-1)[:2]
+            except (AttributeError, TypeError, ValueError):
+                break
+            if (not math.isfinite(width) or width <= 0.0
+                    or not np.isfinite(center_world).all()
+                    or not np.isfinite(left_world).all()
+                    or not np.isfinite(right_world).all()):
+                break
+
+            points = {
+                "center": center_world,
+                "left": left_world,
+                "right": right_world,
+            }
+            values = {
+                "center": self.config.values.route,
+                "left": self.config.values.boundary,
+                "right": self.config.values.boundary,
+            }
+            for name, world_xy in points.items():
+                delta = world_xy - ego_xy
+                x_right = delta[0] * math.cos(heading) - delta[1] * math.sin(heading)
+                y_forward = delta[0] * math.sin(heading) + delta[1] * math.cos(heading)
+                point = self.ego_to_grid(float(x_right), float(y_forward))
+                if point is None:
+                    previous.pop(name, None)
+                    continue
+                row, col = point
+                if name in previous:
+                    prior_row, prior_col = previous[name]
+                    cv2.line(grid, (prior_col, prior_row), (col, row), float(values[name]), 1)
+                else:
+                    grid[row, col] = values[name]
+                previous[name] = point
 
     def ego_to_grid(self, x_right_m: float, y_forward_m: float) -> tuple[int, int] | None:
         """Convert ego-frame metres to integer (row, col), or None if outside."""

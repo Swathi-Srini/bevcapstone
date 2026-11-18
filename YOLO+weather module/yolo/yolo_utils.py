@@ -568,6 +568,22 @@ def run_yolo(model: Any, image: np.ndarray) -> List[Dict[str, Any]]:
     return detections_from_results(results, model)
 
 
+def run_yolo_batch(model: Any, images: list[np.ndarray]) -> List[List[Dict[str, Any]]]:
+    """Run the same detector once over several camera views in batch order."""
+    if not images:
+        return []
+    if hasattr(model, "model_name") and model.model_name == "ultralytics_yolo":
+        results = model.predict(
+            source=images,
+            conf=float(model.confidence_threshold),
+            imgsz=int(getattr(model, "inference_size", 640)),
+            device=model.inference_device,
+            verbose=False,
+        )
+        return [detections_from_results(result, model) for result in results]
+    return [run_yolo(model, image) for image in images]
+
+
 def annotate_image(image: np.ndarray, detections: List[Dict[str, Any]]) -> np.ndarray:
     annotated = image.copy()
     h, w = annotated.shape[:2]
