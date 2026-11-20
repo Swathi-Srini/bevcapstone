@@ -1,3 +1,5 @@
+
+from bev_rl.energy import wh_per_km_from_totals
 """Evaluation under CALIBRATED perception degradation (degraded_env.py), FRESH seeds, paired across arms. One harness for every arm.
 
 Arms (checkpoints under bev_rl/adaptive/runs unless noted):
@@ -28,7 +30,7 @@ def wname(w): return f"{w[0]}_{w[1]}"
 
 
 def row(s, i):
-    return {"seed": s, "outcome": i["outcome"], "speed": float(i["mean_speed"]), "wh_per_km": float(i["energy_wh"] / max(i["distance_m"] / 1000.0, 1e-3)),
+    return {"seed": s, "outcome": i["outcome"], "speed": float(i["mean_speed"]), "wh_per_km": float(wh_per_km_from_totals(i["energy_wh"], i["distance_m"])),
             "route": float(i["route_completion"]), "min_gap_m": float(i.get("min_gap_m", 30.0)), "steps": int(i["steps"])}
 
 

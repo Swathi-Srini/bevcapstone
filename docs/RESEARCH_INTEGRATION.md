@@ -41,9 +41,10 @@ These tracks must not be pooled into one success or energy table. The Phase 3
 policy uses the frozen `CameraGridBuilder` path and an image-estimated caution
 input. The PPO pilot uses `BEVDrivingEnv`, a BC action anchor, a short training
 run, and a separate reward. Training steps, BEV construction, policy, scenario
-contracts, and outcomes differ. The PPO table's Wh/km values are a post-hoc
-flat-road traction-work proxy; the safety-shaped PPO checkpoint did not use an
-energy reward. Synthetic weather changes camera images and visibility masking,
+contracts, and outcomes differ. The published PPO table's Wh/km values came
+from the earlier 1800 kg point-force proxy and are historical until the
+trace-based canonical recalculation is run; the safety-shaped PPO checkpoint
+did not use an energy reward. Synthetic weather changes camera images and visibility masking,
 not road friction or vehicle dynamics. The PPO weather module also supplies a
 condition-derived visibility horizon to BEV construction. Therefore that study
 does not demonstrate that PPO inferred weather severity from pixels.

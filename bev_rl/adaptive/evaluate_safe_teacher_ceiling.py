@@ -4,6 +4,8 @@
 import argparse, json
 from pathlib import Path
 import numpy as np
+from bev_rl.energy import wh_per_km_from_totals
+
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--n", type=int, default=20); ap.add_argument("--seed0", type=int, default=3100)
@@ -23,7 +25,7 @@ def main():
             while True:
                 o, r, te, tr, info = env.step(pol.act(env))
                 if te or tr: break
-            rows.append({"seed": s, "outcome": info["outcome"], "speed": info["mean_speed"], "route": info["route_completion"], "wh_km": info["energy_wh"] / max(info["distance_m"] / 1000, 1e-3)})
+            rows.append({"seed": s, "outcome": info["outcome"], "speed": info["mean_speed"], "route": info["route_completion"], "wh_km": wh_per_km_from_totals(info["energy_wh"], info["distance_m"])})
             print(name, rows[-1], flush=True)
         oc = [r["outcome"] for r in rows]
         out[name] = {"n": len(rows), **{k: oc.count(k) / len(rows) for k in ("success", "crash", "off_road", "timeout")},

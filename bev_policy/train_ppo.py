@@ -110,7 +110,7 @@ def main() -> int:
         "collision_penalty": args.collision_penalty,
         "energy_reward_weight": args.energy_reward_weight,
         "adaptive_reward": "BEV-only nearest front obstacle distance plus synthetic visibility horizon define a target speed; penalize overspeed squared. No NPC positions are used.",
-        "energy_reward": "Physics-inspired positive tractive work per step from speed/acceleration; flat road, 1800 kg, Cd 0.23, A 2.22 m^2, rho 1.225 kg/m^3, Crr 0.01, dt 0.1s, no regeneration or grade. This is a simulator proxy, not real battery energy.",
+        "energy_reward": "Canonical bev_rl.energy.step_work_j per step using live MetaDrive vehicle mass and configured decision dt; flat road, Cd 0.23, A 2.22 m^2, rho 1.225 kg/m^3, Crr 0.01, negative work clipped per step, no regeneration. Reward proxy is mechanical traction work, not battery energy.",
         "bc_anchor": "Frozen BC policy action-matching MSE added to PPO actor loss.",
         "traffic_density": args.traffic_density,
         "confidence_threshold": args.confidence_threshold,

@@ -1,3 +1,5 @@
+
+from bev_rl.energy import wh_per_km_from_totals
 """Scalar-state ablation: how does driving change when parts of the 6-D scalar state are removed?
 
 Zero traffic => the GitHub BEV (1 channel: unknown/free/ego/detected-vehicle cells, no lane or road) is a CONSTANT grid
@@ -89,7 +91,7 @@ def run(seeds_train=(0, 1, 2), eval_seeds=range(1000, 1010)):
                 dist = i["distance_m"]
                 rows.append({"variant": name, "train_seed": ts, "eval_seed": es, "outcome": i["outcome"], "rc": i["route_completion"],
                              "mean_abs_lat": i["mean_abs_lat"], "max_abs_lat": i["max_abs_lat"], "mean_speed": i["mean_speed"],
-                             "wh_per_km": i["energy_wh"] / (dist / 1000) if dist > 50 else float("nan"),
+                             "wh_per_km": wh_per_km_from_totals(i["energy_wh"], dist) if dist > 50 else float("nan"),
                              "steer_rate_rms": float(np.sqrt(np.mean(np.diff(steer) ** 2))) if len(steer) > 1 else 0.0,
                              "steps": i["steps"], "train_mse": mse})
             print(name, "train_seed", ts, "done", flush=True)

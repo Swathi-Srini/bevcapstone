@@ -1,3 +1,5 @@
+
+from bev_rl.energy import wh_per_km_from_totals
 """Final large-n evaluation on a FRESH seed block (default 5000-5199; never used for training, validation or checkpoint selection).
 Clear weather, traffic density 0.05, horizon 800, identical seeds for every arm (needed for paired McNemar / bootstrap).
 Per episode: outcome, mean speed, Wh/km, route completion. Resumable: an arm whose results/final_200seed/<arm>.json exists is skipped.
@@ -14,7 +16,7 @@ ALL = ["ctrl_nocaut", "base_ovsplit", "repo_bc_sparse", "repo_bc_clear", "stock_
 
 
 def row(s, i):
-    return {"seed": s, "outcome": i["outcome"], "speed": float(i["mean_speed"]), "wh_per_km": float(i["energy_wh"] / max(i["distance_m"] / 1000.0, 1e-3)),
+    return {"seed": s, "outcome": i["outcome"], "speed": float(i["mean_speed"]), "wh_per_km": float(wh_per_km_from_totals(i["energy_wh"], i["distance_m"])),
             "route": float(i["route_completion"]), "steps": int(i["steps"]) if "steps" in i else None}
 
 

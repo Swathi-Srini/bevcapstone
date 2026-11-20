@@ -1,3 +1,5 @@
+
+from bev_rl.energy import wh_per_km_from_totals
 """PROTOTYPE of the Visibility-Conditioned SafeTeacher (simulator only, no camera). New file: nothing existing is modified.
 
     target speed = min( IDM target 30 km/h,  curve-guard cap (a_lat 4.0),  visibility cap )
@@ -52,7 +54,7 @@ def main():
                 if ttc is None: free.append(sp)
                 if te or tr: break
             n = len(speeds)
-            rows.append({"seed": seed, "outcome": info["outcome"], "steps": n, "speed": float(np.mean(speeds)), "wh_per_km": float(info["energy_wh"] / max(info["distance_m"] / 1000.0, 1e-3)),
+            rows.append({"seed": seed, "outcome": info["outcome"], "steps": n, "speed": float(np.mean(speeds)), "wh_per_km": float(wh_per_km_from_totals(info["energy_wh"], info["distance_m"])),
                          "stopped_frac": stopped / n, "hard_brake_frac": hard / n, "free_flow_speed": float(np.mean(free)) if free else None, "vis_cap_binding_frac": bind / n, "min_ttc": min_ttc})
         oc = [r["outcome"] for r in rows]; n = len(rows); ok = [r for r in rows if r["outcome"] == "success"]
         out = {"R_m": None if math.isinf(R) else R, "v_vis_mps": None if math.isinf(v_vis) else v_vis, "t_r": a.tr, "b": a.b, "m": a.m, "v_min": a.vmin, "guard": a.guard, "density": a.density, "horizon": a.horizon, "seeds": f"{lo}-{hi}", "n": n,

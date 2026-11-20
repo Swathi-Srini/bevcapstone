@@ -9,9 +9,11 @@ Writes results/expert_ceiling_lane_change_ablation.json.
 import argparse, json
 from pathlib import Path
 import numpy as np
+from bev_rl.energy import wh_per_km_from_totals
 
 VARIANTS = {"stock": {}, "no_lane_change": {"enable_lane_change": False},
             "no_lc_defensive": {"enable_lane_change": False, "TIME_WANTED": 2.2, "DISTANCE_WANTED": 14.0}}
+
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--n", type=int, default=20); ap.add_argument("--seed0", type=int, default=3100)
@@ -31,7 +33,7 @@ def main():
                 act = np.clip(np.asarray(pol.act(), np.float32)[:2], -1, 1)
                 o, r, te, tr, info = env.step(act)
                 if te or tr: break
-            rows.append({"seed": s, "outcome": info["outcome"], "speed": info["mean_speed"], "route": info["route_completion"], "wh_km": info["energy_wh"] / max(info["distance_m"] / 1000, 1e-3)})
+            rows.append({"seed": s, "outcome": info["outcome"], "speed": info["mean_speed"], "route": info["route_completion"], "wh_km": wh_per_km_from_totals(info["energy_wh"], info["distance_m"])})
             print(name, s, rows[-1], flush=True)
         oc = [r["outcome"] for r in rows]
         out[name] = {"n": len(rows), **{k: oc.count(k) / len(rows) for k in ("success", "crash", "off_road", "timeout")},

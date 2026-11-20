@@ -1,3 +1,5 @@
+
+from bev_rl.energy import wh_per_km_from_totals
 """Final n=200 ALL-WEATHER evaluation, ONE harness for all six presented models (records energy for every model).
 Seeds 5000-5199 (fresh block; never used for training, validation or checkpoint selection), density 0.05, horizon 800, weather = detector dropout only
 (keep-prob from results/retention_table.json). Identical seeds for every model AND an identical per-episode dropout stream (rng seeded s*7+1), so paired tests are valid.
@@ -31,7 +33,7 @@ def summarise(arm, w, a, rows, note=None):
 
 
 def row(s, i):
-    return {"seed": s, "outcome": i["outcome"], "speed": float(i["mean_speed"]), "wh_per_km": float(i["energy_wh"] / max(i["distance_m"] / 1000.0, 1e-3)),
+    return {"seed": s, "outcome": i["outcome"], "speed": float(i["mean_speed"]), "wh_per_km": float(wh_per_km_from_totals(i["energy_wh"], i["distance_m"])),
             "route": float(i["route_completion"]), "steps": int(i["steps"]) if "steps" in i else None}
 
 

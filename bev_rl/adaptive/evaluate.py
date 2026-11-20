@@ -1,3 +1,5 @@
+
+from bev_rl.energy import wh_per_km_from_totals
 """Evaluate teacher policies (and the IDM baseline) on reserved seeds across weather. 
 python -m bev_rl.adaptive.evaluate --runs probe_C --out bev_rl/adaptive/results/probe  [--idm]"""
 import argparse, csv, json
@@ -16,7 +18,7 @@ def run_policy(name, act_fn, env, conds, seeds):
             while True:
                 o, r, te, tr, i = env.step(act_fn(o, env))
                 if te or tr: break
-            wh_km = i["energy_wh"] / (i["distance_m"] / 1000) if i["distance_m"] > 1 else float("nan")
+            wh_km = wh_per_km_from_totals(i["energy_wh"], i["distance_m"]) if i["distance_m"] > 1 else float("nan")
             rows.append({"policy": name, "kind": kind, "level": lvl, "seed": s, "outcome": i["outcome"], "rc": i["route_completion"],
                          "energy_wh": i["energy_wh"], "dist_m": i["distance_m"], "wh_per_km": wh_km, "mean_speed": i["mean_speed"],
                          "mean_abs_lat": i["mean_abs_lat"], "steps": i["steps"], "mu": i["mu"]})

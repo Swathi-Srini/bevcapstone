@@ -1,3 +1,5 @@
+
+from bev_rl.energy import wh_per_km_from_totals
 """Reserved-seed evaluation of weather-aware PPO policies AND of DAgger bases, under the SAME weather x density cells.
 
 Weather acts only through the measured detector dropout (retention_table.json) on vehicles in the BEV; no dynamics change.
@@ -67,7 +69,7 @@ def main():
             row = {"policy": a.run, "density": dens, "weather": f"{w[0]}:{w[1]}", "n": n, "success": oc.count("success") / n,
                    "success_ci95": wilson(oc.count("success"), n), "crash": oc.count("crash") / n, "off_road": oc.count("off_road") / n,
                    "timeout": oc.count("timeout") / n, "mean_speed": float(np.mean([x["mean_speed"] for x in res])),
-                   "wh_per_km": float(np.nanmean([x["energy_wh"] / (x["distance_m"] / 1000) if x["distance_m"] > 50 else np.nan for x in res]))}
+                   "wh_per_km": float(np.nanmean([wh_per_km_from_totals(x["energy_wh"], x["distance_m"]) if x["distance_m"] > 50 else np.nan for x in res]))}
             rows.append(row); print(json.dumps({k: (round(v, 3) if isinstance(v, float) else v) for k, v in row.items()}), flush=True)
     Path("bev_rl/adaptive/results").mkdir(parents=True, exist_ok=True)
     (Path("bev_rl/adaptive/results") / f"final_weather_{a.run}.json").write_text(json.dumps(rows, indent=1))
