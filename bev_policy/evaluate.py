@@ -15,6 +15,8 @@ from bev_policy.model import BEVScalarPolicy
 from bev_policy.metrics import action_metrics, summarise_episode_rows
 from bev_policy.runtime import make_env
 from bev_policy.perception import run_perception
+from bev_rl.energy import EnergyParams, trace_energy
+from bev_rl.telemetry import vehicle_mass_kg
 
 
 def main_camera_frame(env):
@@ -22,22 +24,6 @@ def main_camera_frame(env):
     import cv2
     image = env.engine.get_sensor("main_camera").perceive(to_float=False)
     return cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-
-
-def energy_proxy_metrics(speeds_mps, dt_s=0.1):
-    """Flat-road, no-regeneration longitudinal energy proxy, not measured EV energy."""
-    if not speeds_mps:
-        return {"estimated_energy_kwh": 0.0, "estimated_wh_per_km": None}
-    mass_kg, cd, area_m2, rho, crr, gravity = 1800.0, 0.23, 2.22, 1.225, 0.01, 9.81
-    speeds = np.asarray(speeds_mps, dtype=np.float64)
-    accel = np.diff(np.r_[speeds[0], speeds]) / dt_s
-    force = mass_kg * accel + 0.5 * rho * cd * area_m2 * speeds**2 + crr * mass_kg * gravity
-    energy_j = float(np.maximum(force * speeds * dt_s, 0.0).sum())
-    distance_km = float(speeds.sum() * dt_s / 1000.0)
-    return {
-        "estimated_energy_kwh": energy_j / 3.6e6,
-        "estimated_wh_per_km": energy_j / 3600.0 / distance_km if distance_km > 1e-9 else None,
-    }
 
 
 def build_perception_dashboard(
@@ -220,6 +206,15 @@ def main() -> int:
             perception_cv.resizeWindow(perception_window, 1080, 872)
         for episode in range(args.episodes):
             seed = args.seed + episode; _, info = env.reset(seed=seed)
+            # Use the simulator's configured decision interval and live vehicle mass.
+            # MetaDrive's decision interval is physics_dt * decision_repeat (0.1 s here).
+            if "physics_world_step_size" not in env.config or "decision_repeat" not in env.config:
+                raise RuntimeError("MetaDrive config must provide physics_world_step_size and decision_repeat for energy.")
+            physics_dt_s = float(env.config["physics_world_step_size"])
+            decision_repeat = int(env.config["decision_repeat"])
+            dt_s = physics_dt_s * decision_repeat
+            mass_kg = vehicle_mass_kg(env)
+            energy_params = EnergyParams(mass_kg=mass_kg)
             weather_rng = np.random.default_rng(args.weather_seed + seed)
             weather = args.weather
             if weather == "mixed":
@@ -227,7 +222,8 @@ def main() -> int:
             weather_level = (float(weather_rng.uniform(0.0, args.weather_level))
                              if args.random_weather else args.weather_level)
             assembler.mount_if_needed(env)
-            speeds, actions, final_info = [], [], dict(info)
+            speeds = [float(env.agent.speed_km_h) / 3.6]
+            actions, final_info = [], dict(info)
             box_totals = {name: 0 for name in ("front_left_camera", "left_camera", "right_camera", "rear_camera")}
             box_class_totals = {name: 0 for name in ("car", "truck", "bus", "motorcycle", "person")}
             frames_with_detections = 0
@@ -312,12 +308,22 @@ def main() -> int:
                 if terminated or truncated:
                     break
             outcome = "success" if final_info.get("arrive_dest") else "collision" if (final_info.get("crash_vehicle") or final_info.get("crash_object")) else "off_road" if final_info.get("out_of_road") else "max_step"
+            energy = (trace_energy(speeds, dt_s, energy_params) if len(speeds) > 1 else
+                      {"traction_pos_wh": 0.0, "wh_per_km": float("nan")})
+            trace_path = args.output_dir / f"energy_trace_{weather}_{weather_level:.2f}_seed_{seed}.npz"
+            args.output_dir.mkdir(parents=True, exist_ok=True)
+            np.savez_compressed(trace_path, speeds_mps=np.asarray(speeds, dtype=np.float64),
+                                dt_s=np.float64(dt_s), mass_kg=np.float64(mass_kg))
             row = {"seed": seed, "weather": weather, "weather_level": weather_level,
                    "weather_visibility_horizon_m": (args.visibility_range_m
                                                     if args.visibility_range_m is not None
                                                     else weather_horizon),
-                   "outcome": outcome, "steps": len(speeds),
-                   "mean_speed_mps": float(np.mean(speeds)) if speeds else 0.0,
+                   "outcome": outcome, "steps": len(speeds) - 1,
+                   "mean_speed_mps": float(np.mean(speeds[1:])) if len(speeds) > 1 else 0.0,
+                   "energy_mass_kg": mass_kg, "energy_dt_s": dt_s,
+                   "estimated_energy_kwh": energy["traction_pos_wh"] / 1000.0,
+                   "estimated_wh_per_km": energy["wh_per_km"],
+                   "energy_trace_file": trace_path.name,
                    "yolo_box_totals_by_camera": box_totals,
                    "yolo_box_totals_by_class": box_class_totals,
                    "yolo_vehicle_box_total": sum(box_class_totals[label]
@@ -327,7 +333,6 @@ def main() -> int:
                    "mean_front_stereo_valid_fraction": float(np.mean(depth_coverages)) if depth_coverages else None,
                    "mean_abs_lateral_deviation_m": float(np.mean(np.abs(lateral_deviations))) if lateral_deviations else None,
                    "mean_abs_heading_error_rad": float(np.mean(np.abs(heading_errors))) if heading_errors else None,
-                   **energy_proxy_metrics(speeds),
                    **action_metrics(actions)}
             results.append(row); print(row)
             if stop_requested:
@@ -352,11 +357,15 @@ def main() -> int:
                          "random_weather": args.random_weather,
                          "visibility_range_m": args.visibility_range_m,
                          "weather_seed": args.weather_seed,
-                         "energy_proxy_model": {
-                             "description": "Flat-road longitudinal traction-energy proxy; not MetaDrive measured energy, battery use, or validated vehicle consumption.",
-                             "dt_s": 0.1, "mass_kg": 1800.0, "drag_coefficient": 0.23,
+                         "energy_methodology": {
+                             "implementation": "bev_rl.energy.trace_energy",
+                             "description": "Estimated mechanical traction energy per kilometre; not measured battery consumption.",
+                             "dt_s": (float(results[0]["energy_dt_s"]) if results else None),
+                             "mass_kg": (float(results[0]["energy_mass_kg"]) if results else None),
+                             "drag_coefficient": 0.23,
                              "frontal_area_m2": 2.22, "air_density_kg_m3": 1.225,
-                             "rolling_resistance": 0.01, "regeneration": "ignored",
+                             "rolling_resistance": 0.01, "road_grade": 0.0,
+                             "integration": "closed-form linear-speed step work; negative work clipped per step; no regeneration",
                          },
                          "weather_definition": "Configurable, reproducible camera-image formation approximation: fog/rain attenuation uses a ground-plane depth prior; rain also adds exposure streaks, wet-road darkening, and lens droplets. Policy StereoSGBM depth is computed from the degraded camera pair. The associated conservative BEV horizon is an experimental intervention; MetaDrive vehicle dynamics and road friction are unchanged.",
                          "visibility_definition": "When set, visibility_range_m is a privileged controlled-visibility intervention that masks forward BEV cells; it is not camera-inferred physical fog range."},

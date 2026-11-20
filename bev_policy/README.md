@@ -310,11 +310,12 @@ do not use the candidate as evidence of generalization or safe driving. The
 model and metadata are `checkpoints/ppo_bev_research_weather_traffic_v1.zip`
 and `.json`; paired reports are under `outputs/research_train_eval/`.
 
-The evaluator now saves per-camera YOLO box counts, frames with detections and
+The evaluator saves per-camera YOLO box counts, frames with detections and
 projected BEV objects, mean stereo valid fraction, lateral/heading deviation,
-and an idealized flat-road Wh/km proxy. The proxy is report-only: it is not a
-training reward or measured vehicle energy, and regeneration and road grade
-are omitted.
+and canonical Wh/km from `bev_rl/energy.py`. This is estimated mechanical
+traction energy, not measured battery energy; regeneration and road grade are
+omitted. The older PPO weather tables used a separate 1800 kg proxy and remain
+historical until their trace-capture recalculation is run.
 
 The BC-vs-safety PPO comparison was repeated using corrected weathered-image
 stereo depth. Across the matched rain/fog/clear seeds 1000--1002 at traffic
@@ -324,13 +325,16 @@ off-road events. Both collided in fog, and fog mean speed was similar
 (7.86 vs 7.97 m/s). A separate energy-reward PPO also scored 2/3, but its mean
 estimated Wh/km (154.0) was slightly above safety PPO (151.7) across these
 three episodes. These are small, noisy pilots, not proof of generalization or
-energy improvement. Corrected reports are under
+energy improvement. Their old Wh/km values used the 1800 kg point-force
+implementation and must not be compared with canonical results. Corrected reports are under
 `outputs/adaptive_safety_generalization_corrected/`; the previous
 `outputs/adaptive_safety_generalization/` weather reports used clean stereo
 depth and are superseded.
 
 The energy-reward candidate is saved as
 `checkpoints/ppo_bev_energy_adaptive_v1.zip`. Reproduce its training with:
+The existing checkpoint was trained with the prior 1800 kg reward proxy;
+the training source now uses the canonical `bev_rl/energy.py` implementation.
 
 ```powershell
 python -m bev_policy.train_ppo --timesteps 2048 --n-steps 128 --batch-size 64 `

@@ -1,3 +1,5 @@
+
+from bev_rl.energy import wh_per_km_from_totals
 """TEACHER B validation under the IDENTITY caution mapping (c = fog/rain level, 0 in clear).   NEW FILE (2026-11-16).
 
 Same teacher as camera_dagger (SafeTeacher + caution IDM + curve guard 4.0, name cs0_g4.0), same loop as teacher_eval.py, but caution c = severity level instead of the retired c_auto(retention).
@@ -32,7 +34,7 @@ def main():
             if te or tr: break
         n = len(speeds)
         rows.append({"seed": seed, "outcome": info["outcome"], "steps": n, "mean_speed": float(np.mean(speeds)), "energy_wh": float(info["energy_wh"]), "distance_m": float(info["distance_m"]),
-                     "wh_per_km": float(info["energy_wh"] / max(info["distance_m"] / 1000.0, 1e-3)), "route": float(info["route_completion"]), "stopped_frac": stopped / n, "hard_brake_frac": hard / n,
+                     "wh_per_km": float(wh_per_km_from_totals(info["energy_wh"], info["distance_m"])), "route": float(info["route_completion"]), "stopped_frac": stopped / n, "hard_brake_frac": hard / n,
                      "wall_s": round(time.time() - t0, 1)})
     oc = [r["outcome"] for r in rows]; n = len(rows)
     f.write_text(json.dumps({"teacher": "cs0_g4.0", "weather": a.weather, "c": c, "density": a.density, "horizon": a.horizon, "seeds": f"{lo}-{hi}", "n": n,

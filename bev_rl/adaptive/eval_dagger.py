@@ -1,3 +1,5 @@
+
+from bev_rl.energy import wh_per_km_from_totals
 """Final evaluation of a DAgger checkpoint on the RESERVED seeds (use once per selected model) with Wilson 95% intervals.
 
     python -m bev_rl.adaptive.eval_dagger --run base_a --densities 0.05 0.2 [--overlay] [--no-bev] [--scalar-keep 0,1,2,3,4,5]
@@ -56,7 +58,7 @@ def main():
         row = {"run": a.run, "ckpt": a.ckpt, "density": dens, "n": n, "success": oc.count("success") / n, "success_ci95": wilson(oc.count("success"), n),
                "crash": oc.count("crash") / n, "off_road": oc.count("off_road") / n, "timeout": oc.count("timeout") / n,
                "mean_speed": float(np.mean([x["mean_speed"] for x in res])),
-               "wh_per_km": float(np.nanmean([x["energy_wh"] / (x["distance_m"] / 1000) if x["distance_m"] > 50 else np.nan for x in res]))}
+               "wh_per_km": float(np.nanmean([wh_per_km_from_totals(x["energy_wh"], x["distance_m"]) if x["distance_m"] > 50 else np.nan for x in res]))}
         print(json.dumps({k: (round(v, 3) if isinstance(v, float) else v) for k, v in row.items()}), flush=True)
         out.append(row)
     Path("bev_rl/adaptive/results").mkdir(parents=True, exist_ok=True)

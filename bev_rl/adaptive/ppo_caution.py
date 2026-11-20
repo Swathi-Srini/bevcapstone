@@ -1,3 +1,5 @@
+
+from bev_rl.energy import wh_per_km_from_totals
 """PPO fine-tuning with a COMBINABLE energy + robustness reward, on the caution-conditioned BEV policy.
 
 Start point: the previous best DAgger policy (ov_split, no weather/caution input) grafted with a caution input whose weights are
@@ -96,7 +98,7 @@ def validate(model, ck, a):
                 o, r, te, tr, i = env.step(model.predict(o, deterministic=True)[0])
                 if te or tr:
                     break
-            res.append((i["outcome"] == "success", i["outcome"] in ("crash", "off_road"), i["energy_wh"] / max(i["distance_m"] / 1000, 1e-3)))
+            res.append((i["outcome"] == "success", i["outcome"] in ("crash", "off_road"), wh_per_km_from_totals(i["energy_wh"], i["distance_m"])))
     env.close()
     r = np.array(res, float)
     return float(r[:, 0].mean()), float(r[:, 1].mean()), float(r[:, 2].mean())

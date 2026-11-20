@@ -1,3 +1,5 @@
+
+from bev_rl.energy import wh_per_km_from_totals
 """Evaluate TEACHERS on their own (simulator only; teachers read the exact simulator state, no camera is involved).
 
 Teachers
@@ -88,7 +90,7 @@ def main():
             if ttc is None: free.append(sp)
             if te or tr: break
         n = len(speeds)
-        rows.append({"seed": seed, "outcome": info["outcome"], "steps": n, "speed": float(np.mean(speeds)), "wh_per_km": float(info["energy_wh"] / max(info["distance_m"] / 1000.0, 1e-3)),
+        rows.append({"seed": seed, "outcome": info["outcome"], "steps": n, "speed": float(np.mean(speeds)), "wh_per_km": float(wh_per_km_from_totals(info["energy_wh"], info["distance_m"])),
                      "route": float(info["route_completion"]), "stopped_frac": stopped / n, "hard_brake_frac": hard / n, "free_flow_speed": float(np.mean(free)) if free else None,
                      "target_speed": float(target), "guard_active_frac": guard_steps / n if guard is not None else None, "min_ttc": min_ttc, "c": c, "wall_s": round(time.time() - t0, 1)})
         part.write_text(json.dumps(rows))

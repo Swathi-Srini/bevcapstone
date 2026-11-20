@@ -4,9 +4,11 @@
 >
 > **Phase 3 update (17 November 2026):** the image-based severity-adaptive system, its 20-seed results and the paper draft are described in [`docs/phase3/README.md`](docs/phase3/README.md). The sections below are the 14 November state.
 >
-> **Last updated: 14 November 2026, evening.** Full technical record of everything up to this date: [`report/latest_14th_Nov_26.pdf`](report/latest_14th_Nov_26.pdf). Methodology and schedule only: [`report/Final_Methodology_and_Approach.pdf`](report/Final_Methodology_and_Approach.pdf).
+> **Integration update (19 November 2026):** PPO weather code and its pilot results were merged into `main` as PR #17. Keep those PPO results separate from the Phase 3 image-severity A/C study; the training setup, BEV path, and policy differ. The current research claim boundary and next experiments are in [`docs/RESEARCH_INTEGRATION.md`](docs/RESEARCH_INTEGRATION.md).
+>
+> **Last updated: 19 November 2026.** Sections 1–11 below are a historical 14 November record. The full technical report for that date is [`report/latest_14th_Nov_26.pdf`](report/latest_14th_Nov_26.pdf); the Phase 3 and integration notes supersede it for current status.
 
-**Project title: *Reinforcement learning under fog and rain conditions*.** Current work: proper **base models** (OV-Split Camera, Live Caution Camera) trained on our own camera pipeline; the reinforcement-learning part is handled separately by a teammate (what was tried: section 6; code map: [`docs/REPO_MAP.md`](docs/REPO_MAP.md)). A MetaDrive-based research project on **driving under simulated fog and rain** with a camera-derived Bird's-Eye-View (BEV) policy. **The final simulator is MetaDrive, not CARLA** (earlier CARLA work is design context only).
+**Working title: *Reinforcement learning under fog and rain conditions*.** The current primary paper line is the image-severity-adaptive camera policy; BC-initialized PPO is an additional, lower-performing pilot rather than a validated controller. This is a MetaDrive-based study of driving under synthetic fog and rain with a camera-derived Bird's-Eye-View (BEV) policy. **The final simulator is MetaDrive, not CARLA** (earlier CARLA work is design context only).
 
 ## 1. Where we are (14 November 2026)
 

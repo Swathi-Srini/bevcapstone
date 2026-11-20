@@ -1,5 +1,21 @@
 # Status (17 November 2026, evening)
 
+## Integration update (19 November 2026)
+
+The PPO weather pilot from PR #17 is now part of `main`; it is a separate
+experiment and must not be pooled with the Phase 3 A/C results. See
+[`../RESEARCH_INTEGRATION.md`](../RESEARCH_INTEGRATION.md) for the common
+research narrative and claim boundaries.
+
+The planned 20-seed extension on seeds 5220–5239 is not present in this
+checkout. It was not run here: the existing frozen-source verifier rejects the
+current checkout because the source snapshot recorded by `FROZEN_MANIFEST.json`
+does not match current source files. This includes an assembler source version
+that is no longer available in Git history. Re-running under the changed code
+and silently pooling it with the frozen 20-seed study would break the original
+paired protocol. The 20-seed results below remain unchanged and are the only
+Phase 3 paired results currently reported.
+
 ## The final system (Nov 16 specification, governs)
 camera images -> image-based severity estimate -> caution score -> adaptive driving policy -> safe driving, with energy measured.
 Only **two** final models are compared: **A** (non-adaptive OV-Split camera policy, unmodified) and **C** (adaptive: the network trained with the true caution, run with the image-estimated caution at inference). **B** is the training reference only. See `ARCHITECTURE.md`. The effective-range architecture was NOT adopted and training was NOT restarted (pre-registration amendment, section 8).

@@ -34,6 +34,8 @@ def wilson(k, n, z=1.96):
     return [float(max(0, c - h)), float(min(1, c + h))]
 
 
+
+from bev_rl.energy import wh_per_km_from_totals
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--arm", required=True, choices=ARMS); ap.add_argument("--n", type=int, default=30)
@@ -62,7 +64,7 @@ def main():
             *_, i = episode(env, net, mu, sd, torch, s, w, c)
             km = max(i["distance_m"] / 1000.0, 1e-3)
             r = {"weather": f"{w[0]}:{w[1]}", "seed": s, "c": c, "outcome": i["outcome"], "mean_speed": i["mean_speed"],
-                 "wh_per_km": i["energy_wh"] / km, "steps": i["steps"], "route_completion": i["route_completion"]}
+                 "wh_per_km": wh_per_km_from_totals(i["energy_wh"], i["distance_m"]), "steps": i["steps"], "route_completion": i["route_completion"]}
             rows.append(r); outs.append(r); print(json.dumps(r), flush=True)
         n = len(outs); succ = sum(o["outcome"] == "success" for o in outs); fail = sum(o["outcome"] in ("crash", "off_road") for o in outs)
         cells[f"{w[0]}:{w[1]}"] = {"c": c, "n": n, "success": succ / n, "success_ci": wilson(succ, n), "fail": fail / n, "fail_ci": wilson(fail, n),

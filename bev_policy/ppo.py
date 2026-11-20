@@ -20,6 +20,8 @@ from bev_policy.runtime import make_env
 from bev_state import BEVStateAssembler
 from manual_drive_stereo_yolo_weather import CAMERA_RIGS, frame_from_sensor
 from bev_policy.perception import run_perception
+from bev_rl.energy import EnergyParams, step_work_j
+from bev_rl.telemetry import vehicle_mass_kg
 
 
 def nearest_forward_obstacle_m(bev: np.ndarray) -> float | None:
@@ -249,6 +251,8 @@ class BEVDrivingEnv(gym.Env):
         self.visibility_horizon: float | None = None
         self.weather_rng = np.random.default_rng(seed)
         self.current_state = None
+        self.energy_params: EnergyParams | None = None
+        self.energy_dt_s: float | None = None
 
     def reset(self, *, seed: int | None = None, options: dict | None = None):
         super().reset(seed=seed)
@@ -256,6 +260,11 @@ class BEVDrivingEnv(gym.Env):
             int(seed) if seed is not None else int(self.np_random.integers(10, 10010))
         )
         _, info = self.simulator.reset(seed=simulator_seed)
+        self.energy_params = EnergyParams(mass_kg=vehicle_mass_kg(self.simulator))
+        if "physics_world_step_size" not in self.simulator.config or "decision_repeat" not in self.simulator.config:
+            raise RuntimeError("MetaDrive config must provide physics_world_step_size and decision_repeat for energy.")
+        self.energy_dt_s = (float(self.simulator.config["physics_world_step_size"])
+                            * int(self.simulator.config["decision_repeat"]))
         self.weather_rng = np.random.default_rng(simulator_seed + 20261112)
         if self.random_weather:
             self.episode_weather = str(self.weather_rng.choice(("clear", "fog", "rain")))
@@ -288,13 +297,10 @@ class BEVDrivingEnv(gym.Env):
             target_speed = min(target_speed, obstacle_speed_limit)
         overspeed = max(0.0, speed_mps - target_speed)
         reward -= self.adaptive_speed_penalty * overspeed**2
-        acceleration_mps2 = (speed_mps - previous_speed) / 0.1
-        engine_force_n = (
-            1800.0 * acceleration_mps2
-            + 0.5 * 1.225 * 0.23 * 2.22 * speed_mps**2
-            + 0.01 * 1800.0 * 9.81
-        )
-        step_energy_wh = max(0.0, engine_force_n * speed_mps * 0.1) / 3600.0
+        if self.energy_params is None or self.energy_dt_s is None:
+            raise RuntimeError("Energy parameters must be initialized by reset() before step().")
+        step_energy_wh = max(0.0, step_work_j(previous_speed, speed_mps,
+                                               self.energy_dt_s, self.energy_params)) / 3600.0
         reward -= self.energy_reward_weight * step_energy_wh
         if info.get("arrive_dest"):
             reward += 10.0

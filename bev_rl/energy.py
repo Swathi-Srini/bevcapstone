@@ -100,10 +100,17 @@ def trace_energy(speeds_mps, dt: float, params: EnergyParams) -> dict:
         "traction_pos_wh": pos_j / JOULES_PER_WH,
         "net_work_j": float(work.sum()),
         "distance_m": distance_m,
-        "wh_per_km": (pos_j / JOULES_PER_WH) / (distance_m / 1000.0) if distance_m > 1e-9 else float("nan"),
+        "wh_per_km": wh_per_km_from_totals(pos_j / JOULES_PER_WH, distance_m),
         "step_work_j": work,
         "step_pos_j": positive,
     }
+
+
+def wh_per_km_from_totals(energy_wh: float, distance_m: float) -> float:
+    """Canonical Wh/km ratio; undefined for zero or invalid distance."""
+    if not (np.isfinite(energy_wh) and np.isfinite(distance_m)) or distance_m <= 1e-9:
+        return float("nan")
+    return float(energy_wh / (distance_m / 1000.0))
 
 
 def steady_wh_per_km(speed_mps: float, params: EnergyParams) -> float:

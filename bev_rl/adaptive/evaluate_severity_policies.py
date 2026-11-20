@@ -1,3 +1,5 @@
+
+from bev_rl.energy import wh_per_km_from_totals
 """PAIRED CAMERA-PIPELINE EVALUATION of Model A / B / C with full instrumentation.   NEW FILE (2026-11-16).  Reuses the live pipeline (camera_dagger.make_env = the genuine BuilderEnv) and bev_rl/energy.py (unchanged, via env.step).
 
     A   existing non-adaptive OV-Split camera student     camera_dagger_final/e2e_ov_split_final/best.pt       no caution input
@@ -80,7 +82,7 @@ def main():
                 if te or tr: break
             dist_km = max(info["distance_m"] / 1000.0, 1e-3); gaps = [g for g in tr_["gap"] if g is not None]
             out = {"arm": arm, "weather": f"{kind}:{level}", "kind": kind, "level": level, "seed": seed, "c_true": c_true, "outcome": info["outcome"], "steps": int(info["steps"]), "duration_s": info["steps"] * 0.1,
-                   "route_completion": float(info["route_completion"]), "energy_wh": float(info["energy_wh"]), "distance_m": float(info["distance_m"]), "wh_per_km": float(info["energy_wh"] / dist_km),
+                   "route_completion": float(info["route_completion"]), "energy_wh": float(info["energy_wh"]), "distance_m": float(info["distance_m"]), "wh_per_km": float(wh_per_km_from_totals(info["energy_wh"], info["distance_m"])),
                    "mean_speed": float(info["mean_speed"]), "min_gap_m": float(min(gaps)) if gaps else None, "horizon": a.horizon, "density": 0.05, "wall_s": round(time.time() - t0), "trace": tr_}
             res.write_text(json.dumps(out)); print(json.dumps({k: v for k, v in out.items() if k != "trace"}), flush=True)
     env.md.close()

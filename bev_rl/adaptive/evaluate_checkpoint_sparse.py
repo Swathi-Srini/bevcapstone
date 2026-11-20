@@ -1,3 +1,5 @@
+
+from bev_rl.energy import wh_per_km_from_totals
 """Evaluate ANY caution-network checkpoint (runs/<run>/iter_<k>.pt or best.pt) on the fresh sparse-traffic protocol (seeds 1010-1049, density 0.05, clear, detector dropout at
 measured rate for the chosen weather, caution input fixed to --c). Used to test whether later DAgger rounds beat round 0 (model-selection check).
     python -m bev_rl.adaptive.evaluate_checkpoint_sparse --run ctrl_nocaut --iters 0 2 5 --n 40
@@ -25,7 +27,7 @@ def main():
         mu, sd = np.asarray(ck["scalar_mean"], np.float32), np.asarray(ck["scalar_std"], np.float32); rows = []
         for s in range(a.seed0, a.seed0 + a.n):
             *_, i = episode(env, net, mu, sd, torch, s, w, a.c)
-            rows.append({"seed": s, "outcome": i["outcome"], "wh_per_km": i["energy_wh"] / max(i["distance_m"] / 1000, 1e-3), "speed": i["mean_speed"]})
+            rows.append({"seed": s, "outcome": i["outcome"], "wh_per_km": wh_per_km_from_totals(i["energy_wh"], i["distance_m"]), "speed": i["mean_speed"]})
         oc = [r["outcome"] for r in rows]; n = len(oc); kk = oc.count("success")
         out = {"run": a.run, "iter": k, "weather": a.weather, "c": a.c, "n": n, "success": kk / n, "success_ci": wilson(kk, n), "crash": oc.count("crash") / n, "off_road": oc.count("off_road") / n,
                "timeout": oc.count("timeout") / n, "wh_per_km": float(np.mean([r["wh_per_km"] for r in rows])), "episodes": rows}

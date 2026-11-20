@@ -67,6 +67,8 @@ def condition_report(weather: str, level: float, report_path: Path) -> dict:
 
     speed_mean, speed_std = mean_std("mean_speed_mps")
     energy_mean, energy_std = mean_std("estimated_wh_per_km")
+    success_energy = [float(row["estimated_wh_per_km"]) for row in episodes
+                      if row["outcome"] == "success" and row.get("estimated_wh_per_km") is not None]
     lateral_mean, lateral_std = mean_std("mean_abs_lateral_deviation_m")
     heading_mean, heading_std = mean_std("mean_abs_heading_error_rad")
     depth_mean, depth_std = mean_std("mean_front_stereo_valid_fraction")
@@ -82,6 +84,9 @@ def condition_report(weather: str, level: float, report_path: Path) -> dict:
         "max_step": outcomes["max_step"],
         "mean_speed_mps": speed_mean, "sd_episode_mean_speed_mps": speed_std,
         "mean_estimated_wh_per_km": energy_mean, "sd_episode_estimated_wh_per_km": energy_std,
+        "mean_success_estimated_wh_per_km": float(np.mean(success_energy)) if success_energy else None,
+        "sd_success_estimated_wh_per_km": float(np.std(success_energy, ddof=1)) if len(success_energy) > 1 else (0.0 if success_energy else None),
+        "n_success_energy": len(success_energy),
         "mean_abs_lateral_deviation_m": lateral_mean,
         "sd_episode_mean_abs_lateral_deviation_m": lateral_std,
         "mean_abs_heading_error_rad": heading_mean,
@@ -107,9 +112,16 @@ def condition_report(weather: str, level: float, report_path: Path) -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.parse_args()
-    OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
-    status_path = OUTPUT_ROOT / "study_status.json"
+    parser.add_argument("--output-root", type=Path, default=OUTPUT_ROOT,
+                        help="Write this run separately; defaults to the historical study directory.")
+    parser.add_argument("--energy-standardized", action="store_true",
+                        help="Label outputs as canonical bev_rl.energy results; use a new output root.")
+    args = parser.parse_args()
+    output_root = args.output_root
+    if args.energy_standardized and output_root.resolve() == OUTPUT_ROOT.resolve():
+        raise SystemExit("--energy-standardized requires a separate --output-root; historical files are protected.")
+    output_root.mkdir(parents=True, exist_ok=True)
+    status_path = output_root / "study_status.json"
     complete: list[dict] = []
     status = {"state": "running", "requested_episodes_per_condition": N_EPISODES,
               "seed_range": [SEED_START, SEED_START + N_EPISODES - 1],
@@ -120,7 +132,7 @@ def main() -> int:
 
     for weather, level in CONDITIONS:
         condition_name = f"{weather}_{level:.2f}"
-        output_dir = OUTPUT_ROOT / condition_name
+        output_dir = output_root / condition_name
         report_path = output_dir / (
             f"{weather}_level_{level:.2f}_traffic_0.10_visibility_default_"
             f"seed_{SEED_START}_n_{N_EPISODES}.json"
@@ -156,7 +168,7 @@ def main() -> int:
     status_path.write_text(json.dumps(status, indent=2), encoding="utf-8")
     rows = [{key: value for key, value in row.items() if key != "episode_rows"}
             for row in complete]
-    (OUTPUT_ROOT / "paper_summary.json").write_text(json.dumps({
+    (output_root / "paper_summary.json").write_text(json.dumps({
         "study": {
             "policy": "BEV BC-initialized safety-shaped PPO; 2048 PPO training steps",
             "checkpoint": "bev_policy/checkpoints/ppo_bev_adaptive_safety_v1.zip",
@@ -168,22 +180,34 @@ def main() -> int:
             "yolo_model": "yolov8n.pt", "inference_size": 320,
             "confidence_threshold": 0.25, "stereo_scale": 0.5,
             "weather": "synthetic camera image corruption; MetaDrive friction/dynamics unchanged",
+            "energy_methodology": ("bev_rl.energy.trace_energy; mass read from the MetaDrive vehicle; per-episode speed trace and decision dt saved; closed-form linear-speed work with negative work clipped per step; no regeneration. Estimated mechanical traction energy, not battery consumption."
+                                  if args.energy_standardized else "See each episode report for energy methodology."),
             "limitations": [
                 "This is a simulator pilot, not real-road validation.",
                 "YOLO box counts are predictions, not precision/recall; no annotated truth set is available.",
-                "Energy is a flat-road proxy, not measured battery consumption.",
+                "Energy is estimated mechanical traction energy, not measured battery consumption.",
                 "The PPO checkpoint was trained for only 2048 timesteps; a 100-episode evaluation does not cure short training.",
             ],
         },
         "conditions": complete,
     }, indent=2), encoding="utf-8")
     import csv
-    summary_csv = OUTPUT_ROOT / "paper_summary.csv"
+    summary_csv = output_root / "paper_summary.csv"
     with summary_csv.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
         writer.writeheader()
         writer.writerows(rows)
-    print(f"Saved 100-episode study: {OUTPUT_ROOT}", flush=True)
+    if args.energy_standardized:
+        from bev_policy.standardize_ppo_energy import standardize
+        episode_csv, energy_summary_csv, validation_report = standardize(
+            original_root=PROJECT_ROOT / "bev_policy" / "outputs" / "ppo_weather_generalization_20_stereo05",
+            rerun_root=output_root,
+            output_dir=output_root,
+        )
+        print(f"Saved standardized energy episodes: {episode_csv}", flush=True)
+        print(f"Saved standardized energy summary: {energy_summary_csv}", flush=True)
+        print(f"Saved energy validation: {validation_report}", flush=True)
+    print(f"Saved 100-episode study: {output_root}", flush=True)
     return 0
 
 

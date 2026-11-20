@@ -1,3 +1,5 @@
+
+from bev_rl.energy import wh_per_km_from_totals
 """Evaluate the repo's committed BC checkpoints (and the IDM expert) in the fast env under the repo's evaluation contract.
 
 Contract (README 'BC-to-RL handoff baseline'): clear weather, seeds 1000-1009, 800 steps, traffic density 0.05.
@@ -29,7 +31,7 @@ def summarize(name, dens, rows):
     d = {"policy": name, "density": dens, "n": len(rows), "success": out.count("success") / len(rows), "crash": out.count("crash") / len(rows),
          "off_road": out.count("off_road") / len(rows), "timeout": out.count("timeout") / len(rows),
          "route_completion": float(np.mean([x["route_completion"] for x in rows])), "mean_speed": float(np.mean([x["mean_speed"] for x in rows])),
-         "wh_per_km": float(np.nanmean([x["energy_wh"] / (x["distance_m"] / 1000) if x["distance_m"] > 50 else np.nan for x in rows]))}
+         "wh_per_km": float(np.nanmean([wh_per_km_from_totals(x["energy_wh"], x["distance_m"]) if x["distance_m"] > 50 else np.nan for x in rows]))}
     print(json.dumps({k: (round(v, 3) if isinstance(v, float) else v) for k, v in d.items()}), flush=True)
     return d
 

@@ -1,3 +1,5 @@
+
+from bev_rl.energy import wh_per_km_from_totals
 """VANILLA camera policy: ONE front camera image -> small CNN -> (steer, throttle). Nothing else goes in (no BEV, no speed, no scalars, no weather label).
 
 Purpose: show that image corruptions (fog, rain, sensor noise, blur, darkness, occlusion) really HURT a policy that sees raw pixels - the control experiment for the BEV models, whose
@@ -182,7 +184,7 @@ def cmd_eval(a):
             if s in done: continue
             _, _, i = episode(env, torch, s, cond=c, net=net)
             rows.append({"seed": s, "outcome": i["outcome"], "speed": float(i["mean_speed"]), "route": float(i["route_completion"]), "min_gap_m": float(i["min_gap_m"]),
-                         "wh_per_km": float(i["energy_wh"] / max(i["distance_m"] / 1000.0, 1e-3)), "steps": int(i["steps"])}); print(cname(c), rows[-1], flush=True)
+                         "wh_per_km": float(wh_per_km_from_totals(i["energy_wh"], i["distance_m"])), "steps": int(i["steps"])}); print(cname(c), rows[-1], flush=True)
             if len(rows) % 10 == 0: part.write_text(json.dumps(rows))
         oc = [r["outcome"] for r in rows]
         f.write_text(json.dumps({"model": a.name, "cond": cname(c), "n": len(rows), **{k: oc.count(k) / len(rows) for k in ("success", "crash", "off_road", "timeout")},
